@@ -84,8 +84,7 @@ Table of Contents
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
      10.2.  Informative References . . . . . . . . . . . . . . . . .  14
-   Appendix A.  Distinct . . . . . . . . . . . . . . . . . . . . . .  15
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
 
 1.  Introduction
 
@@ -106,6 +105,7 @@ Table of Contents
    directly provided to a UE or to a CPE.  Mechanisms used within the
    LAN are similar in both fixed and cellular CPE-based broadband
    service offerings.
+
 
 
 
@@ -813,35 +813,6 @@ Internet-Draft               DoH/DoT in Home               February 2020
               DOI 10.17487/RFC8520, March 2019,
               <https://www.rfc-editor.org/info/rfc8520>.
 
-Appendix A.  Distinct
-
-   In deployment where DoH/DoT/Do53 are not co-located, the ISP may
-   return a list of servers that is composed of DoH (and/or DoT) and
-   Do53 servers in addition to the DNS Reference Identifier Option
-   (Section 5).  A host that is also DoH-capable (and/or DoT-capable),
-   will try to establish a DoH (and/or DoT) session to that list.  DoT
-   and/or DoH are supported if the client succeeds to establish a
-   session.  Let's consider that the DoH server is reachable at
-   2001:db8:122:300::2 (S2 in Figure 9) while the Do53 server is
-   reachable at 2001:db8:122:300::1 (S1 in Figure 9).  The DHCP server
-   will then return a list that includes both 2001:db8:122:300::1 and
-   2001:db8:122:300::2 to a requesting DNS client.  That list is passed
-   to the DNS client.  A legacy Do53 client will select
-   2001:db8:122:300::1 (S1) while a DoH client will select
-   2001:db8:122:300::2 (S2).
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires August 29, 2020               [Page 15]
-
-Internet-Draft               DoH/DoT in Home               February 2020
-
-
 Authors' Addresses
 
    Mohamed Boucadair
@@ -861,11 +832,40 @@ Authors' Addresses
    Email: TirumaleswarReddy_Konda@McAfee.com
 
 
+
+
+
+
+
+Boucadair, et al.        Expires August 29, 2020               [Page 15]
+
+Internet-Draft               DoH/DoT in Home               February 2020
+
+
    Dan Wing
    Citrix Systems, Inc.
    USA
 
    Email: dwing-ietf@fuggles.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

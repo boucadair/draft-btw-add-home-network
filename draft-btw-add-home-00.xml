@@ -742,22 +742,5 @@ TBA3    DNS Reference Identifier Option         ]]></artwork>
 
       <!---->
     </references>
-
-    <section title="Distinct ">
-      <t>In deployment where DoH/DoT/Do53 are not co-located, the ISP may
-      return a list of servers that is composed of DoH (and/or DoT) and Do53
-      servers in addition to the DNS Reference Identifier Option (<xref
-      target="RI"></xref>). A host that is also DoH-capable (and/or
-      DoT-capable), will try to establish a DoH (and/or DoT) session to that
-      list. DoT and/or DoH are supported if the client succeeds to establish a
-      session. Let's consider that the DoH server is reachable at
-      2001:db8:122:300::2 (S2 in <xref target="selection"></xref>) while the
-      Do53 server is reachable at 2001:db8:122:300::1 (S1 in <xref
-      target="selection"></xref>). The DHCP server will then return a list
-      that includes both 2001:db8:122:300::1 and 2001:db8:122:300::2 to a
-      requesting DNS client. That list is passed to the DNS client. A legacy
-      Do53 client will select 2001:db8:122:300::1 (S1) while a DoH client will
-      select 2001:db8:122:300::2 (S2).</t>
-    </section>
   </back>
 </rfc>
