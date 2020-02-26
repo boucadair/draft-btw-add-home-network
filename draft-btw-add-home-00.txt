@@ -79,7 +79,7 @@ Table of Contents
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
      8.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  12
      8.2.  DHCPv4 Option . . . . . . . . . . . . . . . . . . . . . .  12
-     8.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  13
+     8.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  12
    9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
@@ -622,12 +622,6 @@ Internet-Draft               DoH/DoT in Home               February 2020
    DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
    server is pre-configured in the OS or the browser.
 
-   DoH/DoT servers discovered using insecure discovery mechanisms like
-   DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-   server is pre-configured in the OS or the browser, offers malware
-   filtering service and meets the privacy preserving data policy
-   requirements of the user.
-
    If the insecurely discovered DoH/DoT server is not pre-configured in
    the OS or browser, its policy information must be cryptographically
    attested by the ISP (e.g., [I-D.reddy-dprive-dprive-privacy-policy]);
@@ -665,6 +659,12 @@ Internet-Draft               DoH/DoT in Home               February 2020
    OPTION_V4_DNS_RI TBA2 N      The authentication domain [ThisDocument]
                                 name of a DoT/DoH server.
 
+8.3.  RA Option
+
+   IANA is requested to assign the following new IPv6 Neighbor Discovery
+   Option type in the registry maintained in the "Internet Control
+   Message Protocol version 6 (ICMPv6) Parameters" registry
+   (http://www.iana.org).
 
 
 
@@ -673,13 +673,6 @@ Boucadair, et al.        Expires August 29, 2020               [Page 12]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
-
-8.3.  RA Option
-
-   IANA is requested to assign the following new IPv6 Neighbor Discovery
-   Option type in the registry maintained in the "Internet Control
-   Message Protocol version 6 (ICMPv6) Parameters" registry
-   (http://www.iana.org).
 
    Type    Option Name
    TBA3    DNS Reference Identifier Option
@@ -721,6 +714,13 @@ Internet-Draft               DoH/DoT in Home               February 2020
               DOI 10.17487/RFC8310, March 2018,
               <https://www.rfc-editor.org/info/rfc8310>.
 
+   [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
+              (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
+              <https://www.rfc-editor.org/info/rfc8484>.
+
+
+
+
 
 
 
@@ -729,10 +729,6 @@ Boucadair, et al.        Expires August 29, 2020               [Page 13]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
-
-   [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
-              (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
-              <https://www.rfc-editor.org/info/rfc8484>.
 
 10.2.  Informative References
 
@@ -777,6 +773,10 @@ Internet-Draft               DoH/DoT in Home               February 2020
               Providing Residential IPv6 Internet Service", RFC 6092,
               DOI 10.17487/RFC6092, January 2011,
               <https://www.rfc-editor.org/info/rfc6092>.
+
+
+
+
 
 
 

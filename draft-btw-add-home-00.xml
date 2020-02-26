@@ -614,12 +614,6 @@
       DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
       server is pre-configured in the OS or the browser. </t>
 
-      <t>DoH/DoT servers discovered using insecure discovery mechanisms like
-      DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-      server is pre-configured in the OS or the browser, offers malware
-      filtering service and meets the privacy preserving data policy
-      requirements of the user.</t>
-
       <t>If the insecurely discovered DoH/DoT server is not pre-configured in
       the OS or browser, its policy information must be cryptographically
       attested by the ISP (e.g., <xref
