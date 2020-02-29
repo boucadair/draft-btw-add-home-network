@@ -568,7 +568,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
    o  If a CPE is co-located with security services within the home
       network, the CPE can use WPA-PSK but with unique pre-shared keys
       for different endpoints to deal with security issues.  In such
-      networks, [I-D.reddy-dprive-dprive-privacy-policy] may be used to
+      networks, [I-D.reddy-dprive-bootstrap-dns-server] may be used to
       securely bootstrap endpoint devices with the authentication domain
       name (ADN) and DNS server certificate of the local network's DoH/
       DoT server.
