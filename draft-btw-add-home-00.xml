@@ -222,7 +222,7 @@
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>. If DoH is
       supported by the DNS server, the DNS client may query for the URI
       resource record type <xref target="RFC7553"></xref> to use the https URI
-      scheme (Section 3 of <xref target="RFC8484"></xref>). </t>
+      scheme (Section 3 of <xref target="RFC8484"></xref>).</t>
 
       <t><figure align="center" anchor="wan" title="DoH/DoT in the WAN">
           <artwork><![CDATA[(a) Fixed Networks
@@ -324,11 +324,11 @@
           and IPv6.</t>
 
           <t>'ACME IP Identifier Validation Extension' <xref
-          target="I-D.ietf-acme-ip"></xref> can be used to issue a public
-          certificate for the public IP address of the DoH/DoT forwarder. This
-          mechanism requires the certificate issuance and renewal management
-          to be done on the CPE itself. The HTTP Challenge (http-01) or TLS
-          with Application Level Protocol Negotiation (TLS ALPN) challenge
+          target="RFC8738"></xref> can be used to issue a public certificate
+          for the public IP address of the DoH/DoT forwarder. This mechanism
+          requires the certificate issuance and renewal management to be done
+          on the CPE itself. The HTTP Challenge (http-01) or TLS with
+          Application Level Protocol Negotiation (TLS ALPN) challenge
           (tls-alpn-01) are used to prove the IP address ownership during
           certificate issuance. The issued certificate will have public IP
           address in iPAddress subjectAltName extension.<vspace
@@ -353,13 +353,13 @@
       and a DoH/DoT server while accommodating for the current best practices
       for issuing certificates, this document allows for configuring
       authentication domain name and an IP address to be presented as a
-      reference identifier for DNS authentication purposes. </t>
+      reference identifier for DNS authentication purposes.</t>
 
       <t>The DNS client establishes DoH/DoT session with the discovered DNS IP
       address(es) and uses the mechanism discussed in Section 8 of <xref
       target="RFC8310"></xref> to authenticate the DNS server certificate
       using the authentication domain name conveyed in the DNS Reference
-      Identifier. </t>
+      Identifier.</t>
 
       <section title="Format of DHCPv6 DNS Reference Identifier Option">
         <t>The DHCPv6 DNS Reference Identifier option is used to configure an
@@ -502,7 +502,7 @@
       in <xref target="depl"></xref>, Do53, DoH, and DoT may terminate on the
       same IP address (or distinct IP addresses as depicted in <xref
       target="selection"></xref>). Terminating Do53/DoH/DoT on the same or
-      distinct IP addresses is deployment-specific. </t>
+      distinct IP addresses is deployment-specific.</t>
 
       <t>From an IP reachability standpoint, DoH/DoT servers should be located
       by their address literals rather than their names. This avoids adding a
@@ -570,7 +570,7 @@
           <t>If a CPE is co-located with security services within the home
           network, the CPE can use WPA-PSK but with unique pre-shared keys for
           different endpoints to deal with security issues. In such networks,
-          <xref target="I-D.reddy-dprive-dprive-privacy-policy"></xref> may be
+          <xref target="I-D.reddy-dprive-bootstrap-dns-server"></xref> may be
           used to securely bootstrap endpoint devices with the authentication
           domain name (ADN) and DNS server certificate of the local network's
           DoH/DoT server. <vspace blankLines="1" />The OS would not know if
@@ -612,13 +612,13 @@
 
       <t>DoH/DoT servers discovered using insecure discovery mechanisms like
       DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-      server is pre-configured in the OS or the browser. </t>
+      server is pre-configured in the OS or the browser.</t>
 
       <t>If the insecurely discovered DoH/DoT server is not pre-configured in
       the OS or browser, its policy information must be cryptographically
       attested by the ISP (e.g., <xref
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>); user consent
-      is required to use the locally-discovered DoH/DoT server. </t>
+      is required to use the locally-discovered DoH/DoT server.</t>
 
       <t>DOT/DoH sessions with rogue servers spoofing the IP address of a DNS
       server will fail because the DNS client will fail to authenticate that
@@ -626,7 +626,7 @@
       target="RFC6125"></xref> based on the authentication domain name in the
       Reference Identifier Option. DNS clients that ignore authentication
       failures and accept spoofed certificate will be subject to attacks
-      (e.g., redirect to malicious servers, intercept sensitive data). </t>
+      (e.g., redirect to malicious servers, intercept sensitive data).</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -708,7 +708,7 @@ TBA3    DNS Reference Identifier Option         ]]></artwork>
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.I-D.ietf-acme-ip'?>
+      <?rfc include='reference.RFC.8738'?>
 
       <?rfc include='reference.RFC.6092'?>
 

@@ -5,10 +5,10 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: August 29, 2020                                          McAfee
+Expires: September 1, 2020                                        McAfee
                                                                  D. Wing
                                                                   Citrix
-                                                       February 26, 2020
+                                                       February 29, 2020
 
 
           DoH/DoT Deployment Considerations for Home Networks
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 29, 2020.
+   This Internet-Draft will expire on September 1, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 1]
+Boucadair, et al.       Expires September 1, 2020               [Page 1]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 2]
+Boucadair, et al.       Expires September 1, 2020               [Page 2]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -165,7 +165,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 3]
+Boucadair, et al.       Expires September 1, 2020               [Page 3]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -221,7 +221,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 4]
+Boucadair, et al.       Expires September 1, 2020               [Page 4]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -277,7 +277,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 5]
+Boucadair, et al.       Expires September 1, 2020               [Page 5]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -322,18 +322,18 @@ Internet-Draft               DoH/DoT in Home               February 2020
       DoH/DoT forwarder.  This behavior adheres to REQ#8 in [RFC6092],
       but must be applied for both IPv4 and IPv6.
 
-   o  'ACME IP Identifier Validation Extension' [I-D.ietf-acme-ip] can
-      be used to issue a public certificate for the public IP address of
-      the DoH/DoT forwarder.  This mechanism requires the certificate
-      issuance and renewal management to be done on the CPE itself.  The
-      HTTP Challenge (http-01) or TLS with Application Level Protocol
+   o  'ACME IP Identifier Validation Extension' [RFC8738] can be used to
+      issue a public certificate for the public IP address of the DoH/
+      DoT forwarder.  This mechanism requires the certificate issuance
+      and renewal management to be done on the CPE itself.  The HTTP
+      Challenge (http-01) or TLS with Application Level Protocol
       Negotiation (TLS ALPN) challenge (tls-alpn-01) are used to prove
       the IP address ownership during certificate issuance.  The issued
 
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 6]
+Boucadair, et al.       Expires September 1, 2020               [Page 6]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -389,7 +389,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 7]
+Boucadair, et al.       Expires September 1, 2020               [Page 7]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -445,7 +445,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 8]
+Boucadair, et al.       Expires September 1, 2020               [Page 8]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -501,7 +501,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020                [Page 9]
+Boucadair, et al.       Expires September 1, 2020               [Page 9]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -557,7 +557,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020               [Page 10]
+Boucadair, et al.       Expires September 1, 2020              [Page 10]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -613,7 +613,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020               [Page 11]
+Boucadair, et al.       Expires September 1, 2020              [Page 11]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -669,7 +669,7 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020               [Page 12]
+Boucadair, et al.       Expires September 1, 2020              [Page 12]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -725,16 +725,12 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020               [Page 13]
+Boucadair, et al.       Expires September 1, 2020              [Page 13]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
 
 10.2.  Informative References
-
-   [I-D.ietf-acme-ip]
-              Shoemaker, R., "ACME IP Identifier Validation Extension",
-              draft-ietf-acme-ip-08 (work in progress), October 2019.
 
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
@@ -774,24 +770,21 @@ Internet-Draft               DoH/DoT in Home               February 2020
               DOI 10.17487/RFC6092, January 2011,
               <https://www.rfc-editor.org/info/rfc6092>.
 
-
-
-
-
-
-
-
-Boucadair, et al.        Expires August 29, 2020               [Page 14]
-
-Internet-Draft               DoH/DoT in Home               February 2020
-
-
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
               within Internet Public Key Infrastructure Using X.509
               (PKIX) Certificates in the Context of Transport Layer
               Security (TLS)", RFC 6125, DOI 10.17487/RFC6125, March
               2011, <https://www.rfc-editor.org/info/rfc6125>.
+
+
+
+
+
+Boucadair, et al.       Expires September 1, 2020              [Page 14]
+
+Internet-Draft               DoH/DoT in Home               February 2020
+
 
    [RFC7553]  Faltstrom, P. and O. Kolkman, "The Uniform Resource
               Identifier (URI) DNS Resource Record", RFC 7553,
@@ -812,6 +805,11 @@ Internet-Draft               DoH/DoT in Home               February 2020
               Description Specification", RFC 8520,
               DOI 10.17487/RFC8520, March 2019,
               <https://www.rfc-editor.org/info/rfc8520>.
+
+   [RFC8738]  Shoemaker, R., "Automated Certificate Management
+              Environment (ACME) IP Identifier Validation Extension",
+              RFC 8738, DOI 10.17487/RFC8738, February 2020,
+              <https://www.rfc-editor.org/info/rfc8738>.
 
 Authors' Addresses
 
@@ -837,7 +835,9 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires August 29, 2020               [Page 15]
+
+
+Boucadair, et al.       Expires September 1, 2020              [Page 15]
 
 Internet-Draft               DoH/DoT in Home               February 2020
 
@@ -893,4 +893,4 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.        Expires August 29, 2020               [Page 16]
+Boucadair, et al.       Expires September 1, 2020              [Page 16]
