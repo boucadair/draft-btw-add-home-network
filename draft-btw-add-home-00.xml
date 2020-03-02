@@ -95,12 +95,12 @@
     <abstract>
       <t>This document discusses DoT/DoH deployment considerations for home
       networks. It particularly sketches the required steps to use DoT/DoH
-      provided by local networks.</t>
+      capabilities provided by local networks.</t>
 
-      <t>One of the goals of the document is to assess to what extent existing
-      tools can be used to provide such service. As an outcome, new DHCP and
-      Router Advertisement Options are specified in order to convey a DNS
-      Authentication Domain Name. </t>
+      <t>One of the goals of this document is to assess to what extent
+      existing tools can be used to provide a DoT/DoH service. As an outcome,
+      new DHCP and Router Advertisement Options are specified in order to
+      convey a DNS Authentication Domain Name.</t>
     </abstract>
   </front>
 
@@ -124,10 +124,10 @@
 
       <t>The communication between a customer's device (Customer Premise
       Equipment (CPE) or User Equipment (UE)) and an ISP-supplied DNS resolver
-      takes then place using cleartext DNS messages (Do53, <xref
+      takes place by using cleartext DNS messages (Do53, <xref
       target="I-D.ietf-dnsop-terminology-ter"></xref>). Some examples are
-      depicted in <xref target="do53"></xref>. For the case of cellular
-      networks, connectivity can be directly provided to a UE or to a CPE. The
+      depicted in <xref target="do53"></xref>. In the case of cellular
+      networks, connectivity can be provided to a UE or to a CPE. Do53
       mechanisms used within the LAN are similar in both fixed and cellular
       CPE-based broadband service offerings.</t>
 
@@ -155,43 +155,48 @@
 ]]></artwork>
         </figure></t>
 
-      <t>ISPs use DNS to provide advanced services such as (non exhaustive)
-      malware filtering, parental control, or VoD (Video on Demand)
+      <t>ISPs use DNS to provide additional services such as (but not limited
+      to) malware filtering, parental control, or VoD (Video on Demand)
       optimization. DNS is also a central component for mastering the quality
       of experience for current latency-sensitive services, but also emerging
-      services (e.g., Ultra Reliability and Low Latency Communications (uRLLC)
-      or Enhanced Mobile Broadband (eMBB)). <list style="empty">
+      ones (such as those services that pertain to the Ultra Reliability and
+      Low Latency Communications (uRLLC) or Enhanced Mobile Broadband (eMBB).
+      <list style="empty">
           <t>For example, the latency targets set in the context of 5G are 1ms
-          (uRLLC) and 4ms (eMBB). An ISP will be able to provide such services
-          if deployed close to the user (e.g., by means of Edge Computing
-          techniques and resources) and if the various involved communications
-          legs are optimized (DNS, in particular).</t>
+          (uRLLC) and 4ms (eMBB). An ISP will be able to address such
+          demanding latency requirements assuming the corresponding services
+          rely upon resources (network, compute, sotrage) that are located as
+          close to the user as possible (e.g., by means of Edge Computing
+          techniques and resources). Such latency requirements are likely to
+          be adressed by means of optimized designs (DNS, in particular),
+          too.</t>
         </list>Relying upon local DNS resolvers will therefore contribute to
       meet the aforementioned service requirements. The use of external
-      resolvers is likely to induce an extra service delay (e.g., 15 ms) which
-      exceeds by far the service target (1 or 4 ms).</t>
+      resolvers is likely to induce an extra service delay which exceeds by
+      far the service target (1 or 4 ms).</t>
 
       <t>This document focuses on the support of DNS-over-HTTPS (DoH) <xref
       target="RFC8484"></xref> or DNS-over-TLS (DoT) <xref
-      target="RFC7858"></xref> by local networks. In particular, the document
-      describes how a local DoH/DoT can be discovered and used by connected
-      hosts.</t>
+      target="RFC7858"></xref> in local networks. In particular, the document
+      describes how a local DoH/DoT server can be discovered and used by
+      connected hosts.</t>
 
       <t>It is not the intent of this document to argue in favor or against
-      the generalization of DoH/DoT. Likewise, it is not the intent of the
-      document to evaluate the benifits/impacts of enabling DoH/DoT within
-      some networks. Furthermore, it is not the intent of the document to
+      the generalization of DoH/DoT. Likewise, it is not the intent of this
+      document to evaluate the benefits and impacts of enabling DoH/DoT within
+      some networks. Furthermore, it is not the intent of this document to
       discuss which information can be supplied to third-party resolvers
-      (e.g., ECS) for the sake of proper delivery of some services nor how
-      alternative technical options to DNS can be used to deliver the service
-      that are currently "coupled" with the DNS service.</t>
+      (e.g., EDNS Client Subnet, <xref target="RFC7871"> </xref>) for the sake
+      of properly delivering some services nor how alternative options to DNS
+      can be used to deliver the service that are currently "bound" with the
+      DNS service.</t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
-      addresses of these resolvers (configured on CPEs, typically) using the
-      mechanisms listed above. This document does not preclude such
-      deployments. It is up to each ISP to decide which list of DNS resolvers
-      to advertise to its serviced devices.</t>
+      addresses of these resolvers (these addresses are typically configured
+      on CPEs) using the mechanisms listed above. This document does not
+      preclude such deployments. It is up to an ISP to decide which list of
+      DNS resolvers to advertise to its serviced devices.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -209,11 +214,12 @@
     </section>
 
     <section anchor="depl" title="Sample Deployment Scenarios">
-      <t>ISPs are used to manage service-specific configuration using, e.g.,
-      TR-069. For example, these tools may be used to provision authentication
-      domain name (ADN) (defined in <xref target="RFC8310"></xref>) to managed
-      CPEs if DoH or DoT is supported by a local network similar to what is
-      depicted in <xref target="wan"></xref>.</t>
+      <t>ISPs have developed an expertise in managing service-specific
+      configuration information, using, e.g., TR-069. For example, these tools
+      may be used to provision authentication domain name information (ADN,
+      defined in <xref target="RFC8310"></xref>) to managed CPEs if DoH or DoT
+      is supported by a local network similar to what is depicted in <xref
+      target="wan"></xref>.</t>
 
       <t>DNS clients may try to establish DoH and/or DoT sessions with
       discovered DNS servers to determine whether these servers support DoH
@@ -221,9 +227,9 @@
       may discover whether the DNS server in the local network supports DoH or
       DoT by using the mechanism discussed in Section 6 of <xref
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>. If DoH is
-      supported by the DNS server, the DNS client may query for the URI
-      resource record type <xref target="RFC7553"></xref> to use the https URI
-      scheme (Section 3 of <xref target="RFC8484"></xref>).</t>
+      supported by the DNS server, the DNS client may request the URI resource
+      record type <xref target="RFC7553"></xref> to use the HTTPS URI scheme
+      (Section 3 of <xref target="RFC8484"></xref>).</t>
 
       <t><figure align="center" anchor="wan" title="DoH/DoT in the WAN">
           <artwork><![CDATA[(a) Fixed Networks
@@ -249,10 +255,11 @@
         </figure></t>
 
       <t>The CPE relays the list of DoT/DoH servers it learns for the network
-      using mechanisms (e.g., DHCP, RA). In such context, direct DoH/DoT
-      sessions will be established between a host serviced by a CPE and an
-      ISP-supplied DoT/DoH server (see the example depicted in <xref
-      target="direct"></xref> for a DoH/DoT-capable host).</t>
+      by using mechanisms like DHCP or a specific Router Advertisement
+      message. In such context, direct DoH/DoT sessions will be established
+      between a host serviced by a CPE and an ISP-supplied DoT/DoH server (see
+      the example depicted in <xref target="direct"></xref> for a
+      DoH/DoT-capable host).</t>
 
       <t><figure align="center" anchor="direct"
           title="Direct DoH/DoT Sessions">
@@ -272,13 +279,13 @@
       advertises itself as the default DNS server to the hosts it serves. The
       CPE relies upon DHCP or RA to advertise itself to internal hosts as the
       default DoT/DoH/Do53 server. The CPE forwards DNS requests received from
-      internal hosts and which it can not handle locally to an upstream
-      DoH/DoT/Do53 resolver. Such deployment is required for IPv4 service
-      continuity (e.g., <xref target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or
+      internal hosts that it cannot handle locally to an upstream DoH/DoT/Do53
+      resolver. Such deployment is required for IPv4 service continuity
+      purposes (e.g., <xref target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or
       for supporting advanced services within the home (e.g., malware
-      filtering, parental control, Manufacturer Usage Description (MUD) <xref
+      filtering, parental control, Manufacturer Usage Description (MUD, <xref
       target="RFC8520"></xref> to only allow intended communications to and
-      from the IoT device). When the CPE behaves as a DNS forwarder, DNS
+      from an IoT device). When the CPE behaves as a DNS forwarder, DNS
       communications can be decomposed into two legs:<list style="symbols">
           <t>The one between an internal host and the CPE.</t>
 
@@ -307,37 +314,38 @@
       <t></t>
     </section>
 
-    <section anchor="forwarder" title="Hosting DoH/DoT Forwarder on the CPE">
-      <t>The following mechanisms can be used in order to host DoH/DoT
-      forwarder on the CPE:</t>
+    <section anchor="forwarder" title="Hosting DoH/DoT Forwarder in the CPE">
+      <t>The following mechanisms can be used to host a DoH/DoT forwarder in
+      the CPE:</t>
 
       <t><list style="symbols">
           <t>If a CPE is co-located with security services (e.g., malware
           filtering, parental control, MUD), the ISP can assign a unique FQDN
           (e.g., cpe1.example.com) and a domain-validated public certificate
-          to the DoH/DoT forwarder on the CPE. <vspace
+          to the DoH/DoT forwarder to the CPE. <vspace
           blankLines="1" />Alternatively, the ISP can assign a unique FQDN to
           the managed CPE. The DoT/DoH forwarder will act like a public
           DoT/DoH server but will only be accessible from within the home
           network. DNS queries received outside the home network must be
-          rejected by the DoH/DoT forwarder. This behavior adheres to REQ#8 in
-          <xref target="RFC6092"></xref>, but must be applied for both IPv4
-          and IPv6.</t>
+          discarded by the DoH/DoT forwarder. This behavior adheres to REQ#8
+          in <xref target="RFC6092"></xref>, and must apply for both IPv4 and
+          IPv6.</t>
 
           <t>'ACME IP Identifier Validation Extension' <xref
           target="RFC8738"></xref> can be used to issue a public certificate
           for the public IP address of the DoH/DoT forwarder. This mechanism
-          requires the certificate issuance and renewal management to be done
-          on the CPE itself. The HTTP Challenge (http-01) or TLS with
-          Application Level Protocol Negotiation (TLS ALPN) challenge
-          (tls-alpn-01) are used to prove the IP address ownership during
-          certificate issuance. The issued certificate will have public IP
-          address in iPAddress subjectAltName extension.<vspace
-          blankLines="1" />The disadvantages of this mechanism are: (1) the
-          certificate needs to be re-issued every time the IPv6 prefix or the
-          public IPv4 address changes and (2) the CPE needs to run an HTTP(S)
-          server until the ACME server validates that the challenge has
-          completed and issues the requested certificate.</t>
+          requires the issuance of the certificate and the management of the
+          certificate's renewal to be supported by the CPE itself. The HTTP
+          Challenge (http-01) or TLS with Application Level Protocol
+          Negotiation (TLS ALPN) challenge (tls-alpn-01) are used to prove the
+          IP address ownership during the issuance of the certificate. This
+          certificate will carry a public IP address in iPAddress
+          subjectAltName extension.<vspace blankLines="1" />The disadvantages
+          of this mechanism are: (1) the certificate needs to be re-issued
+          every time the IPv6 prefix or the public IPv4 address changes and
+          (2) the CPE needs to run an HTTP(S) server until the ACME server
+          validates that the challenge has completed so that the ACME server
+          can issue the requested certificate.</t>
         </list></t>
     </section>
 
@@ -351,13 +359,13 @@
         </list></t>
 
       <t>In order to allow for PKIX-based authentication between a DNS client
-      and a DoH/DoT server while accommodating for the current best practices
-      for issuing certificates, this document allows for configuring
+      and a DoH/DoT server while accommodating the current best practices for
+      issuing certificates, this document allows for configuring an
       authentication domain name and an IP address to be presented as a
       reference identifier for DNS authentication purposes.</t>
 
-      <t>The DNS client establishes DoH/DoT session with the discovered DNS IP
-      address(es) (<xref target="address"></xref>) and uses the mechanism
+      <t>The DNS client establishes a DoH/DoT session with the discovered DNS
+      IP address(es) (<xref target="address"></xref>) and uses the mechanism
       discussed in Section 8 of <xref target="RFC8310"></xref> to authenticate
       the DNS server certificate using the authentication domain name conveyed
       in the DNS Reference Identifier.</t>
@@ -410,8 +418,8 @@
           </figure></t>
       </section>
 
-      <section title="Format of DHCPv4 DNS Reference Identifier Option">
-        <t>The DHCPv4 DNS Reference Identifier option is used to configure a
+      <section title="Format of DHCP DNS Reference Identifier Option">
+        <t>The DHCP DNS Reference Identifier option is used to configure an
         authentication domain name of the DoH/DoT server. The format of this
         option is illustrated in <xref target="dhcpri_dns"></xref>.</t>
 
@@ -447,7 +455,7 @@
 
       <section title="Format of RA DNS Reference Identifier Option">
         <t>The IPv6 Router Advertisement (RA) DNS Reference Identifier option
-        is used to configure a authentication domain name of the DoH/DoT
+        is used to configure an authentication domain name of the DoH/DoT
         server. The format of this option is illustrated in <xref
         target="ra_dns"></xref>.</t>
 
@@ -467,8 +475,7 @@
         <t>The fields of the option shown in <xref target="ra_dns"></xref> are
         as follows:<?rfc subcompact="yes" ?><list style="symbols">
             <t>Type: 8-bit identifier of the DNS Reference Identifier Option
-            as assigned by the IANA (TBA3, see <xref
-            target="iana7"></xref>).</t>
+            as assigned by IANA (TBA3, see <xref target="iana7"></xref>).</t>
 
             <t>Length: 8-bit unsigned integer. The length of the option
             (including the Type and Length fields) is in units of 8
@@ -499,18 +506,19 @@
     <section anchor="address" title="Locating DoH/DoT Servers">
       <t>As mentioned in <xref target="intro"></xref>, a CPE or a host relies
       upon discovery mechanisms (such as PCO, DHCP, or RA) to retrieve DoH and
-      DoT servers hosted by local networks. In the various scenarios sketched
-      in <xref target="depl"></xref>, Do53, DoH, and DoT may terminate on the
-      same IP address (or distinct IP addresses as depicted in <xref
-      target="selection"></xref>). Terminating Do53/DoH/DoT on the same or
-      distinct IP addresses is deployment-specific.</t>
+      DoT servers' reachability information, and hosted by local networks. In
+      the various scenarios sketched in <xref target="depl"></xref>, Do53,
+      DoH, and DoT may terminate on the same IP address (or distinct IP
+      addresses as depicted in <xref target="selection"></xref>). Terminating
+      Do53/DoH/DoT on the same or distinct IP addresses is
+      deployment-specific.</t>
 
       <t>From an IP reachability standpoint, DoH/DoT servers should be located
       by their address literals rather than their names. This avoids adding a
       dependency on another server to resolve the DoH/DoT name. Concretely,
       existing discovery mechanisms can be leveraged to learn the IP addresses
       of DoT/DoH servers while an authentication domain name is supplied by
-      one of the means discussed in <xref target="RI"></xref>.</t>
+      one of the options discussed in <xref target="RI"></xref>.</t>
 
       <t><list style="empty">
           <t>Note: It is unlikely that DoH and DoT will be offered
@@ -543,7 +551,7 @@
 
       <t>Additional considerations are discussed below for the use of DoH and
       DoT servers provided by local networks:<list style="symbols">
-          <t>If the DNS server IP address discovered using DHCP/RA is
+          <t>If the DNS server's IP address discovered by using DHCP/RA is
           pre-configured in the OS or browser as a trusted resolver, the DNS
           client auto-upgrades to use the discovered DoH/DoT server.</t>
 
@@ -598,13 +606,13 @@
       modification in any way, their content can be spoofed or modified by
       compromised devices within the home network. An attacker can spoof the
       DHCP/RA response to provide the attacker's DoT/DoH server. Note that
-      such an attacker can mount other attacks as discussed in Section 22 of
+      such an attacker can launch other attacks as discussed in Section 22 of
       <xref target="RFC8415"></xref>. Furthermore, if the browser or the OS is
-      pre-configured with a list of DNS servers where some perform malware
-      filtering and others do not, an attacker can prevent contacting the
-      preferred filtering DNS servers causing a downgrade attack to a
-      non-filtering DNS server, which the attacker can leverage to deliver
-      malware.</t>
+      pre-configured with a list of DNS servers and some of which perform
+      malware filtering while others do not, an attacker can prevent
+      contacting the preferred filtering DNS servers causing a downgrade
+      attack to a non-filtering DNS server, which the attacker can leverage to
+      deliver malware.</t>
 
       <t>The use of DoH/DoT also depends on the user's policies. For example,
       the user may indicate his/her consent to use (or not) the
@@ -621,13 +629,14 @@
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>); user consent
       is required to use the locally-discovered DoH/DoT server.</t>
 
-      <t>DOT/DoH sessions with rogue servers spoofing the IP address of a DNS
+      <t>DoT/DoH sessions with rogue servers spoofing the IP address of a DNS
       server will fail because the DNS client will fail to authenticate that
-      rogue server because of PKIX authentication <xref
-      target="RFC6125"></xref> based on the authentication domain name in the
-      Reference Identifier Option. DNS clients that ignore authentication
-      failures and accept spoofed certificate will be subject to attacks
-      (e.g., redirect to malicious servers, intercept sensitive data).</t>
+      rogue server based upon PKIX authentication <xref
+      target="RFC6125"></xref> , and which relies upon the authentication
+      domain name in the Reference Identifier Option. DNS clients that ignore
+      authentication failures and accept spoofed certificates will be subject
+      to attacks (e.g., redirect to malicious servers, intercept sensitive
+      data).</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -649,7 +658,7 @@
 
           <c>TBA1</c>
 
-          <c>OPTION_V6_DNS_RI </c>
+          <c>OPTION_V6_DNS_RI</c>
 
           <c>Yes</c>
 
@@ -694,7 +703,7 @@
 
           <c>TBA3</c>
 
-          <c>DNS Reference Identifier Option </c>
+          <c>DNS Reference Identifier Option</c>
 
           <c>[ThisDocument]</c>
         </texttable>
@@ -704,7 +713,7 @@
     </section>
 
     <section title="Acknowledgements">
-      <t>TBC.</t>
+      <t>Many thanks to Christian Jacquenet for the review.</t>
     </section>
   </middle>
 
@@ -754,7 +763,7 @@
 
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
 
-      <!---->
+      <?rfc include='reference.RFC.7871'?>
     </references>
   </back>
 </rfc>
