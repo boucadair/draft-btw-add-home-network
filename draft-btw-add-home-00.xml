@@ -98,8 +98,9 @@
       provided by local networks.</t>
 
       <t>One of the goals of the document is to assess to what extent existing
-      tools can be used to provide such service. Extensions are proposed for
-      identified gaps.</t>
+      tools can be used to provide such service. As an outcome, new DHCP and
+      Router Advertisement Options are specified in order to convey a DNS
+      Authentication Domain Name. </t>
     </abstract>
   </front>
 
@@ -126,8 +127,8 @@
       takes then place using cleartext DNS messages (Do53, <xref
       target="I-D.ietf-dnsop-terminology-ter"></xref>). Some examples are
       depicted in <xref target="do53"></xref>. For the case of cellular
-      networks, connectivity can be directly provided to a UE or to a CPE.
-      Mechanisms used within the LAN are similar in both fixed and cellular
+      networks, connectivity can be directly provided to a UE or to a CPE. The
+      mechanisms used within the LAN are similar in both fixed and cellular
       CPE-based broadband service offerings.</t>
 
       <t><figure align="center" anchor="do53"
@@ -356,10 +357,10 @@
       reference identifier for DNS authentication purposes.</t>
 
       <t>The DNS client establishes DoH/DoT session with the discovered DNS IP
-      address(es) and uses the mechanism discussed in Section 8 of <xref
-      target="RFC8310"></xref> to authenticate the DNS server certificate
-      using the authentication domain name conveyed in the DNS Reference
-      Identifier.</t>
+      address(es) (<xref target="address"></xref>) and uses the mechanism
+      discussed in Section 8 of <xref target="RFC8310"></xref> to authenticate
+      the DNS server certificate using the authentication domain name conveyed
+      in the DNS Reference Identifier.</t>
 
       <section title="Format of DHCPv6 DNS Reference Identifier Option">
         <t>The DHCPv6 DNS Reference Identifier option is used to configure an
@@ -635,11 +636,29 @@
         the registry maintained in:
         https://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.</t>
 
-        <t><figure>
-            <artwork><![CDATA[Value   Description              Client ORO    Singleton Option
-TBD1    OPTION_V6_DNS_RI         Yes           Yes
-]]></artwork>
-          </figure></t>
+        <texttable>
+          <ttcol>Value</ttcol>
+
+          <ttcol>Description</ttcol>
+
+          <ttcol>Client ORO</ttcol>
+
+          <ttcol>Singleton Option</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA1</c>
+
+          <c>OPTION_V6_DNS_RI </c>
+
+          <c>Yes</c>
+
+          <c>Yes</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+
+        <t></t>
       </section>
 
       <section anchor="iana4" title="DHCPv4 Option">
@@ -647,39 +666,40 @@ TBD1    OPTION_V6_DNS_RI         Yes           Yes
         the registry maintained in:
         https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml#options.</t>
 
-        <texttable style="headers">
-          <ttcol align="right">Name</ttcol>
-
-          <ttcol>Tag</ttcol>
-
-          <ttcol>Data Length</ttcol>
-
-          <ttcol>Meaning</ttcol>
-
-          <ttcol>Reference</ttcol>
-
-          <c>OPTION_V4_DNS_RI</c>
-
-          <c>TBA2</c>
-
-          <c>N</c>
-
-          <c>The authentication domain name of a DoT/DoH server.</c>
-
-          <c>[ThisDocument]</c>
-        </texttable>
+        <figure>
+          <artwork><![CDATA[+------+------------------+-------+----------------+----------------+
+| Tag  | Name             | Data  | Meaning        | Reference      |
+|      |                  | Length|                |                |
++------+------------------+-------+----------------+----------------+
+| TBA2 | OPTION_V4_DNS_RI | N     | DoT/DoH server | [ThisDocument] |
+|      |                  |       | authentication |                |
+|      |                  |       | domain name    |                |
++------+------------------+-------+----------------+----------------+]]></artwork>
+        </figure>
       </section>
 
       <section anchor="iana7" title="RA Option">
         <t>IANA is requested to assign the following new IPv6 Neighbor
-        Discovery Option type in the registry maintained in the "Internet
-        Control Message Protocol version 6 (ICMPv6) Parameters" registry
-        (http://www.iana.org).</t>
+        Discovery Option type in the "IPv6 Neighbor Discovery Option Formats"
+        sub-registry under the "Internet Control Message Protocol version 6
+        (ICMPv6) Parameters" registry maintained in
+        http://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-5.</t>
 
-        <t><figure>
-            <artwork><![CDATA[Type    Option Name 
-TBA3    DNS Reference Identifier Option         ]]></artwork>
-          </figure></t>
+        <texttable>
+          <ttcol>Type</ttcol>
+
+          <ttcol>Description</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA3</c>
+
+          <c>DNS Reference Identifier Option </c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+
+        <t></t>
       </section>
     </section>
 
@@ -700,8 +720,6 @@ TBA3    DNS Reference Identifier Option         ]]></artwork>
 
       <?rfc include='reference.RFC.7858'?>
 
-      <?rfc include='reference.RFC.8106'?>
-
       <?rfc include='reference.RFC.8310'?>
 
       <?rfc include='reference.RFC.4861'?>
@@ -709,6 +727,8 @@ TBA3    DNS Reference Identifier Option         ]]></artwork>
 
     <references title="Informative References">
       <?rfc include='reference.RFC.8738'?>
+
+      <?rfc include='reference.RFC.8106'?>
 
       <?rfc include='reference.RFC.6092'?>
 

@@ -5,10 +5,10 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: September 1, 2020                                        McAfee
+Expires: September 2, 2020                                        McAfee
                                                                  D. Wing
                                                                   Citrix
-                                                       February 29, 2020
+                                                           March 1, 2020
 
 
           DoH/DoT Deployment Considerations for Home Networks
@@ -21,8 +21,9 @@ Abstract
    provided by local networks.
 
    One of the goals of the document is to assess to what extent existing
-   tools can be used to provide such service.  Extensions are proposed
-   for identified gaps.
+   tools can be used to provide such service.  As an outcome, new DHCP
+   and Router Advertisement Options are specified in order to convey a
+   DNS Authentication Domain Name.
 
 Status of This Memo
 
@@ -39,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 1, 2020.
+   This Internet-Draft will expire on September 2, 2020.
 
 Copyright Notice
 
@@ -49,15 +50,15 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (https://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 1]
+Boucadair, et al.       Expires September 2, 2020               [Page 1]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
+   publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
@@ -79,7 +80,7 @@ Table of Contents
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
      8.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  12
      8.2.  DHCPv4 Option . . . . . . . . . . . . . . . . . . . . . .  12
-     8.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  12
+     8.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  13
    9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
@@ -102,16 +103,15 @@ Table of Contents
    resolver takes then place using cleartext DNS messages (Do53,
    [I-D.ietf-dnsop-terminology-ter]).  Some examples are depicted in
    Figure 1.  For the case of cellular networks, connectivity can be
-   directly provided to a UE or to a CPE.  Mechanisms used within the
-   LAN are similar in both fixed and cellular CPE-based broadband
+   directly provided to a UE or to a CPE.  The mechanisms used within
+   the LAN are similar in both fixed and cellular CPE-based broadband
    service offerings.
 
 
 
-
-Boucadair, et al.       Expires September 1, 2020               [Page 2]
+Boucadair, et al.       Expires September 2, 2020               [Page 2]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
    (a) Fixed Networks
@@ -165,9 +165,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 3]
+Boucadair, et al.       Expires September 2, 2020               [Page 3]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
    some networks.  Furthermore, it is not the intent of the document to
@@ -221,9 +221,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 4]
+Boucadair, et al.       Expires September 2, 2020               [Page 4]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
    (a) Fixed Networks
@@ -277,9 +277,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 5]
+Boucadair, et al.       Expires September 2, 2020               [Page 5]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
    [RFC8520] to only allow intended communications to and from the IoT
@@ -333,9 +333,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 6]
+Boucadair, et al.       Expires September 2, 2020               [Page 6]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
       certificate will have public IP address in iPAddress
@@ -363,8 +363,8 @@ Internet-Draft               DoH/DoT in Home               February 2020
    presented as a reference identifier for DNS authentication purposes.
 
    The DNS client establishes DoH/DoT session with the discovered DNS IP
-   address(es) and uses the mechanism discussed in Section 8 of
-   [RFC8310] to authenticate the DNS server certificate using the
+   address(es) (Section 6) and uses the mechanism discussed in Section 8
+   of [RFC8310] to authenticate the DNS server certificate using the
    authentication domain name conveyed in the DNS Reference Identifier.
 
 5.1.  Format of DHCPv6 DNS Reference Identifier Option
@@ -389,9 +389,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 7]
+Boucadair, et al.       Expires September 2, 2020               [Page 7]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
    o  Option-code: OPTION_V6_DNS_RI (TBA1, see Section 8.1)
@@ -445,9 +445,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 8]
+Boucadair, et al.       Expires September 2, 2020               [Page 8]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
         0                   1                   2                   3
@@ -501,9 +501,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020               [Page 9]
+Boucadair, et al.       Expires September 2, 2020               [Page 9]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
       Note: It is unlikely that DoH and DoT will be offered
@@ -557,9 +557,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020              [Page 10]
+Boucadair, et al.       Expires September 2, 2020              [Page 10]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
       devices in the home network with the local DoT/DoH server using
@@ -613,9 +613,9 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-Boucadair, et al.       Expires September 1, 2020              [Page 11]
+Boucadair, et al.       Expires September 2, 2020              [Page 11]
 
-Internet-Draft               DoH/DoT in Home               February 2020
+Internet-Draft               DoH/DoT in Home                  March 2020
 
 
    DoH/DoT servers discovered using insecure discovery mechanisms like
@@ -644,8 +644,12 @@ Internet-Draft               DoH/DoT in Home               February 2020
    the registry maintained in: https://www.iana.org/assignments/dhcpv6-
    parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.
 
-   Value   Description              Client ORO    Singleton Option
-   TBD1    OPTION_V6_DNS_RI         Yes           Yes
+   +-------+------------------+---------+-------------+----------------+
+   | Value | Description      | Client  | Singleton   | Reference      |
+   |       |                  | ORO     | Option      |                |
+   +-------+------------------+---------+-------------+----------------+
+   | TBA1  | OPTION_V6_DNS_RI | Yes     | Yes         | [ThisDocument] |
+   +-------+------------------+---------+-------------+----------------+
 
 8.2.  DHCPv4 Option
 
@@ -653,29 +657,37 @@ Internet-Draft               DoH/DoT in Home               February 2020
    the registry maintained in: https://www.iana.org/assignments/bootp-
    dhcp-parameters/bootp-dhcp-parameters.xhtml#options.
 
-               Name Tag  Data   Meaning                   Reference
-                         Length
-   ---------------- ---- ------ ------------------------- --------------
-   OPTION_V4_DNS_RI TBA2 N      The authentication domain [ThisDocument]
-                                name of a DoT/DoH server.
+   +------+------------------+-------+----------------+----------------+
+   | Tag  | Name             | Data  | Meaning        | Reference      |
+   |      |                  | Length|                |                |
+   +------+------------------+-------+----------------+----------------+
+   | TBA2 | OPTION_V4_DNS_RI | N     | DoT/DoH server | [ThisDocument] |
+   |      |                  |       | authentication |                |
+   |      |                  |       | domain name    |                |
+   +------+------------------+-------+----------------+----------------+
+
+
+
+
+Boucadair, et al.       Expires September 2, 2020              [Page 12]
+
+Internet-Draft               DoH/DoT in Home                  March 2020
+
 
 8.3.  RA Option
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
-   Option type in the registry maintained in the "Internet Control
-   Message Protocol version 6 (ICMPv6) Parameters" registry
-   (http://www.iana.org).
+   Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
+   registry under the "Internet Control Message Protocol version 6
+   (ICMPv6) Parameters" registry maintained in
+   http://www.iana.org/assignments/icmpv6-parameters/
+   icmpv6-parameters.xhtml#icmpv6-parameters-5.
 
-
-
-
-Boucadair, et al.       Expires September 1, 2020              [Page 12]
-
-Internet-Draft               DoH/DoT in Home               February 2020
-
-
-   Type    Option Name
-   TBA3    DNS Reference Identifier Option
+       +------+----------------------------------+----------------+
+       | Type | Description                      | Reference      |
+       +------+----------------------------------+----------------+
+       | TBA3 | DNS Reference Identifier Option  | [ThisDocument] |
+       +------+----------------------------------+----------------+
 
 9.  Acknowledgements
 
@@ -700,11 +712,6 @@ Internet-Draft               DoH/DoT in Home               February 2020
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
-   [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
-              "IPv6 Router Advertisement Options for DNS Configuration",
-              RFC 8106, DOI 10.17487/RFC8106, March 2017,
-              <https://www.rfc-editor.org/info/rfc8106>.
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
@@ -714,21 +721,18 @@ Internet-Draft               DoH/DoT in Home               February 2020
               DOI 10.17487/RFC8310, March 2018,
               <https://www.rfc-editor.org/info/rfc8310>.
 
+
+
+
+
+Boucadair, et al.       Expires September 2, 2020              [Page 13]
+
+Internet-Draft               DoH/DoT in Home                  March 2020
+
+
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires September 1, 2020              [Page 13]
-
-Internet-Draft               DoH/DoT in Home               February 2020
-
 
 10.2.  Informative References
 
@@ -770,6 +774,18 @@ Internet-Draft               DoH/DoT in Home               February 2020
               DOI 10.17487/RFC6092, January 2011,
               <https://www.rfc-editor.org/info/rfc6092>.
 
+
+
+
+
+
+
+
+Boucadair, et al.       Expires September 2, 2020              [Page 14]
+
+Internet-Draft               DoH/DoT in Home                  March 2020
+
+
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
               within Internet Public Key Infrastructure Using X.509
@@ -777,19 +793,15 @@ Internet-Draft               DoH/DoT in Home               February 2020
               Security (TLS)", RFC 6125, DOI 10.17487/RFC6125, March
               2011, <https://www.rfc-editor.org/info/rfc6125>.
 
-
-
-
-
-Boucadair, et al.       Expires September 1, 2020              [Page 14]
-
-Internet-Draft               DoH/DoT in Home               February 2020
-
-
    [RFC7553]  Faltstrom, P. and O. Kolkman, "The Uniform Resource
               Identifier (URI) DNS Resource Record", RFC 7553,
               DOI 10.17487/RFC7553, June 2015,
               <https://www.rfc-editor.org/info/rfc7553>.
+
+   [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
+              "IPv6 Router Advertisement Options for DNS Configuration",
+              RFC 8106, DOI 10.17487/RFC8106, March 2017,
+              <https://www.rfc-editor.org/info/rfc8106>.
 
    [RFC8415]  Mrugalski, T., Siodelski, M., Volz, B., Yourtchenko, A.,
               Richardson, M., Jiang, S., Lemon, T., and T. Winters,
@@ -821,6 +833,15 @@ Authors' Addresses
    Email: mohamed.boucadair@orange.com
 
 
+
+
+
+
+Boucadair, et al.       Expires September 2, 2020              [Page 15]
+
+Internet-Draft               DoH/DoT in Home                  March 2020
+
+
    Tirumaleswar Reddy
    McAfee, Inc.
    Embassy Golf Link Business Park
@@ -828,18 +849,6 @@ Authors' Addresses
    India
 
    Email: TirumaleswarReddy_Konda@McAfee.com
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires September 1, 2020              [Page 15]
-
-Internet-Draft               DoH/DoT in Home               February 2020
 
 
    Dan Wing
@@ -884,13 +893,4 @@ Internet-Draft               DoH/DoT in Home               February 2020
 
 
 
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires September 1, 2020              [Page 16]
+Boucadair, et al.       Expires September 2, 2020              [Page 16]
