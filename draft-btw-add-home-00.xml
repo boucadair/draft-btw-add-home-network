@@ -211,11 +211,12 @@
 
     <section anchor="depl" title="Sample Deployment Scenarios">
       <t>ISPs have developed an expertise in managing service-specific
-      configuration information (e.g., CPE WAN Management Protocol (TR-069)).
-      For example, these tools may be used to provision authentication domain
-      name information (ADN, defined in <xref target="RFC8310"></xref>) to
-      managed CPEs if DoH/DoT is supported by a local network similar to what
-      is depicted in <xref target="wan"></xref>.</t>
+      configuration information (e.g., CPE WAN Management Protocol <xref
+      target="TR-069"></xref>). For example, these tools may be used to
+      provision authentication domain name information (ADN, defined in <xref
+      target="RFC8310"></xref>) to managed CPEs if DoH/DoT is supported by a
+      local network similar to what is depicted in <xref
+      target="wan"></xref>.</t>
 
       <t>DNS clients may try to establish DoH/DoT sessions with discovered DNS
       servers to determine whether these servers support DoH and/or DoT (<xref
@@ -311,42 +312,6 @@
         </figure></t>
 
       <t></t>
-    </section>
-
-    <section anchor="forwarder" title="Hosting DoH/DoT Forwarder in the CPE">
-      <t>The following mechanisms can be used to host a DoH/DoT forwarder in
-      the CPE:</t>
-
-      <t><list style="symbols">
-          <t>If a CPE is co-located with security services (e.g., malware
-          filtering, parental control, MUD), the ISP can assign a unique FQDN
-          (e.g., cpe1.example.com) and a domain-validated public certificate
-          to the DoH/DoT forwarder to the CPE. <vspace
-          blankLines="1" />Alternatively, the ISP can assign a unique FQDN to
-          the managed CPE. The DoT/DoH forwarder will act like a public
-          DoT/DoH server but will only be accessible from within the home
-          network. DNS queries received outside the home network must be
-          discarded by the DoH/DoT forwarder. This behavior adheres to REQ#8
-          in <xref target="RFC6092"></xref>, and must apply for both IPv4 and
-          IPv6.</t>
-
-          <t>'ACME IP Identifier Validation Extension' <xref
-          target="RFC8738"></xref> can be used to issue a public certificate
-          for the public IP address of the DoH/DoT forwarder. This mechanism
-          requires the issuance of the certificate and the management of the
-          certificate's renewal to be supported by the CPE itself. The HTTP
-          Challenge (HTTP-01) or TLS with Application Level Protocol
-          Negotiation (TLS ALPN) challenge (TLS-ALPN-01) are used to prove the
-          IP address ownership during the issuance of the certificate. This
-          certificate will carry a public IP address in iPAddress
-          subjectAltName extension.<vspace blankLines="1" />The disadvantages
-          of this mechanism are: (1) the certificate needs to be re-issued
-          every time the subscriber's IPv6 prefix or the public IPv4 address
-          changes and (2) the CPE needs to run an HTTP- or HTTPS server (on
-          the default ports) while the ACME server is validating the
-          challenge; the CPE might have those ports forwarded to an internal
-          host for other purposes.</t>
-        </list></t>
     </section>
 
     <section anchor="RI" title="DNS Reference Identifier Option">
@@ -600,6 +565,42 @@
         </list></t>
     </section>
 
+    <section anchor="forwarder" title="Hosting DoH/DoT Forwarder in the CPE">
+      <t>The following mechanisms can be used to host a DoH/DoT forwarder in
+      the CPE:</t>
+
+      <t><list style="symbols">
+          <t>If a CPE is co-located with security services (e.g., malware
+          filtering, parental control, MUD), the ISP can assign a unique FQDN
+          (e.g., cpe1.example.com) and a domain-validated public certificate
+          to the DoH/DoT forwarder to the CPE. <vspace
+          blankLines="1" />Alternatively, the ISP can assign a unique FQDN to
+          the managed CPE. The DoT/DoH forwarder will act like a public
+          DoT/DoH server but will only be accessible from within the home
+          network. DNS queries received outside the home network must be
+          discarded by the DoH/DoT forwarder. This behavior adheres to REQ#8
+          in <xref target="RFC6092"></xref>, and must apply for both IPv4 and
+          IPv6.</t>
+
+          <t>'ACME IP Identifier Validation Extension' <xref
+          target="RFC8738"></xref> can be used to issue a public certificate
+          for the public IP address of the DoH/DoT forwarder. This mechanism
+          requires the issuance of the certificate and the management of the
+          certificate's renewal to be supported by the CPE itself. The HTTP
+          Challenge (HTTP-01) or TLS with Application Level Protocol
+          Negotiation (TLS ALPN) challenge (TLS-ALPN-01) are used to prove the
+          IP address ownership during the issuance of the certificate. This
+          certificate will carry a public IP address in iPAddress
+          subjectAltName extension.<vspace blankLines="1" />The disadvantages
+          of this mechanism are: (1) the certificate needs to be re-issued
+          every time the subscriber's IPv6 prefix or the public IPv4 address
+          changes and (2) the CPE needs to run an HTTP- or HTTPS server (on
+          the default ports) while the ACME server is validating the
+          challenge; the CPE might have those ports forwarded to an internal
+          host for other purposes.</t>
+        </list></t>
+    </section>
+
     <section anchor="Security" title="Security Considerations">
       <t>An attacker can get a domain name, doman-validated public certificate
       from a CA, host a DoT/DoH server and claim the best DNS privacy
@@ -769,9 +770,8 @@
 
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
 
-      <?rfc include='reference.RFC.7871'?>
-
-      <reference anchor="TR-69">
+      <reference anchor="TR-069"
+                 target="https://www.broadband-forum.org/technical/download/TR-069.pdf">
         <front>
           <title>CPE WAN Management Protocol</title>
 
