@@ -108,18 +108,20 @@
     <section anchor="intro" title="Introduction">
       <t>Internet Service Providers (ISPs) traditionally provide DNS resolvers
       to their customers. Typically, ISPs deploy the following mechanisms to
-      advertise a list of DNS resolvers to their customers: <?rfc subcompact="yes" ?></t>
+      advertise a list of DNS Recursive DNS server(s) to their customers:
+      <?rfc subcompact="yes" ?></t>
 
       <t><list style="symbols">
-          <t>Protocol Configuration Options in cellular networks
-          (TS.24008).</t>
+          <t>Protocol Configuration Options in cellular networks <xref
+          target="TS.24008"></xref>.</t>
 
-          <t>CPE WAN Management Protocol (TR-069).</t>
+          <t>DHCP <xref target="RFC2132"></xref> (Domain Name Server Option)
+          or DHCPv6 <xref target="RFC8415"></xref><xref
+          target="RFC3646"></xref> (OPTION_DNS_SERVERS).</t>
 
-          <t>DHCP <xref target="RFC2132"></xref> or DHCPv6 <xref
-          target="RFC8415"></xref><xref target="RFC3646"></xref>.</t>
-
-          <t>IPv6 Router Advertisement <xref target="RFC8106"></xref>.<?rfc subcompact="no" ?></t>
+          <t>IPv6 Router Advertisement <xref target="RFC4861"></xref><xref
+          target="RFC8106"></xref> (Type 25 (Recursive DNS Server
+          Option)).<?rfc subcompact="no" ?></t>
         </list></t>
 
       <t>The communication between a customer's device (Customer Premise
@@ -133,7 +135,8 @@
 
       <t><figure align="center" anchor="do53"
           title="Sample Legacy Deployments">
-          <artwork><![CDATA[(a) Fixed Networks
+          <artwork align="center"><![CDATA[(a) Fixed Networks
+
            ,--,--,--.             ,--,--,--.
         ,-'          `-.       ,-'   ISP    `-. 
        (      LAN      CPE----(    DNS Server  )
@@ -145,13 +148,16 @@
 
 (b) Cellular Networks
 
-           ,--,--,--.             ,--,--,--.
-        ,-'          `-.       ,-'   ISP    `-.           +--+
-       (      LAN      CPE----(    DNS Server  )----------|UE|
-        `-.          ,-'       `-.          ,-'           +--+
-           `--'--'--'             `--'--'--'                |
-                |                     |<=======Do53========>| 
-                |<=======Do53========>| 
+                |<===========Do53=========>| 
+           ,--,--,--.                      |
+        ,-'          `-.               ,--,--,--.    
+       (      LAN      CPE------------+          \
+        `-.          ,-'            ,'   ISP     `-. 
+           `--'--'--'              (    DNS Server  )
+                              +-----+-.          ,-'
+               +--+           |        `--'--'--'  
+               |UE+-----------+
+               +--+
 ]]></artwork>
         </figure></t>
 
@@ -172,8 +178,8 @@
           too.</t>
         </list>Relying upon local DNS resolvers will therefore contribute to
       meet the aforementioned service requirements. The use of external
-      resolvers is likely to induce an extra service delay which exceeds by
-      far the service target (1 or 4 ms).</t>
+      resolexpervers is likely to induce an extra service delay which exceeds
+      by far the service target.</t>
 
       <t>This document focuses on the support of DNS-over-HTTPS (DoH) <xref
       target="RFC8484"></xref> or DNS-over-TLS (DoT) <xref
@@ -181,22 +187,12 @@
       describes how a local DoH/DoT server can be discovered and used by
       connected hosts.</t>
 
-      <t>It is not the intent of this document to argue in favor or against
-      the generalization of DoH/DoT. Likewise, it is not the intent of this
-      document to evaluate the benefits and impacts of enabling DoH/DoT within
-      some networks. Furthermore, it is not the intent of this document to
-      discuss which information can be supplied to third-party resolvers
-      (e.g., EDNS Client Subnet, <xref target="RFC7871"> </xref>) for the sake
-      of properly delivering some services nor how alternative options to DNS
-      can be used to deliver the service that are currently "bound" with the
-      DNS service.</t>
-
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
-      addresses of these resolvers (these addresses are typically configured
-      on CPEs) using the mechanisms listed above. This document does not
-      preclude such deployments. It is up to an ISP to decide which list of
-      DNS resolvers to advertise to its serviced devices.</t>
+      addresses of these resolvers. These addresses are typically configured
+      on CPEs using the same mechanisms listed above. This document permits
+      such deployments. It is up to an ISP to decide which list of DNS
+      resolvers to advertise to its serviced devices.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -215,24 +211,25 @@
 
     <section anchor="depl" title="Sample Deployment Scenarios">
       <t>ISPs have developed an expertise in managing service-specific
-      configuration information, using, e.g., TR-069. For example, these tools
-      may be used to provision authentication domain name information (ADN,
-      defined in <xref target="RFC8310"></xref>) to managed CPEs if DoH or DoT
-      is supported by a local network similar to what is depicted in <xref
-      target="wan"></xref>.</t>
+      configuration information (e.g., CPE WAN Management Protocol (TR-069)).
+      For example, these tools may be used to provision authentication domain
+      name information (ADN, defined in <xref target="RFC8310"></xref>) to
+      managed CPEs if DoH/DoT is supported by a local network similar to what
+      is depicted in <xref target="wan"></xref>.</t>
 
-      <t>DNS clients may try to establish DoH and/or DoT sessions with
-      discovered DNS servers to determine whether these servers support DoH
-      and/or DoT (<xref target="address"></xref>). Alternatively, a DNS client
-      may discover whether the DNS server in the local network supports DoH or
-      DoT by using the mechanism discussed in Section 6 of <xref
+      <t>DNS clients may try to establish DoH/DoT sessions with discovered DNS
+      servers to determine whether these servers support DoH and/or DoT (<xref
+      target="address"></xref>). Alternatively, a DNS client may discover
+      whether the DNS server in the local network supports DoH/DoT by using
+      the mechanism discussed in Section 6 of <xref
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>. If DoH is
       supported by the DNS server, the DNS client may request the URI resource
       record type <xref target="RFC7553"></xref> to use the HTTPS URI scheme
       (Section 3 of <xref target="RFC8484"></xref>).</t>
 
       <t><figure align="center" anchor="wan" title="DoH/DoT in the WAN">
-          <artwork><![CDATA[(a) Fixed Networks
+          <artwork align="center"><![CDATA[(a) Fixed Networks
+
            ,--,--,--.             ,--,--,--.
         ,-'          `-.       ,-'   ISP    `-. 
        (      LAN      CPE----(    DNS Server  )
@@ -242,15 +239,18 @@
                 |<=======DoH/DoT=====>| 
 
 
-(b) Cellular Networks                                                            
-                         ,--,--,--.
-                      ,-'   ISP    `-.
-              CPE----(    DNS Server  )------ User Equipment
-               |      `-.          ,-'                |
-               |         `--'--'--'                   |
-               |             |<=========DoH/DoT======>| 
-               |<==DoT/DoH==>| 
-
+(b) Cellular Networks    
+                                                                      
+                |<=========DoH/DoT========>| 
+           ,--,--,--.                      |
+        ,-'          `-.               ,--,--,--.    
+       (      LAN      CPE------------+          \
+        `-.          ,-'            ,'   ISP     `-. 
+           `--'--'--'              (    DNS Server  )
+                              +-----+-.          ,-'
+               +--+           |        `--'--'--'  
+               |UE+-----------+
+               +--+
 ]]></artwork>
         </figure></t>
 
@@ -267,19 +267,18 @@
                       ,--,--,--.             ,--,--,--.
                    ,-'          `-.       ,-'   ISP    `-.
             Host--(      LAN      CPE----(    DNS Server  )
-             |     `-.          ,-'|      `-.          ,-'
-             |        `--'--'--'   |         `--'--'--'
+             |     `-.          ,-'       `-.          ,-'
+             |        `--'--'--'             `--'--'--'
              |                                   | 
              |<==============DoT/DoH============>|
-
 ]]></artwork>
         </figure></t>
 
-      <t>In many deployments, the CPE embeds a DNS forwarder. The CPE
+      <t>In many deployments, the CPE embeds a caching DNS forwarder. The CPE
       advertises itself as the default DNS server to the hosts it serves. The
       CPE relies upon DHCP or RA to advertise itself to internal hosts as the
-      default DoT/DoH/Do53 server. The CPE forwards DNS requests received from
-      internal hosts that it cannot handle locally to an upstream DoH/DoT/Do53
+      default DoT/DoH/Do53 server. When receiving a DNS request it cannot
+      handle locally, the CPE forwards the request to an upstream DoH/DoT/Do53
       resolver. Such deployment is required for IPv4 service continuity
       purposes (e.g., <xref target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or
       for supporting advanced services within the home (e.g., malware
@@ -287,12 +286,12 @@
       target="RFC8520"></xref> to only allow intended communications to and
       from an IoT device). When the CPE behaves as a DNS forwarder, DNS
       communications can be decomposed into two legs:<list style="symbols">
-          <t>The one between an internal host and the CPE.</t>
+          <t>The leg between an internal host and the CPE.</t>
 
-          <t>The second one between the CPE and an upstream DNS resolver.</t>
+          <t>The leg between the CPE and an upstream DNS resolver.</t>
         </list></t>
 
-      <t>An ISP that wants to offer DoH/DoT to its customers may enable
+      <t>Also, an ISP that wants to offer DoH/DoT to its customers may enable
       DoH/DoT in both legs as shown in <xref target="proxied"></xref>.
       Additional considerations related to this approach are discussed in
       <xref target="forwarder"></xref>.</t>
@@ -336,16 +335,17 @@
           for the public IP address of the DoH/DoT forwarder. This mechanism
           requires the issuance of the certificate and the management of the
           certificate's renewal to be supported by the CPE itself. The HTTP
-          Challenge (http-01) or TLS with Application Level Protocol
-          Negotiation (TLS ALPN) challenge (tls-alpn-01) are used to prove the
+          Challenge (HTTP-01) or TLS with Application Level Protocol
+          Negotiation (TLS ALPN) challenge (TLS-ALPN-01) are used to prove the
           IP address ownership during the issuance of the certificate. This
           certificate will carry a public IP address in iPAddress
           subjectAltName extension.<vspace blankLines="1" />The disadvantages
           of this mechanism are: (1) the certificate needs to be re-issued
-          every time the IPv6 prefix or the public IPv4 address changes and
-          (2) the CPE needs to run an HTTP(S) server until the ACME server
-          validates that the challenge has completed so that the ACME server
-          can issue the requested certificate.</t>
+          every time the subscriber's IPv6 prefix or the public IPv4 address
+          changes and (2) the CPE needs to run an HTTP- or HTTPS server (on
+          the default ports) while the ACME server is validating the
+          challenge; the CPE might have those ports forwarded to an internal
+          host for other purposes.</t>
         </list></t>
     </section>
 
@@ -370,7 +370,11 @@
       the DNS server certificate using the authentication domain name conveyed
       in the DNS Reference Identifier.</t>
 
-      <section title="Format of DHCPv6 DNS Reference Identifier Option">
+      <t>If the DNS Reference Identifier is discovered by a host using both RA
+      and DHCP, the rules discussed in Section 5.3.1 of <xref
+      target="RFC8106"></xref> MUST be followed. </t>
+
+      <section title="DHCPv6 DNS Reference Identifier Option">
         <t>The DHCPv6 DNS Reference Identifier option is used to configure an
         authentication domain name of the DoH/DoT server. The format of this
         option is shown in <xref target="ri_option"></xref>.</t>
@@ -418,7 +422,7 @@
           </figure></t>
       </section>
 
-      <section title="Format of DHCP DNS Reference Identifier Option">
+      <section title="DHCP DNS Reference Identifier Option">
         <t>The DHCP DNS Reference Identifier option is used to configure an
         authentication domain name of the DoH/DoT server. The format of this
         option is illustrated in <xref target="dhcpri_dns"></xref>.</t>
@@ -453,11 +457,11 @@
         <t><?rfc subcompact="no" ?></t>
       </section>
 
-      <section title="Format of RA DNS Reference Identifier Option">
+      <section title="RA DNS Reference Identifier Option">
         <t>The IPv6 Router Advertisement (RA) DNS Reference Identifier option
         is used to configure an authentication domain name of the DoH/DoT
         server. The format of this option is illustrated in <xref
-        target="ra_dns"></xref>.</t>
+        target="ra_dns"></xref>. </t>
 
         <t><figure anchor="ra_dns" title="RA DNS Reference Identifier Option">
             <artwork><![CDATA[      0                   1                   2                   3
@@ -467,7 +471,9 @@
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                  authentication-domain-name                   |
+     |                                                               |
+     :                  authentication-domain-name                   :
+     |                                                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure></t>
@@ -670,8 +676,8 @@
         <t></t>
       </section>
 
-      <section anchor="iana4" title="DHCPv4 Option">
-        <t>IANA is requested to assign the following new DHCPv4 Option Code in
+      <section anchor="iana4" title="DHCP Option">
+        <t>IANA is requested to assign the following new DHCP Option Code in
         the registry maintained in:
         https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml#options.</t>
 
@@ -732,12 +738,16 @@
       <?rfc include='reference.RFC.8310'?>
 
       <?rfc include='reference.RFC.4861'?>
+
+      <?rfc include='reference.RFC.8415'?>
+
+      <?rfc include='reference.RFC.2132'?>
+
+      <?rfc include='reference.RFC.8106'?>
     </references>
 
     <references title="Informative References">
       <?rfc include='reference.RFC.8738'?>
-
-      <?rfc include='reference.RFC.8106'?>
 
       <?rfc include='reference.RFC.6092'?>
 
@@ -745,11 +755,7 @@
 
       <?rfc include='reference.RFC.6125'?>
 
-      <?rfc include='reference.RFC.8415'?>
-
       <?rfc include='reference.RFC.3646'?>
-
-      <?rfc include='reference.RFC.2132'?>
 
       <?rfc include='reference.RFC.8520'?>
 
@@ -764,6 +770,33 @@
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
 
       <?rfc include='reference.RFC.7871'?>
+
+      <reference anchor="TR-69">
+        <front>
+          <title>CPE WAN Management Protocol</title>
+
+          <author fullname="The Broadband Forum" initials=""
+                  surname="The Broadband Forum">
+            <organization></organization>
+          </author>
+
+          <date month="March" year="2018" />
+        </front>
+      </reference>
+
+      <reference anchor="TS.24008"
+                 target="http://www.3gpp.org/DynaReport/24008.htm">
+        <front>
+          <title>Mobile radio interface Layer 3 specification; Core network
+          protocols; Stage 3 (Release 16)</title>
+
+          <author fullname="" surname="">
+            <organization>3GPP</organization>
+          </author>
+
+          <date day="0" month="December" year="2019" />
+        </front>
+      </reference>
     </references>
   </back>
 </rfc>
