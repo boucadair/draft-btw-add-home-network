@@ -99,7 +99,7 @@
           <country>UK</country>
         </postal>
 
-        <email>neil.cook@open-xchange.com</email>
+        <email>neil.cook@noware.co.uk</email>
       </address>
     </author>
 
@@ -540,8 +540,12 @@
       <t>Additional considerations are discussed below for the use of DoH and
       DoT servers provided by local networks:<list style="symbols">
           <t>If the DNS server's IP address discovered by using DHCP/RA is
-          pre-configured in the OS or browser as a trusted resolver, the DNS
-          client auto-upgrades to use the discovered DoH/DoT server.</t>
+          pre-configured in the OS or Browser as a trusted resolver, the DNS
+          client may auto-upgrade to use the pre-configured DoH/DoT server
+          tied to the discovered DNS server IP address. In such a case the DNS
+          client may perform additional check out of band, such as confirming
+          that the Do53 IP address and the DoH server are owned and operated
+          by the same organisation.</t>
 
           <t>If the DNS reference identity (<xref target="RI"></xref>) is
           provided by means of DHCP/RA, the DNS client matches the domain name
@@ -629,6 +633,24 @@
           discarded by the DoH/DoT forwarder. This behavior adheres to REQ#8
           in <xref target="RFC6092"></xref>, and must apply for both IPv4 and
           IPv6.</t>
+
+          <t>If the ISP DoH resolver is pre-configured as a trusted resolver
+          in browsers, the CPE is managed by the ISP, and the ISP has assigned
+          a domain-validated public certificate to the DoH forwarder hosted on
+          the CPE, the ISP can configure the CPE to convey the ISP DoH/DoT
+          resolver IP addresses and the ISP DoH/DoT ADN in DHCP/RA to internal
+          hosts (<xref target="RI"></xref>). If the ISP DNS server IP address
+          is pre-configured in the browser as a trusted resolver, the DNS
+          client auto-upgrades to use the DoH/DoT server tied with the
+          discovered DNS server IP address.<vspace blankLines="1" />If the ADN
+          in DHCP/RA is pre-configured in the OS or browser as a trusted
+          resolver, the client auto-upgrades to establish DoH session with the
+          ADN.<vspace blankLines="1" />Once the DoH session is established,
+          the ISP DoH/DoT server uses HTTP redirection (Section 6.4.4 in <xref
+          target="RFC7231"></xref>) to redirect the DNS client to the DoH
+          forwarder hosted on the CPE. The DNS client uses Do53 to resolve the
+          domain name in the redirected URI and eventually establishes DoH
+          session with the DoH forwarder on the CPE. </t>
         </list></t>
     </section>
 
@@ -784,6 +806,8 @@
 
     <references title="Informative References">
       <?rfc include='reference.RFC.6092'?>
+
+      <?rfc include='reference.RFC.7231'?>
 
       <?rfc include='reference.RFC.8499'?>
 
