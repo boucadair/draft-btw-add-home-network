@@ -85,11 +85,12 @@ Table of Contents
      9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  13
      9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  14
      9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  14
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  14
+     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  14
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  15
      11.2.  Informative References . . . . . . . . . . . . . . . . .  16
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  17
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
 
@@ -104,8 +105,7 @@ Table of Contents
    o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
       DNS Server Option)).
 
-   The communication between a customer's device (UE) (possibly via
-   Customer Premise Equipment (CPE)) and an ISP-supplied DNS resolver
+
 
 
 
@@ -114,6 +114,8 @@ Boucadair, et al.       Expires September 7, 2020               [Page 2]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   The communication between a customer's device (UE) (possibly via
+   Customer Premise Equipment (CPE)) and an ISP-supplied DNS resolver
    takes place by using cleartext DNS messages (Do53,
    [I-D.ietf-dnsop-terminology-ter]).  Some examples are depicted in
    Figure 1.  In the case of cellular networks, connectivity can be
@@ -160,8 +162,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       demanding latency requirements assuming the corresponding services
       rely upon resources (network, compute, storage) that are located
       as close to the user as possible (e.g., by means of Edge Computing
-      techniques and resources).  Such latency requirements are likely
-
 
 
 
@@ -170,6 +170,7 @@ Boucadair, et al.       Expires September 7, 2020               [Page 3]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+      techniques and resources).  Such latency requirements are likely
       to be addressed by means of optimized designs (DNS, in
       particular), too.
 
@@ -216,8 +217,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    managed CPEs if DoH/DoT is supported by a local network similar to
    what is depicted in Figure 2.
 
-   DNS clients may try to establish DoH/DoT sessions with discovered DNS
-   servers to determine whether these servers support DoH and/or DoT
+
 
 
 
@@ -226,6 +226,8 @@ Boucadair, et al.       Expires September 7, 2020               [Page 4]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   DNS clients may try to establish DoH/DoT sessions with discovered DNS
+   servers to determine whether these servers support DoH and/or DoT
    (Section 5).  Alternatively, a DNS client may discover whether the
    DNS server in the local network supports DoH/DoT by using the
    mechanism discussed in Section 6.
@@ -272,8 +274,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                 |<==============DoT/DoH============>|
 
                      Figure 3: Direct DoH/DoT Sessions
-
-
 
 
 
@@ -595,13 +595,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    The <Domain> portion specifies the authentication domain name (ADN).
    The <Service> portion of the DNS service instance name MUST be
-   "_dot._tcp" or "_doh._tcp".  If no DNS-SD records can be retrieved,
-   the discovery procedure fails for this authentication domain name.
-   However, before retrying a lookup that has failed, a DNS client MUST
-   wait a time period that is appropriate for the encountered error
-   (e.g., NXDOMAIN, timeout, etc.).  If no DNS-SD records can be
-   retrieved, the DNS client can try connecting to the pre-configured
-   public DNS servers (if any).
+   "_domain-s._tcp" or "_doh._tcp".  If no DNS-SD records can be
+   retrieved, the discovery procedure fails for this authentication
+   domain name.  However, before retrying a lookup that has failed, a
+   DNS client MUST wait a time period that is appropriate for the
+   encountered error (e.g., NXDOMAIN, timeout, etc.).  If no DNS-SD
+   records can be retrieved, the DNS client can try connecting to the
+   pre-configured public DNS servers (if any).
 
    If DoH is supported by the DNS server, the DNS client may request the
    URI resource record type [RFC7553] using the domain name discovered
@@ -714,14 +714,14 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 9.  IANA Considerations
 
-   IANA is requested to allocate the SRV service name of "dot" for DNS-
-   over-TLS and the service name of "doh" for DNS-over-HTTPS.
-
 9.1.  DHCPv6 Option
 
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in: https://www.iana.org/assignments/dhcpv6-
    parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.
+
+
+
 
 
 
@@ -767,13 +767,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
         | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
         +------+---------------------------------+----------------+
 
-10.  Acknowledgements
+9.4.  Service Name
 
-   Many thanks to Christian Jacquenet for the review.
+   IANA is requested to allocate the following service name from the
+   registry available at: https://www.iana.org/assignments/service-
+   names-port-numbers/service-names-port-numbers.xhtml.
 
-11.  References
 
-11.1.  Normative References
 
 
 
@@ -785,6 +785,22 @@ Boucadair, et al.       Expires September 7, 2020              [Page 14]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+        Service Name:            doh
+        Port Number:             N/A
+        Transport Protocol(s):   TCP
+        Description:             DNS-over-HTTPS
+        Assignee:                IESG <iesg@ietf.org>
+        Contact:                 IETF Chair <chair@ietf.org>
+        Reference:               [ThisDocument]
+
+10.  Acknowledgements
+
+   Many thanks to Christian Jacquenet for the review.
+
+11.  References
+
+11.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -818,6 +834,14 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+Boucadair, et al.       Expires September 7, 2020              [Page 15]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
               DOI 10.17487/RFC8310, March 2018,
@@ -832,15 +856,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
-
-
-
-
-
-Boucadair, et al.       Expires September 7, 2020              [Page 15]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
 11.2.  Informative References
 
@@ -872,6 +887,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               DOI 10.17487/RFC3646, December 2003,
               <https://www.rfc-editor.org/info/rfc3646>.
 
+
+
+
+
+
+
+Boucadair, et al.       Expires September 7, 2020              [Page 16]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
               Capabilities in Customer Premises Equipment (CPE) for
               Providing Residential IPv6 Internet Service", RFC 6092,
@@ -889,14 +915,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               DOI 10.17487/RFC7231, June 2014,
               <https://www.rfc-editor.org/info/rfc7231>.
-
-
-
-
-Boucadair, et al.       Expires September 7, 2020              [Page 16]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [RFC7553]  Faltstrom, P. and O. Kolkman, "The Uniform Resource
               Identifier (URI) DNS Resource Record", RFC 7553,
@@ -926,6 +944,16 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               network protocols; Stage 3 (Release 16)", December 2019,
               <http://www.3gpp.org/DynaReport/24008.htm>.
 
+
+
+
+
+
+Boucadair, et al.       Expires September 7, 2020              [Page 17]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
 Authors' Addresses
 
    Mohamed Boucadair
@@ -945,15 +973,6 @@ Authors' Addresses
    Email: TirumaleswarReddy_Konda@McAfee.com
 
 
-
-
-
-
-Boucadair, et al.       Expires September 7, 2020              [Page 17]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
-
    Dan Wing
    Citrix Systems, Inc.
    USA
@@ -966,25 +985,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
