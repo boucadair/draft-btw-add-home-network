@@ -35,7 +35,7 @@
   <front>
     <title abbrev="DoH/DoT in Home and Mobile ">DNS-over-HTTPS and
     DNS-over-TLS server Discovery and Deployment Considerations for Home and
-    Mobile networks</title>
+    Mobile Networks</title>
 
     <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
       <organization>Orange</organization>
@@ -186,10 +186,10 @@
           <t>For example, the latency targets set in the context of 5G are 1ms
           (uRLLC) and 4ms (eMBB). An ISP will be able to address such
           demanding latency requirements assuming the corresponding services
-          rely upon resources (network, compute, sotrage) that are located as
+          rely upon resources (network, compute, storage) that are located as
           close to the user as possible (e.g., by means of Edge Computing
           techniques and resources). Such latency requirements are likely to
-          be adressed by means of optimized designs (DNS, in particular),
+          be addressed by means of optimized designs (DNS, in particular),
           too.</t>
         </list>Relying upon local DNS resolvers will therefore contribute to
       meet the aforementioned service requirements. The use of external
@@ -332,7 +332,9 @@
 
     <section anchor="RI" title="DNS Reference Identifier Option">
       <t>This section describes how a DNS client can discover the ADN of local
-      DoH/DoT server using DHCP/RA.</t>
+      DoH/DoT server(s) using DHCP (Sections <xref format="counter"
+      target="DHCPv6"></xref> and <xref format="counter"
+      target="DHCP"></xref>) and RA (<xref target="RA"></xref>).</t>
 
       <t>As reported in Section 1.7.2 of <xref target="RFC6125"></xref>:<list
           style="empty">
@@ -358,7 +360,7 @@
       and DHCP, the rules discussed in Section 5.3.1 of <xref
       target="RFC8106"></xref> MUST be followed.</t>
 
-      <section title="DHCPv6 DNS Reference Identifier Option">
+      <section anchor="DHCPv6" title="DHCPv6 DNS Reference Identifier Option">
         <t>The DHCPv6 DNS Reference Identifier option is used to configure an
         authentication domain name of the DoH/DoT server. The format of this
         option is shown in <xref target="ri_option"></xref>.</t>
@@ -406,7 +408,7 @@
           </figure></t>
       </section>
 
-      <section title="DHCP DNS Reference Identifier Option">
+      <section anchor="DHCP" title="DHCP DNS Reference Identifier Option">
         <t>The DHCP DNS Reference Identifier option is used to configure an
         authentication domain name of the DoH/DoT server. The format of this
         option is illustrated in <xref target="dhcpri_dns"></xref>.</t>
@@ -441,7 +443,7 @@
         <t><?rfc subcompact="no" ?></t>
       </section>
 
-      <section title="RA DNS Reference Identifier Option">
+      <section anchor="RA" title="RA DNS Reference Identifier Option">
         <t>The IPv6 Router Advertisement (RA) DNS Reference Identifier option
         is used to configure an authentication domain name of the DoH/DoT
         server. The format of this option is illustrated in <xref
@@ -506,7 +508,7 @@
       by their address literals rather than their names. This avoids adding a
       dependency on another server to resolve the DoH/DoT name. Concretely, if
       Do53/DoH/DoT terminate on same IP addresses, existing discovery
-      mechanisms <xref target="RFC2131"></xref><xref
+      mechanisms <xref target="RFC2132"></xref><xref
       target="RFC3646"></xref><xref target="RFC8106"></xref> can be leveraged
       to learn the IP addresses of DoT/DoH servers while an authentication
       domain name is supplied by one of the options discussed in <xref
@@ -631,12 +633,12 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t>An attacker can get a domain name, doman-validated public certificate
-      from a CA, host a DoT/DoH server and claim the best DNS privacy
-      preservation policy. Also, an attacker within the home network can use
-      the public IP address, get an 'IP address'-validated public certificate
-      from a CA, host a DoT/DoH server and claim the best DNS privacy
-      preservation policy.</t>
+      <t>An attacker can get a domain name, domain-validated public
+      certificate from a CA, host a DoT/DoH server and claim the best DNS
+      privacy preservation policy. Also, an attacker within the home network
+      can use the public IP address, get an 'IP address'-validated public
+      certificate from a CA, host a DoT/DoH server and claim the best DNS
+      privacy preservation policy.</t>
 
       <t>Because DHCP/RA messages are not encrypted or protected against
       modification in any way, their content can be spoofed or modified by
@@ -792,8 +794,6 @@
       <?rfc include='reference.RFC.8520'?>
 
       <?rfc include='reference.RFC.7553'?>
-
-      <?rfc include='reference.RFC.2131'?>
 
       <?rfc include='reference.I-D.reddy-dprive-dprive-privacy-policy'?>
 
