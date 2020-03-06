@@ -650,9 +650,9 @@
           ADN.<vspace blankLines="1" />Once the DoH session is established,
           the ISP DoH/DoT server uses HTTP redirection (Section 6.4.4 in <xref
           target="RFC7231"></xref>) to redirect the DNS client to the DoH
-          forwarder hosted on the CPE. The DNS client uses Do53 to resolve the
-          domain name in the redirected URI and eventually establishes DoH
-          session with the DoH forwarder on the CPE.</t>
+          forwarder hosted on the CPE (e.g., cpe1-internal.example.net). The DNS client uses Do53 to resolve the
+          domain name in the redirected URI to the CPE's internal IPv4 address (e.g., 192.168.1.1) and IPv6 address 
+               and then establishes a DoH session with the DoH forwarder on the CPE.</t>
 
           <t>If the DoT/DoH forwarder uses raw public key <xref
           target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin set
