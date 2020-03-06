@@ -81,11 +81,11 @@ Table of Contents
    6.  DNS-over-TLS and DNS-over-HTTPS Server Discovery Procedure  .  11
    7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  12
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
-     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  13
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  14
      9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  14
      9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  14
-     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  14
+     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  15
    10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  15
@@ -689,6 +689,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    attack to a non-filtering DNS server, which the attacker can leverage
    to deliver malware.
 
+   The primary attacks against the methods described in Section 6 are
+   the ones that would lead to impersonation of a DNS server and
+   spoofing the DNS response to indicate that the DNS server does not
+   support DoH or DoT.  To protect against DNS-vectored attacks, secured
+   DNS (DNSSEC) can be used to ensure the validity of the received DNS
+   records received.  Impersonation of a DoH/DoT server is prevented by
+   validating the certificate presented by the DoH/DoT server.  If DHCP/
+   RA conveys an ADN, but the DNS-SD lookup indicates that the DNS
+   server does not support DoH/DoT, the DNS client can detect the DNS
+   response is spoofed.
+
    The use of DoH/DoT also depends on the user's policies.  For example,
    the user may indicate his/her consent to use (or not) the locally-
    discovered DoH/DoT server.  The DNS client must adhere to these
@@ -712,6 +723,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    certificates will be subject to attacks (e.g., redirect to malicious
    servers, intercept sensitive data).
 
+
+
+Boucadair, et al.       Expires September 7, 2020              [Page 13]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
 9.  IANA Considerations
 
 9.1.  DHCPv6 Option
@@ -719,16 +737,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in: https://www.iana.org/assignments/dhcpv6-
    parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.
-
-
-
-
-
-
-Boucadair, et al.       Expires September 7, 2020              [Page 13]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    +-------+------------------+---------+-------------+----------------+
    | Value | Description      | Client  | Singleton   | Reference      |
@@ -767,14 +775,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
         | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
         +------+---------------------------------+----------------+
 
-9.4.  Service Name
-
-   IANA is requested to allocate the following service name from the
-   registry available at: https://www.iana.org/assignments/service-
-   names-port-numbers/service-names-port-numbers.xhtml.
-
-
-
 
 
 
@@ -785,6 +785,12 @@ Boucadair, et al.       Expires September 7, 2020              [Page 14]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+9.4.  Service Name
+
+   IANA is requested to allocate the following service name from the
+   registry available at: https://www.iana.org/assignments/service-
+   names-port-numbers/service-names-port-numbers.xhtml.
 
         Service Name:            doh
         Port Number:             N/A
@@ -825,14 +831,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
-   [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
-              "IPv6 Router Advertisement Options for DNS Configuration",
-              RFC 8106, DOI 10.17487/RFC8106, March 2017,
-              <https://www.rfc-editor.org/info/rfc8106>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
 
 
 
@@ -841,6 +841,15 @@ Boucadair, et al.       Expires September 7, 2020              [Page 15]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
+              "IPv6 Router Advertisement Options for DNS Configuration",
+              RFC 8106, DOI 10.17487/RFC8106, March 2017,
+              <https://www.rfc-editor.org/info/rfc8106>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -882,21 +891,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Assertion Token", draft-reddy-dprive-dprive-privacy-
               policy-03 (work in progress), March 2020.
 
-   [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
-              Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
-              DOI 10.17487/RFC3646, December 2003,
-              <https://www.rfc-editor.org/info/rfc3646>.
-
-
-
-
-
 
 
 Boucadair, et al.       Expires September 7, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
+              Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
+              DOI 10.17487/RFC3646, December 2003,
+              <https://www.rfc-editor.org/info/rfc3646>.
 
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
               Capabilities in Customer Premises Equipment (CPE) for
@@ -939,11 +944,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               2018, <https://www.broadband-forum.org/technical/download/
               TR-069.pdf>.
 
-   [TS.24008]
-              3GPP, "Mobile radio interface Layer 3 specification; Core
-              network protocols; Stage 3 (Release 16)", December 2019,
-              <http://www.3gpp.org/DynaReport/24008.htm>.
-
 
 
 
@@ -953,6 +953,11 @@ Boucadair, et al.       Expires September 7, 2020              [Page 17]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [TS.24008]
+              3GPP, "Mobile radio interface Layer 3 specification; Core
+              network protocols; Stage 3 (Release 16)", December 2019,
+              <http://www.3gpp.org/DynaReport/24008.htm>.
 
 Authors' Addresses
 
@@ -985,11 +990,6 @@ Authors' Addresses
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-
-
-
 
 
 

@@ -652,7 +652,7 @@
           target="RFC7231"></xref>) to redirect the DNS client to the DoH
           forwarder hosted on the CPE. The DNS client uses Do53 to resolve the
           domain name in the redirected URI and eventually establishes DoH
-          session with the DoH forwarder on the CPE. </t>
+          session with the DoH forwarder on the CPE.</t>
         </list></t>
     </section>
 
@@ -675,6 +675,17 @@
       contacting the preferred filtering DNS servers causing a downgrade
       attack to a non-filtering DNS server, which the attacker can leverage to
       deliver malware.</t>
+
+      <t>The primary attacks against the methods described in <xref
+      target="discovery"></xref> are the ones that would lead to impersonation
+      of a DNS server and spoofing the DNS response to indicate that the DNS
+      server does not support DoH or DoT. To protect against DNS-vectored
+      attacks, secured DNS (DNSSEC) can be used to ensure the validity of the
+      received DNS records received. Impersonation of a DoH/DoT server is
+      prevented by validating the certificate presented by the DoH/DoT server.
+      If DHCP/RA conveys an ADN, but the DNS-SD lookup indicates that the DNS
+      server does not support DoH/DoT, the DNS client can detect the DNS
+      response is spoofed. </t>
 
       <t>The use of DoH/DoT also depends on the user's policies. For example,
       the user may indicate his/her consent to use (or not) the
