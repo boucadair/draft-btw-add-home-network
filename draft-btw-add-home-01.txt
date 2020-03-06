@@ -80,7 +80,7 @@ Table of Contents
    5.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .   9
    6.  DNS-over-TLS and DNS-over-HTTPS Server Discovery Procedure  .  11
    7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  12
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  12
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
      9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  14
      9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  14
@@ -184,7 +184,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    particular, the document describes how a local DoH/DoT server can be
    discovered and used by connected hosts.  This document specifies
    DHCP/RA options that allows DNS clients to discover local DoT/DoH
-   servers.  Section 4 describes DHCPv4, DHCPv6 and RA options to convey
+   servers.  Section 4 describes DHCP, DHCPv6, and RA options to convey
    the authentication domain name information (ADN, defined in
    [RFC8310]).
 
@@ -660,12 +660,12 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       eventually establishes DoH session with the DoH forwarder on the
       CPE.
 
-8.  Security Considerations
+   o  If the DoT/DoH forwarder uses raw public key [RFC7250], the
+      Subject Public Key Info (SPKI) pin set [RFC8310] of raw public
+      keys may be encoded in a QR code.  The configurator (e.g., mobile
+      device) can scan the QR code and provision SPKI pin set in the OS/
+      Browser.  The configurator can in-turn securely configure devices
 
-   An attacker can get a domain name, domain-validated public
-   certificate from a CA, host a DoT/DoH server and claim the best DNS
-   privacy preservation policy.  Also, an attacker within the home
-   network can use the public IP address, get an 'IP address'-validated
 
 
 
@@ -674,6 +674,15 @@ Boucadair, et al.       Expires September 7, 2020              [Page 12]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+      (e.g., thermostat) in the home network with the SPKI pin set using
+      DPP.
+
+8.  Security Considerations
+
+   An attacker can get a domain name, domain-validated public
+   certificate from a CA, host a DoT/DoH server and claim the best DNS
+   privacy preservation policy.  Also, an attacker within the home
+   network can use the public IP address, get an 'IP address'-validated
    public certificate from a CA, host a DoT/DoH server and claim the
    best DNS privacy preservation policy.
 
@@ -712,6 +721,15 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    If the insecurely discovered DoH/DoT server is not pre-configured in
    the OS or browser, its policy information must be cryptographically
    attested by the ISP (e.g., [I-D.reddy-dprive-dprive-privacy-policy]);
+
+
+
+
+Boucadair, et al.       Expires September 7, 2020              [Page 13]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    user consent is required to use the locally-discovered DoH/DoT
    server.
 
@@ -722,13 +740,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    DNS clients that ignore authentication failures and accept spoofed
    certificates will be subject to attacks (e.g., redirect to malicious
    servers, intercept sensitive data).
-
-
-
-Boucadair, et al.       Expires September 7, 2020              [Page 13]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
 9.  IANA Considerations
 
@@ -766,17 +777,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
    registry under the "Internet Control Message Protocol version 6
    (ICMPv6) Parameters" registry maintained in
-   http://www.iana.org/assignments/icmpv6-parameters/
-   icmpv6-parameters.xhtml#icmpv6-parameters-5.
-
-        +------+---------------------------------+----------------+
-        | Type | Description                     | Reference      |
-        +------+---------------------------------+----------------+
-        | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
-        +------+---------------------------------+----------------+
-
-
-
 
 
 
@@ -785,6 +785,15 @@ Boucadair, et al.       Expires September 7, 2020              [Page 14]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   http://www.iana.org/assignments/icmpv6-parameters/
+   icmpv6-parameters.xhtml#icmpv6-parameters-5.
+
+        +------+---------------------------------+----------------+
+        | Type | Description                     | Reference      |
+        +------+---------------------------------+----------------+
+        | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
+        +------+---------------------------------+----------------+
 
 9.4.  Service Name
 
@@ -826,21 +835,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
               <https://www.rfc-editor.org/info/rfc6763>.
 
-   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
-              and P. Hoffman, "Specification for DNS over Transport
-              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
-              2016, <https://www.rfc-editor.org/info/rfc7858>.
-
-
-
-
-
 
 
 Boucadair, et al.       Expires September 7, 2020              [Page 15]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
+              and P. Hoffman, "Specification for DNS over Transport
+              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
+              2016, <https://www.rfc-editor.org/info/rfc7858>.
 
    [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
               "IPv6 Router Advertisement Options for DNS Configuration",
@@ -885,11 +890,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               dprive-bootstrap-dns-server-07 (work in progress),
               February 2020.
 
-   [I-D.reddy-dprive-dprive-privacy-policy]
-              Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
-              "DNS Server Privacy Statement and Filtering Policy with
-              Assertion Token", draft-reddy-dprive-dprive-privacy-
-              policy-03 (work in progress), March 2020.
 
 
 
@@ -897,6 +897,12 @@ Boucadair, et al.       Expires September 7, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [I-D.reddy-dprive-dprive-privacy-policy]
+              Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
+              "DNS Server Privacy Statement and Filtering Policy with
+              Assertion Token", draft-reddy-dprive-dprive-privacy-
+              policy-03 (work in progress), March 2020.
 
    [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
               Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
@@ -921,6 +927,12 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               DOI 10.17487/RFC7231, June 2014,
               <https://www.rfc-editor.org/info/rfc7231>.
 
+   [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
+              Weiler, S., and T. Kivinen, "Using Raw Public Keys in
+              Transport Layer Security (TLS) and Datagram Transport
+              Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
+              June 2014, <https://www.rfc-editor.org/info/rfc7250>.
+
    [RFC7553]  Faltstrom, P. and O. Kolkman, "The Uniform Resource
               Identifier (URI) DNS Resource Record", RFC 7553,
               DOI 10.17487/RFC7553, June 2015,
@@ -935,6 +947,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               DOI 10.17487/RFC8520, March 2019,
               <https://www.rfc-editor.org/info/rfc8520>.
 
+
+
+Boucadair, et al.       Expires September 7, 2020              [Page 17]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [RFC8555]  Barnes, R., Hoffman-Andrews, J., McCarney, D., and J.
               Kasten, "Automatic Certificate Management Environment
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
@@ -943,16 +962,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol", March
               2018, <https://www.broadband-forum.org/technical/download/
               TR-069.pdf>.
-
-
-
-
-
-
-Boucadair, et al.       Expires September 7, 2020              [Page 17]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [TS.24008]
               3GPP, "Mobile radio interface Layer 3 specification; Core
@@ -990,15 +999,6 @@ Authors' Addresses
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-
-
-
-
-
-
-
 
 
 

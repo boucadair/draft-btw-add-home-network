@@ -202,7 +202,7 @@
       describes how a local DoH/DoT server can be discovered and used by
       connected hosts. This document specifies DHCP/RA options that allows DNS
       clients to discover local DoT/DoH servers. <xref target="RI"></xref>
-      describes DHCPv4, DHCPv6 and RA options to convey the authentication
+      describes DHCP, DHCPv6, and RA options to convey the authentication
       domain name information (ADN, defined in <xref
       target="RFC8310"></xref>).</t>
 
@@ -653,6 +653,14 @@
           forwarder hosted on the CPE. The DNS client uses Do53 to resolve the
           domain name in the redirected URI and eventually establishes DoH
           session with the DoH forwarder on the CPE.</t>
+
+          <t>If the DoT/DoH forwarder uses raw public key <xref
+          target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin set
+          <xref target="RFC8310"></xref> of raw public keys may be encoded in
+          a QR code. The configurator (e.g., mobile device) can scan the QR
+          code and provision SPKI pin set in the OS/Browser. The configurator
+          can in-turn securely configure devices (e.g., thermostat) in the
+          home network with the SPKI pin set using DPP.</t>
         </list></t>
     </section>
 
@@ -685,7 +693,7 @@
       prevented by validating the certificate presented by the DoH/DoT server.
       If DHCP/RA conveys an ADN, but the DNS-SD lookup indicates that the DNS
       server does not support DoH/DoT, the DNS client can detect the DNS
-      response is spoofed. </t>
+      response is spoofed.</t>
 
       <t>The use of DoH/DoT also depends on the user's policies. For example,
       the user may indicate his/her consent to use (or not) the
@@ -835,6 +843,8 @@
 
     <references title="Informative References">
       <?rfc include='reference.RFC.6092'?>
+
+      <?rfc include='reference.RFC.7250'?>
 
       <?rfc include='reference.RFC.7231'?>
 
