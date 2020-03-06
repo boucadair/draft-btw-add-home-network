@@ -626,9 +626,10 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    o  If a CPE is co-located with security services (e.g., malware
       filtering, parental control, MUD), the ISP can assign a unique
       FQDN (e.g., cpe1.example.com) and a domain-validated public
-      certificate to the DoH/DoT forwarder hosted on the CPE.  ACME can
-      be used to automate certificate management functions such as
-      domain validation procedure, certificate issuance and certificate
+      certificate to the DoH/DoT forwarder hosted on the CPE.  Automatic
+      Certificate Management Environment (ACME) [RFC8555] can be used to
+      automate certificate management functions such as domain
+      validation procedure, certificate issuance and certificate
       revocation.
 
    o  Alternatively, the security service provider can assign a unique
@@ -665,7 +666,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    certificate from a CA, host a DoT/DoH server and claim the best DNS
    privacy preservation policy.  Also, an attacker within the home
    network can use the public IP address, get an 'IP address'-validated
-
 
 
 
@@ -912,6 +912,11 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               DOI 10.17487/RFC8520, March 2019,
               <https://www.rfc-editor.org/info/rfc8520>.
 
+   [RFC8555]  Barnes, R., Hoffman-Andrews, J., McCarney, D., and J.
+              Kasten, "Automatic Certificate Management Environment
+              (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
+              <https://www.rfc-editor.org/info/rfc8555>.
+
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol", March
               2018, <https://www.broadband-forum.org/technical/download/
               TR-069.pdf>.
@@ -940,11 +945,6 @@ Authors' Addresses
    Email: TirumaleswarReddy_Konda@McAfee.com
 
 
-   Dan Wing
-   Citrix Systems, Inc.
-   USA
-
-   Email: dwing-ietf@fuggles.com
 
 
 
@@ -954,18 +954,18 @@ Boucadair, et al.       Expires September 7, 2020              [Page 17]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   Dan Wing
+   Citrix Systems, Inc.
+   USA
+
+   Email: dwing-ietf@fuggles.com
+
+
    Neil Cook
    Open-Xchange
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-
-
-
-
-
 
 
 

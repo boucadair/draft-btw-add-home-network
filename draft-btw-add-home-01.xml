@@ -622,9 +622,11 @@
           <t>If a CPE is co-located with security services (e.g., malware
           filtering, parental control, MUD), the ISP can assign a unique FQDN
           (e.g., cpe1.example.com) and a domain-validated public certificate
-          to the DoH/DoT forwarder hosted on the CPE. ACME can be used to
-          automate certificate management functions such as domain validation
-          procedure, certificate issuance and certificate revocation.</t>
+          to the DoH/DoT forwarder hosted on the CPE. Automatic Certificate
+          Management Environment (ACME) <xref target="RFC8555"></xref> can be
+          used to automate certificate management functions such as domain
+          validation procedure, certificate issuance and certificate
+          revocation.</t>
 
           <t>Alternatively, the security service provider can assign a unique
           FQDN to the managed CPE. The DoT/DoH forwarder will act like a
@@ -818,6 +820,8 @@
       <?rfc include='reference.RFC.8520'?>
 
       <?rfc include='reference.RFC.7553'?>
+
+      <?rfc include='reference.RFC.8555'?>
 
       <?rfc include='reference.I-D.reddy-dprive-dprive-privacy-policy'?>
 
