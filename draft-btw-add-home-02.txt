@@ -78,7 +78,9 @@ Table of Contents
      4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .   8
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .   8
    5.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .   9
-   6.  DNS-over-TLS and DNS-over-HTTPS Server Discovery Procedure  .  11
+     5.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  10
+     5.2.  Additional Deployment Options . . . . . . . . . . . . . .  11
+   6.  DoT and DoH DNS-SD Procedure  . . . . . . . . . . . . . . . .  11
    7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  12
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
@@ -88,8 +90,8 @@ Table of Contents
      9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  15
    10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  15
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  15
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  15
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  16
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  16
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  17
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  18
 
 1.  Introduction
@@ -104,8 +106,6 @@ Table of Contents
       [RFC8415][RFC3646] (OPTION_DNS_SERVERS).
    o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
       DNS Server Option)).
-
-
 
 
 
@@ -184,7 +184,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    particular, the document describes how a local DoH/DoT server can be
    discovered and used by connected hosts.  This document specifies
    DHCP/RA options that allows DNS clients to discover local DoT/DoH
-   servers.  Section 4 describes DHCPv4, DHCPv6 and RA options to convey
+   servers.  Section 4 describes DHCP, DHCPv6, and RA options to convey
    the authentication domain name information (ADN, defined in
    [RFC8310]).
 
@@ -529,31 +529,31 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
                Figure 9: Locating DoH/DoT/Do53 using RFC8106
 
+   The following sub-sections discusses the conditions under which
+   discovered DoT/DoH server can be safely used.
+
+5.1.  DoT/DoH Auto-Upgrade
+
    Additional considerations are discussed below for the use of DoH and
    DoT servers provided by local networks:
 
    o  If the DNS server's IP address discovered by using DHCP/RA is pre-
       configured in the OS or Browser as a verified resolver part of an
-      auto-upgrade program [Auto-upgrade], the DNS client will auto-
-      upgrade to use the pre-configured DoH/DoT server tied to the
+      auto-upgrade program (e.g., [Auto-upgrade]), the DNS client auto-
+      upgrades to use the pre-configured DoH/DoT server tied to the
       discovered DNS server IP address.  In such a case the DNS client
       will perform additional check out of band, such as confirming that
       the Do53 IP address and the DoH server are owned and operated by
       the same organisation.
 
-   o  If the DNS reference identity (Section 4) is provided by means of
-      DHCP/RA, the DNS client matches the domain name in the DNS
+   o  Similarly, if the ADN conveyed in DHCP/RA (Section 4) is pre-
+      configured in the OS or browser as a verified resolver, the DNS
+      client auto-upgrades to establish a DoH/DoT session with the ADN.
+
+      In such case, the DNS client matches the domain name in the DNS
       Reference Identifier DHCP/RA option with the 'DNS-ID' identifier
       type within subjectAltName entry in the server certificate
       conveyed in the TLS handshake.
-
-   Additional options are discussed below:
-
-   o  The Wi-Fi Alliance has released the Device Provisioning Protocol
-      (DPP).  If DPP is used, the configurator can securely configure
-      devices in the home network with the local DoT/DoH server using
-      DPP.  If the DoT/DoH servers use raw public keys [RFC7250], the
-      Subject Public Key Info (SPKI) pin set [RFC7250] of raw public
 
 
 
@@ -562,6 +562,15 @@ Boucadair, et al.       Expires September 8, 2020              [Page 10]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+5.2.  Additional Deployment Options
+
+   Additional options are discussed below:
+
+   o  The Wi-Fi Alliance has released the Device Provisioning Protocol
+      (DPP).  If DPP is used, the configurator can securely configure
+      devices in the home network with the local DoT/DoH server using
+      DPP.  If the DoT/DoH servers use raw public keys [RFC7250], the
+      Subject Public Key Info (SPKI) pin set [RFC7250] of raw public
       keys may be encoded in a QR code.  The configurator (e.g., mobile
       device) can scan the QR code and provision SPKI pin set in OS/
       Browser.  The configurator can in-turn securely configure devices
@@ -586,7 +595,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       fake access point, and the device cannot be securely bootstrapped
       with the home network's DoH/DoT server.
 
-6.  DNS-over-TLS and DNS-over-HTTPS Server Discovery Procedure
+6.  DoT and DoH DNS-SD Procedure
 
    A DNS client discovers the DNS server in the local network supporting
    DNS-over-TLS and DNS-over-HTTPS protocols by using DNS-based Service
@@ -601,15 +610,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    The <Domain> portion specifies the authentication domain name (ADN).
    The <Service> portion of the DNS service instance name MUST be
-   "_domain-s._tcp" or "_doh._tcp".  If no DNS-SD records can be
-   retrieved, the discovery procedure fails for this authentication
-   domain name.  However, before retrying a lookup that has failed, a
-   DNS client MUST wait a time period that is appropriate for the
-   encountered error (e.g., NXDOMAIN, timeout, etc.).  If no DNS-SD
-   records can be retrieved, the DNS client can try connecting to the
-   pre-configured public DNS servers (if any).
-
-
 
 
 
@@ -617,6 +617,14 @@ Boucadair, et al.       Expires September 8, 2020              [Page 11]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   "_domain-s._tcp" or "_doh._tcp".  If no DNS-SD records can be
+   retrieved, the discovery procedure fails for this authentication
+   domain name.  However, before retrying a lookup that has failed, a
+   DNS client MUST wait a time period that is appropriate for the
+   encountered error (e.g., NXDOMAIN, timeout, etc.).  If no DNS-SD
+   records can be retrieved, the DNS client can try connecting to the
+   pre-configured public DNS servers (if any).
 
    If DoH is supported by the DNS server, the DNS client may request the
    URI resource record type [RFC7553] using the domain name discovered
@@ -628,7 +636,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    The following mechanisms can be used to host a DoH/DoT forwarder in
    the CPE:
 
-   o  If a CPE is co-located with security services (e.g., malware
+   ACME:  If a CPE is co-located with security services (e.g., malware
       filtering, parental control, MUD), the ISP can assign a unique
       FQDN (e.g., cpe1.example.com) and a domain-validated public
       certificate to the DoH/DoT forwarder hosted on the CPE.  Automatic
@@ -637,35 +645,27 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       validation procedure, certificate issuance and certificate
       revocation.
 
-   o  Alternatively, the security service provider can assign a unique
-      FQDN to the managed CPE.  DNS requests to the forwarder are sent
-      to the internal IP address, not the external one.  The DoT/DoH
-      forwarder will act like a private DoT/DoH server only be
-      accessible from within the home network.  DNS queries received
-      outside the home network must be discarded by the DoH/DoT
+   Private DoH/Dot Server:  Alternatively, the security service provider
+      can assign a unique FQDN to the managed CPE.  DNS requests to the
+      forwarder are sent to the internal IP address, not the external
+      one.  The DoH/DoT forwarder will act like a private DoT/DoH server
+      only be accessible from within the home network.  DNS queries
+      received outside the home network must be discarded by the DoH/DoT
       forwarder.  This behavior adheres to REQ#8 in [RFC6092], and must
       apply for both IPv4 and IPv6.
 
-   o  ISP-managed CPE can be configured with the ISP's DoH/DoT resolver
-      IP addresses, which will communicate to hosts (using DHCP/RA) the
-      ISP's DoH/DoT resolver IP addresses in DHCP/RA.  Upon joining the
-      network, the DoH client checks if the network-supplied IP
-      addresses is one of the client's verified resolver auto-upgrade
-      program [Auto-upgrade].  If the ISP DNS server IP address is pre-
-      configured in the browser as a verified resolver, the DNS client
-      auto-upgrades to use the DoH/DoT server tied with the discovered
-      DNS server IP address.
-
-      Similarly, if the ADN conveyed in DHCP/RA is pre-configured in the
-      OS or browser as a verified resolver, the client auto-upgrades to
-      establish DoH session with the ADN.
+   Redirection:  An ISP-managed CPE can be configured with the ISP's
+      DoH/DoT resolver IP addresses, which it will communicate to
+      internal hosts using DHCP/RA.  Upon joining the network, a DoH/DoT
+      client follows the procedure specified in Section 5.1 to upgrade
+      to DoT/DoH.
 
       Once the DoH session is established, the ISP DoH/DoT server uses
       HTTP redirection (Section 6.4.4 in [RFC7231]) to redirect the DNS
-      client to the DoH forwarder hosted on the CPE.  The DNS client
-      either uses Do53 or opportunistic privacy profile (Section 7.2 of
-      [RFC8310]) to resolve the domain name in the redirected URI and
-      eventually establishes DoH session with the DoH forwarder on the
+      client to the DoH forwarder hosted on the CPE (e.g.,
+      cpe1-internal.example.net).  The DNS client either uses Do53 or
+      opportunistic privacy profile (Section 7.2 of [RFC8310]) to
+      resolve the domain name in the redirected URI and eventually
 
 
 
@@ -674,13 +674,17 @@ Boucadair, et al.       Expires September 8, 2020              [Page 12]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
-      CPE.  DNSSEC validation can detect the attack on the resolution of
-      the domain name in the redirected URI.  Even if the client does
+      establishes DoH session with the DoH forwarder on the CPE
+      reachable on the LAN interface.
+
+      DNSSEC validation can detect the attack on the resolution of the
+      domain name in the redirected URI.  Even if the DNS client does
       not perform DNSSEC validation, PKIX authentication [RFC6125] based
       upon the domain name in the redirected URI will detect the attack.
+
       A DNS client that successfully connects to a redirected DoH server
-      MAY choose to locally cache the server host IP addresses in order
-      to not have to repeat the query.
+      may choose to locally cache the server host IP addresses in order
+      to not have to repeat the Do53 query.
 
 8.  Security Considerations
 
@@ -717,11 +721,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    The use of DoH/DoT also depends on the user's policies.  For example,
    the user may indicate his/her consent to use (or not) the locally-
    discovered DoH/DoT server.  The DNS client must adhere to these
-   policies.
-
-   DoH/DoT servers discovered using insecure discovery mechanisms like
-   DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-   server is pre-configured in the OS or the browser.
+   policies.  This document does not make any assumption about the
 
 
 
@@ -730,11 +730,21 @@ Boucadair, et al.       Expires September 8, 2020              [Page 13]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   structure of such policies nor mandates specific requirements.  Such
+   policies and their handling is out of scope.
+
+   DoH/DoT servers discovered using insecure discovery mechanisms like
+   DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
+   server is pre-configured in the OS or the browser.  Sections
+   Section 5.1 and Section 5.2 identify a set of deployment options
+   under which the use of DHCP/RA RI options is safe.
+
    If the insecurely discovered DoH/DoT server is not pre-configured in
    the OS or browser, its policy information must be cryptographically
    attested by the ISP (e.g., [I-D.reddy-dprive-dprive-privacy-policy]);
    user consent is required to use the locally-discovered DoH/DoT
-   server.
+   server.  Such consent may be part of the generic policies discussed
+   above.
 
    DoT/DoH sessions with rogue servers spoofing the IP address of a DNS
    server will fail because the DNS client will fail to authenticate
@@ -765,16 +775,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    registry maintained in: https://www.iana.org/assignments/bootp-dhcp-
    parameters/bootp-dhcp-parameters.xhtml#options.
 
-   +------+------------------+-------+----------------+----------------+
-   | Tag  | Name             | Data  | Meaning        | Reference      |
-   |      |                  | Length|                |                |
-   +------+------------------+-------+----------------+----------------+
-   | TBA2 | OPTION_V4_DNS_RI | N     | DoT/DoH server | [ThisDocument] |
-   |      |                  |       | authentication |                |
-   |      |                  |       | domain name    |                |
-   +------+------------------+-------+----------------+----------------+
-
-
 
 
 
@@ -785,6 +785,15 @@ Boucadair, et al.       Expires September 8, 2020              [Page 14]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   +------+------------------+-------+----------------+----------------+
+   | Tag  | Name             | Data  | Meaning        | Reference      |
+   |      |                  | Length|                |                |
+   +------+------------------+-------+----------------+----------------+
+   | TBA2 | OPTION_V4_DNS_RI | N     | DoT/DoH server | [ThisDocument] |
+   |      |                  |       | authentication |                |
+   |      |                  |       | domain name    |                |
+   +------+------------------+-------+----------------+----------------+
 
 9.3.  RA Option
 
@@ -821,16 +830,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 11.  References
 
-11.1.  Normative References
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
-
-   [RFC2132]  Alexander, S. and R. Droms, "DHCP Options and BOOTP Vendor
-              Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
-              <https://www.rfc-editor.org/info/rfc2132>.
 
 
 
@@ -841,6 +841,17 @@ Boucadair, et al.       Expires September 8, 2020              [Page 15]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+11.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC2132]  Alexander, S. and R. Droms, "DHCP Options and BOOTP Vendor
+              Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
+              <https://www.rfc-editor.org/info/rfc2132>.
 
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
@@ -880,23 +891,19 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
 
-11.2.  Informative References
-
-   [Auto-upgrade]
-              The Unicode Consortium, "DoH providers: criteria, process
-              for Chrome", <docs.google.com/document/
-              d/128i2YTV2C7T6Gr3I-81zlQ-_Lprnsp24qzy_20Z1Psw/edit>.
-
-
-
-
-
 
 
 Boucadair, et al.       Expires September 8, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+11.2.  Informative References
+
+   [Auto-upgrade]
+              The Unicode Consortium, "DoH providers: criteria, process
+              for Chrome", <docs.google.com/document/
+              d/128i2YTV2C7T6Gr3I-81zlQ-_Lprnsp24qzy_20Z1Psw/edit>.
 
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
@@ -939,13 +946,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Security (TLS)", RFC 6125, DOI 10.17487/RFC6125, March
               2011, <https://www.rfc-editor.org/info/rfc6125>.
 
-   [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
-              Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
-              DOI 10.17487/RFC7231, June 2014,
-              <https://www.rfc-editor.org/info/rfc7231>.
-
-
-
 
 
 
@@ -953,6 +953,11 @@ Boucadair, et al.       Expires September 8, 2020              [Page 17]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
+              DOI 10.17487/RFC7231, June 2014,
+              <https://www.rfc-editor.org/info/rfc7231>.
 
    [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
               Weiler, S., and T. Kivinen, "Using Raw Public Keys in
@@ -996,11 +1001,6 @@ Authors' Addresses
    France
 
    Email: mohamed.boucadair@orange.com
-
-
-
-
-
 
 
 

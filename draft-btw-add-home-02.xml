@@ -202,7 +202,7 @@
       describes how a local DoH/DoT server can be discovered and used by
       connected hosts. This document specifies DHCP/RA options that allows DNS
       clients to discover local DoT/DoH servers. <xref target="RI"></xref>
-      describes DHCPv4, DHCPv6 and RA options to convey the authentication
+      describes DHCP, DHCPv6, and RA options to convey the authentication
       domain name information (ADN, defined in <xref
       target="RFC8310"></xref>).</t>
 
@@ -537,58 +537,70 @@
 ]]></artwork>
         </figure></t>
 
-      <t>Additional considerations are discussed below for the use of DoH and
-      DoT servers provided by local networks:<list style="symbols">
-          <t>If the DNS server's IP address discovered by using DHCP/RA is
-          pre-configured in the OS or Browser as a verified resolver part of
-          an auto-upgrade program <xref target="Auto-upgrade"></xref>, the DNS
-          client will auto-upgrade to use the pre-configured DoH/DoT server
-          tied to the discovered DNS server IP address. In such a case the DNS
-          client will perform additional check out of band, such as confirming
-          that the Do53 IP address and the DoH server are owned and operated
-          by the same organisation.</t>
+      <t>The following sub-sections discusses the conditions under which
+      discovered DoT/DoH server can be safely used.</t>
 
-          <t>If the DNS reference identity (<xref target="RI"></xref>) is
-          provided by means of DHCP/RA, the DNS client matches the domain name
-          in the DNS Reference Identifier DHCP/RA option with the 'DNS-ID'
-          identifier type within subjectAltName entry in the server
-          certificate conveyed in the TLS handshake.</t>
-        </list></t>
+      <section anchor="auto" title="DoT/DoH Auto-Upgrade">
+        <t>Additional considerations are discussed below for the use of DoH
+        and DoT servers provided by local networks:<list style="symbols">
+            <t>If the DNS server's IP address discovered by using DHCP/RA is
+            pre-configured in the OS or Browser as a verified resolver part of
+            an auto-upgrade program (e.g., <xref
+            target="Auto-upgrade"></xref>), the DNS client auto-upgrades to
+            use the pre-configured DoH/DoT server tied to the discovered DNS
+            server IP address. In such a case the DNS client will perform
+            additional check out of band, such as confirming that the Do53 IP
+            address and the DoH server are owned and operated by the same
+            organisation.</t>
 
-      <t>Additional options are discussed below:</t>
+            <t>Similarly, if the ADN conveyed in DHCP/RA (<xref
+            target="RI"></xref>) is pre-configured in the OS or browser as a
+            verified resolver, the DNS client auto-upgrades to establish a
+            DoH/DoT session with the ADN.<vspace blankLines="1" />In such
+            case, the DNS client matches the domain name in the DNS Reference
+            Identifier DHCP/RA option with the 'DNS-ID' identifier type within
+            subjectAltName entry in the server certificate conveyed in the TLS
+            handshake.</t>
+          </list></t>
+      </section>
 
-      <t><list style="symbols">
-          <t>The Wi-Fi Alliance has released the Device Provisioning Protocol
-          (DPP). If DPP is used, the configurator can securely configure
-          devices in the home network with the local DoT/DoH server using DPP.
-          If the DoT/DoH servers use raw public keys <xref
-          target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin set
-          <xref target="RFC7250"></xref> of raw public keys may be encoded in
-          a QR code. The configurator (e.g., mobile device) can scan the QR
-          code and provision SPKI pin set in OS/Browser. The configurator can
-          in-turn securely configure devices (e.g., thermostat) in the home
-          network with the SPKI pin set using DPP.</t>
+      <section anchor="ad" title="Additional Deployment Options">
+        <t>Additional options are discussed below:</t>
 
-          <t>If a CPE is co-located with security services within the home
-          network, the CPE can use WPA-PSK but with unique pre-shared keys for
-          different endpoints to deal with security issues. In such networks,
-          <xref target="I-D.reddy-dprive-bootstrap-dns-server"></xref> may be
-          used to securely bootstrap endpoint devices with the authentication
-          domain name (ADN) and DNS server certificate of the local network's
-          DoH/DoT server. <vspace blankLines="1" />The OS would not know if
-          the WPA pre-shared-key is the same for all clients or a unique
-          pre-shared key is assigned to the host. Hence, the user has to
-          indicate to the system that a unique pre-shared key is assigned to
-          trigger the bootstrapping procedure. <vspace blankLines="1" />If the
-          device joins a home network using a single shared password among all
-          the attached devices, a compromised device can host a fake access
-          point, and the device cannot be securely bootstrapped with the home
-          network's DoH/DoT server.</t>
-        </list></t>
+        <t><list style="symbols">
+            <t>The Wi-Fi Alliance has released the Device Provisioning
+            Protocol (DPP). If DPP is used, the configurator can securely
+            configure devices in the home network with the local DoT/DoH
+            server using DPP. If the DoT/DoH servers use raw public keys <xref
+            target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin
+            set <xref target="RFC7250"></xref> of raw public keys may be
+            encoded in a QR code. The configurator (e.g., mobile device) can
+            scan the QR code and provision SPKI pin set in OS/Browser. The
+            configurator can in-turn securely configure devices (e.g.,
+            thermostat) in the home network with the SPKI pin set using
+            DPP.</t>
+
+            <t>If a CPE is co-located with security services within the home
+            network, the CPE can use WPA-PSK but with unique pre-shared keys
+            for different endpoints to deal with security issues. In such
+            networks, <xref
+            target="I-D.reddy-dprive-bootstrap-dns-server"></xref> may be used
+            to securely bootstrap endpoint devices with the authentication
+            domain name (ADN) and DNS server certificate of the local
+            network's DoH/DoT server. <vspace blankLines="1" />The OS would
+            not know if the WPA pre-shared-key is the same for all clients or
+            a unique pre-shared key is assigned to the host. Hence, the user
+            has to indicate to the system that a unique pre-shared key is
+            assigned to trigger the bootstrapping procedure. <vspace
+            blankLines="1" />If the device joins a home network using a single
+            shared password among all the attached devices, a compromised
+            device can host a fake access point, and the device cannot be
+            securely bootstrapped with the home network's DoH/DoT server.</t>
+          </list></t>
+      </section>
     </section>
 
-    <section anchor="discovery"
-             title="DNS-over-TLS and DNS-over-HTTPS Server Discovery Procedure">
+    <section anchor="discovery" title="DoT and DoH DNS-SD Procedure">
       <t>A DNS client discovers the DNS server in the local network supporting
       DNS-over-TLS and DNS-over-HTTPS protocols by using DNS-based Service
       Discovery (DNS-SD) <xref target="RFC6763"></xref>. DNS-SD provides
@@ -625,51 +637,46 @@
       <t>The following mechanisms can be used to host a DoH/DoT forwarder in
       the CPE:</t>
 
-      <t><list style="symbols">
-          <t>If a CPE is co-located with security services (e.g., malware
-          filtering, parental control, MUD), the ISP can assign a unique FQDN
-          (e.g., cpe1.example.com) and a domain-validated public certificate
-          to the DoH/DoT forwarder hosted on the CPE. Automatic Certificate
-          Management Environment (ACME) <xref target="RFC8555"></xref> can be
-          used to automate certificate management functions such as domain
-          validation procedure, certificate issuance and certificate
-          revocation.</t>
+      <t><list style="hanging">
+          <t hangText="ACME:">If a CPE is co-located with security services
+          (e.g., malware filtering, parental control, MUD), the ISP can assign
+          a unique FQDN (e.g., cpe1.example.com) and a domain-validated public
+          certificate to the DoH/DoT forwarder hosted on the CPE. Automatic
+          Certificate Management Environment (ACME) <xref
+          target="RFC8555"></xref> can be used to automate certificate
+          management functions such as domain validation procedure,
+          certificate issuance and certificate revocation.</t>
 
-          <t>Alternatively, the security service provider can assign a unique
-          FQDN to the managed CPE. DNS requests to the forwarder are sent to
-          the internal IP address, not the external one. The DoT/DoH forwarder
-          will act like a private DoT/DoH server only be accessible from
-          within the home network. DNS queries received outside the home
-          network must be discarded by the DoH/DoT forwarder. This behavior
-          adheres to REQ#8 in <xref target="RFC6092"></xref>, and must apply
-          for both IPv4 and IPv6.</t>
+          <t hangText="Private DoH/Dot Server:">Alternatively, the security
+          service provider can assign a unique FQDN to the managed CPE. DNS
+          requests to the forwarder are sent to the internal IP address, not
+          the external one. The DoH/DoT forwarder will act like a private
+          DoT/DoH server only be accessible from within the home network. DNS
+          queries received outside the home network must be discarded by the
+          DoH/DoT forwarder. This behavior adheres to REQ#8 in <xref
+          target="RFC6092"></xref>, and must apply for both IPv4 and IPv6.</t>
 
-          <t>ISP-managed CPE can be configured with the ISP's DoH/DoT resolver
-          IP addresses, which will communicate to hosts (using DHCP/RA) the
-          ISP's DoH/DoT resolver IP addresses in DHCP/RA. Upon joining the
-          network, the DoH client checks if the network-supplied IP addresses
-          is one of the client's verified resolver auto-upgrade program <xref
-          target="Auto-upgrade"></xref>. If the ISP DNS server IP address is
-          pre-configured in the browser as a verified resolver, the DNS client
-          auto-upgrades to use the DoH/DoT server tied with the discovered DNS
-          server IP address. <vspace blankLines="1" />Similarly, if the ADN
-          conveyed in DHCP/RA is pre-configured in the OS or browser as a
-          verified resolver, the client auto-upgrades to establish DoH session
-          with the ADN. <vspace blankLines="1" />Once the DoH session is
-          established, the ISP DoH/DoT server uses HTTP redirection (Section
-          6.4.4 in <xref target="RFC7231"></xref>) to redirect the DNS client
-          to the DoH forwarder hosted on the CPE. The DNS client either uses
-          Do53 or opportunistic privacy profile (Section 7.2 of <xref
-          target="RFC8310"></xref>) to resolve the domain name in the
-          redirected URI and eventually establishes DoH session with the DoH
-          forwarder on the CPE. DNSSEC validation can detect the attack on the
-          resolution of the domain name in the redirected URI. Even if the
-          client does not perform DNSSEC validation, PKIX authentication <xref
-          target="RFC6125"></xref> based upon the domain name in the
-          redirected URI will detect the attack. A DNS client that
-          successfully connects to a redirected DoH server MAY choose to
-          locally cache the server host IP addresses in order to not have to
-          repeat the query.</t>
+          <t hangText="Redirection:">An ISP-managed CPE can be configured with
+          the ISP's DoH/DoT resolver IP addresses, which it will communicate
+          to internal hosts using DHCP/RA. Upon joining the network, a DoH/DoT
+          client follows the procedure specified in <xref
+          target="auto"></xref> to upgrade to DoT/DoH. <vspace
+          blankLines="1" />Once the DoH session is established, the ISP
+          DoH/DoT server uses HTTP redirection (Section 6.4.4 in <xref
+          target="RFC7231"></xref>) to redirect the DNS client to the DoH
+          forwarder hosted on the CPE (e.g., cpe1-internal.example.net). The
+          DNS client either uses Do53 or opportunistic privacy profile
+          (Section 7.2 of <xref target="RFC8310"></xref>) to resolve the
+          domain name in the redirected URI and eventually establishes DoH
+          session with the DoH forwarder on the CPE reachable on the LAN
+          interface. <vspace blankLines="1" />DNSSEC validation can detect the
+          attack on the resolution of the domain name in the redirected URI.
+          Even if the DNS client does not perform DNSSEC validation, PKIX
+          authentication <xref target="RFC6125"></xref> based upon the domain
+          name in the redirected URI will detect the attack.<vspace
+          blankLines="1" />A DNS client that successfully connects to a
+          redirected DoH server may choose to locally cache the server host IP
+          addresses in order to not have to repeat the Do53 query.</t>
         </list></t>
     </section>
 
@@ -707,17 +714,23 @@
       <t>The use of DoH/DoT also depends on the user's policies. For example,
       the user may indicate his/her consent to use (or not) the
       locally-discovered DoH/DoT server. The DNS client must adhere to these
-      policies.</t>
+      policies. This document does not make any assumption about the structure
+      of such policies nor mandates specific requirements. Such policies and
+      their handling is out of scope.</t>
 
       <t>DoH/DoT servers discovered using insecure discovery mechanisms like
       DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-      server is pre-configured in the OS or the browser.</t>
+      server is pre-configured in the OS or the browser. Sections <xref
+      target="auto"></xref> and <xref target="ad"></xref> identify a set of
+      deployment options under which the use of DHCP/RA RI options is safe.
+      </t>
 
       <t>If the insecurely discovered DoH/DoT server is not pre-configured in
       the OS or browser, its policy information must be cryptographically
       attested by the ISP (e.g., <xref
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>); user consent
-      is required to use the locally-discovered DoH/DoT server.</t>
+      is required to use the locally-discovered DoH/DoT server. Such consent
+      may be part of the generic policies discussed above. </t>
 
       <t>DoT/DoH sessions with rogue servers spoofing the IP address of a DNS
       server will fail because the DNS client will fail to authenticate that
