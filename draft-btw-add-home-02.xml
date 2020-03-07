@@ -34,7 +34,7 @@
 <rfc category="std" docName="draft-btw-add-home-02" ipr="trust200902">
   <front>
     <title abbrev="DoH/DoT in Home and Mobile ">DNS-over-HTTPS and
-    DNS-over-TLS server Discovery and Deployment Considerations for Home and
+    DNS-over-TLS Server Discovery and Deployment Considerations for Home and
     Mobile Networks</title>
 
     <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
@@ -139,14 +139,14 @@
           Option)).<?rfc subcompact="no" ?></t>
         </list></t>
 
-      <t>The communication between a customer's device (UE) (possibly via
-      Customer Premise Equipment (CPE)) and an ISP-supplied DNS resolver takes
-      place by using cleartext DNS messages (Do53, <xref
-      target="I-D.ietf-dnsop-terminology-ter"></xref>). Some examples are
-      depicted in <xref target="do53"></xref>. In the case of cellular
-      networks, connectivity can be provided to a UE or to a CPE. Do53
-      mechanisms used within the LAN are similar in both fixed and cellular
-      CPE-based broadband service offerings.</t>
+      <t>The communication between a customer's device (a.k.a., User Equipment
+      (UE)) (possibly via Customer Premises Equipment (CPE)) and an
+      ISP-supplied DNS resolver takes place by using cleartext DNS messages
+      (Do53, <xref target="I-D.ietf-dnsop-terminology-ter"></xref>). Some
+      examples are depicted in <xref target="do53"></xref>. In the case of
+      cellular networks, connectivity can be provided to a UE or to a CPE.
+      Do53 mechanisms used within the Local Area Network (LAN) are similar in
+      both fixed and cellular CPE-based broadband service offerings.</t>
 
       <t><figure align="center" anchor="do53"
           title="Sample Legacy Deployments">
@@ -202,9 +202,8 @@
       describes how a local DoH/DoT server can be discovered and used by
       connected hosts. This document specifies DHCP/RA options that allows DNS
       clients to discover local DoT/DoH servers. <xref target="RI"></xref>
-      describes DHCP, DHCPv6, and RA options to convey the authentication
-      domain name information (ADN, defined in <xref
-      target="RFC8310"></xref>).</t>
+      describes DHCP, DHCPv6, and RA options to convey the Authentication
+      Domain Name (ADN, defined in <xref target="RFC8310"></xref>).</t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
@@ -232,10 +231,9 @@
       <t>ISPs have developed an expertise in managing service-specific
       configuration information (e.g., CPE WAN Management Protocol <xref
       target="TR-069"></xref>). For example, these tools may be used to
-      provision authentication domain name information (ADN, defined in <xref
-      target="RFC8310"></xref>) to managed CPEs if DoH/DoT is supported by a
-      local network similar to what is depicted in <xref
-      target="wan"></xref>.</t>
+      provision the authentication domain name information (ADN) to managed
+      CPEs if DoH/DoT is supported by a local network similar to what is
+      depicted in <xref target="wan"></xref>.</t>
 
       <t>DNS clients may try to establish DoH/DoT sessions with discovered DNS
       servers to determine whether these servers support DoH and/or DoT (<xref
@@ -300,7 +298,7 @@
       target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or for supporting advanced
       services within the home (e.g., malware filtering, parental control,
       Manufacturer Usage Description (MUD, <xref target="RFC8520"></xref> to
-      only allow intended communications to and from an IoT device). When the
+      only allow intended communications to and from an IoT device)). When the
       CPE behaves as a DNS forwarder, DNS communications can be decomposed
       into two legs:<list style="symbols">
           <t>The leg between an internal host and the CPE.</t>
@@ -308,7 +306,7 @@
           <t>The leg between the CPE and an upstream DNS resolver.</t>
         </list></t>
 
-      <t>Also, an ISP that wants to offer DoH/DoT to its customers may enable
+      <t>An ISP that wants to offer DoH/DoT to its customers may enable
       DoH/DoT in both legs as shown in <xref target="proxied"></xref>.
       Additional considerations related to this approach are discussed in
       <xref target="forwarder"></xref>.</t>
@@ -414,7 +412,7 @@
         option is illustrated in <xref target="dhcpri_dns"></xref>.</t>
 
         <t><figure anchor="dhcpri_dns"
-            title="DHCPv4 DNS Reference Identifier Option">
+            title="DHCP DNS Reference Identifier Option">
             <artwork><![CDATA[
           Code  Length   Authentication domain name 
          +-----+-----+-----+-----+-----+-----+-----+--
@@ -458,7 +456,7 @@
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
-     :                  authentication-domain-name                   :
+     :                  Authentication Domain Name                   :
      |                                                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
@@ -486,7 +484,7 @@
             means that the DNS Reference Identifier MUST no longer be
             used.</t>
 
-            <t>Authentication domain name: The domain name of the DoH/DoT
+            <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
             <xref target="RFC8415"></xref>.</t>
           </list></t>
@@ -527,12 +525,12 @@
                       ,+-,--,--.    |        ,/   S1   \.
                    ,-'          `-. |     ,-'    ISP     `-.
          DoH/DoT --(      LAN      CPE----(   DNS Servers  )
-           capable  `-.          ,-'|      `-.    S2    ,-'
+    capable client  `-.          ,-'|      `-.    S2    ,-'
              |        `--'--'--'    |         `--'--'--'
              |<=========RA==========|             | 
              |      {RI, S1,S2}     |             | 
              |                                    | 
-             |<===============DoT/DoH===========->|
+             |<===============DoT/DoH============>|
 
 ]]></artwork>
         </figure></t>
@@ -590,16 +588,16 @@
             networks, <xref
             target="I-D.reddy-dprive-bootstrap-dns-server"></xref> may be used
             to securely bootstrap endpoint devices with the authentication
-            domain name (ADN) and DNS server certificate of the local
-            network's DoH/DoT server. <vspace blankLines="1" />The OS would
-            not know if the WPA pre-shared-key is the same for all clients or
-            a unique pre-shared key is assigned to the host. Hence, the user
-            has to indicate to the system that a unique pre-shared key is
-            assigned to trigger the bootstrapping procedure. <vspace
-            blankLines="1" />If the device joins a home network using a single
-            shared password among all the attached devices, a compromised
-            device can host a fake access point, and the device cannot be
-            securely bootstrapped with the home network's DoH/DoT server.</t>
+            domain name and DNS server certificate of the local network's
+            DoH/DoT server. <vspace blankLines="1" />The OS would not know if
+            the WPA pre-shared-key is the same for all clients or a unique
+            pre-shared key is assigned to the host. Hence, the user has to
+            indicate to the system that a unique pre-shared key is assigned to
+            trigger the bootstrapping procedure. <vspace blankLines="1" />If
+            the device joins a home network using a single shared password
+            among all the attached devices, a compromised device can host a
+            fake access point, and the device cannot be securely bootstrapped
+            with the home network's DoH/DoT server.</t>
           </list></t>
       </section>
     </section>
@@ -623,8 +621,8 @@
       <t></t>
 
       <t>The &lt;Domain&gt; portion specifies the authentication domain name
-      (ADN) (<xref target="RI"></xref>). The &lt;Service&gt; portion of the
-      DNS service instance name MUST be "_domain-s._tcp" <xref
+      (<xref target="RI"></xref>). The &lt;Service&gt; portion of the DNS
+      service instance name MUST be "_domain-s._tcp" <xref
       target="RFC7858"></xref> or "_doh._tcp" (<xref target="name"></xref>).
       If no DNS-SD records can be retrieved by the DNS client, the discovery
       procedure fails for this authentication domain name. However, before
@@ -670,7 +668,7 @@
           DNS client either uses Do53 or opportunistic privacy profile
           (Section 7.2 of <xref target="RFC8310"></xref>) to resolve the
           domain name in the redirected URI and eventually establishes DoH
-          session with the DoH forwarder on the CPE reachable on the LAN
+          session with the DoH forwarder in the CPE reachable on the LAN
           interface. <vspace blankLines="1" />DNSSEC validation can detect the
           attack on the resolution of the domain name in the redirected URI.
           Even if the DNS client does not perform DNSSEC validation, PKIX
@@ -748,7 +746,7 @@
       (e.g., redirect to malicious servers, intercept sensitive data).</t>
 
       <t>DNS queries received outside the home network MUST be discarded by
-      the DoH/DoT forwarder on the CPE. This behavior adheres to REQ#8 in
+      the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
       <xref target="RFC6092"></xref>, and must apply for both IPv4 and
       IPv6.</t>
     </section>
