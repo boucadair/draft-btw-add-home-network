@@ -79,7 +79,6 @@ Table of Contents
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .   8
    5.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .   9
      5.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  10
-       5.1.1.  new section . . . . . . . . . . . . . . . . . . . . .  11
      5.2.  Additional Deployment Options . . . . . . . . . . . . . .  11
    6.  DoT and DoH DNS-SD Considerations . . . . . . . . . . . . . .  11
    7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  12
@@ -105,7 +104,8 @@ Table of Contents
    o  Protocol Configuration Options in cellular networks [TS.24008].
    o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
       [RFC8415][RFC3646] (OPTION_DNS_SERVERS).
-
+   o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
+      DNS Server Option)).
 
 
 
@@ -113,9 +113,6 @@ Boucadair, et al.       Expires September 8, 2020               [Page 2]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
-
-   o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
-      DNS Server Option)).
 
    The communication between a customer's device (a.k.a., User Equipment
    (UE)) (possibly via Customer Premises Equipment (CPE)) and an ISP-
@@ -162,6 +159,9 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
       For example, the latency targets set in the context of 5G are 1ms
       (uRLLC) and 4ms (eMBB).  An ISP will be able to address such
+      demanding latency requirements assuming the corresponding services
+      rely upon resources (network, compute, storage) that are located
+      as close to the user as possible (e.g., by means of Edge Computing
 
 
 
@@ -170,9 +170,6 @@ Boucadair, et al.       Expires September 8, 2020               [Page 3]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
-      demanding latency requirements assuming the corresponding services
-      rely upon resources (network, compute, storage) that are located
-      as close to the user as possible (e.g., by means of Edge Computing
       techniques and resources).  Such latency requirements are likely
       to be addressed by means of optimized designs (DNS, in
       particular), too.
@@ -219,6 +216,9 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    DoT is supported by a local network similar to what is depicted in
    Figure 2.
 
+   DNS clients may try to establish DoH/DoT sessions with discovered DNS
+   servers to determine whether these servers support DoH and/or DoT
+
 
 
 Boucadair, et al.       Expires September 8, 2020               [Page 4]
@@ -226,8 +226,6 @@ Boucadair, et al.       Expires September 8, 2020               [Page 4]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
-   DNS clients may try to establish DoH/DoT sessions with discovered DNS
-   servers to determine whether these servers support DoH and/or DoT
    (Section 5).  Alternatively, a DNS client may discover whether the
    DNS server in the local network supports DoH/DoT by using the
    mechanism discussed in Section 6.
@@ -274,6 +272,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                 |<==============DoT/DoH============>|
 
                      Figure 3: Direct DoH/DoT Sessions
+
+
 
 
 
@@ -562,8 +562,6 @@ Boucadair, et al.       Expires September 8, 2020              [Page 10]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
-5.1.1.  new section
-
 5.2.  Additional Deployment Options
 
    Additional options are discussed below:
@@ -610,6 +608,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    following structure:
 
    <Instance> . <Service> . <Domain>
+
+
 
 
 

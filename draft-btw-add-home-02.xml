@@ -560,10 +560,6 @@
             subjectAltName entry in the server certificate conveyed in the TLS
             handshake.</t>
           </list></t>
-
-        <section title="new section">
-          <t></t>
-        </section>
       </section>
 
       <section anchor="ad" title="Additional Deployment Options">
