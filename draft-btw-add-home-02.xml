@@ -562,6 +562,10 @@
             subjectAltName entry in the server certificate conveyed in the TLS
             handshake.</t>
           </list></t>
+
+        <section title="new section">
+          <t></t>
+        </section>
       </section>
 
       <section anchor="ad" title="Additional Deployment Options">
@@ -622,12 +626,11 @@
       (ADN) (<xref target="RI"></xref>). The &lt;Service&gt; portion of the
       DNS service instance name MUST be "_domain-s._tcp" <xref
       target="RFC7858"></xref> or "_doh._tcp" (<xref target="name"></xref>).
-      If no DNS-SD records can be retrieved, the discovery procedure fails for
-      this authentication domain name. However, before retrying a lookup that
-      has failed, a DNS client MUST wait a time period that is appropriate for
-      the encountered error (e.g., NXDOMAIN, timeout, etc.). If no DNS-SD
-      records can be retrieved, the DNS client can try connecting to the
-      pre-configured public DNS servers (if any).</t>
+      If no DNS-SD records can be retrieved by the DNS client, the discovery
+      procedure fails for this authentication domain name. However, before
+      retrying a lookup that has failed, a DNS client MUST wait a time period
+      that is appropriate for the encountered error (e.g., NXDOMAIN, timeout,
+      etc.). </t>
 
       <t>If DoH is supported by the DNS server, the DNS client may request the
       URI resource record type <xref target="RFC7553"></xref> using the domain
