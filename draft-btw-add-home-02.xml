@@ -200,10 +200,11 @@
       target="RFC8484"></xref> or DNS-over-TLS (DoT) <xref
       target="RFC7858"></xref> in local networks. In particular, the document
       describes how a local DoH/DoT server can be discovered and used by
-      connected hosts. This document specifies DHCP/RA options that allows DNS
-      clients to discover local DoT/DoH servers. <xref target="RI"></xref>
-      describes DHCP, DHCPv6, and RA options to convey the Authentication
-      Domain Name (ADN, defined in <xref target="RFC8310"></xref>).</t>
+      connected hosts. This document specifies options that allow DNS clients
+      to discover local DoT/DoH servers. In particular, <xref
+      target="RI"></xref> describes DHCP, DHCPv6, and RA options to convey the
+      Authentication Domain Name (ADN, defined in <xref
+      target="RFC8310"></xref>).</t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
@@ -235,9 +236,13 @@
       CPEs if DoH/DoT is supported by a local network similar to what is
       depicted in <xref target="wan"></xref>.</t>
 
-      <t>DNS clients may try to establish DoH/DoT sessions with discovered DNS
-      servers to determine whether these servers support DoH and/or DoT (<xref
-      target="address"></xref>). Alternatively, a DNS client may discover
+      <t>DoH-capable (or DoH) clients establish the DoH (or DoT) session with
+      the discovered DNS server. </t>
+
+      <t>If a DNS client supports both DoT and DoH, the client try to
+      establish DoH/DoT sessions with the discovered DNS server to determine
+      whether these servers support DoH and/or DoT (<xref
+      target="address"></xref>). Alternatively, the DNS client may discover
       whether the DNS server in the local network supports DoH/DoT by using
       the mechanism discussed in <xref target="discovery"></xref>.</t>
 
@@ -247,7 +252,7 @@
            ,--,--,--.             ,--,--,--.
         ,-'   +--+  `-.       ,-'   ISP    `-. 
        ( LAN  |UE|    CPE----(    DNS Server  )
-        `-.   +--+   ,-'       `-.          ,-' 
+        `-.   +--+   ,-'       `-.    S    ,-' 
            `--'|-'--'             `--'--'--'    
                |                     |
                |<=======DoH/DoT=====>| 
@@ -306,10 +311,10 @@
           <t>The leg between the CPE and an upstream DNS resolver.</t>
         </list></t>
 
-      <t>An ISP that wants to offer DoH/DoT to its customers may enable
-      DoH/DoT in both legs as shown in <xref target="proxied"></xref>.
-      Additional considerations related to this approach are discussed in
-      <xref target="forwarder"></xref>.</t>
+      <t>An ISP that offers DoH/DoT to its customers may enable DoH/DoT in
+      both legs as shown in <xref target="proxied"></xref>. Additional
+      considerations related to this deployment are discussed in <xref
+      target="forwarder"></xref>.</t>
 
       <t><figure align="center" anchor="proxied"
           title="Proxied DoH/DoT Sessions">
@@ -332,7 +337,8 @@
       <t>This section describes how a DNS client can discover the ADN of local
       DoH/DoT server(s) using DHCP (Sections <xref format="counter"
       target="DHCPv6"></xref> and <xref format="counter"
-      target="DHCP"></xref>) and RA (<xref target="RA"></xref>).</t>
+      target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
+      target="RA"></xref>).</t>
 
       <t>As reported in Section 1.7.2 of <xref target="RFC6125"></xref>:<list
           style="empty">
@@ -370,7 +376,7 @@
    |     OPTION_V6_DNS_RI          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                                                               |
-   |                 authentication-domain-name                    |
+   |                 Authentication Domain Name                    |
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -382,18 +388,17 @@
             <t>Option-code: OPTION_V6_DNS_RI (TBA1, see <xref
             target="iana6"></xref>)</t>
 
-            <t>Option-length: Length of the authentication-domain-name field
+            <t>Option-length: Length of the Authentication Domain Name field
             in octets.</t>
 
-            <t>authentication-domain-name: A fully qualified domain name of
+            <t>Authentication Domain Name: A fully qualified domain name of
             the DoH/DoT server. This field is formatted as specified in
             Section 10 of <xref target="RFC8415"></xref>.</t>
           </list></t>
 
-        <t><?rfc subcompact="no" ?>An example of the
-        authentication-domain-name encoding is shown in <xref
-        target="fqdn"></xref>. This example conveys the FQDN
-        "doh1.example.com.".</t>
+        <t><?rfc subcompact="no" ?>An example of the Authentication Domain
+        Name encoding is shown in <xref target="fqdn"></xref>. This example
+        conveys the FQDN "doh1.example.com.".</t>
 
         <t><figure anchor="fqdn"
             title="An example of the authentication-domain-name Encoding">
@@ -414,7 +419,7 @@
         <t><figure anchor="dhcpri_dns"
             title="DHCP DNS Reference Identifier Option">
             <artwork><![CDATA[
-          Code  Length   Authentication domain name 
+          Code  Length   Authentication Domain Name 
          +-----+-----+-----+-----+-----+-----+-----+--
          |TBA2 |  n  |  s1 |  s2 |  s3 |  s4 | s5  |  ...
          +-----+-----+-----+-----+-----+-----+-----+--
@@ -430,10 +435,10 @@
             <t>Code: OPTION_V4_DNS_RI (TBA2, see <xref
             target="iana4"></xref>).</t>
 
-            <t>Length: Includes the length of the "authentication domain name"
+            <t>Length: Includes the length of the Authentication Domain Name
             field in octets.</t>
 
-            <t>Authentication domain name: The domain name of the DoH/DoT
+            <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
             <xref target="RFC8415"></xref>.</t>
           </list></t>
@@ -477,12 +482,13 @@
             <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
             (relative to the time the packet is received) over which the
             authentication domain name MAY be used as a DNS Reference
-            Identifier. The value of Lifetime SHOULD by default be at least 3
-            * MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
-            interval as defined in <xref target="RFC4861"></xref>. A value of
-            all one bits (0xffffffff) represents infinity. A value of zero
-            means that the DNS Reference Identifier MUST no longer be
-            used.</t>
+            Identifier. <vspace blankLines="1" />The value of Lifetime SHOULD
+            by default be at least 3 * MaxRtrAdvInterval, where
+            MaxRtrAdvInterval is the maximum RA interval as defined in <xref
+            target="RFC4861"></xref>. <vspace blankLines="1" />A value of all
+            one bits (0xffffffff) represents infinity. <vspace
+            blankLines="1" />A value of zero means that the DNS Reference
+            Identifier MUST no longer be used.</t>
 
             <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
@@ -510,10 +516,35 @@
       target="RFC3646"></xref><xref target="RFC8106"></xref> can be leveraged
       to learn the IP addresses of DoT/DoH servers while an authentication
       domain name is supplied by one of the options discussed in <xref
-      target="RI"></xref>.</t>
+      target="RI"></xref>. An example is depicted in <xref
+      target="selection-s"></xref>.<figure align="center" anchor="selection-s"
+          title="Locating DoH/DoT/Do53 (Same DNS Server)">
+          <artwork><![CDATA[
+                 Legacy Do53                       
+                   client                        
+                       |<===DHCP===>|
+                       |    {S}     |       |
+                       |            |       |
+                       |======Do53 Query===>|
+                       |            |       |   --,--,-
+                      ,+-,--,--.    |       |,/  ISP   \.
+                   ,-'          `-. |     ,-'            `-.
+         DoH/DoT --(      LAN      CPE----( S (DNS Server)  )
+    capable client  `-.          ,-'|      `-.           ,-'
+             |        `--'--'--'    |       | `--'--'--'
+             |<========DHCP========>|       | 
+             |       {RI, S}        |       | 
+             |                              | 
+             |<=========DoT/DoH============>|
+
+Legend:
+  * S: DNS server
+  * RI: DNS Reference Identifier
+]]></artwork>
+        </figure></t>
 
       <t><figure align="center" anchor="selection"
-          title="Locating DoH/DoT/Do53 using RFC8106">
+          title="Locating DoH/DoT/Do53 (Distinct Servers)">
           <artwork><![CDATA[
                  Legacy Do53                       
                    client                        
@@ -532,6 +563,10 @@
              |                                    | 
              |<===============DoT/DoH============>|
 
+Legend:
+  * S1: Do53 server
+  * S2: DoH/DoT server
+  * RI: DNS Reference Identifier
 ]]></artwork>
         </figure></t>
 
@@ -542,8 +577,8 @@
         <t>Additional considerations are discussed below for the use of DoH
         and DoT servers provided by local networks:<list style="symbols">
             <t>If the DNS server's IP address discovered by using DHCP/RA is
-            pre-configured in the OS or Browser as a verified resolver part of
-            an auto-upgrade program (e.g., <xref
+            pre-configured in the OS or Browser as a verified resolver (e.g.,
+            part of an auto-upgrade program such as <xref
             target="Auto-upgrade"></xref>), the DNS client auto-upgrades to
             use the pre-configured DoH/DoT server tied to the discovered DNS
             server IP address. In such a case the DNS client will perform
@@ -567,16 +602,16 @@
 
         <t><list style="symbols">
             <t>The Wi-Fi Alliance has released the Device Provisioning
-            Protocol (DPP). If DPP is used, the configurator can securely
-            configure devices in the home network with the local DoT/DoH
-            server using DPP. If the DoT/DoH servers use raw public keys <xref
-            target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin
-            set <xref target="RFC7250"></xref> of raw public keys may be
-            encoded in a QR code. The configurator (e.g., mobile device) can
-            scan the QR code and provision SPKI pin set in OS/Browser. The
-            configurator can in-turn securely configure devices (e.g.,
-            thermostat) in the home network with the SPKI pin set using
-            DPP.</t>
+            Protocol (DPP) <xref target="DPP"></xref>. If DPP is used, the
+            configurator can securely configure devices in the home network
+            with the local DoT/DoH server using DPP. If the DoT/DoH servers
+            use raw public keys <xref target="RFC7250"></xref>, the Subject
+            Public Key Info (SPKI) pin set <xref target="RFC7250"></xref> of
+            raw public keys may be encoded in a QR code. The configurator
+            (e.g., mobile device) can scan the QR code and provision SPKI pin
+            set in OS/Browser. The configurator can in-turn securely configure
+            devices (e.g., thermostat) in the home network with the SPKI pin
+            set using DPP.</t>
 
             <t>If a CPE is co-located with security services within the home
             network, the CPE can use WPA-PSK but with unique pre-shared keys
@@ -618,13 +653,11 @@
 
       <t>The &lt;Domain&gt; portion specifies the authentication domain name
       (<xref target="RI"></xref>). The &lt;Service&gt; portion of the DNS
-      service instance name MUST be "_domain-s._tcp" <xref
-      target="RFC7858"></xref> or "_doh._tcp" (<xref target="name"></xref>).
-      If no DNS-SD records can be retrieved by the DNS client, the discovery
-      procedure fails for this authentication domain name. However, before
-      retrying a lookup that has failed, a DNS client MUST wait a time period
-      that is appropriate for the encountered error (e.g., NXDOMAIN, timeout,
-      etc.). </t>
+      service instance name MUST be "_domain-s._tcp" (Section 6 of <xref
+      target="RFC7858"></xref>) or "_doh._tcp" (<xref target="name"></xref>).
+      If no DNS-SD records can be retrieved by the DNS client, it MUST wait a
+      time period that is appropriate for the encountered error (e.g.,
+      NXDOMAIN, timeout, etc.). </t>
 
       <t>If DoH is supported by the DNS server, the DNS client may request the
       URI resource record type <xref target="RFC7553"></xref> using the domain
@@ -653,9 +686,9 @@
           accessible from within the home network. </t>
 
           <t hangText="Redirection:">An ISP-managed CPE can be configured with
-          the ISP's DoH/DoT resolver IP addresses, which it will communicate
-          to internal hosts using DHCP/RA. Upon joining the network, a DoH/DoT
-          client follows the procedure specified in <xref
+          the ISP's DoH/DoT resolver IP addresses and ADN, which it will
+          communicate to internal hosts using DHCP/RA. Upon joining the
+          network, a DoH/DoT client follows the procedure specified in <xref
           target="auto"></xref> to upgrade to DoT/DoH. <vspace
           blankLines="1" />Once the DoH session is established, the ISP
           DoH/DoT server uses HTTP redirection (Section 6.4.4 in <xref
@@ -665,14 +698,38 @@
           (Section 7.2 of <xref target="RFC8310"></xref>) to resolve the
           domain name in the redirected URI and eventually establishes DoH
           session with the DoH forwarder in the CPE reachable on the LAN
-          interface. <vspace blankLines="1" />DNSSEC validation can detect the
-          attack on the resolution of the domain name in the redirected URI.
-          Even if the DNS client does not perform DNSSEC validation, PKIX
-          authentication <xref target="RFC6125"></xref> based upon the domain
-          name in the redirected URI will detect the attack.<vspace
-          blankLines="1" />A DNS client that successfully connects to a
-          redirected DoH server may choose to locally cache the server host IP
-          addresses in order to not have to repeat the Do53 query.</t>
+          interface. A simplified example is illustrated in <xref
+          target="redirection"></xref>.<vspace blankLines="1" />DNSSEC
+          validation can detect the attack on the resolution of the domain
+          name in the redirected URI. Even if the DNS client does not perform
+          DNSSEC validation, PKIX authentication <xref
+          target="RFC6125"></xref> based upon the domain name in the
+          redirected URI will detect the attack.<vspace blankLines="1" />A DNS
+          client that successfully connects to a redirected DoH server may
+          choose to locally cache the server host IP addresses in order to not
+          have to repeat the Do53 query.<figure align="center"
+              anchor="redirection"
+              title="A Simplified Example of Redirection to the DNS Forwarder in the CPE">
+              <artwork><![CDATA[                                                --,--,-
+                      ,+-,--,--.             ,/  ISP   \.
+                   ,-'          `-.       ,-'            `-.
+         DoH/DoT --(      LAN      CPE----( S (DNS Server)  )
+    capable client  `-.          ,-'|      `-.           ,-'
+             |        `--'--'--'    |       | `--'--'--'
+             |<========DHCP========>|       | 
+             |       {RI, S}        |       | 
+             |                              | 
+             |<============DoH=============>|
+             |<------303 (See Other)--------| 
+             |                              | 
+             |-----Do53 Query------>| 
+             |<----CPE's LAN @------|
+             |                      |        
+             |<========DoH=========>|    
+             |                      |     
+
+]]></artwork>
+            </figure></t>
         </list></t>
     </section>
 
@@ -741,9 +798,9 @@
       failures and accept spoofed certificates will be subject to attacks
       (e.g., redirect to malicious servers, intercept sensitive data).</t>
 
-      <t>DNS queries received outside the home network MUST be discarded by
-      the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
-      <xref target="RFC6092"></xref>, and must apply for both IPv4 and
+      <t>TCP connections received outside the home network MUST be discarded
+      by the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
+      <xref target="RFC6092"></xref>; it MUST apply for both IPv4 and
       IPv6.</t>
     </section>
 
@@ -841,6 +898,8 @@
 
     <section title="Acknowledgements">
       <t>Many thanks to Christian Jacquenet for the review.</t>
+
+      <t>Thanks to Tommy Jensen for the comments.</t>
     </section>
   </middle>
 
@@ -906,7 +965,21 @@
             <organization></organization>
           </author>
 
-          <date month="March" year="2018" />
+          <date month="December" year="2018" />
+        </front>
+      </reference>
+
+      <reference anchor="DPP"
+                 target="https://www.wi-fi.org/download.php?file=/sites/default/files/private/Device_Provisioning_Protocol_Specification_v1.1_1.pdf">
+        <front>
+          <title>Device Provisioning Protocol Specification</title>
+
+          <author fullname="The Wi-Fi Alliance" initials=""
+                  surname="The Wi-Fi Alliance">
+            <organization></organization>
+          </author>
+
+          <date />
         </front>
       </reference>
 
