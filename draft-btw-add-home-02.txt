@@ -238,7 +238,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                       ,--,--,--.             ,--,--,--.
                    ,-'   +--+  `-.       ,-'   ISP    `-.
                   ( LAN  |UE|    CPE----(    DNS Server  )
-                   `-.   +--+   ,-'       `-.    S    ,-'
+                   `-.   +--+   ,-'       `-.         ,-'
                       `--'|-'--'             `--'--'--'
                           |                     |
                           |<=======DoH/DoT=====>|
@@ -491,8 +491,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 5.  Locating DoH/DoT Servers
 
    A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
-   or RA) to retrieve DoH and DoT servers' reachability information.  In
-   the various scenarios sketched in Section 3, Do53, DoH, and DoT may
+   or RA) to retrieve DoH/DoT servers' reachability information.  In the
+   various scenarios sketched in Section 3, Do53, DoH, and DoT may
    terminate on the same IP address (or distinct IP addresses as
    depicted in Figure 10).  Terminating Do53/DoH/DoT on the same or
    distinct IP addresses is deployment-specific.
@@ -518,27 +518,27 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                     Legacy Do53
                       client
                           |<===DHCP===>|
-                          |    {S}     |       |
+                          |    {@1}    |       |
                           |            |       |
                           |======Do53 Query===>|
                           |            |       |   --,--,-
                          ,+-,--,--.    |       |,/  ISP   \.
                       ,-'          `-. |     ,-'            `-.
-            DoH/DoT --(      LAN      CPE----( S (DNS Server)  )
+            DoH/DoT --(      LAN      CPE----( S (@1)         )
        capable client  `-.          ,-'|      `-.           ,-'
                 |        `--'--'--'    |       | `--'--'--'
                 |<========DHCP========>|       |
-                |       {RI, S}        |       |
+                |       {RI, @1}       |       |
                 |                              |
                 |<=========DoT/DoH============>|
 
    Legend:
      * S: DNS server
+     * {@1}: IP address of S; returned in a DHCP
+       Domain Name Server option
      * RI: DNS Reference Identifier
 
              Figure 9: Locating DoH/DoT/Do53 (Same DNS Server)
-
-
 
 
 
@@ -565,23 +565,25 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                     Legacy Do53
                       client
                           |<===RA======|
-                          | {RI,S1,S2} |             |
+                          | {RI,@1,@2} |             |
                           |            |             |
                           |========Do53 Query=======>|
                           |            |           --,--,-
-                         ,+-,--,--.    |        ,/   S1   \.
+                         ,+-,--,--.    |        ,/  S1 (@1)\.
                       ,-'          `-. |     ,-'    ISP     `-.
-            DoH/DoT --(      LAN      CPE----(   DNS Servers  )
-       capable client  `-.          ,-'|      `-.    S2    ,-'
+            DoH/DoT --(      LAN      CPE----(                 )
+       capable client  `-.          ,-'|      `-.   S2 (@2)  ,-'
                 |        `--'--'--'    |         `--'--'--'
                 |<=========RA==========|             |
-                |      {RI, S1,S2}     |             |
+                |      {RI,@1,@2}      |             |
                 |                                    |
                 |<===============DoT/DoH============>|
 
    Legend:
      * S1: Do53 server
      * S2: DoH/DoT server
+     * @1: IP address of S1
+     * @1: IP address of S2
      * RI: DNS Reference Identifier
 
             Figure 10: Locating DoH/DoT/Do53 (Distinct Servers)
@@ -607,8 +609,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       configured in the OS or browser as a verified resolver, the DNS
       client auto-upgrades to establish a DoH/DoT session with the ADN.
 
-      In such case, the DNS client matches the domain name in the DNS
-      Reference Identifier DHCP/RA option with the 'DNS-ID' identifier
 
 
 
@@ -618,6 +618,8 @@ Boucadair, et al.       Expires September 9, 2020              [Page 11]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+      In such case, the DNS client matches the domain name in the DNS
+      Reference Identifier DHCP/RA option with the 'DNS-ID' identifier
       type within subjectAltName entry in the server certificate
       conveyed in the TLS handshake.
 
@@ -625,16 +627,15 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    Additional options are discussed below:
 
-   o  The Wi-Fi Alliance has released the Device Provisioning Protocol
-      (DPP) [DPP].  If DPP is used, the configurator can securely
-      configure devices in the home network with the local DoT/DoH
-      server using DPP.  If the DoT/DoH servers use raw public keys
-      [RFC7250], the Subject Public Key Info (SPKI) pin set [RFC7250] of
-      raw public keys may be encoded in a QR code.  The configurator
-      (e.g., mobile device) can scan the QR code and provision SPKI pin
-      set in OS/Browser.  The configurator can in-turn securely
-      configure devices (e.g., thermostat) in the home network with the
-      SPKI pin set using DPP.
+   o  If Device Provisioning Protocol (DPP) [DPP] is used, the
+      configurator can securely configure devices in the home network
+      with the local DoT/DoH server using DPP.  If the DoT/DoH servers
+      use raw public keys [RFC7250], the Subject Public Key Info (SPKI)
+      pin set [RFC7250] of raw public keys may be encoded in a QR code.
+      The configurator (e.g., mobile device) can scan the QR code and
+      provision SPKI pin set in OS/Browser.  The configurator can in-
+      turn securely configure devices (e.g., thermostat) in the home
+      network with the SPKI pin set using DPP.
 
    o  If a CPE is co-located with security services within the home
       network, the CPE can use WPA-PSK but with unique pre-shared keys
@@ -665,7 +666,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    that they use for advertising and discovering services.  Section 4.1
    of [RFC6763] specifies that a service instance name in DNS-SD has the
    following structure:
-
 
 
 
@@ -733,10 +733,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       reachable on the LAN interface.  A simplified example is
       illustrated in Figure 11.
 
-      DNSSEC validation can detect the attack on the resolution of the
-      domain name in the redirected URI.  Even if the DNS client does
-      not perform DNSSEC validation, PKIX authentication [RFC6125] based
-      upon the domain name in the redirected URI will detect the attack.
+      PKIX authentication [RFC6125] based upon the domain name in the
+      redirected URI will detect rogue DNS servers.
 
       A DNS client that successfully connects to a redirected DoH server
       may choose to locally cache the server host IP addresses in order
@@ -745,11 +743,11 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                                                    --,--,-
                          ,+-,--,--.             ,/  ISP   \.
                       ,-'          `-.       ,-'            `-.
-            DoH/DoT --(      LAN      CPE----( S (DNS Server)  )
+            DoH/DoT --(      LAN      CPE----( S (@1)          )
        capable client  `-.          ,-'|      `-.           ,-'
                 |        `--'--'--'    |       | `--'--'--'
                 |<========DHCP========>|       |
-                |       {RI, S}        |       |
+                |       {RI, @1}       |       |
                 |                              |
                 |<============DoH=============>|
                 |<------303 (See Other)--------|
@@ -759,7 +757,9 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
                 |                      |
                 |<========DoH=========>|
                 |                      |
-
+   Legend:
+     * S: DoH/DoT server
+     * @1: IP address of S
 
     Figure 11: A Simplified Example of Redirection to the DNS Forwarder
                                 in the CPE

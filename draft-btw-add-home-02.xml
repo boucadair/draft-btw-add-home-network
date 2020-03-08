@@ -252,7 +252,7 @@
            ,--,--,--.             ,--,--,--.
         ,-'   +--+  `-.       ,-'   ISP    `-. 
        ( LAN  |UE|    CPE----(    DNS Server  )
-        `-.   +--+   ,-'       `-.    S    ,-' 
+        `-.   +--+   ,-'       `-.         ,-' 
            `--'|-'--'             `--'--'--'    
                |                     |
                |<=======DoH/DoT=====>| 
@@ -501,7 +501,7 @@
 
     <section anchor="address" title="Locating DoH/DoT Servers">
       <t>A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
-      or RA) to retrieve DoH and DoT servers' reachability information. In the
+      or RA) to retrieve DoH/DoT servers' reachability information. In the
       various scenarios sketched in <xref target="depl"></xref>, Do53, DoH,
       and DoT may terminate on the same IP address (or distinct IP addresses
       as depicted in <xref target="selection"></xref>). Terminating
@@ -523,22 +523,24 @@
                  Legacy Do53                       
                    client                        
                        |<===DHCP===>|
-                       |    {S}     |       |
+                       |    {@1}    |       |
                        |            |       |
                        |======Do53 Query===>|
                        |            |       |   --,--,-
                       ,+-,--,--.    |       |,/  ISP   \.
                    ,-'          `-. |     ,-'            `-.
-         DoH/DoT --(      LAN      CPE----( S (DNS Server)  )
+         DoH/DoT --(      LAN      CPE----( S (@1)         )
     capable client  `-.          ,-'|      `-.           ,-'
              |        `--'--'--'    |       | `--'--'--'
              |<========DHCP========>|       | 
-             |       {RI, S}        |       | 
+             |       {RI, @1}       |       | 
              |                              | 
              |<=========DoT/DoH============>|
 
 Legend:
-  * S: DNS server
+  * S: DNS server 
+  * {@1}: IP address of S; returned in a DHCP 
+    Domain Name Server option
   * RI: DNS Reference Identifier
 ]]></artwork>
         </figure></t>
@@ -549,23 +551,25 @@ Legend:
                  Legacy Do53                       
                    client                        
                        |<===RA======|
-                       | {RI,S1,S2} |             |
+                       | {RI,@1,@2} |             |
                        |            |             |
                        |========Do53 Query=======>|
                        |            |           --,--,-
-                      ,+-,--,--.    |        ,/   S1   \.
+                      ,+-,--,--.    |        ,/  S1 (@1)\.
                    ,-'          `-. |     ,-'    ISP     `-.
-         DoH/DoT --(      LAN      CPE----(   DNS Servers  )
-    capable client  `-.          ,-'|      `-.    S2    ,-'
+         DoH/DoT --(      LAN      CPE----(                 )
+    capable client  `-.          ,-'|      `-.   S2 (@2)  ,-'
              |        `--'--'--'    |         `--'--'--'
              |<=========RA==========|             | 
-             |      {RI, S1,S2}     |             | 
+             |      {RI,@1,@2}      |             | 
              |                                    | 
              |<===============DoT/DoH============>|
 
 Legend:
   * S1: Do53 server
   * S2: DoH/DoT server
+  * @1: IP address of S1
+  * @1: IP address of S2
   * RI: DNS Reference Identifier
 ]]></artwork>
         </figure></t>
@@ -601,17 +605,17 @@ Legend:
         <t>Additional options are discussed below:</t>
 
         <t><list style="symbols">
-            <t>The Wi-Fi Alliance has released the Device Provisioning
-            Protocol (DPP) <xref target="DPP"></xref>. If DPP is used, the
-            configurator can securely configure devices in the home network
-            with the local DoT/DoH server using DPP. If the DoT/DoH servers
-            use raw public keys <xref target="RFC7250"></xref>, the Subject
-            Public Key Info (SPKI) pin set <xref target="RFC7250"></xref> of
-            raw public keys may be encoded in a QR code. The configurator
-            (e.g., mobile device) can scan the QR code and provision SPKI pin
-            set in OS/Browser. The configurator can in-turn securely configure
-            devices (e.g., thermostat) in the home network with the SPKI pin
-            set using DPP.</t>
+            <t>If Device Provisioning Protocol (DPP) <xref
+            target="DPP"></xref> is used, the configurator can securely
+            configure devices in the home network with the local DoT/DoH
+            server using DPP. If the DoT/DoH servers use raw public keys <xref
+            target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin
+            set <xref target="RFC7250"></xref> of raw public keys may be
+            encoded in a QR code. The configurator (e.g., mobile device) can
+            scan the QR code and provision SPKI pin set in OS/Browser. The
+            configurator can in-turn securely configure devices (e.g.,
+            thermostat) in the home network with the SPKI pin set using
+            DPP.</t>
 
             <t>If a CPE is co-located with security services within the home
             network, the CPE can use WPA-PSK but with unique pre-shared keys
@@ -699,25 +703,22 @@ Legend:
           domain name in the redirected URI and eventually establishes DoH
           session with the DoH forwarder in the CPE reachable on the LAN
           interface. A simplified example is illustrated in <xref
-          target="redirection"></xref>.<vspace blankLines="1" />DNSSEC
-          validation can detect the attack on the resolution of the domain
-          name in the redirected URI. Even if the DNS client does not perform
-          DNSSEC validation, PKIX authentication <xref
-          target="RFC6125"></xref> based upon the domain name in the
-          redirected URI will detect the attack.<vspace blankLines="1" />A DNS
-          client that successfully connects to a redirected DoH server may
-          choose to locally cache the server host IP addresses in order to not
-          have to repeat the Do53 query.<figure align="center"
-              anchor="redirection"
+          target="redirection"></xref>.<vspace blankLines="1" />PKIX
+          authentication <xref target="RFC6125"></xref> based upon the domain
+          name in the redirected URI will detect rogue DNS servers.<vspace
+          blankLines="1" />A DNS client that successfully connects to a
+          redirected DoH server may choose to locally cache the server host IP
+          addresses in order to not have to repeat the Do53 query.<figure
+              align="center" anchor="redirection"
               title="A Simplified Example of Redirection to the DNS Forwarder in the CPE">
               <artwork><![CDATA[                                                --,--,-
                       ,+-,--,--.             ,/  ISP   \.
                    ,-'          `-.       ,-'            `-.
-         DoH/DoT --(      LAN      CPE----( S (DNS Server)  )
+         DoH/DoT --(      LAN      CPE----( S (@1)          )
     capable client  `-.          ,-'|      `-.           ,-'
              |        `--'--'--'    |       | `--'--'--'
              |<========DHCP========>|       | 
-             |       {RI, S}        |       | 
+             |       {RI, @1}       |       | 
              |                              | 
              |<============DoH=============>|
              |<------303 (See Other)--------| 
@@ -727,7 +728,9 @@ Legend:
              |                      |        
              |<========DoH=========>|    
              |                      |     
-
+Legend:
+  * S: DoH/DoT server
+  * @1: IP address of S
 ]]></artwork>
             </figure></t>
         </list></t>
