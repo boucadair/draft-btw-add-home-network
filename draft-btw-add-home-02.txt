@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: September 9, 2020                                        McAfee
+Expires: September 10, 2020                                       McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                           March 8, 2020
+                                                           March 9, 2020
 
 
     DNS-over-HTTPS and DNS-over-TLS Server Discovery and Deployment
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 9, 2020.
+   This Internet-Draft will expire on September 10, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 1]
+Boucadair, et al.      Expires September 10, 2020               [Page 1]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -79,7 +79,7 @@ Table of Contents
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .   8
    5.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .   9
      5.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  11
-     5.2.  Additional Deployment Options . . . . . . . . . . . . . .  12
+     5.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  12
    6.  DoT and DoH DNS-SD Considerations . . . . . . . . . . . . . .  12
    7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  13
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
@@ -92,7 +92,8 @@ Table of Contents
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  17
      11.2.  Informative References . . . . . . . . . . . . . . . . .  18
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
+   Appendix A.  Customized DHCP Configuration  . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -104,15 +105,17 @@ Table of Contents
    o  Protocol Configuration Options in cellular networks [TS.24008].
    o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
       [RFC8415][RFC3646] (OPTION_DNS_SERVERS).
-   o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
-      DNS Server Option)).
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 2]
+
+Boucadair, et al.      Expires September 10, 2020               [Page 2]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
+      DNS Server Option)).
 
    The communication between a customer's device (a.k.a., User Equipment
    (UE)) (possibly via Customer Premises Equipment (CPE)) and an ISP-
@@ -159,17 +162,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
       For example, the latency targets set in the context of 5G are 1ms
       (uRLLC) and 4ms (eMBB).  An ISP will be able to address such
-      demanding latency requirements assuming the corresponding services
-      rely upon resources (network, compute, storage) that are located
-      as close to the user as possible (e.g., by means of Edge Computing
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 3]
+Boucadair, et al.      Expires September 10, 2020               [Page 3]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+      demanding latency requirements assuming the corresponding services
+      rely upon resources (network, compute, storage) that are located
+      as close to the user as possible (e.g., by means of Edge Computing
       techniques and resources).  Such latency requirements are likely
       to be addressed by means of optimized designs (DNS, in
       particular), too.
@@ -190,9 +193,10 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    Some ISPs rely upon external resolvers (e.g., outsourced service or
    public resolvers); these ISPs provide their customers with the IP
    addresses of these resolvers.  These addresses are typically
-   configured on CPEs using the same mechanisms listed above.  This
-   document permits such deployments.  It is up to an ISP to decide
-   which list of DNS resolvers to advertise to its serviced devices.
+   configured on CPEs using the same mechanisms listed above.  Likewise,
+   users can modify the default DNS configuration of their CPEs (e.g.,
+   supplied by their ISP) to configure their favorite DNS servers.  This
+   document permits such deployments.
 
 2.  Terminology
 
@@ -213,18 +217,20 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    configuration information (e.g., CPE WAN Management Protocol
    [TR-069]).  For example, these tools may be used to provision the
    authentication domain name information (ADN) to managed CPEs if DoH/
+
+
+
+
+Boucadair, et al.      Expires September 10, 2020               [Page 4]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    DoT is supported by a local network similar to what is depicted in
    Figure 2.
 
    DoH-capable (or DoH) clients establish the DoH (or DoT) session with
    the discovered DNS server.
-
-
-
-Boucadair, et al.       Expires September 9, 2020               [Page 4]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    If a DNS client supports both DoT and DoH, the client try to
    establish DoH/DoT sessions with the discovered DNS server to
@@ -271,13 +277,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-
-
-
-
-
-
-Boucadair, et al.       Expires September 9, 2020               [Page 5]
+Boucadair, et al.      Expires September 10, 2020               [Page 5]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 6]
+Boucadair, et al.      Expires September 10, 2020               [Page 6]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 7]
+Boucadair, et al.      Expires September 10, 2020               [Page 7]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 8]
+Boucadair, et al.      Expires September 10, 2020               [Page 8]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020               [Page 9]
+Boucadair, et al.      Expires September 10, 2020               [Page 9]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 10]
+Boucadair, et al.      Expires September 10, 2020              [Page 10]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 11]
+Boucadair, et al.      Expires September 10, 2020              [Page 11]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -623,9 +623,10 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       type within subjectAltName entry in the server certificate
       conveyed in the TLS handshake.
 
-5.2.  Additional Deployment Options
+5.2.  Other Deployment Options
 
-   Additional options are discussed below:
+   Some deployment options to securely configure hosts are discussed
+   below.  These options are provided for the sake of completeness.
 
    o  If Device Provisioning Protocol (DPP) [DPP] is used, the
       configurator can securely configure devices in the home network
@@ -664,15 +665,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    DNS-SD defines a set of naming rules for certain DNS record types
    that they use for advertising and discovering services.  Section 4.1
-   of [RFC6763] specifies that a service instance name in DNS-SD has the
-   following structure:
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 12]
+
+Boucadair, et al.      Expires September 10, 2020              [Page 12]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   of [RFC6763] specifies that a service instance name in DNS-SD has the
+   following structure:
 
    <Instance> . <Service> . <Domain>
 
@@ -719,17 +722,16 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
       client to the DoH forwarder hosted on the CPE (e.g.,
       cpe1-internal.example.net).  The DNS client either uses Do53 or
       opportunistic privacy profile (Section 7.2 of [RFC8310]) to
-      resolve the domain name in the redirected URI and eventually
-      establishes DoH session with the DoH forwarder in the CPE
 
 
 
-
-Boucadair, et al.       Expires September 9, 2020              [Page 13]
+Boucadair, et al.      Expires September 10, 2020              [Page 13]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+      resolve the domain name in the redirected URI and eventually
+      establishes DoH session with the DoH forwarder in the CPE
       reachable on the LAN interface.  A simplified example is
       illustrated in Figure 11.
 
@@ -776,16 +778,16 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    Because DHCP/RA messages are not encrypted or protected against
    modification in any way, their content can be spoofed or modified by
    compromised devices within the home network.  An attacker can spoof
-   the DHCP/RA response to provide the attacker's DoT/DoH server.  Note
-   that such an attacker can launch other attacks as discussed in
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 14]
+Boucadair, et al.      Expires September 10, 2020              [Page 14]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   the DHCP/RA response to provide the attacker's DoT/DoH server.  Note
+   that such an attacker can launch other attacks as discussed in
    Section 22 of [RFC8415].  Furthermore, if the browser or the OS is
    pre-configured with a list of DNS servers and some of which perform
    malware filtering while others do not, an attacker can prevent
@@ -835,9 +837,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-
-
-Boucadair, et al.       Expires September 9, 2020              [Page 15]
+Boucadair, et al.      Expires September 10, 2020              [Page 15]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 16]
+Boucadair, et al.      Expires September 10, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 17]
+Boucadair, et al.      Expires September 10, 2020              [Page 17]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 18]
+Boucadair, et al.      Expires September 10, 2020              [Page 18]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1061,10 +1061,15 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.       Expires September 9, 2020              [Page 19]
+Boucadair, et al.      Expires September 10, 2020              [Page 19]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
+              Configuration on the Basis of Network Topology", RFC 7969,
+              DOI 10.17487/RFC7969, October 2016,
+              <https://www.rfc-editor.org/info/rfc7969>.
 
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
@@ -1088,6 +1093,40 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               3GPP, "Mobile radio interface Layer 3 specification; Core
               network protocols; Stage 3 (Release 16)", December 2019,
               <http://www.3gpp.org/DynaReport/24008.htm>.
+
+Appendix A.  Customized DHCP Configuration
+
+   In deployment where DoH/DoT/Do53 are not co-located, an ISP may
+   return a list of servers that is composed of DoH (and/or DoT) and
+   Do53 servers.  A host that is also DoH-capable (and/or DoT-capable),
+   will try to establish a DoH (and/or DoT) session to that list.  DoT
+   and/or DoH are supported if the client succeeds to establish a
+   session.
+
+   Let's consider that the DoH server is reachable at
+   2001:db8:122:300::2 while the Do53 server is reachable at
+   2001:db8:122:300::1.  The DHCP server will then return a list that
+   includes both 2001:db8:122:300::1 and 2001:db8:122:300::2 to a
+   requesting DNS client.  That list is passed to the DNS client.  A
+   legacy Do53 client will select 2001:db8:122:300::1 while a DoH client
+   will select 2001:db8:122:300::2.
+
+   Alternatively, the DHCP server may return a customized DNS
+   configuration ([RFC7969]) as a function of the requested DHCP option.
+   For example, if the DHCP client does not request any DNS Reference
+
+
+
+Boucadair, et al.      Expires September 10, 2020              [Page 20]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
+   Identifier option, the DHCP server returns the IP address of the Do53
+   server (2001:db8:122:300::1).  If a DNS Reference Identifier option
+   is present in the request, the DHCP server returns the IP address of
+   the DoH server (2001:db8:122:300::2) (or 2001:db8:122:300::2 and
+   2001:db8:122:300::1 in this order).
 
 Authors' Addresses
 
@@ -1115,13 +1154,6 @@ Authors' Addresses
    Email: dwing-ietf@fuggles.com
 
 
-
-
-Boucadair, et al.       Expires September 9, 2020              [Page 20]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
-
    Neil Cook
    Open-Xchange
    UK
@@ -1141,36 +1173,4 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires September 9, 2020              [Page 21]
+Boucadair, et al.      Expires September 10, 2020              [Page 21]

@@ -209,9 +209,10 @@
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
       addresses of these resolvers. These addresses are typically configured
-      on CPEs using the same mechanisms listed above. This document permits
-      such deployments. It is up to an ISP to decide which list of DNS
-      resolvers to advertise to its serviced devices.</t>
+      on CPEs using the same mechanisms listed above. Likewise, users can
+      modify the default DNS configuration of their CPEs (e.g., supplied by
+      their ISP) to configure their favorite DNS servers. This document
+      permits such deployments. </t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -237,7 +238,7 @@
       depicted in <xref target="wan"></xref>.</t>
 
       <t>DoH-capable (or DoH) clients establish the DoH (or DoT) session with
-      the discovered DNS server. </t>
+      the discovered DNS server.</t>
 
       <t>If a DNS client supports both DoT and DoH, the client try to
       establish DoH/DoT sessions with the discovered DNS server to determine
@@ -575,7 +576,7 @@ Legend:
         </figure></t>
 
       <t>The following sub-sections discusses the conditions under which
-      discovered DoT/DoH server can be used. </t>
+      discovered DoT/DoH server can be used.</t>
 
       <section anchor="auto" title="DoT/DoH Auto-Upgrade">
         <t>Additional considerations are discussed below for the use of DoH
@@ -601,8 +602,9 @@ Legend:
           </list></t>
       </section>
 
-      <section anchor="ad" title="Additional Deployment Options">
-        <t>Additional options are discussed below:</t>
+      <section anchor="ad" title="Other Deployment Options">
+        <t>Some deployment options to securely configure hosts are discussed
+        below. These options are provided for the sake of completeness. </t>
 
         <t><list style="symbols">
             <t>If Device Provisioning Protocol (DPP) <xref
@@ -641,8 +643,7 @@ Legend:
       <t>As an alternative to probing discovered DNS servers in order to check
       (1) whether they support DoT and/or DoH, and (2) whether customized port
       numbers are used (instead of 443/853 port numbers), a DNS client MAY use
-      DNS-based Service Discovery (DNS-SD) <xref target="RFC6763"></xref>.
-      </t>
+      DNS-based Service Discovery (DNS-SD) <xref target="RFC6763"></xref>.</t>
 
       <t>DNS-SD defines a set of naming rules for certain DNS record types
       that they use for advertising and discovering services. Section 4.1 of
@@ -661,7 +662,7 @@ Legend:
       target="RFC7858"></xref>) or "_doh._tcp" (<xref target="name"></xref>).
       If no DNS-SD records can be retrieved by the DNS client, it MUST wait a
       time period that is appropriate for the encountered error (e.g.,
-      NXDOMAIN, timeout, etc.). </t>
+      NXDOMAIN, timeout, etc.).</t>
 
       <t>If DoH is supported by the DNS server, the DNS client may request the
       URI resource record type <xref target="RFC7553"></xref> using the domain
@@ -687,7 +688,7 @@ Legend:
           assign a unique FQDN to the managed CPE. DNS requests to the
           forwarder are sent to the internal IP address, not the external one.
           The DoH/DoT forwarder will act like a private DoT/DoH server only be
-          accessible from within the home network. </t>
+          accessible from within the home network.</t>
 
           <t hangText="Redirection:">An ISP-managed CPE can be configured with
           the ISP's DoH/DoT resolver IP addresses and ADN, which it will
@@ -784,14 +785,14 @@ Legend:
       server is pre-configured in the OS or the browser. Sections <xref
       format="counter" target="auto"></xref> and <xref format="counter"
       target="ad"></xref> identify a set of deployment options under which
-      DHCP/RA RI options can be used. </t>
+      DHCP/RA RI options can be used.</t>
 
       <t>If the insecurely discovered DoH/DoT server is not pre-configured in
       the OS or browser, its policy information must be cryptographically
       attested by the ISP (e.g., <xref
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>); user consent
       is required to use the locally-discovered DoH/DoT server. Such consent
-      may be part of the generic policies discussed above. </t>
+      may be part of the generic policies discussed above.</t>
 
       <t>DoT/DoH sessions with rogue servers spoofing the IP address of a DNS
       server will fail because the DNS client will fail to authenticate that
@@ -958,6 +959,8 @@ Legend:
 
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
 
+      <?rfc include='reference.RFC.7969'?>
+
       <reference anchor="TR-069"
                  target="https://www.broadband-forum.org/technical/download/TR-069.pdf">
         <front>
@@ -1013,5 +1016,30 @@ Legend:
         </front>
       </reference>
     </references>
+
+    <section title="Customized DHCP Configuration">
+      <t>In deployment where DoH/DoT/Do53 are not co-located, an ISP may
+      return a list of servers that is composed of DoH (and/or DoT) and Do53
+      servers. A host that is also DoH-capable (and/or DoT-capable), will try
+      to establish a DoH (and/or DoT) session to that list. DoT and/or DoH are
+      supported if the client succeeds to establish a session.</t>
+
+      <t>Let's consider that the DoH server is reachable at
+      2001:db8:122:300::2 while the Do53 server is reachable at
+      2001:db8:122:300::1. The DHCP server will then return a list that
+      includes both 2001:db8:122:300::1 and 2001:db8:122:300::2 to a
+      requesting DNS client. That list is passed to the DNS client. A legacy
+      Do53 client will select 2001:db8:122:300::1 while a DoH client will
+      select 2001:db8:122:300::2.</t>
+
+      <t>Alternatively, the DHCP server may return a customized DNS
+      configuration (<xref target="RFC7969"></xref>) as a function of the
+      requested DHCP option. For example, if the DHCP client does not request
+      any DNS Reference Identifier option, the DHCP server returns the IP
+      address of the Do53 server (2001:db8:122:300::1). If a DNS Reference
+      Identifier option is present in the request, the DHCP server returns the
+      IP address of the DoH server (2001:db8:122:300::2) (or
+      2001:db8:122:300::2 and 2001:db8:122:300::1 in this order).</t>
+    </section>
   </back>
 </rfc>
