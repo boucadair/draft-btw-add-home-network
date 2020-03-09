@@ -212,7 +212,7 @@
       on CPEs using the same mechanisms listed above. Likewise, users can
       modify the default DNS configuration of their CPEs (e.g., supplied by
       their ISP) to configure their favorite DNS servers. This document
-      permits such deployments. </t>
+      permits such deployments.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -237,7 +237,7 @@
       CPEs if DoH/DoT is supported by a local network similar to what is
       depicted in <xref target="wan"></xref>.</t>
 
-      <t>DoH-capable (or DoH) clients establish the DoH (or DoT) session with
+      <t>DoH-capable (or DoT) clients establish the DoH (or DoT) session with
       the discovered DNS server.</t>
 
       <t>If a DNS client supports both DoT and DoH, the client try to
@@ -604,7 +604,7 @@ Legend:
 
       <section anchor="ad" title="Other Deployment Options">
         <t>Some deployment options to securely configure hosts are discussed
-        below. These options are provided for the sake of completeness. </t>
+        below. These options are provided for the sake of completeness.</t>
 
         <t><list style="symbols">
             <t>If Device Provisioning Protocol (DPP) <xref
@@ -782,9 +782,8 @@ Legend:
 
       <t>DoH/DoT servers discovered using insecure discovery mechanisms like
       DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-      server is pre-configured in the OS or the browser. Sections <xref
-      format="counter" target="auto"></xref> and <xref format="counter"
-      target="ad"></xref> identify a set of deployment options under which
+      server is pre-configured in the OS or the browser. <xref
+      target="auto"></xref> identifies a set of deployment options under which
       DHCP/RA RI options can be used.</t>
 
       <t>If the insecurely discovered DoH/DoT server is not pre-configured in
@@ -1034,11 +1033,11 @@ Legend:
 
       <t>Alternatively, the DHCP server may return a customized DNS
       configuration (<xref target="RFC7969"></xref>) as a function of the
-      requested DHCP option. For example, if the DHCP client does not request
-      any DNS Reference Identifier option, the DHCP server returns the IP
-      address of the Do53 server (2001:db8:122:300::1). If a DNS Reference
-      Identifier option is present in the request, the DHCP server returns the
-      IP address of the DoH server (2001:db8:122:300::2) (or
+      requested DHCP options. For example, if the DHCP client does not include
+      a DNS Reference Identifier option in its request, the DHCP server will
+      return the IP address of the Do53 server (2001:db8:122:300::1). If a DNS
+      Reference Identifier option is present in the request, the DHCP server
+      returns the IP address(es) of the DoH server (2001:db8:122:300::2) (or
       2001:db8:122:300::2 and 2001:db8:122:300::1 in this order).</t>
     </section>
   </back>

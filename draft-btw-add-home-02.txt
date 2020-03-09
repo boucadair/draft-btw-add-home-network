@@ -229,7 +229,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    DoT is supported by a local network similar to what is depicted in
    Figure 2.
 
-   DoH-capable (or DoH) clients establish the DoH (or DoT) session with
+   DoH-capable (or DoT) clients establish the DoH (or DoT) session with
    the discovered DNS server.
 
    If a DNS client supports both DoT and DoH, the client try to
@@ -815,9 +815,9 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    DoH/DoT servers discovered using insecure discovery mechanisms like
    DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
-   server is pre-configured in the OS or the browser.  Sections 5.1 and
-   5.2 identify a set of deployment options under which DHCP/RA RI
-   options can be used.
+   server is pre-configured in the OS or the browser.  Section 5.1
+   identifies a set of deployment options under which DHCP/RA RI options
+   can be used.
 
    If the insecurely discovered DoH/DoT server is not pre-configured in
    the OS or browser, its policy information must be cryptographically
@@ -1112,8 +1112,8 @@ Appendix A.  Customized DHCP Configuration
    will select 2001:db8:122:300::2.
 
    Alternatively, the DHCP server may return a customized DNS
-   configuration ([RFC7969]) as a function of the requested DHCP option.
-   For example, if the DHCP client does not request any DNS Reference
+   configuration ([RFC7969]) as a function of the requested DHCP
+   options.  For example, if the DHCP client does not include a DNS
 
 
 
@@ -1122,11 +1122,12 @@ Boucadair, et al.      Expires September 10, 2020              [Page 20]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
-   Identifier option, the DHCP server returns the IP address of the Do53
-   server (2001:db8:122:300::1).  If a DNS Reference Identifier option
-   is present in the request, the DHCP server returns the IP address of
-   the DoH server (2001:db8:122:300::2) (or 2001:db8:122:300::2 and
-   2001:db8:122:300::1 in this order).
+   Reference Identifier option in its request, the DHCP server will
+   return the IP address of the Do53 server (2001:db8:122:300::1).  If a
+   DNS Reference Identifier option is present in the request, the DHCP
+   server returns the IP address(es) of the DoH server
+   (2001:db8:122:300::2) (or 2001:db8:122:300::2 and 2001:db8:122:300::1
+   in this order).
 
 Authors' Addresses
 
@@ -1159,7 +1160,6 @@ Authors' Addresses
    UK
 
    Email: neil.cook@noware.co.uk
-
 
 
 
