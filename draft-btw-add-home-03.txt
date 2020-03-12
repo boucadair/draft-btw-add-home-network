@@ -597,19 +597,19 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
       *  The DoH client can immediately use available DoH services.
 
-   Retrieve the templates directly from the DoH server:  Concretely,
-      upon discovery of a DoH server (Section 4), the DoH client
-      contacts that DoH server to retrieve the list of supported DoH
-      services (e.g., use of a well-known URI).  That information is
-      then cached by the DoH client for a given period (e.g., 24h).  DoH
-      clients can re-iterate that request regularly (e.g., 24h) to
-      retrieve an updated list.  This approach allows to avoid adherence
-      with DHCP/RA for (de)activating new DoH services.
+   Retrieve the templates directly from the DoH server:  Upon discovery
+      of a DoH server (Section 4), the DoH client contacts that DoH
+      server to retrieve the list of supported DoH services (e.g., use
+      of a well-known URI).  That information is cached by the DoH
+      client for a given period (e.g., 24h).  DoH clients re-iterates
+      that request regularly (e.g., 24h) to retrieve an updated list of
+      supported DoH services.
+
+      This approach allows to avoid adherence of DoH servers with DHCP
+      servers (or access routers) for (de)activating new DoH services.
 
    How a DoH client makes use of the configured DoH services is out of
    scope of this document.
-
-
 
 
 
