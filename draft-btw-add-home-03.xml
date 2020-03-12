@@ -562,8 +562,9 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       services (e.g., no-filtering, blocking adult content, blocking malware).
       The following discusses some candidate solutions for a DoH client to
       retrieve the list of supported templates by a DoH server:<list
-          style="symbols">
-          <t>Convey the URI templates in a dedicated DHCP/RA option: This
+          style="hanging">
+          <t
+          hangText="Convey the URI templates in a dedicated DHCP/RA option:">This
           solution assumes that DHCP servers and access router maintain an
           updated list of the templates used by DoH servers. <vspace
           blankLines="1" />In order to avoid that stale DoH information is
@@ -576,22 +577,21 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           the DNS service is provided by a distinct entity than the ISP, an
           out-of-band mechanism is required to synchronize the list of DoH
           services that are active on a DoH server vs. the list maintained
-          locally by the ISP. <vspace blankLines="1" />Also, it is not clear
+          locally by the ISP.<vspace blankLines="1" />Also, it is not clear
           how enclosed URI templates will be validated by DHCP clients given
           that future specifications may allow for other variables in the URI.
           <vspace blankLines="1" />RA/DHCP has the advantage to notify clients
           whenever there is a change in the DoH service configuration. </t>
 
-          <t>Retrieve the templates directly from the DoH server discovered
-          using DNS Reference Identifier DHCP/RA option (<xref
-          target="RI"></xref>). Concretely, upon discovery of a DoH server,
-          the DoH client contacts that DoH server to retrieve the list of
-          supported DoH services (e.g., use of a well-known URI). That
-          information is then cached by the DoH client for a given period
-          (e.g., 24h). DoH clients can re-iterate that request regularly
-          (e.g., 24h) to retrieve an updated list. This approach allows to
-          avoid adherence with DHCP/RA for (de)activating new DoH services.
-          </t>
+          <t
+          hangText="Retrieve the templates directly from the DoH server:">Concretely,
+          upon discovery of a DoH server (<xref target="RI"></xref>), the DoH
+          client contacts that DoH server to retrieve the list of supported
+          DoH services (e.g., use of a well-known URI). That information is
+          then cached by the DoH client for a given period (e.g., 24h). DoH
+          clients can re-iterate that request regularly (e.g., 24h) to
+          retrieve an updated list. This approach allows to avoid adherence
+          with DHCP/RA for (de)activating new DoH services. </t>
         </list></t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
