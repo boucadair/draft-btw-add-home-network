@@ -565,23 +565,40 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           style="hanging">
           <t
           hangText="Convey the URI templates in a dedicated DHCP/RA option:">This
-          solution assumes that DHCP servers and access router maintain an
+          solution assumes that DHCP servers and access routers maintain an
           updated list of the templates used by DoH servers. <vspace
-          blankLines="1" />In order to avoid that stale DoH information is
-          supplied to connected devices, each time the URI templates are
-          updated at a DoH server (e.g., add a new DoH service, withdraw a DoH
-          service), DHCP servers (or access routers for the RA case) have to
-          be updated accordingly to reflect the DNS service change. This
-          dependency may be affordable if the ISP providing the connectivity
-          service is also the one operating the DoH server. Nevertheless, if
-          the DNS service is provided by a distinct entity than the ISP, an
-          out-of-band mechanism is required to synchronize the list of DoH
-          services that are active on a DoH server vs. the list maintained
-          locally by the ISP.<vspace blankLines="1" />Also, it is not clear
-          how enclosed URI templates will be validated by DHCP clients given
-          that future specifications may allow for other variables in the URI.
-          <vspace blankLines="1" />RA/DHCP has the advantage to notify clients
-          whenever there is a change in the DoH service configuration. </t>
+          blankLines="1" />The following observations can be made: <list
+              style="symbols">
+              <t>In order to avoid that stale DoH information is supplied to
+              connected devices, each time the URI templates are updated at a
+              DoH server (e.g., add a new DoH service, withdraw a DoH
+              service), DHCP servers (or access routers for the RA case) have
+              to be updated accordingly to reflect the DNS service change.</t>
+
+              <t>This dependency may be affordable if the ISP providing the
+              connectivity service is also the one operating the DoH
+              server.</t>
+
+              <t>Nevertheless, if the DNS service is provided by a distinct
+              entity than the ISP, an out-of-band mechanism is required to
+              synchronize the list of DoH services that are active on a DoH
+              server vs. the list maintained locally by the ISP.</t>
+
+              <t>Also, it is not clear how enclosed URI templates will be
+              validated by DHCP clients given that future specifications may
+              allow for other variables in the URI.</t>
+
+              <t>Including a large list of templates may cause the size of an
+              RA to exceed the link MTU. In such case, multiple RAs must be
+              used. </t>
+            </list> <vspace blankLines="1" />RA/DHCP has the following
+          advantages:<list style="symbols">
+              <t>Notify clients whenever there is a change in the DoH service
+              configuration. </t>
+
+              <t>The DoH client can immediately use available DoH services.
+              </t>
+            </list></t>
 
           <t
           hangText="Retrieve the templates directly from the DoH server:">Concretely,

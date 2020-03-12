@@ -80,7 +80,7 @@ Table of Contents
      4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .   9
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .   9
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  10
-   6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  11
+   6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  12
      6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  13
      6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  14
    7.  DoT and DoH DNS-SD Considerations . . . . . . . . . . . . . .  14
@@ -563,27 +563,39 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
    Convey the URI templates in a dedicated DHCP/RA option:  This
-      solution assumes that DHCP servers and access router maintain an
+      solution assumes that DHCP servers and access routers maintain an
       updated list of the templates used by DoH servers.
 
-      In order to avoid that stale DoH information is supplied to
-      connected devices, each time the URI templates are updated at a
-      DoH server (e.g., add a new DoH service, withdraw a DoH service),
-      DHCP servers (or access routers for the RA case) have to be
-      updated accordingly to reflect the DNS service change.  This
-      dependency may be affordable if the ISP providing the connectivity
-      service is also the one operating the DoH server.  Nevertheless,
-      if the DNS service is provided by a distinct entity than the ISP,
-      an out-of-band mechanism is required to synchronize the list of
-      DoH services that are active on a DoH server vs. the list
-      maintained locally by the ISP.
+      The following observations can be made:
 
-      Also, it is not clear how enclosed URI templates will be validated
-      by DHCP clients given that future specifications may allow for
-      other variables in the URI.
+      *  In order to avoid that stale DoH information is supplied to
+         connected devices, each time the URI templates are updated at a
+         DoH server (e.g., add a new DoH service, withdraw a DoH
+         service), DHCP servers (or access routers for the RA case) have
+         to be updated accordingly to reflect the DNS service change.
 
-      RA/DHCP has the advantage to notify clients whenever there is a
-      change in the DoH service configuration.
+      *  This dependency may be affordable if the ISP providing the
+         connectivity service is also the one operating the DoH server.
+
+      *  Nevertheless, if the DNS service is provided by a distinct
+         entity than the ISP, an out-of-band mechanism is required to
+         synchronize the list of DoH services that are active on a DoH
+         server vs. the list maintained locally by the ISP.
+
+      *  Also, it is not clear how enclosed URI templates will be
+         validated by DHCP clients given that future specifications may
+         allow for other variables in the URI.
+
+      *  Including a large list of templates may cause the size of an RA
+         to exceed the link MTU.  In such case, multiple RAs must be
+         used.
+
+      RA/DHCP has the following advantages:
+
+      *  Notify clients whenever there is a change in the DoH service
+         configuration.
+
+      *  The DoH client can immediately use available DoH services.
 
    Retrieve the templates directly from the DoH server:  Concretely,
       upon discovery of a DoH server (Section 4), the DoH client
@@ -596,6 +608,15 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    How a DoH client makes use of the configured DoH services is out of
    scope of this document.
+
+
+
+
+
+Boucadair, et al.      Expires September 13, 2020              [Page 11]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
 
 6.  Locating DoH/DoT Servers
 
@@ -610,14 +631,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    by their address literals rather than their names.  This avoids
    adding a dependency on another server to resolve the DoH/DoT name.
    Concretely, if Do53/DoH/DoT terminate on same IP addresses, existing
-
-
-
-Boucadair, et al.      Expires September 13, 2020              [Page 11]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
-
    discovery mechanisms [RFC2132][RFC3646][RFC8106] can be leveraged to
    learn the IP addresses of DoT/DoH servers while an authentication
    domain name is supplied by one of the options discussed in Section 4.
@@ -647,19 +660,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
      * RI: DNS Reference Identifier
 
             Figure 11: Locating DoH/DoT/Do53 (Same DNS Server)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
