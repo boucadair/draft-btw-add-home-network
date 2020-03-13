@@ -856,19 +856,26 @@ Legend:
 
       <section anchor="forwarder_u" title="Unmanaged CPEs">
         <t>The approach specified in <xref target="forwarder_m"></xref> does
-        not apply for hosting a DNS forwarder in an unmanaged CPE. An approach
-        that can be followed is described hereafter.</t>
+        not apply for hosting a DNS forwarder in an unmanaged CPE. </t>
 
-        <t>In reference to <xref target="internal_forwarded"></xref>:</t>
+        <t>The unmanaged CPE administrator (referred to as administrator) can
+        host a DoH/DoT forwarder on the unmanaged CPE. The DoH/DoT server
+        certificate is managed by the entity in-charge of hosting the DoT/DoH
+        forwarder. The DoH/DoT forwarder will either be configured to use the
+        ISP's or a 3rd party DoH/DoT server. The unmanaged CPE will advertise
+        the DoH/DoT forwarder ADN using DHCP/RA to internal clients. </t>
+
+        <t>More details are provided below in reference to the example shown
+        in <xref target="internal_forwarded"></xref>:</t>
 
         <t><list style="numbers">
-            <t>The user configures via a management interface of the Internal
-            CPE a 3rd party DNS server as the default DNS server. It also
-            configures an ADN associated with the DNS forwarder, if the
-            Internal CPE supports such feature.</t>
+            <t>The administrator configures via a management interface of the
+            Internal CPE a 3rd party DNS server as the default DNS server. It
+            also configures an ADN associated with the DNS forwarder, if the
+            Internal CPE supports such feature. How the administrator manages
+            the certificates for that ADN is not detailed. </t>
 
-            <t>The user pre-configures its hosts following one of the methods
-            discussed in <xref target="ad"></xref>.</t>
+            <t>The administrator pre-configures its hosts with the ADN.</t>
 
             <t>The managed CPE receives the DNS configuration from the ISP
             using the options defined in <xref target="RI"></xref>.</t>
@@ -877,17 +884,14 @@ Legend:
             (including the Internal CPE). The Internal CPE ignores received
             DNS information from the managed CPE (Given Step (1)).</t>
 
-            <t>The Internal CPE uses that 3rd Party DNS server to populate the
-            DNS RI options (<xref target="RI"></xref>) sent to an internal
-            host (e.g., UE shown in <xref
-            target="internal_forwarded"></xref>).</t>
+            <t>The Internal CPE uses that forwarder's ADN to populate the DNS
+            RI options (<xref target="RI"></xref>) sent to an internal host
+            (e.g., UE shown in <xref target="internal_forwarded"></xref>).</t>
 
-            <t>Upon receipt of the DNS RI by the UE, it will auto-upgrade to
-            use DoH/DoT because it matches what is pre-configured by the user
-            (Step 2).</t>
+            <t>The UE uses the information provided in the DNS RI to establish
+            DoH/DoT sessions given that it matches what is pre-configured by
+            the administrator (Step 2).</t>
           </list></t>
-
-        <t></t>
 
         <t><figure align="center" anchor="internal_forwarded"
             title="Example of an Internal CPE Hosting a Forwarder">
@@ -901,9 +905,7 @@ UE----(  Network#A  CPE------CPE-----(   ISP   )--- DNS Server
 ]]></artwork>
           </figure></t>
 
-        <t>If a static IP address is assigned to the Internal CPE, that IP
-        address can be pre-configured to the hosts as well. In such case, the
-        host does not require to discover the local DoH/DoT forwarder.</t>
+        <t></t>
       </section>
     </section>
 
