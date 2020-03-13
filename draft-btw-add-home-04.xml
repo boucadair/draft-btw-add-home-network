@@ -565,62 +565,61 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <t>DoH servers may support more than one URI Template <xref
       target="RFC8484"></xref>. This allows a resolver to host several DoH
       services (e.g., no-filtering, blocking adult content, blocking malware).
-      The following discusses some candidate solutions for a DoH client to
-      retrieve the list of supported templates by a DoH server:<list
-          style="hanging">
-          <t
-          hangText="Convey the URI templates in a dedicated DHCP/RA option:">This
-          solution assumes that DHCP servers and access routers maintain an
-          updated list of the templates used by DoH servers. <vspace
-          blankLines="1" />The following observations can be made: <list
-              style="symbols">
-              <t>In order to avoid that stale DoH information is supplied to
-              connected devices, each time the URI templates are updated at a
-              DoH server (e.g., add a new DoH service, withdraw a DoH
-              service), DHCP servers (or access routers for the RA case) have
-              to be updated accordingly to reflect the DNS service change.</t>
-
-              <t>This dependency may be affordable if the ISP providing the
-              connectivity service is also the one operating the DoH
-              server.</t>
-
-              <t>Nevertheless, if the DNS service is provided by a distinct
-              entity than the ISP, an out-of-band mechanism is required to
-              synchronize the list of DoH services that are active on a DoH
-              server vs. the list maintained locally by the ISP.</t>
-
-              <t>Also, it is not clear how enclosed URI templates will be
-              validated by DHCP clients given that future specifications may
-              allow for other variables in the URI.</t>
-
-              <t>Including a large list of templates may cause the size of an
-              RA to exceed the link MTU. In such case, multiple RAs must be
-              used.</t>
-            </list> <vspace blankLines="1" />RA/DHCP has the following
-          advantages:<list style="symbols">
-              <t>Notify clients whenever there is a change in the DoH service
-              configuration.</t>
-
-              <t>The DoH client can immediately use available DoH
-              services.</t>
-            </list></t>
-
-          <t
-          hangText="Retrieve the templates directly from the DoH server:">Upon
-          discovery of a DoH server (<xref target="RI"></xref>), the DoH
-          client contacts that DoH server to retrieve the list of supported
-          DoH services (e.g., use of a well-known URI). That information is
-          cached by the DoH client for a given period (e.g., 24h). DoH clients
-          re-iterates that request regularly (e.g., 24h) to retrieve an
-          updated list of supported DoH services. Note that a "push" mode can
-          be considered using the mechanism defined in <xref
-          target="I-D.ietf-dnssd-push"></xref>.<vspace blankLines="1" />This
-          approach allows to avoid adherence of DoH servers with DHCP servers
-          (or access routers) for (de)activating new DoH services.</t>
-        </list></t>
+      The following sub-sections discuss some candidate solutions for a DoH
+      client to retrieve the list of supported templates by a DoH server. </t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
       scope of this document.</t>
+
+      <section title="Define a Dedicated DHCP/RA Option">
+        <t>This solution assumes that DHCP servers and access routers maintain
+        an updated list of the templates used by DoH servers. </t>
+
+        <t>The following observations can be made: <list style="symbols">
+            <t>In order to avoid that stale DoH information is supplied to
+            connected devices, each time the URI templates are updated at a
+            DoH server (e.g., add a new DoH service, withdraw a DoH service),
+            DHCP servers (or access routers for the RA case) have to be
+            updated accordingly to reflect the DNS service change.</t>
+
+            <t>This dependency may be affordable if the ISP providing the
+            connectivity service is also the one operating the DoH server.</t>
+
+            <t>Nevertheless, if the DNS service is provided by a distinct
+            entity than the ISP, an out-of-band mechanism is required to
+            synchronize the list of DoH services that are active on a DoH
+            server vs. the list maintained locally by the ISP.</t>
+
+            <t>Also, it is not clear how enclosed URI templates will be
+            validated by DHCP clients given that future specifications may
+            allow for other variables in the URI.</t>
+
+            <t>Including a large list of templates may cause the size of an RA
+            to exceed the link MTU. In such case, multiple RAs must be
+            used.</t>
+          </list></t>
+
+        <t>RA/DHCP has the following advantages:<list style="symbols">
+            <t>Notify clients whenever there is a change in the DoH service
+            configuration.</t>
+
+            <t>The DoH client can immediately use available DoH services.</t>
+          </list></t>
+      </section>
+
+      <section title="Retrieve the List Directly from the DoH Server">
+        <t>Upon discovery of a DoH server (<xref target="RI"></xref>), the DoH
+        client contacts that DoH server to retrieve the list of supported DoH
+        services (e.g., use of a well-known URI). That information is cached
+        by the DoH client for a given period (e.g., 24h). DoH clients
+        re-iterates that request regularly (e.g., 24h) to retrieve an updated
+        list of supported DoH services. Note that a "push" mode can be
+        considered using the mechanism defined in <xref
+        target="I-D.ietf-dnssd-push"></xref>.</t>
+
+        <t>This approach allows to avoid adherence of DoH servers with DHCP
+        servers (or access routers) for (de)activating new DoH services.</t>
+      </section>
     </section>
 
     <section anchor="address" title="Locating DoH/DoT Servers">
@@ -710,7 +709,7 @@ Legend:
             target="Auto-upgrade"></xref>), the DNS client auto-upgrades to
             use the pre-configured DoH/DoT server tied to the discovered DNS
             server IP address. In such a case the DNS client will perform
-            additional check out of band, such as confirming that the Do53 IP
+            additional checks out of band, such as confirming that the Do53 IP
             address and the DoH server are owned and operated by the same
             organisation.</t>
 
@@ -723,6 +722,10 @@ Legend:
             subjectAltName entry in the server certificate conveyed in the TLS
             handshake.</t>
           </list></t>
+
+        <t>Such an auto-upgrade mechanism would be compatible with the
+        Redirection method of <xref target="redirect"></xref>, for managed
+        CPEs hosting a DoT/DoH forwarder.</t>
       </section>
 
       <section anchor="ad" title="Other Deployment Options">
@@ -793,46 +796,52 @@ Legend:
 
       <section anchor="forwarder_m" title="Managed CPEs">
         <t>The following mechanisms can be used to host a DoH/DoT forwarder in
-        a managed CPE (<xref target="mcpe"></xref>):</t>
+        a managed CPE (<xref target="mcpe"></xref>).</t>
 
-        <t><list style="hanging">
-            <t hangText="ACME:">If a CPE is co-located with security services
-            (e.g., malware filtering, parental control, MUD), the ISP can
-            assign a unique FQDN (e.g., cpe1.example.com) and a
-            domain-validated public certificate to the DoH/DoT forwarder
-            hosted on the CPE. Automatic Certificate Management Environment
-            (ACME) <xref target="RFC8555"></xref> can be used to automate
-            certificate management functions such as domain validation
-            procedure, certificate issuance and certificate revocation.<vspace
-            blankLines="1" />Alternatively, the security service provider can
-            assign a unique FQDN to the managed CPE. DNS requests to the
-            forwarder are sent to the internal IP address, not the external
-            one. The DoH/DoT forwarder will act like a private DoT/DoH server
-            only be accessible from within the home network.</t>
+        <section anchor="acme" title="ACME">
+          <t>If a CPE is co-located with security services (e.g., malware
+          filtering, parental control, MUD), the ISP can assign a unique FQDN
+          (e.g., cpe1.example.com) and a domain-validated public certificate
+          to the DoH/DoT forwarder hosted on the CPE. Automatic Certificate
+          Management Environment (ACME) <xref target="RFC8555"></xref> can be
+          used to automate certificate management functions such as domain
+          validation procedure, certificate issuance and certificate
+          revocation.</t>
 
-            <t hangText="Redirection:">An ISP-managed CPE can be configured
-            with the ISP's DoH resolver IP addresses and ADN, which it will
-            communicate to internal hosts using DHCP/RA. Upon joining the
-            network, a DoH client follows the procedure specified in <xref
-            target="auto"></xref> to upgrade to DoH. <vspace
-            blankLines="1" />Once the DoH session is established, the ISP DoH
-            server uses HTTP redirection (Section 6.4.4 in <xref
-            target="RFC7231"></xref>) to redirect the DNS client to the DoH
-            forwarder hosted on the CPE (e.g., cpe1-internal.example.net). The
-            DNS client either uses Do53 or opportunistic privacy profile
-            (Section 7.2 of <xref target="RFC8310"></xref>) to resolve the
-            domain name in the redirected URI and eventually establishes DoH
-            session with the DoH forwarder in the CPE reachable on the LAN
-            interface. A simplified example is illustrated in <xref
-            target="redirection"></xref>.<vspace blankLines="1" />PKIX
-            authentication <xref target="RFC6125"></xref> based upon the
-            domain name in the redirected URI will detect rogue DNS
-            servers.<vspace blankLines="1" />A DNS client that successfully
-            connects to a redirected DoH server may choose to locally cache
-            the server host IP addresses in order to not have to repeat the
-            Do53 query.<figure align="center" anchor="redirection"
-                title="A Simplified Example of Redirection to the DNS Forwarder in the CPE">
-                <artwork><![CDATA[                                                --,--,-
+          <t>Alternatively, the security service provider can assign a unique
+          FQDN to the managed CPE. DNS requests to the forwarder are sent to
+          the internal IP address, not the external one. The DoH/DoT forwarder
+          will act like a private DoT/DoH server only be accessible from
+          within the home network.</t>
+        </section>
+
+        <section anchor="redirect" title="Redirection">
+          <t>An ISP-managed CPE can be configured with the ISP's DoH resolver
+          IP addresses and ADN, which it will communicate to internal hosts
+          using DHCP/RA. Upon joining the network, a DoH client follows the
+          procedure specified in <xref target="auto"></xref> to upgrade to
+          DoH. </t>
+
+          <t>Once the DoH session is established, the ISP DoH server uses HTTP
+          redirection (Section 6.4.4 in <xref target="RFC7231"></xref>) to
+          redirect the DNS client to the DoH forwarder hosted on the CPE
+          (e.g., cpe1-internal.example.net). The DNS client either uses Do53
+          or opportunistic privacy profile (Section 7.2 of <xref
+          target="RFC8310"></xref>) to resolve the domain name in the
+          redirected URI and eventually establishes DoH session with the DoH
+          forwarder in the CPE reachable on the LAN interface. A simplified
+          example is illustrated in <xref target="redirection"></xref>.</t>
+
+          <t>PKIX authentication <xref target="RFC6125"></xref> based upon the
+          domain name in the redirected URI will detect rogue DNS servers.</t>
+
+          <t>A DNS client that successfully connects to a redirected DoH
+          server may choose to locally cache the server host IP addresses in
+          order to not have to repeat the Do53 query.</t>
+
+          <t><figure align="center" anchor="redirection"
+              title="A Simplified Example of Redirection to the DNS Forwarder in the CPE">
+              <artwork><![CDATA[                                                --,--,-
                       ,+-,--,--.             ,/  ISP   \.
                    ,-'          `-.       ,-'            `-.
          DoH/DoT --(      LAN      CPE----( S (@1)          )
@@ -853,8 +862,10 @@ Legend:
   * S: DoH/DoT server
   * @1: IP address of S
 ]]></artwork>
-              </figure></t>
-          </list></t>
+            </figure></t>
+
+          <t></t>
+        </section>
       </section>
 
       <section anchor="forwarder_u" title="Unmanaged CPEs">
@@ -877,7 +888,7 @@ Legend:
         <t><xref target="internal_forwarded"></xref> illustrates an example of
         an unmanaged CPE hosting a forwarder which connects to a 3rd party
         DoH/DoT server. In this example, the DNS information received from the
-        managed CPE (and therefore form the ISP) is ignored by the Internal
+        managed CPE (and therefore from the ISP) is ignored by the Internal
         CPE hosting the forwarder.</t>
 
         <t><figure align="center" anchor="internal_forwarded"
