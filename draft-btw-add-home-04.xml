@@ -616,7 +616,7 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           be considered using the mechanism defined in <xref
           target="I-D.ietf-dnssd-push"></xref>.<vspace blankLines="1" />This
           approach allows to avoid adherence of DoH servers with DHCP servers
-          (or access routers) for (de)activating new DoH services. </t>
+          (or access routers) for (de)activating new DoH services.</t>
         </list></t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
@@ -859,7 +859,7 @@ Legend:
 
       <section anchor="forwarder_u" title="Unmanaged CPEs">
         <t>The approach specified in <xref target="forwarder_m"></xref> does
-        not apply for hosting a DNS forwarder in an unmanaged CPE. </t>
+        not apply for hosting a DNS forwarder in an unmanaged CPE.</t>
 
         <t>The unmanaged CPE administrator (referred to as administrator) can
         host a DoH/DoT forwarder on the unmanaged CPE. This assumes the
@@ -868,10 +868,10 @@ Legend:
             in-charge of hosting the DoT/DoH forwarder.</t>
 
             <t>The DoH/DoT forwarder will either be configured to use the
-            ISP's or a 3rd party DoH/DoT server. </t>
+            ISP's or a 3rd party DoH/DoT server.</t>
 
             <t>The unmanaged CPE will advertise the DoH/DoT forwarder ADN
-            using DHCP/RA to internal hosts. </t>
+            using DHCP/RA to internal hosts.</t>
           </list></t>
 
         <t><xref target="internal_forwarded"></xref> illustrates an example of
@@ -937,10 +937,10 @@ Legend:
       response is spoofed.</t>
 
       <t>The use of DoH/DoT also depends on the user's policies. For example,
-      the user may indicate his/her consent to use (or not) the
-      locally-discovered DoH/DoT server or request to review human-readable
-      privacy policy information of a selected DNS server to assess whether
-      that DNS server performs DNS-based content filtering (e.g., <xref
+      the user may indicate his/her consent to use (or not) the locally-
+      discovered DoH/DoT server or request to review human-readable privacy
+      policy information of a selected DNS server and to assess whether that
+      DNS server performs DNS-based content filtering (e.g., <xref
       target="I-D.reddy-dprive-dprive-privacy-policy"></xref>). The DNS client
       is assumed to adhere to these policies. This document does not make any
       assumption about the structure of such policies nor mandates specific

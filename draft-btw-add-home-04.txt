@@ -966,8 +966,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    The use of DoH/DoT also depends on the user's policies.  For example,
    the user may indicate his/her consent to use (or not) the locally-
    discovered DoH/DoT server or request to review human-readable privacy
-   policy information of a selected DNS server to assess whether that
-   DNS server performs DNS-based content filtering (e.g.,
+   policy information of a selected DNS server and to assess whether
+   that DNS server performs DNS-based content filtering (e.g.,
    [I-D.reddy-dprive-dprive-privacy-policy]).  The DNS client is assumed
    to adhere to these policies.  This document does not make any
    assumption about the structure of such policies nor mandates specific
