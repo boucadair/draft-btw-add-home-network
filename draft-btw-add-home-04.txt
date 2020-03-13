@@ -89,7 +89,7 @@ Table of Contents
      8.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  16
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
    10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
-     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  18
+     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  19
      10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  19
      10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  19
      10.4.  Service Name . . . . . . . . . . . . . . . . . . . . . .  19
@@ -882,14 +882,14 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    DNS forwarder in an unmanaged CPE.
 
    The unmanaged CPE administrator (referred to as administrator) can
-   host a DoH/DoT forwarder on the unmanaged CPE (Figure 14).  The DoH/
-   DoT server certificate is managed by the entity in-charge of hosting
-   the DoT/DoH forwarder.  The DoH/DoT forwarder will either be
-   configured to use the ISP's or a 3rd party DoH/DoT server.  The
-   unmanaged CPE will advertise the DoH/DoT forwarder ADN using DHCP/RA
-   to internal hosts.
+   host a DoH/DoT forwarder on the unmanaged CPE.  This assumes the
+   following:
 
+   o  The DoH/DoT server certificate is managed by the entity in-charge
+      of hosting the DoT/DoH forwarder.
 
+   o  The DoH/DoT forwarder will either be configured to use the ISP's
+      or a 3rd party DoH/DoT server.
 
 
 
@@ -897,6 +897,15 @@ Boucadair, et al.      Expires September 14, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   o  The unmanaged CPE will advertise the DoH/DoT forwarder ADN using
+      DHCP/RA to internal hosts.
+
+   Figure 14 illustrates an example of an unmanaged CPE hosting a
+   forwarder which connects to a 3rd party DoH/DoT server.  In this
+   example, the DNS information received from the managed CPE (and
+   therefore form the ISP) is ignored by the Internal CPE hosting the
+   forwarder.
 
               ,--,--,--.                         ,--,
             ,'         Internal   Managed     ,-'    '-     3rd Party
@@ -937,6 +946,14 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
    The primary attacks against the methods described in Section 7 are
    the ones that would lead to impersonation of a DNS server and
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 17]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    spoofing the DNS response to indicate that the DNS server does not
    support DoH or DoT.  To protect against DNS-vectored attacks, secured
    DNS (DNSSEC) can be used to ensure the validity of the received DNS
@@ -945,14 +962,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    RA conveys an ADN, but the DNS-SD lookup indicates that the DNS
    server does not support DoH/DoT, the DNS client can detect the DNS
    response is spoofed.
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 17]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    The use of DoH/DoT also depends on the user's policies.  For example,
    the user may indicate his/her consent to use (or not) the locally-
@@ -990,6 +999,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 10.  IANA Considerations
 
+
+
+
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 18]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
 10.1.  DHCPv6 Option
 
    IANA is requested to assign the following new DHCPv6 Option Code in
@@ -1002,13 +1022,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    +-------+------------------+---------+-------------+----------------+
    | TBA1  | OPTION_V6_DNS_RI | Yes     | Yes         | [ThisDocument] |
    +-------+------------------+---------+-------------+----------------+
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 18]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
 10.2.  DHCP Option
 
@@ -1046,6 +1059,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    registry available at: https://www.iana.org/assignments/service-
    names-port-numbers/service-names-port-numbers.xhtml.
 
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 19]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
         Service Name:            doh
         Port Number:             N/A
         Transport Protocol(s):   TCP
@@ -1053,18 +1073,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
         Assignee:                IESG <iesg@ietf.org>
         Contact:                 IETF Chair <chair@ietf.org>
         Reference:               [ThisDocument]
-
-
-
-
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 19]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
 11.  Acknowledgements
 
@@ -1105,14 +1113,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               RFC 8106, DOI 10.17487/RFC8106, March 2017,
               <https://www.rfc-editor.org/info/rfc8106>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-   [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
-              for DNS over TLS and DNS over DTLS", RFC 8310,
-              DOI 10.17487/RFC8310, March 2018,
-              <https://www.rfc-editor.org/info/rfc8310>.
 
 
 
@@ -1121,6 +1121,15 @@ Boucadair, et al.      Expires September 14, 2020              [Page 20]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
+              for DNS over TLS and DNS over DTLS", RFC 8310,
+              DOI 10.17487/RFC8310, March 2018,
+              <https://www.rfc-editor.org/info/rfc8310>.
 
    [RFC8415]  Mrugalski, T., Siodelski, M., Volz, B., Yourtchenko, A.,
               Richardson, M., Jiang, S., Lemon, T., and T. Winters,
@@ -1157,6 +1166,18 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Routers", draft-ietf-v6ops-rfc7084-bis-04 (work in
               progress), June 2017.
 
+
+
+
+
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 21]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [I-D.reddy-dprive-bootstrap-dns-server]
               Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
               "A Bootstrapping Procedure to Discover and Authenticate
@@ -1169,14 +1190,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               "DNS Server Privacy Statement and Filtering Policy with
               Assertion Token", draft-reddy-dprive-dprive-privacy-
               policy-03 (work in progress), March 2020.
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 21]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
               Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
@@ -1212,6 +1225,15 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               DOI 10.17487/RFC7969, October 2016,
               <https://www.rfc-editor.org/info/rfc7969>.
 
+
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 22]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
               January 2019, <https://www.rfc-editor.org/info/rfc8499>.
@@ -1225,14 +1247,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Kasten, "Automatic Certificate Management Environment
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 22]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
@@ -1269,6 +1283,13 @@ Authors' Addresses
    Email: dwing-ietf@fuggles.com
 
 
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 23]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    Neil Cook
    Open-Xchange
    UK
@@ -1285,4 +1306,39 @@ Authors' Addresses
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 23]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 24]

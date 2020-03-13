@@ -862,12 +862,23 @@ Legend:
         not apply for hosting a DNS forwarder in an unmanaged CPE. </t>
 
         <t>The unmanaged CPE administrator (referred to as administrator) can
-        host a DoH/DoT forwarder on the unmanaged CPE (<xref
-        target="internal_forwarded"></xref>). The DoH/DoT server certificate
-        is managed by the entity in-charge of hosting the DoT/DoH forwarder.
-        The DoH/DoT forwarder will either be configured to use the ISP's or a
-        3rd party DoH/DoT server. The unmanaged CPE will advertise the DoH/DoT
-        forwarder ADN using DHCP/RA to internal hosts. </t>
+        host a DoH/DoT forwarder on the unmanaged CPE. This assumes the
+        following:<list style="symbols">
+            <t>The DoH/DoT server certificate is managed by the entity
+            in-charge of hosting the DoT/DoH forwarder.</t>
+
+            <t>The DoH/DoT forwarder will either be configured to use the
+            ISP's or a 3rd party DoH/DoT server. </t>
+
+            <t>The unmanaged CPE will advertise the DoH/DoT forwarder ADN
+            using DHCP/RA to internal hosts. </t>
+          </list></t>
+
+        <t><xref target="internal_forwarded"></xref> illustrates an example of
+        an unmanaged CPE hosting a forwarder which connects to a 3rd party
+        DoH/DoT server. In this example, the DNS information received from the
+        managed CPE (and therefore form the ISP) is ignored by the Internal
+        CPE hosting the forwarder.</t>
 
         <t><figure align="center" anchor="internal_forwarded"
             title="Example of an Internal CPE Hosting a Forwarder">
