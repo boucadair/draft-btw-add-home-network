@@ -213,6 +213,9 @@
       modify the default DNS configuration of their CPEs (e.g., supplied by
       their ISP) to configure their favorite DNS servers. This document
       permits such deployments.</t>
+
+      <t>Both managed and unmanaged CPEs (<xref target="depl"></xref>) are
+      discussed in the document.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -342,11 +345,11 @@
         compliant with the network access technical specification that is
         usually published by ISPs). Upon attachment to the network, an
         unmanaged CPE receives from the network its service configuration
-        (including the DNS information). That DNS information is shared within
-        the LAN following the same mechanisms as those discussed in <xref
-        target="mcpe"></xref>. A host can thus establish DoH/DoT session with
-        a DoH/DoT server similar to what is depicted in <xref
-        target="direct"></xref>.</t>
+        (including the DNS information) by means of, e.g., DHCP. That DNS
+        information is shared within the LAN following the same mechanisms as
+        those discussed in <xref target="mcpe"></xref>. A host can thus
+        establish DoH/DoT session with a DoH/DoT server similar to what is
+        depicted in <xref target="direct"></xref>.</t>
 
         <t>Customers may also decide to deploy internal home routers (called
         hereafter, Internal CPEs) for a variety of reasons that are not
@@ -863,49 +866,8 @@ Legend:
         certificate is managed by the entity in-charge of hosting the DoT/DoH
         forwarder. The DoH/DoT forwarder will either be configured to use the
         ISP's or a 3rd party DoH/DoT server. The unmanaged CPE will advertise
-        the DoH/DoT forwarder ADN using DHCP/RA to internal clients. </t>
-
-        <t>More details are provided below in reference to the example shown
-        in <xref target="internal_forwarded"></xref>:</t>
-
-        <t><list style="numbers">
-            <t>The administrator configures via a management interface of the
-            Internal CPE a 3rd party DNS server as the default DNS server. It
-            also configures an ADN associated with the DNS forwarder, if the
-            Internal CPE supports such feature. How the administrator manages
-            the certificates for that ADN is not detailed. </t>
-
-            <t>The administrator pre-configures its hosts with the ADN.</t>
-
-            <t>The managed CPE receives the DNS configuration from the ISP
-            using the options defined in <xref target="RI"></xref>.</t>
-
-            <t>The managed CPE relays that information to hosts within the LAN
-            (including the Internal CPE). The Internal CPE ignores received
-            DNS information from the managed CPE (Given Step (1)).</t>
-
-            <t>The Internal CPE uses that forwarder's ADN to populate the DNS
-            RI options (<xref target="RI"></xref>) sent to an internal host
-            (e.g., UE shown in <xref target="internal_forwarded"></xref>).</t>
-
-            <t>The UE uses the information provided in the DNS RI to establish
-            DoH/DoT sessions given that it matches what is pre-configured by
-            the administrator (Step 2).</t>
-          </list></t>
-
-        <t><figure align="center" anchor="internal_forwarded"
-            title="Example of an Internal CPE Hosting a Forwarder">
-            <artwork align="center"><![CDATA[         ,--,--,--.                      ,--,
-       ,'         Internal Managed    ,-'    '-     3rd Party
-UE----(  Network#A  CPE------CPE-----(   ISP   )--- DNS Server
- |     `.         ,-'|               `-.    -'         |
- |       `-'--'--'   |                  `--'           |
- |                   |                                 | 
- |<=====DoT/DoH=====>|<===========DoT/DoH=============>|
-]]></artwork>
-          </figure></t>
-
-        <t></t>
+        the DoH/DoT forwarder ADN using DHCP/RA to internal hosts. More
+        details are provided in <xref target="app"></xref>.</t>
       </section>
     </section>
 
@@ -1213,6 +1175,54 @@ UE----(  Network#A  CPE------CPE-----(   ISP   )--- DNS Server
       Reference Identifier option is present in the request, the DHCP server
       returns the IP address(es) of the DoH server (2001:db8:122:300::2) (or
       2001:db8:122:300::2 and 2001:db8:122:300::1 in this order).</t>
+    </section>
+
+    <section anchor="app" title="DoH/DoT Forwarder Hosted in an Unmanaged CPE">
+      <t>In reference to the example shown in <xref
+      target="internal_forwarded"></xref>:</t>
+
+      <t><list style="symbols">
+          <t>The administrator configures via a management interface of the
+          Internal CPE a 3rd party DNS server as the default DNS server. It
+          also configures an ADN associated with the DNS forwarder, if the
+          Internal CPE supports such feature. How the administrator manages
+          the certificates for that ADN is not detailed.</t>
+
+          <t>The administrator pre-configures its hosts with the ADN.</t>
+
+          <t>The managed CPE receives the DNS configuration from the ISP using
+          the options defined in <xref target="RI"></xref>.</t>
+
+          <t>The managed CPE relays that information to hosts within the LAN
+          (including the Internal CPE). The Internal CPE ignores received DNS
+          information from the managed CPE (Given Step (1)).</t>
+
+          <t>The Internal CPE uses that forwarder's ADN to populate the DNS RI
+          options (<xref target="RI"></xref>) sent to an internal host (e.g.,
+          UE shown in <xref target="internal_forwarded"></xref>).</t>
+
+          <t>The UE uses the information provided in the DNS RI to establish
+          DoH/DoT sessions given that it matches what is pre-configured by the
+          administrator (Step 2).</t>
+        </list></t>
+
+      <t><figure align="center" anchor="internal_forwarded"
+          title="Example of an Internal CPE Hosting a Forwarder">
+          <artwork align="center"><![CDATA[         ,--,--,--.                         ,--,
+       ,'         Internal   Managed     ,-'    '-     3rd Party
+UE----(  Network#A  CPE--------CPE------(   ISP   )--- DNS Server
+ |     `.         ,-'|          |        `-.    -'       |
+ |       `-'--'--'   |          |<==DHCP==>|`--'         |
+ |                   |<==DHCP==>|          |             | 
+ |<======DHCP=======>|          |                        |
+ |     {RI, @i}      |                                   |
+ |<=====DoT/DoH=====>|<=============DoT/DoH=============>|
+
+Legend:
+  * @i: IP address of the DNS forwarder hosted in the Internal
+        CPE. 
+]]></artwork>
+        </figure></t>
     </section>
   </back>
 </rfc>

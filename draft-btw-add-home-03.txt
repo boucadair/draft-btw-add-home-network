@@ -72,7 +72,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   3.  Sample Deployment Scenarios . . . . . . . . . . . . . . . . .   4
+   3.  Sample Deployment Scenarios . . . . . . . . . . . . . . . . .   5
      3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   7
    4.  DNS Reference Identifier Option . . . . . . . . . . . . . . .   8
@@ -88,24 +88,24 @@ Table of Contents
      8.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  15
      8.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  16
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
-   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  19
-     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  19
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  18
+     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  18
      10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  19
-     10.4.  Service Name . . . . . . . . . . . . . . . . . . . . . .  20
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  20
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Appendix A.  Customized DHCP Configuration  . . . . . . . . . . .  23
+     10.4.  Service Name . . . . . . . . . . . . . . . . . . . . . .  19
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  19
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  19
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  20
+   Appendix A.  Customized DHCP Configuration  . . . . . . . . . . .  22
+   Appendix B.  DoH/DoT Forwarder Hosted in an Unmanaged CPE . . . .  23
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
 
 1.  Introduction
 
    Internet Service Providers (ISPs) traditionally provide DNS resolvers
    to their customers.  Typically, ISPs deploy the following mechanisms
-   to advertise a list of DNS Recursive DNS server(s) to their
-   customers:
+
 
 
 
@@ -113,6 +113,9 @@ Boucadair, et al.      Expires September 14, 2020               [Page 2]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   to advertise a list of DNS Recursive DNS server(s) to their
+   customers:
 
    o  Protocol Configuration Options in cellular networks [TS.24008].
    o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
@@ -159,9 +162,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    to) malware filtering, parental control, or VoD (Video on Demand)
    optimization.  DNS is also a central component for mastering the
    quality of experience for current latency-sensitive services, but
-   also emerging ones (such as those services that pertain to the Ultra
-   Reliability and Low Latency Communications (uRLLC) or Enhanced Mobile
-   Broadband (eMBB).
 
 
 
@@ -169,6 +169,10 @@ Boucadair, et al.      Expires September 14, 2020               [Page 3]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   also emerging ones (such as those services that pertain to the Ultra
+   Reliability and Low Latency Communications (uRLLC) or Enhanced Mobile
+   Broadband (eMBB).
 
       For example, the latency targets set in the context of 5G are 1ms
       (uRLLC) and 4ms (eMBB).  An ISP will be able to address such
@@ -200,6 +204,9 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    supplied by their ISP) to configure their favorite DNS servers.  This
    document permits such deployments.
 
+   Both managed and unmanaged CPEs (Section 3) are discussed in the
+   document.
+
 2.  Terminology
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -211,13 +218,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    This document makes use of the terms defined in [RFC8499] and
    [I-D.ietf-dnsop-terminology-ter].
 
-   'DoH/DoT' refers to DNS-over-HTTPS and/or DNS-over-TLS.
-
-3.  Sample Deployment Scenarios
-
-
-
-
 
 
 
@@ -225,6 +225,10 @@ Boucadair, et al.      Expires September 14, 2020               [Page 4]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
+
+   'DoH/DoT' refers to DNS-over-HTTPS and/or DNS-over-TLS.
+
+3.  Sample Deployment Scenarios
 
 3.1.  Managed CPEs
 
@@ -271,10 +275,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
                        Figure 2: DoH/DoT in the WAN
 
-   Figure 2 shows the scenario where the CPE relays the list of DoT/DoH
-   servers it learns for the network by using mechanisms like DHCP or a
-   specific Router Advertisement message.  In such context, direct DoH/
-
 
 
 Boucadair, et al.      Expires September 14, 2020               [Page 5]
@@ -282,6 +282,9 @@ Boucadair, et al.      Expires September 14, 2020               [Page 5]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   Figure 2 shows the scenario where the CPE relays the list of DoT/DoH
+   servers it learns for the network by using mechanisms like DHCP or a
+   specific Router Advertisement message.  In such context, direct DoH/
    DoT sessions will be established between a host serviced by a CPE and
    an ISP-supplied DoT/DoH server (see the example depicted in Figure 3
    for a DoH/DoT-capable host).
@@ -330,9 +333,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-
-
-
 Boucadair, et al.      Expires September 14, 2020               [Page 6]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
@@ -344,10 +344,11 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    compliant with the network access technical specification that is
    usually published by ISPs).  Upon attachment to the network, an
    unmanaged CPE receives from the network its service configuration
-   (including the DNS information).  That DNS information is shared
-   within the LAN following the same mechanisms as those discussed in
-   Section 3.1.  A host can thus establish DoH/DoT session with a DoH/
-   DoT server similar to what is depicted in Figure 3.
+   (including the DNS information) by means of, e.g., DHCP.  That DNS
+   information is shared within the LAN following the same mechanisms as
+   those discussed in Section 3.1.  A host can thus establish DoH/DoT
+   session with a DoH/DoT server similar to what is depicted in
+   Figure 3.
 
    Customers may also decide to deploy internal home routers (called
    hereafter, Internal CPEs) for a variety of reasons that are not
@@ -383,7 +384,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
          |<======================DoT/DoH===================>|
 
      Figure 6: Direct DoH/DoT Sessions with a Third Party DNS Resolver
-
 
 
 
@@ -886,8 +886,8 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    certificate is managed by the entity in-charge of hosting the DoT/DoH
    forwarder.  The DoH/DoT forwarder will either be configured to use
    the ISP's or a 3rd party DoH/DoT server.  The unmanaged CPE will
-   advertise the DoH/DoT forwarder ADN using DHCP/RA to internal
-   clients.
+   advertise the DoH/DoT forwarder ADN using DHCP/RA to internal hosts.
+   More details are provided in Appendix B.
 
 
 
@@ -897,42 +897,6 @@ Boucadair, et al.      Expires September 14, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
-
-   More details are provided below in reference to the example shown in
-   Figure 14:
-
-   1.  The administrator configures via a management interface of the
-       Internal CPE a 3rd party DNS server as the default DNS server.
-       It also configures an ADN associated with the DNS forwarder, if
-       the Internal CPE supports such feature.  How the administrator
-       manages the certificates for that ADN is not detailed.
-
-   2.  The administrator pre-configures its hosts with the ADN.
-
-   3.  The managed CPE receives the DNS configuration from the ISP using
-       the options defined in Section 4.
-
-   4.  The managed CPE relays that information to hosts within the LAN
-       (including the Internal CPE).  The Internal CPE ignores received
-       DNS information from the managed CPE (Given Step (1)).
-
-   5.  The Internal CPE uses that forwarder's ADN to populate the DNS RI
-       options (Section 4) sent to an internal host (e.g., UE shown in
-       Figure 14).
-
-   6.  The UE uses the information provided in the DNS RI to establish
-       DoH/DoT sessions given that it matches what is pre-configured by
-       the administrator (Step 2).
-
-               ,--,--,--.                      ,--,
-             ,'         Internal Managed    ,-'    '-     3rd Party
-      UE----(  Network#A  CPE------CPE-----(   ISP   )--- DNS Server
-       |     `.         ,-'|               `-.    -'         |
-       |       `-'--'--'   |                  `--'           |
-       |                   |                                 |
-       |<=====DoT/DoH=====>|<===========DoT/DoH=============>|
-
-         Figure 14: Example of an Internal CPE Hosting a Forwarder
 
 9.  Security Considerations
 
@@ -946,14 +910,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    Because DHCP/RA messages are not encrypted or protected against
    modification in any way, their content can be spoofed or modified by
    compromised devices within the home network.  An attacker can spoof
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 17]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
-
    the DHCP/RA response to provide the attacker's DoT/DoH server.  Note
    that such an attacker can launch other attacks as discussed in
    Section 22 of [RFC8415].  Furthermore, if the browser or the OS is
@@ -990,6 +946,14 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    identifies a set of deployment options under which DHCP/RA RI options
    can be used.
 
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 17]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    If the insecurely discovered DoH/DoT server is not pre-configured in
    the OS or browser, the client may validate the signatory (e.g.,
    cryptographically attested by the ISP).  However, as discussed above,
@@ -1001,15 +965,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    that rogue server based upon PKIX authentication [RFC6125] based upon
    the authentication domain name in the Reference Identifier Option.
    DNS clients that ignore authentication failures and accept spoofed
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 18]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
-
    certificates will be subject to attacks (e.g., redirect to malicious
    servers, intercept sensitive data).
 
@@ -1047,6 +1002,14 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    |      |                  |       | domain name    |                |
    +------+------------------+-------+----------------+----------------+
 
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 18]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
 10.3.  RA Option
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
@@ -1055,16 +1018,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    (ICMPv6) Parameters" registry maintained in
    http://www.iana.org/assignments/icmpv6-parameters/
    icmpv6-parameters.xhtml#icmpv6-parameters-5.
-
-
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 19]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
         +------+---------------------------------+----------------+
         | Type | Description                     | Reference      |
@@ -1106,6 +1059,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
               <https://www.rfc-editor.org/info/rfc2132>.
 
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 19]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
               DOI 10.17487/RFC4861, September 2007,
@@ -1114,13 +1074,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
               Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
               <https://www.rfc-editor.org/info/rfc6763>.
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 20]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
@@ -1162,6 +1115,13 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Specification", <https://www.wi-fi.org/file/device-
               provisioning-protocol-specification>.
 
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 20]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
               Location", draft-ietf-dnsop-terminology-ter-01 (work in
@@ -1170,13 +1130,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    [I-D.ietf-dnssd-push]
               Pusateri, T. and S. Cheshire, "DNS Push Notifications",
               draft-ietf-dnssd-push-25 (work in progress), October 2019.
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 21]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [I-D.ietf-v6ops-rfc7084-bis]
               Palet, J., "Basic Requirements for IPv6 Customer Edge
@@ -1214,6 +1167,17 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Security (TLS)", RFC 6125, DOI 10.17487/RFC6125, March
               2011, <https://www.rfc-editor.org/info/rfc6125>.
 
+
+
+
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 21]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               DOI 10.17487/RFC7231, June 2014,
@@ -1224,15 +1188,6 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
               Transport Layer Security (TLS) and Datagram Transport
               Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
               June 2014, <https://www.rfc-editor.org/info/rfc7250>.
-
-
-
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 22]
-
-Internet-Draft         DoH/DoT in Home and Mobile             March 2020
-
 
    [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
               Configuration on the Basis of Network Topology", RFC 7969,
@@ -1271,6 +1226,14 @@ Appendix A.  Customized DHCP Configuration
    and/or DoH are supported if the client succeeds to establish a
    session.
 
+
+
+
+Boucadair, et al.      Expires September 14, 2020              [Page 22]
+
+Internet-Draft         DoH/DoT in Home and Mobile             March 2020
+
+
    Let's consider that the DoH server is reachable at
    2001:db8:122:300::2 while the Do53 server is reachable at
    2001:db8:122:300::1.  The DHCP server will then return a list that
@@ -1282,6 +1245,43 @@ Appendix A.  Customized DHCP Configuration
    Alternatively, the DHCP server may return a customized DNS
    configuration ([RFC7969]) as a function of the requested DHCP
    options.  For example, if the DHCP client does not include a DNS
+   Reference Identifier option in its request, the DHCP server will
+   return the IP address of the Do53 server (2001:db8:122:300::1).  If a
+   DNS Reference Identifier option is present in the request, the DHCP
+   server returns the IP address(es) of the DoH server
+   (2001:db8:122:300::2) (or 2001:db8:122:300::2 and 2001:db8:122:300::1
+   in this order).
+
+Appendix B.  DoH/DoT Forwarder Hosted in an Unmanaged CPE
+
+   In reference to the example shown in Figure 14:
+
+   o  The administrator configures via a management interface of the
+      Internal CPE a 3rd party DNS server as the default DNS server.  It
+      also configures an ADN associated with the DNS forwarder, if the
+      Internal CPE supports such feature.  How the administrator manages
+      the certificates for that ADN is not detailed.
+
+   o  The administrator pre-configures its hosts with the ADN.
+
+   o  The managed CPE receives the DNS configuration from the ISP using
+      the options defined in Section 4.
+
+   o  The managed CPE relays that information to hosts within the LAN
+      (including the Internal CPE).  The Internal CPE ignores received
+      DNS information from the managed CPE (Given Step (1)).
+
+   o  The Internal CPE uses that forwarder's ADN to populate the DNS RI
+      options (Section 4) sent to an internal host (e.g., UE shown in
+      Figure 14).
+
+   o  The UE uses the information provided in the DNS RI to establish
+      DoH/DoT sessions given that it matches what is pre-configured by
+      the administrator (Step 2).
+
+
+
+
 
 
 
@@ -1290,12 +1290,21 @@ Boucadair, et al.      Expires September 14, 2020              [Page 23]
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
-   Reference Identifier option in its request, the DHCP server will
-   return the IP address of the Do53 server (2001:db8:122:300::1).  If a
-   DNS Reference Identifier option is present in the request, the DHCP
-   server returns the IP address(es) of the DoH server
-   (2001:db8:122:300::2) (or 2001:db8:122:300::2 and 2001:db8:122:300::1
-   in this order).
+              ,--,--,--.                         ,--,
+            ,'         Internal   Managed     ,-'    '-     3rd Party
+     UE----(  Network#A  CPE--------CPE------(   ISP   )--- DNS Server
+      |     `.         ,-'|          |        `-.    -'       |
+      |       `-'--'--'   |          |<==DHCP==>|`--'         |
+      |                   |<==DHCP==>|          |             |
+      |<======DHCP=======>|          |                        |
+      |     {RI, @i}      |                                   |
+      |<=====DoT/DoH=====>|<=============DoT/DoH=============>|
+
+     Legend:
+       * @i: IP address of the DNS forwarder hosted in the Internal
+             CPE.
+
+         Figure 14: Example of an Internal CPE Hosting a Forwarder
 
 Authors' Addresses
 
@@ -1328,15 +1337,6 @@ Authors' Addresses
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-
-
-
-
-
-
-
 
 
 
