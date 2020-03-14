@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: September 14, 2020                                       McAfee
+Expires: September 15, 2020                                       McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                          March 13, 2020
+                                                          March 14, 2020
 
 
     DNS-over-HTTPS and DNS-over-TLS Server Discovery and Deployment
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 14, 2020.
+   This Internet-Draft will expire on September 15, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 1]
+Boucadair, et al.      Expires September 15, 2020               [Page 1]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 2]
+Boucadair, et al.      Expires September 15, 2020               [Page 2]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -165,7 +165,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 3]
+Boucadair, et al.      Expires September 15, 2020               [Page 3]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 4]
+Boucadair, et al.      Expires September 15, 2020               [Page 4]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -277,7 +277,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 5]
+Boucadair, et al.      Expires September 15, 2020               [Page 5]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 6]
+Boucadair, et al.      Expires September 15, 2020               [Page 6]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 7]
+Boucadair, et al.      Expires September 15, 2020               [Page 7]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 8]
+Boucadair, et al.      Expires September 15, 2020               [Page 8]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020               [Page 9]
+Boucadair, et al.      Expires September 15, 2020               [Page 9]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 10]
+Boucadair, et al.      Expires September 15, 2020              [Page 10]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -586,11 +586,12 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 5.  DoH URI Templates
 
-   DoH servers may support more than one URI Template [RFC8484].  This
-   allows a resolver to host several DoH services (e.g., no-filtering,
-   blocking adult content, blocking malware).  The following sub-
-   sections discuss some candidate solutions for a DoH client to
-   retrieve the list of supported templates by a DoH server.
+   DoH servers may support more than one URI Template [RFC8484].  The
+   following sub-sections discuss some candidate solutions for a DoH
+   client to retrieve the list of supported templates by a DoH server.
+   Also, if the resolver hosts several DoH services (e.g., no-filtering,
+   blocking adult content, blocking malware), these services can be
+   discovered as templates.
 
    How a DoH client makes use of the configured DoH services is out of
    scope of this document.
@@ -598,29 +599,31 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 5.1.  Define a Dedicated DHCP/RA Option
 
    This solution assumes that DHCP servers and access routers maintain
-   an updated list of the templates used by DoH servers.
+   an updated list of the templates used by DoH resolvers.
 
    The following observations can be made:
 
    o  In order to avoid that stale DoH information is supplied to
       connected devices, each time the URI templates are updated at a
-      DoH server (e.g., add a new DoH service, withdraw a DoH service),
-      DHCP servers (or access routers for the RA case) have to be
-      updated accordingly to reflect the DNS service change.
-
-   o  This dependency may be affordable if the ISP providing the
-      connectivity service is also the one operating the DoH server.
+      DoH resolver (e.g., add a new DoH service, withdraw a DoH
+      service), DHCP servers (or access routers for the RA case) have to
+      be updated accordingly to reflect the DNS service change.
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 11]
+
+
+Boucadair, et al.      Expires September 15, 2020              [Page 11]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   o  This dependency may be affordable if the ISP providing the
+      connectivity service is also the one operating the DoH resolver.
+
    o  Nevertheless, if the DNS service is provided by a distinct entity
       than the ISP, an out-of-band mechanism is required to synchronize
-      the list of DoH services that are active on a DoH server vs. the
+      the list of DoH services that are active on a DoH resolver vs. the
       list maintained locally by the ISP.
 
    o  Also, it is not clear how enclosed URI templates will be validated
@@ -639,11 +642,11 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 5.2.  Retrieve the List Directly from the DoH Server
 
-   Upon discovery of a DoH server (Section 4), the DoH client contacts
-   that DoH server to retrieve the list of supported DoH services (e.g.,
-   use of a well-known URI).  That information is cached by the DoH
-   client for a given period (e.g., 24h).  DoH clients re-iterates that
-   request regularly (e.g., 24h) to retrieve an updated list of
+   Upon discovery of a DoH resolver (Section 4), the DoH client contacts
+   that DoH resolver to retrieve the list of supported DoH services
+   (e.g., use of a well-known URI).  That information is cached by the
+   DoH client for a given period (e.g., 24h).  DoH clients re-iterates
+   that request regularly (e.g., 24h) to retrieve an updated list of
    supported DoH services.  Note that a "push" mode can be considered
    using the mechanism defined in [I-D.ietf-dnssd-push].
 
@@ -663,17 +666,16 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
    by their address literals rather than their names.  This avoids
    adding a dependency on another server to resolve the DoH/DoT name.
    Concretely, if Do53/DoH/DoT terminate on same IP addresses, existing
-   discovery mechanisms [RFC2132][RFC3646][RFC8106] can be leveraged to
-   learn the IP addresses of DoT/DoH servers while an authentication
 
 
 
-
-Boucadair, et al.      Expires September 14, 2020              [Page 12]
+Boucadair, et al.      Expires September 15, 2020              [Page 12]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
+   discovery mechanisms [RFC2132][RFC3646][RFC8106] can be leveraged to
+   learn the IP addresses of DoT/DoH servers while an authentication
    domain name is supplied by one of the options discussed in Section 4.
    An example is depicted in Figure 11.
 
@@ -723,9 +725,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-
-
-Boucadair, et al.      Expires September 14, 2020              [Page 13]
+Boucadair, et al.      Expires September 15, 2020              [Page 13]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 14]
+Boucadair, et al.      Expires September 15, 2020              [Page 14]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 15]
+Boucadair, et al.      Expires September 15, 2020              [Page 15]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 16]
+Boucadair, et al.      Expires September 15, 2020              [Page 16]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 17]
+Boucadair, et al.      Expires September 15, 2020              [Page 17]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 18]
+Boucadair, et al.      Expires September 15, 2020              [Page 18]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 19]
+Boucadair, et al.      Expires September 15, 2020              [Page 19]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 20]
+Boucadair, et al.      Expires September 15, 2020              [Page 20]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 21]
+Boucadair, et al.      Expires September 15, 2020              [Page 21]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 22]
+Boucadair, et al.      Expires September 15, 2020              [Page 22]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 23]
+Boucadair, et al.      Expires September 15, 2020              [Page 23]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1341,7 +1341,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 24]
+Boucadair, et al.      Expires September 15, 2020              [Page 24]
 
 Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
@@ -1397,4 +1397,4 @@ Internet-Draft         DoH/DoT in Home and Mobile             March 2020
 
 
 
-Boucadair, et al.      Expires September 14, 2020              [Page 25]
+Boucadair, et al.      Expires September 15, 2020              [Page 25]

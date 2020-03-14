@@ -563,32 +563,34 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
     <section anchor="URI" title="DoH URI Templates">
       <t>DoH servers may support more than one URI Template <xref
-      target="RFC8484"></xref>. This allows a resolver to host several DoH
-      services (e.g., no-filtering, blocking adult content, blocking malware).
-      The following sub-sections discuss some candidate solutions for a DoH
-      client to retrieve the list of supported templates by a DoH server. </t>
+      target="RFC8484"></xref>. The following sub-sections discuss some
+      candidate solutions for a DoH client to retrieve the list of supported
+      templates by a DoH server. Also, if the resolver hosts several DoH
+      services (e.g., no-filtering, blocking adult content, blocking malware),
+      these services can be discovered as templates. </t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
       scope of this document.</t>
 
       <section title="Define a Dedicated DHCP/RA Option">
         <t>This solution assumes that DHCP servers and access routers maintain
-        an updated list of the templates used by DoH servers. </t>
+        an updated list of the templates used by DoH resolvers.</t>
 
         <t>The following observations can be made: <list style="symbols">
             <t>In order to avoid that stale DoH information is supplied to
             connected devices, each time the URI templates are updated at a
-            DoH server (e.g., add a new DoH service, withdraw a DoH service),
-            DHCP servers (or access routers for the RA case) have to be
-            updated accordingly to reflect the DNS service change.</t>
+            DoH resolver (e.g., add a new DoH service, withdraw a DoH
+            service), DHCP servers (or access routers for the RA case) have to
+            be updated accordingly to reflect the DNS service change.</t>
 
             <t>This dependency may be affordable if the ISP providing the
-            connectivity service is also the one operating the DoH server.</t>
+            connectivity service is also the one operating the DoH
+            resolver.</t>
 
             <t>Nevertheless, if the DNS service is provided by a distinct
             entity than the ISP, an out-of-band mechanism is required to
             synchronize the list of DoH services that are active on a DoH
-            server vs. the list maintained locally by the ISP.</t>
+            resolver vs. the list maintained locally by the ISP.</t>
 
             <t>Also, it is not clear how enclosed URI templates will be
             validated by DHCP clients given that future specifications may
@@ -608,13 +610,13 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       </section>
 
       <section title="Retrieve the List Directly from the DoH Server">
-        <t>Upon discovery of a DoH server (<xref target="RI"></xref>), the DoH
-        client contacts that DoH server to retrieve the list of supported DoH
-        services (e.g., use of a well-known URI). That information is cached
-        by the DoH client for a given period (e.g., 24h). DoH clients
-        re-iterates that request regularly (e.g., 24h) to retrieve an updated
-        list of supported DoH services. Note that a "push" mode can be
-        considered using the mechanism defined in <xref
+        <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the
+        DoH client contacts that DoH resolver to retrieve the list of
+        supported DoH services (e.g., use of a well-known URI). That
+        information is cached by the DoH client for a given period (e.g.,
+        24h). DoH clients re-iterates that request regularly (e.g., 24h) to
+        retrieve an updated list of supported DoH services. Note that a "push"
+        mode can be considered using the mechanism defined in <xref
         target="I-D.ietf-dnssd-push"></xref>.</t>
 
         <t>This approach allows to avoid adherence of DoH servers with DHCP
@@ -820,7 +822,7 @@ Legend:
           IP addresses and ADN, which it will communicate to internal hosts
           using DHCP/RA. Upon joining the network, a DoH client follows the
           procedure specified in <xref target="auto"></xref> to upgrade to
-          DoH. </t>
+          DoH.</t>
 
           <t>Once the DoH session is established, the ISP DoH server uses HTTP
           redirection (Section 6.4.4 in <xref target="RFC7231"></xref>) to
