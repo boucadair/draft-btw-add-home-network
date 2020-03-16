@@ -214,8 +214,8 @@
       their ISP) to configure their favorite DNS servers. This document
       permits such deployments.</t>
 
-      <t>Both managed and unmanaged CPEs (<xref target="depl"></xref>) are
-      discussed in the document.</t>
+      <t>Both managed and unmanaged CPEs are discussed in the document (<xref
+      target="depl"></xref>) .</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -567,10 +567,15 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       candidate solutions for a DoH client to retrieve the list of supported
       templates by a DoH server. Also, if the resolver hosts several DoH
       services (e.g., no-filtering, blocking adult content, blocking malware),
-      these services can be discovered as templates. </t>
+      these services can be discovered as templates.</t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
       scope of this document.</t>
+
+      <t><list style="symbols">
+          <t>DISCUSSION: More feedback is needed to assess whether URI RA/DHCP
+          options have to be specified.</t>
+        </list></t>
 
       <section title="Define a Dedicated DHCP/RA Option">
         <t>This solution assumes that DHCP servers and access routers maintain
@@ -606,6 +611,11 @@ UE----(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             configuration.</t>
 
             <t>The DoH client can immediately use available DoH services.</t>
+
+            <t>It is convenient if very few (stable) URIs are in use.</t>
+
+            <t>It allows for customized configuration within the home
+            network.</t>
           </list></t>
       </section>
 
