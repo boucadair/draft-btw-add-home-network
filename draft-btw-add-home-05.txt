@@ -78,10 +78,10 @@ Table of Contents
    4.  DNS Reference Identifier Option . . . . . . . . . . . . . . .   8
      4.1.  DHCPv6 DNS Reference Identifier Option  . . . . . . . . .   9
      4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .  10
-     4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  11
-   5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  12
+     4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  12
+   5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  13
      5.1.  Define a Dedicated DHCP/RA Option . . . . . . . . . . . .  13
-     5.2.  Retrieve the List Directly from the DoH Server  . . . . .  13
+     5.2.  Retrieve the List Directly from the DoH Server  . . . . .  14
    6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  14
      6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  16
      6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  17
@@ -524,11 +524,43 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    Multiple instances of OPTION_V6_DNS_RI may be returned to a DHCPv6
    client; each pointing to a distinct encrypted DNS server type.
 
+   To discover an encrypted DNS server, the DHCPv6 client including
+   OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
+   18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of [RFC8415].  The
+   DHCPv6 client sets the Encrypted DNS Type field to the requested
+   encrypted DNS server.
+
+   If the DHCPv6 client requested any encrypted DNS server, the DHCP
+   client MUST be prepared to receive multiple DHCP OPTION_V6_DNS_RI
+   options; each option is to be treated as a separate encrypted DNS
+   server.
+
 4.2.  DHCP DNS Reference Identifier Option
 
    The DHCP DNS Reference Identifier option is used to configure an
    authentication domain name of the DoH/DoT server.  The format of this
    option is illustrated in Figure 9.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 10]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
 
             0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -554,14 +586,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
               Figure 9: DHCP DNS Reference Identifier Option
 
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 10]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
    The fields of the option shown in Figure 9 are as follows:
 
    o  Code: OPTION_V4_DNS_RI (TBA2, see Section 9.2).
@@ -581,6 +605,28 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       field in octets.
    o  Authentication Domain Name: The domain name of the DoH/DoT server.
       This field is formatted as specified in Section 10 of [RFC8415].
+
+   OPTION_V4_DNS_RI is a concatenation-requiring option.  As such, the
+   mechanism specified in [RFC3396] MUST be used if OPTION_V4_DNS_RI
+   exceeds the maximum DHCP option size of 255 octets.
+
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 11]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
+
+   To discover an encrypted DNS server, the DHCP client requests the
+   Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
+   Parameter Request List option [RFC2132].  The DHCP client sets the
+   Encrypted DNS Type field to the requested encrypted DNS server.
+
+   If the DHCP client requested any encrypted DNS server, the DHCP
+   client MUST be prepared to receive multiple DHCP OPTION_V4_DNS_RI
+   options; each option is to be treated as a separate encrypted DNS
+   server.
 
 4.3.  RA DNS Reference Identifier Option
 
@@ -610,14 +656,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       assigned by IANA (TBA3, see Section 9.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 11]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
    o  Reserved: This field is unused.  It MUST be initialized to zero by
       the sender and MUST be ignored by the receiver.
    o  Lifetime: 32-bit unsigned integer.  The maximum time in seconds
@@ -628,6 +666,13 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       The value of Lifetime SHOULD by default be at least 3 *
       MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
       interval as defined in [RFC4861].
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 12]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
 
       A value of all one bits (0xffffffff) represents infinity.
 
@@ -662,18 +707,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    o  DISCUSSION: More feedback is needed to assess whether URI RA/DHCP
       options have to be specified.
 
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 12]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
 5.1.  Define a Dedicated DHCP/RA Option
 
    This solution assumes that DHCP servers and access routers maintain
@@ -689,6 +722,13 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
    o  This dependency may be affordable if the ISP providing the
       connectivity service is also the one operating the DoH resolver.
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 13]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
 
    o  Nevertheless, if the DNS service is provided by a distinct entity
       than the ISP, an out-of-band mechanism is required to synchronize
@@ -722,14 +762,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    Upon discovery of a DoH resolver (Section 4), the DoH client contacts
    that DoH resolver to retrieve the list of supported DoH services
    (e.g., use of a well-known URI).  That information is cached by the
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 13]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
    DoH client for a given period (e.g., 24h).  DoH clients re-iterates
    that request regularly (e.g., 24h) to retrieve an updated list of
    supported DoH services.  Note that a "push" mode can be considered
@@ -747,6 +779,13 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    depicted in Figure 12).  Terminating Do53/DoH/DoT on the same or
    distinct IP addresses is deployment-specific.
 
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 14]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
+
    From an IP reachability standpoint, DoH/DoT servers SHOULD be located
    by their address literals rather than their names.  This avoids
    adding a dependency on another server to resolve the DoH/DoT name.
@@ -755,36 +794,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    learn the IP addresses of DoT/DoH servers while an authentication
    domain name is supplied by one of the options discussed in Section 4.
    An example is depicted in Figure 11.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 14]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
                     Legacy Do53
                       client
@@ -810,15 +819,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
      * RI: DNS Reference Identifier
 
             Figure 11: Locating DoH/DoT/Do53 (Same DNS Server)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1327,15 +1327,15 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
               <https://www.rfc-editor.org/info/rfc2132>.
 
+   [RFC3396]  Lemon, T. and S. Cheshire, "Encoding Long Options in the
+              Dynamic Host Configuration Protocol (DHCPv4)", RFC 3396,
+              DOI 10.17487/RFC3396, November 2002,
+              <https://www.rfc-editor.org/info/rfc3396>.
+
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
               DOI 10.17487/RFC4861, September 2007,
               <https://www.rfc-editor.org/info/rfc4861>.
-
-   [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
-              Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
-              <https://www.rfc-editor.org/info/rfc6763>.
-
 
 
 
@@ -1345,6 +1345,10 @@ Boucadair, et al.        Expires October 2, 2020               [Page 24]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
+
+   [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
+              Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
+              <https://www.rfc-editor.org/info/rfc6763>.
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
@@ -1390,10 +1394,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
               Specification", <https://www.wi-fi.org/file/device-
               provisioning-protocol-specification>.
-
-
-
-
 
 
 

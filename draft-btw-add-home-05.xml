@@ -502,6 +502,17 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
         <t>Multiple instances of OPTION_V6_DNS_RI may be returned to a DHCPv6
         client; each pointing to a distinct encrypted DNS server type. </t>
+
+        <t>To discover an encrypted DNS server, the DHCPv6 client including
+        OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
+        18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
+        target="RFC8415"></xref>. The DHCPv6 client sets the Encrypted DNS
+        Type field to the requested encrypted DNS server.</t>
+
+        <t>If the DHCPv6 client requested any encrypted DNS server, the DHCP
+        client MUST be prepared to receive multiple DHCP OPTION_V6_DNS_RI
+        options; each option is to be treated as a separate encrypted DNS
+        server.</t>
       </section>
 
       <section anchor="DHCP" title="DHCP DNS Reference Identifier Option">
@@ -568,7 +579,21 @@ with:
             <xref target="RFC8415"></xref>.</t>
           </list></t>
 
-        <t><?rfc subcompact="no" ?></t>
+        <t><?rfc subcompact="no" ?>OPTION_V4_DNS_RI is a
+        concatenation-requiring option. As such, the mechanism specified in
+        <xref target="RFC3396"></xref> MUST be used if OPTION_V4_DNS_RI
+        exceeds the maximum DHCP option size of 255 octets.</t>
+
+        <t>To discover an encrypted DNS server, the DHCP client requests the
+        Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
+        Parameter Request List option <xref target="RFC2132"></xref>. The DHCP
+        client sets the Encrypted DNS Type field to the requested encrypted
+        DNS server.</t>
+
+        <t>If the DHCP client requested any encrypted DNS server, the DHCP
+        client MUST be prepared to receive multiple DHCP OPTION_V4_DNS_RI
+        options; each option is to be treated as a separate encrypted DNS
+        server.</t>
       </section>
 
       <section anchor="RA" title="RA DNS Reference Identifier Option">
@@ -1259,6 +1284,8 @@ Legend:
       <?rfc include='reference.RFC.6763'?>
 
       <?rfc include='reference.RFC.8126'?>
+
+      <?rfc include='reference.RFC.3396'?>
     </references>
 
     <references title="Informative References">
