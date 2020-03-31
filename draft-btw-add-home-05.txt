@@ -80,31 +80,31 @@ Table of Contents
      4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .  10
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  11
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  12
-     5.1.  Define a Dedicated DHCP/RA Option . . . . . . . . . . . .  12
+     5.1.  Define a Dedicated DHCP/RA Option . . . . . . . . . . . .  13
      5.2.  Retrieve the List Directly from the DoH Server  . . . . .  13
    6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  14
-     6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  15
-     6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  16
-   7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  16
-     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  17
-       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  17
-       7.1.2.  Redirection . . . . . . . . . . . . . . . . . . . . .  17
-         7.1.2.1.  Server-Driven Redirection . . . . . . . . . . . .  17
-         7.1.2.2.  Client-Initiated Redirection  . . . . . . . . . .  18
-     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  19
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  20
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
-     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  21
-     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  22
-     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  22
-     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  22
-     9.5.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  23
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  23
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  23
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  23
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  24
-   Appendix A.  DoT and DoH DNS-SD Considerations  . . . . . . . . .  27
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
+     6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  16
+     6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  17
+   7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  17
+     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  18
+       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  18
+       7.1.2.  Redirection . . . . . . . . . . . . . . . . . . . . .  18
+         7.1.2.1.  Server-Driven Redirection . . . . . . . . . . . .  18
+         7.1.2.2.  Client-Initiated Redirection  . . . . . . . . . .  19
+     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  20
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
+     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  22
+     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  23
+     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  23
+     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  23
+     9.5.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  24
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  24
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  24
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  25
+   Appendix A.  DoT and DoH DNS-SD Considerations  . . . . . . . . .  28
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  28
 
 
 
@@ -470,8 +470,8 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |     OPTION_V6_DNS_RI          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |F|    Encrypted DNS Type       |         ADN Length            |
-      +-+-----------------------------+-------------------------------+
+      |F|Encr DNS Type|   Reserved    |         ADN Length            |
+      +-+-------------+---------------+-------------------------------+
       |                                                               |
       |                 Authentication Domain Name                    |
       |                                                               |
@@ -487,8 +487,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    o  F bit: Forwarder bit.  If set, it instructs the DNS client to
       retrieve the forwarder identifier from the resolver identified by
       the Authentication Domain Name (Section 7).
-   o  Encrypted DNS Type: Indicates the type of the encrypted DNS server
-      conveyed in this attribute.  The following values are defined:
+   o  Encr DNS Type (Encrypted DNS Type): Indicates the type of the
+      encrypted DNS server conveyed in this attribute.  The following
+      values are defined:
 
          0: Any encrypted DNS
          1: DoT
@@ -496,7 +497,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
          See Section 9.5 for future assignment considerations.
    o  ADN Length: Length of the DNS Authentication Domain Name field in
       octets.
-
 
 
 
@@ -522,7 +522,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       Figure 8: An example of the authentication-domain-name Encoding
 
    Multiple instances of OPTION_V6_DNS_RI may be returned to a DHCPv6
-   client; each pointing to a distinct encrtypted DNS server type.
+   client; each pointing to a distinct encrypted DNS server type.
 
 4.2.  DHCP DNS Reference Identifier Option
 
@@ -595,8 +595,8 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |F|    Encrypted DNS Type       |         ADN Length            |
-       +-+-----------------------------+-------------------------------+
+       |F|Encr DNS Type|   Reserved    |         ADN Length            |
+       +-+-------------+---------------+-------------------------------+
        |                                                               |
        :                  Authentication Domain Name                   :
        |                                                               |
@@ -636,8 +636,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    o  F bit: Forwarder bit.  If set, it instructs the DNS client to
       retrieve the forwarder identifier from the resolver identified by
       the Authentication Domain Name (Section 7).
-   o  Encrypted DNS Type: Indicates the type of the encrypted DNS server
-      conveyed in this attribute.  The following values are defined:
+   o  Encr DNS Type (Encrypted DNS Type): Indicates the type of the
+      encrypted DNS server conveyed in this attribute.  The following
+      values are defined:
 
          0: Any encrypted DNS
          1: DoT
@@ -661,10 +662,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    o  DISCUSSION: More feedback is needed to assess whether URI RA/DHCP
       options have to be specified.
 
-5.1.  Define a Dedicated DHCP/RA Option
 
-   This solution assumes that DHCP servers and access routers maintain
-   an updated list of the templates used by DoH resolvers.
+
+
 
 
 
@@ -673,6 +673,11 @@ Boucadair, et al.        Expires October 2, 2020               [Page 12]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
+
+5.1.  Define a Dedicated DHCP/RA Option
+
+   This solution assumes that DHCP servers and access routers maintain
+   an updated list of the templates used by DoH resolvers.
 
    The following observations can be made:
 
@@ -717,11 +722,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    Upon discovery of a DoH resolver (Section 4), the DoH client contacts
    that DoH resolver to retrieve the list of supported DoH services
    (e.g., use of a well-known URI).  That information is cached by the
-   DoH client for a given period (e.g., 24h).  DoH clients re-iterates
-   that request regularly (e.g., 24h) to retrieve an updated list of
-   supported DoH services.  Note that a "push" mode can be considered
-   using the mechanism defined in [I-D.ietf-dnssd-push].
-
 
 
 
@@ -729,6 +729,11 @@ Boucadair, et al.        Expires October 2, 2020               [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
+
+   DoH client for a given period (e.g., 24h).  DoH clients re-iterates
+   that request regularly (e.g., 24h) to retrieve an updated list of
+   supported DoH services.  Note that a "push" mode can be considered
+   using the mechanism defined in [I-D.ietf-dnssd-push].
 
    This approach allows to avoid adherence of DoH servers with DHCP
    servers (or access routers) for (de)activating new DoH services.
@@ -750,6 +755,36 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    learn the IP addresses of DoT/DoH servers while an authentication
    domain name is supplied by one of the options discussed in Section 4.
    An example is depicted in Figure 11.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 14]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
 
                     Legacy Do53
                       client
@@ -781,7 +816,28 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 14]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -837,7 +893,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 15]
+Boucadair, et al.        Expires October 2, 2020               [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -893,7 +949,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 16]
+Boucadair, et al.        Expires October 2, 2020               [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -949,7 +1005,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 17]
+Boucadair, et al.        Expires October 2, 2020               [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -978,7 +1034,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
     Figure 13: A Simplified Example of Redirection to the DNS Forwarder
                                 in the CPE
 
-      Discussion Note: As an optimization, the redirect request can be
+      Discussion Note: As an optimization, the redirect response can be
       modified to include a list of IPv4/IPv6 addresses in addition to
       the CPE's name.
 
@@ -1005,7 +1061,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 18]
+Boucadair, et al.        Expires October 2, 2020               [Page 19]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1061,7 +1117,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 19]
+Boucadair, et al.        Expires October 2, 2020               [Page 20]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1117,7 +1173,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 20]
+Boucadair, et al.        Expires October 2, 2020               [Page 21]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1173,7 +1229,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 21]
+Boucadair, et al.        Expires October 2, 2020               [Page 22]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1229,14 +1285,14 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 22]
+Boucadair, et al.        Expires October 2, 2020               [Page 23]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 9.5.  Encrypted DNS Types
 
-   This document requests IANA to create a new registery called
+   This document requests IANA to create a new registry called
    "Encrypted DNS Types".  The initial values of the registery is as
    follows:
 
@@ -1285,7 +1341,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 23]
+Boucadair, et al.        Expires October 2, 2020               [Page 24]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1341,7 +1397,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 24]
+Boucadair, et al.        Expires October 2, 2020               [Page 25]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1397,7 +1453,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 25]
+Boucadair, et al.        Expires October 2, 2020               [Page 26]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1453,7 +1509,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 26]
+Boucadair, et al.        Expires October 2, 2020               [Page 27]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1509,7 +1565,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 27]
+Boucadair, et al.        Expires October 2, 2020               [Page 28]
 
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
@@ -1565,4 +1621,4 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 28]
+Boucadair, et al.        Expires October 2, 2020               [Page 29]

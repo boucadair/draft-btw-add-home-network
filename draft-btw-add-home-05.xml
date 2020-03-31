@@ -443,8 +443,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |     OPTION_V6_DNS_RI          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |F|    Encrypted DNS Type       |         ADN Length            |
-   +-+-----------------------------+-------------------------------+
+   |F|Encr DNS Type|   Reserved    |         ADN Length            |
+   +-+-------------+---------------+-------------------------------+
    |                                                               |
    |                 Authentication Domain Name                    |
    |                                                               |
@@ -465,9 +465,9 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             the Authentication Domain Name (<xref
             target="forwarder"></xref>).</t>
 
-            <t>Encrypted DNS Type: Indicates the type of the encrypted DNS
-            server conveyed in this attribute. The following values are
-            defined:<list style="empty">
+            <t>Encr DNS Type (Encrypted DNS Type): Indicates the type of the
+            encrypted DNS server conveyed in this attribute. The following
+            values are defined:<list style="empty">
                 <t>0: Any encrypted DNS</t>
 
                 <t>1: DoT</t>
@@ -501,7 +501,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           </figure></t>
 
         <t>Multiple instances of OPTION_V6_DNS_RI may be returned to a DHCPv6
-        client; each pointing to a distinct encrtypted DNS server type. </t>
+        client; each pointing to a distinct encrypted DNS server type. </t>
       </section>
 
       <section anchor="DHCP" title="DHCP DNS Reference Identifier Option">
@@ -585,8 +585,8 @@ with:
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |F|    Encrypted DNS Type       |         ADN Length            |
-     +-+-----------------------------+-------------------------------+
+     |F|Encr DNS Type|   Reserved    |         ADN Length            |
+     +-+-------------+---------------+-------------------------------+
      |                                                               |
      :                  Authentication Domain Name                   :
      |                                                               |
@@ -622,9 +622,9 @@ with:
             the Authentication Domain Name (<xref
             target="forwarder"></xref>).</t>
 
-            <t>Encrypted DNS Type: Indicates the type of the encrypted DNS
-            server conveyed in this attribute. The following values are
-            defined:<list style="empty">
+            <t>Encr DNS Type (Encrypted DNS Type): Indicates the type of the
+            encrypted DNS server conveyed in this attribute. The following
+            values are defined:<list style="empty">
                 <t>0: Any encrypted DNS</t>
 
                 <t>1: DoT</t>
@@ -943,7 +943,7 @@ Legend:
               </figure></t>
 
             <t><list style="empty">
-                <t>Discussion Note: As an optimization, the redirect request
+                <t>Discussion Note: As an optimization, the redirect response
                 can be modified to include a list of IPv4/IPv6 addresses in
                 addition to the CPE's name. </t>
               </list></t>
@@ -1191,7 +1191,7 @@ Legend:
       </section>
 
       <section anchor="IANA2" title="Encrypted DNS Types">
-        <t>This document requests IANA to create a new registery called
+        <t>This document requests IANA to create a new registry called
         "Encrypted DNS Types". The initial values of the registery is as
         follows:</t>
 
