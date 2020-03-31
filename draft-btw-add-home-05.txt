@@ -103,8 +103,8 @@ Table of Contents
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  24
      11.2.  Informative References . . . . . . . . . . . . . . . . .  25
-   Appendix A.  DoT and DoH DNS-SD Considerations  . . . . . . . . .  28
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  28
+
 
 
 
@@ -966,11 +966,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    automate certificate management functions such as domain validation
    procedure, certificate issuance and certificate revocation.
 
-   Alternatively, the ISP can assign a unique FQDN to the managed CPE.
-   DNS requests to the forwarder are sent to the internal IP address,
-   not the external one.  The DoH/DoT forwarder will act like a private
-   DoT/DoH server only be accessible from within the home network.
-
 7.1.2.  Redirection
 
    The following mechanisms can be used to host a DoH/DoT forwarder in a
@@ -988,11 +983,11 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    Once the DoH session is established, the ISP DoH server uses HTTP
    redirection (Section 6.4.4 in [RFC7231]) to redirect the DNS client
    to the DoH forwarder hosted on the CPE (e.g.,
-   cpe1-internal.example.net).  The DNS client either uses Do53 or
-   opportunistic privacy profile (Section 7.2 of [RFC8310]) to resolve
-   the domain name in the redirected URI and eventually establishes DoH
-   session with the DoH forwarder in the CPE reachable on the LAN
-   interface.  A simplified example is illustrated in Figure 13.
+   cpe1-internal.example.net).  The DNS client either uses Do53 to
+   resolve the domain name in the redirected URI and eventually
+   establishes DoH session with the DoH forwarder in the CPE reachable
+   on the LAN interface.  A simplified example is illustrated in
+   Figure 13.
 
    PKIX authentication [RFC6125] based upon the domain name in the
    redirected URI will detect rogue DNS servers.
@@ -1000,6 +995,11 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    A DNS client that successfully connects to a redirected DoH server
    may choose to locally cache the server host IP addresses in order to
    not have to repeat the Do53 query.
+
+
+
+
+
 
 
 
@@ -1072,6 +1072,10 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
                       Figure 14: DOT Redirect Example
 
+   The <Service> portion of the DNS service instance name MUST be
+   "_domain-s._tcp" (Section 6 of [RFC7858]) or "_doh._tcp"
+   (Section 9.4).
+
    The SRV record can only convey a sub-domain of the parent domain
    otherwise the SRV record MUST be rejected by the DoH/DoT client.
 
@@ -1091,6 +1095,10 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    o  The DoH/DoT server certificate is managed by the entity in-charge
       of hosting the DoT/DoH forwarder.
 
+      Alternatively, a security service provider can assign a unique
+      FQDN to the CPE.  The DoH/DoT forwarder will act like a private
+      DoT/DoH server only be accessible from within the home network.
+
    o  The DoH/DoT forwarder will either be configured to use the ISP's
       or a 3rd party DoH/DoT server.
 
@@ -1102,14 +1110,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
    forwarder.
-
-
-
-
-
-
-
-
 
 
 
@@ -1159,25 +1159,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    attack to a non-filtering DNS server, which the attacker can leverage
    to deliver malware.
 
-   The primary attacks against the methods described in Appendix A are
-   the ones that would lead to impersonation of a DNS server and
-   spoofing the DNS response to indicate that the DNS server does not
-   support DoH or DoT.  To protect against DNS-vectored attacks, secured
-   DNS (DNSSEC) can be used to ensure the validity of the received DNS
-   records received.  Impersonation of a DoH/DoT server is prevented by
-   validating the certificate presented by the DoH/DoT server.  If DHCP/
-   RA conveys an ADN, but the DNS-SD lookup indicates that the DNS
-   server does not support DoH/DoT, the DNS client can detect the DNS
-   response is spoofed.
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 21]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
    The use of DoH/DoT also depends on the user's policies.  For example,
    the user may indicate his/her consent to use (or not) the locally-
    discovered DoH/DoT server or request to review human-readable privacy
@@ -1187,6 +1168,15 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    to adhere to these policies.  This document does not make any
    assumption about the structure of such policies nor mandates specific
    requirements.  Such policies and their handling is out of scope.
+
+
+
+
+
+Boucadair, et al.        Expires October 2, 2020               [Page 21]
+
+Internet-Draft          DoH/DoT in Home Networks              March 2020
+
 
    DoH/DoT servers discovered using insecure discovery mechanisms like
    DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
@@ -1208,6 +1198,13 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    certificates will be subject to attacks (e.g., redirect to malicious
    servers, intercept sensitive data).
 
+   The resolution of redirected domain using Do53 (Section 7.1.2.1) is a
+   minimal leakage (see Section 6.3 of [RFC8310]).  To protect against
+   DNS-vectored attacks, DNSSEC can be used to ensure the validity of
+   the received DNS records received.  Impersonation of a DoH/DoT
+   forwarder is prevented by validating the certificate presented by the
+   DoH/DoT forwarder.
+
    TCP connections received outside the home network MUST be discarded
    by the DoH/DoT forwarder in the CPE.  This behavior adheres to REQ#8
    in [RFC6092]; it MUST apply for both IPv4 and IPv6.
@@ -1226,6 +1223,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    +-------+------------------+---------+-------------+----------------+
    | TBA1  | OPTION_V6_DNS_RI | Yes     | Yes         | [ThisDocument] |
    +-------+------------------+---------+-------------+----------------+
+
+
+
 
 
 
@@ -1346,10 +1346,6 @@ Boucadair, et al.        Expires October 2, 2020               [Page 24]
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
-   [RFC6763]  Cheshire, S. and M. Krochmal, "DNS-Based Service
-              Discovery", RFC 6763, DOI 10.17487/RFC6763, February 2013,
-              <https://www.rfc-editor.org/info/rfc6763>.
-
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
@@ -1394,6 +1390,10 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
               Specification", <https://www.wi-fi.org/file/device-
               provisioning-protocol-specification>.
+
+
+
+
 
 
 
@@ -1514,27 +1514,6 @@ Boucadair, et al.        Expires October 2, 2020               [Page 27]
 Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
-Appendix A.  DoT and DoH DNS-SD Considerations
-
-   As an alternative to probing discovered DNS servers in order to check
-   (1) whether they support DoT and/or DoH, and (2) whether customized
-   port numbers are used (instead of 443/853 port numbers), a DNS client
-   MAY use DNS-based Service Discovery (DNS-SD) [RFC6763].
-
-   DNS-SD defines a set of naming rules for certain DNS record types
-   that they use for advertising and discovering services.  Section 4.1
-   of [RFC6763] specifies that a service instance name in DNS-SD has the
-   following structure:
-
-   <Instance> . <Service> . <Domain>
-
-   The <Domain> portion specifies the authentication domain name
-   (Section 4).  The <Service> portion of the DNS service instance name
-   MUST be "_domain-s._tcp" (Section 6 of [RFC7858]) or "_doh._tcp"
-   (Section 9.4).  If no DNS-SD records can be retrieved by the DNS
-   client, it MUST wait a time period that is appropriate for the
-   encountered error (e.g., NXDOMAIN, timeout, etc.).
-
 Authors' Addresses
 
    Mohamed Boucadair
@@ -1559,15 +1538,6 @@ Authors' Addresses
    USA
 
    Email: dwing-ietf@fuggles.com
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 28]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
    Neil Cook
@@ -1595,30 +1565,4 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 29]
+Boucadair, et al.        Expires October 2, 2020               [Page 28]

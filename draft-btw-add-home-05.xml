@@ -903,19 +903,13 @@ Legend:
           used by the ISP to automate certificate management functions such as
           domain validation procedure, certificate issuance and certificate
           revocation.</t>
-
-          <t>Alternatively, the ISP can assign a unique FQDN to the managed
-          CPE. DNS requests to the forwarder are sent to the internal IP
-          address, not the external one. The DoH/DoT forwarder will act like a
-          private DoT/DoH server only be accessible from within the home
-          network.</t>
         </section>
 
         <section anchor="redirect" title="Redirection">
           <t>The following mechanisms can be used to host a DoH/DoT forwarder
           in a managed CPE (<xref target="mcpe"></xref>).</t>
 
-          <section anchor="redirect_dih" title="Server-Driven Redirection ">
+          <section anchor="redirect_doh" title="Server-Driven Redirection ">
             <t>The mechanism specified in this section is specific to DoH.</t>
 
             <t>An ISP-managed CPE can be configured with the ISP's DoH
@@ -928,11 +922,10 @@ Legend:
             HTTP redirection (Section 6.4.4 in <xref target="RFC7231"></xref>)
             to redirect the DNS client to the DoH forwarder hosted on the CPE
             (e.g., cpe1-internal.example.net). The DNS client either uses Do53
-            or opportunistic privacy profile (Section 7.2 of <xref
-            target="RFC8310"></xref>) to resolve the domain name in the
-            redirected URI and eventually establishes DoH session with the DoH
-            forwarder in the CPE reachable on the LAN interface. A simplified
-            example is illustrated in <xref target="redirection"></xref>.</t>
+            to resolve the domain name in the redirected URI and eventually
+            establishes DoH session with the DoH forwarder in the CPE
+            reachable on the LAN interface. A simplified example is
+            illustrated in <xref target="redirection"></xref>.</t>
 
             <t>PKIX authentication <xref target="RFC6125"></xref> based upon
             the domain name in the redirected URI will detect rogue DNS
@@ -999,6 +992,11 @@ cpe1-internal.example.net  A 198.51.100.2
 ]]></artwork>
               </figure></t>
 
+            <t>The &lt;Service&gt; portion of the DNS service instance name
+            MUST be "_domain-s._tcp" (Section 6 of <xref
+            target="RFC7858"></xref>) or "_doh._tcp" (<xref
+            target="name"></xref>). </t>
+
             <t>The SRV record can only convey a sub-domain of the parent
             domain otherwise the SRV record MUST be rejected by the DoH/DoT
             client.</t>
@@ -1018,7 +1016,11 @@ cpe1-internal.example.net  A 198.51.100.2
         host a DoH/DoT forwarder on the unmanaged CPE. This assumes the
         following:<list style="symbols">
             <t>The DoH/DoT server certificate is managed by the entity
-            in-charge of hosting the DoT/DoH forwarder.</t>
+            in-charge of hosting the DoT/DoH forwarder. <vspace
+            blankLines="1" />Alternatively, a security service provider can
+            assign a unique FQDN to the CPE. The DoH/DoT forwarder will act
+            like a private DoT/DoH server only be accessible from within the
+            home network.</t>
 
             <t>The DoH/DoT forwarder will either be configured to use the
             ISP's or a 3rd party DoH/DoT server.</t>
@@ -1078,17 +1080,6 @@ Legend:
    conform to the user's privacy policy.
 --></t>
 
-      <t>The primary attacks against the methods described in <xref
-      target="discovery"></xref> are the ones that would lead to impersonation
-      of a DNS server and spoofing the DNS response to indicate that the DNS
-      server does not support DoH or DoT. To protect against DNS-vectored
-      attacks, secured DNS (DNSSEC) can be used to ensure the validity of the
-      received DNS records received. Impersonation of a DoH/DoT server is
-      prevented by validating the certificate presented by the DoH/DoT server.
-      If DHCP/RA conveys an ADN, but the DNS-SD lookup indicates that the DNS
-      server does not support DoH/DoT, the DNS client can detect the DNS
-      response is spoofed.</t>
-
       <t>The use of DoH/DoT also depends on the user's policies. For example,
       the user may indicate his/her consent to use (or not) the locally-
       discovered DoH/DoT server or request to review human-readable privacy
@@ -1117,6 +1108,13 @@ Legend:
       the Reference Identifier Option. DNS clients that ignore authentication
       failures and accept spoofed certificates will be subject to attacks
       (e.g., redirect to malicious servers, intercept sensitive data).</t>
+
+      <t>The resolution of redirected domain using Do53 (<xref
+      target="redirect_doh"></xref>) is a minimal leakage (see Section 6.3 of
+      <xref target="RFC8310"></xref>). To protect against DNS-vectored
+      attacks, DNSSEC can be used to ensure the validity of the received DNS
+      records received. Impersonation of a DoH/DoT forwarder is prevented by
+      validating the certificate presented by the DoH/DoT forwarder. </t>
 
       <t>TCP connections received outside the home network MUST be discarded
       by the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
@@ -1281,8 +1279,6 @@ Legend:
 
       <?rfc include='reference.RFC.8106'?>
 
-      <?rfc include='reference.RFC.6763'?>
-
       <?rfc include='reference.RFC.8126'?>
 
       <?rfc include='reference.RFC.3396'?>
@@ -1374,31 +1370,5 @@ Legend:
         </front>
       </reference>
     </references>
-
-    <section anchor="discovery" title="DoT and DoH DNS-SD Considerations">
-      <t>As an alternative to probing discovered DNS servers in order to check
-      (1) whether they support DoT and/or DoH, and (2) whether customized port
-      numbers are used (instead of 443/853 port numbers), a DNS client MAY use
-      DNS-based Service Discovery (DNS-SD) <xref target="RFC6763"></xref>.</t>
-
-      <t>DNS-SD defines a set of naming rules for certain DNS record types
-      that they use for advertising and discovering services. Section 4.1 of
-      <xref target="RFC6763"></xref> specifies that a service instance name in
-      DNS-SD has the following structure:</t>
-
-      <figure>
-        <artwork><![CDATA[<Instance> . <Service> . <Domain>]]></artwork>
-      </figure>
-
-      <t></t>
-
-      <t>The &lt;Domain&gt; portion specifies the authentication domain name
-      (<xref target="RI"></xref>). The &lt;Service&gt; portion of the DNS
-      service instance name MUST be "_domain-s._tcp" (Section 6 of <xref
-      target="RFC7858"></xref>) or "_doh._tcp" (<xref target="name"></xref>).
-      If no DNS-SD records can be retrieved by the DNS client, it MUST wait a
-      time period that is appropriate for the encountered error (e.g.,
-      NXDOMAIN, timeout, etc.).</t>
-    </section>
   </back>
 </rfc>
