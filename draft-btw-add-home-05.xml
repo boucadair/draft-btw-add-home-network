@@ -890,14 +890,12 @@ Legend:
         a managed CPE (<xref target="mcpe"></xref>).</t>
 
         <section anchor="acme" title="ACME">
-          <t>If a CPE is co-located with security services (e.g., malware
-          filtering, parental control, MUD), the ISP can assign a unique FQDN
-          (e.g., cpe1.example.com) and a domain-validated public certificate
-          to the DoH/DoT forwarder hosted on the CPE. Automatic Certificate
-          Management Environment (ACME) <xref target="RFC8555"></xref> can be
-          used by the ISP to automate certificate management functions such as
-          domain validation procedure, certificate issuance and certificate
-          revocation.</t>
+          <t>The ISP can assign a unique FQDN (e.g., cpe1.example.com) and a
+          domain-validated public certificate to the DoH/DoT forwarder hosted
+          on the CPE. Automatic Certificate Management Environment (ACME)
+          <xref target="RFC8555"></xref> can be used by the ISP to automate
+          certificate management functions such as domain validation
+          procedure, certificate issuance and certificate revocation.</t>
 
           <t>The managed CPE should support a configuration parameter to
           instruct the CPE whether it has to relay the encrypted DNS server
@@ -981,7 +979,7 @@ Legend:
             <t>An ISP-managed CPE can be configured with the ISP's DoH/DoT
             resolver IP addresses and ADN, which it will communicate to
             internal hosts using DHCP/RA (<xref target="RI"></xref>). In
-            addition, the CPE set the F-bit to inform the client that a
+            addition, the CPE sets the F-bit to inform the client that a
             forwarder is available locally.</t>
 
             <t>Upon joining the LAN, a DoH/DoT client follows the procedure
@@ -995,7 +993,7 @@ Legend:
             CPE (e.g., cpe1-internal.example.net). A simplified example is
             illustrated in <xref target="dotr"></xref>.</t>
 
-            <t><figure anchor="dotr" title="DOT Redirect Example">
+            <t><figure anchor="dotr" title="DoT Redirect Example">
                 <artwork><![CDATA[_domain-s._tcp.example.net  SRV 0 0 853 cpe1-internal.example.net
 cpe1-internal.example.net  AAAA 2001:db8:8:4::2
 cpe1-internal.example.net  A 198.51.100.2
@@ -1012,8 +1010,8 @@ cpe1-internal.example.net  A 198.51.100.2
             client.</t>
 
             <t>A DNS client that successfully connects to a redirected DoH/DoT
-            server may choose to locally cache the server host IP addresses in
-            order to not have to repeat the SRV lookup.</t>
+            server may choose to locally cache the server IP addresses in
+            order to avoid repeating the SRV lookup.</t>
 
             <t><figure align="center" anchor="iredirection"
                 title="A Simplified Example of Client-Initiated Redirection">
@@ -1048,8 +1046,8 @@ Legend:
         <section title="Auto-Upgrade based on Domains and their Sub-domains">
           <t>If the ADN conveyed in DHCP/RA (<xref target="RI"></xref>) is
           pre-configured in popular OSes or browsers as a verified resolver
-          and auto-upgrade (<xref target="auto"></xref>) is allowed for both
-          the pre-configured ADN and its sub-domains, the redirection
+          and the auto-upgrade (<xref target="auto"></xref>) is allowed for
+          both the pre-configured ADN and its sub-domains, the redirection
           mechanisms discussed in <xref target="redirect"></xref> can be
           avoided. Concretely, the CPE can communicate the ADN of the local
           DoH forwarder (<xref target="acme"></xref>) to internal hosts using

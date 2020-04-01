@@ -961,13 +961,12 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 7.1.1.  ACME
 
-   If a CPE is co-located with security services (e.g., malware
-   filtering, parental control, MUD), the ISP can assign a unique FQDN
-   (e.g., cpe1.example.com) and a domain-validated public certificate to
-   the DoH/DoT forwarder hosted on the CPE.  Automatic Certificate
-   Management Environment (ACME) [RFC8555] can be used by the ISP to
-   automate certificate management functions such as domain validation
-   procedure, certificate issuance and certificate revocation.
+   The ISP can assign a unique FQDN (e.g., cpe1.example.com) and a
+   domain-validated public certificate to the DoH/DoT forwarder hosted
+   on the CPE.  Automatic Certificate Management Environment (ACME)
+   [RFC8555] can be used by the ISP to automate certificate management
+   functions such as domain validation procedure, certificate issuance
+   and certificate revocation.
 
    The managed CPE should support a configuration parameter to instruct
    the CPE whether it has to relay the encrypted DNS server received
@@ -1000,6 +999,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
    PKIX authentication [RFC6125] based upon the domain name in the
    redirected URI will detect rogue DNS servers.
+
 
 
 
@@ -1050,7 +1050,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
    An ISP-managed CPE can be configured with the ISP's DoH/DoT resolver
    IP addresses and ADN, which it will communicate to internal hosts
-   using DHCP/RA (Section 4).  In addition, the CPE set the F-bit to
+   using DHCP/RA (Section 4).  In addition, the CPE sets the F-bit to
    inform the client that a forwarder is available locally.
 
    Upon joining the LAN, a DoH/DoT client follows the procedure
@@ -1075,7 +1075,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    cpe1-internal.example.net  AAAA 2001:db8:8:4::2
    cpe1-internal.example.net  A 198.51.100.2
 
-                      Figure 14: DOT Redirect Example
+                      Figure 14: DoT Redirect Example
 
    The <Service> portion of the DNS service instance name MUST be
    "_domain-s._tcp" (Section 6 of [RFC7858]) or "_doh._tcp"
@@ -1085,8 +1085,8 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    otherwise the SRV record MUST be rejected by the DoH/DoT client.
 
    A DNS client that successfully connects to a redirected DoH/DoT
-   server may choose to locally cache the server host IP addresses in
-   order to not have to repeat the SRV lookup.
+   server may choose to locally cache the server IP addresses in order
+   to avoid repeating the SRV lookup.
 
                                                    --,--,-
                          ,+-,--,--.             ,/  ISP   \.
@@ -1125,7 +1125,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 7.1.3.  Auto-Upgrade based on Domains and their Sub-domains
 
    If the ADN conveyed in DHCP/RA (Section 4) is pre-configured in
-   popular OSes or browsers as a verified resolver and auto-upgrade
+   popular OSes or browsers as a verified resolver and the auto-upgrade
    (Section 6.1) is allowed for both the pre-configured ADN and its sub-
    domains, the redirection mechanisms discussed in Section 7.1.2 can be
    avoided.  Concretely, the CPE can communicate the ADN of the local
