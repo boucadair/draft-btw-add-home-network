@@ -443,10 +443,10 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |     OPTION_V6_DNS_RI          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |F|Encr DNS Type|   Reserved    |         ADN Length            |
-   +-+-------------+---------------+-------------------------------+
+   |F|Encr DNS Type|                                               |
+   +-+-------------+                                               |
    |                                                               |
-   |                 Authentication Domain Name                    |
+   ~                 Authentication Domain Name                    ~
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -478,9 +478,6 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
                 considerations.</t>
               </list></t>
 
-            <t>ADN Length: Length of the DNS Authentication Domain Name field
-            in octets.</t>
-
             <t>Authentication Domain Name: A fully qualified domain name of
             the DoH/DoT server. This field is formatted as specified in
             Section 10 of <xref target="RFC8415"></xref>.</t>
@@ -501,7 +498,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           </figure></t>
 
         <t>Multiple instances of OPTION_V6_DNS_RI may be returned to a DHCPv6
-        client; each pointing to a distinct encrypted DNS server type. </t>
+        client; each pointing to a distinct encrypted DNS server type.</t>
 
         <t>To discover an encrypted DNS server, the DHCPv6 client including
         OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
@@ -526,10 +523,10 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |     TBA2      |     Length    |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         |F|Encr DNS Type|   ADN Length  |
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         |F|Encr DNS Type|               |
+         +-+-+-+-+-+-+-+-+               |
          |                               |
-         :  Authentication Domain Name   :
+         ~  Authentication Domain Name   ~
          |                               |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
 
@@ -571,9 +568,6 @@ with:
                 considerations.</t>
               </list></t>
 
-            <t>ADN Length: Includes the length of the Authentication Domain
-            Name field in octets.</t>
-
             <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
             <xref target="RFC8415"></xref>.</t>
@@ -606,12 +600,10 @@ with:
             <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     Type      |     Length    |           Reserved            |
+     |     Type      |     Length    |F|Encr DNS Type|   Unassigned  |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |F|Encr DNS Type|   Reserved    |         ADN Length            |
-     +-+-------------+---------------+-------------------------------+
      |                                                               |
      :                  Authentication Domain Name                   :
      |                                                               |
@@ -627,20 +619,6 @@ with:
             <t>Length: 8-bit unsigned integer. The length of the option
             (including the Type and Length fields) is in units of 8
             octets.</t>
-
-            <t>Reserved: This field is unused. It MUST be initialized to zero
-            by the sender and MUST be ignored by the receiver.</t>
-
-            <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
-            (relative to the time the packet is received) over which the
-            authentication domain name MAY be used as a DNS Reference
-            Identifier. <vspace blankLines="1" />The value of Lifetime SHOULD
-            by default be at least 3 * MaxRtrAdvInterval, where
-            MaxRtrAdvInterval is the maximum RA interval as defined in <xref
-            target="RFC4861"></xref>. <vspace blankLines="1" />A value of all
-            one bits (0xffffffff) represents infinity. <vspace
-            blankLines="1" />A value of zero means that the DNS Reference
-            Identifier MUST no longer be used.</t>
 
             <t>F bit: Forwarder bit. If set, it instructs the DNS client to
             retrieve the forwarder identifier from the resolver identified by
@@ -660,9 +638,25 @@ with:
                 considerations.</t>
               </list></t>
 
+            <t>Unassigned: This field is unused. It MUST be initialized to
+            zero by the sender and MUST be ignored by the receiver.</t>
+
+            <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
+            (relative to the time the packet is received) over which the
+            authentication domain name MAY be used as a DNS Reference
+            Identifier. <vspace blankLines="1" />The value of Lifetime SHOULD
+            by default be at least 3 * MaxRtrAdvInterval, where
+            MaxRtrAdvInterval is the maximum RA interval as defined in <xref
+            target="RFC4861"></xref>. <vspace blankLines="1" />A value of all
+            one bits (0xffffffff) represents infinity. <vspace
+            blankLines="1" />A value of zero means that the DNS Reference
+            Identifier MUST no longer be used.</t>
+
             <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
-            <xref target="RFC8415"></xref>.</t>
+            <xref target="RFC8415"></xref>.<vspace blankLines="1" />This field
+            MUST be padded with zeros so that its size is a multiple of 8
+            octets.</t>
           </list></t>
 
         <t><?rfc subcompact="no" ?></t>
@@ -892,7 +886,8 @@ Legend:
       <t></t>
 
       <section anchor="forwarder_m" title="Managed CPEs">
-        <t></t>
+        <t>The following mechanisms can be used to host a DoH/DoT forwarder in
+        a managed CPE (<xref target="mcpe"></xref>).</t>
 
         <section anchor="acme" title="ACME">
           <t>If a CPE is co-located with security services (e.g., malware
@@ -903,11 +898,20 @@ Legend:
           used by the ISP to automate certificate management functions such as
           domain validation procedure, certificate issuance and certificate
           revocation.</t>
+
+          <t>The managed CPE should support a configuration parameter to
+          instruct the CPE whether it has to relay the encrypted DNS server
+          received from the ISP's network or has to announce itself as a
+          forwarder within the local network. The default behavior of the CPE
+          is to supply the encrypted DNS server received from the ISP's
+          network.</t>
+
+          <t>If the CPE announces itself as a DNS forwarder, the F-bit MUST
+          NOT be set.</t>
         </section>
 
         <section anchor="redirect" title="Redirection">
-          <t>The following mechanisms can be used to host a DoH/DoT forwarder
-          in a managed CPE (<xref target="mcpe"></xref>).</t>
+          <t></t>
 
           <section anchor="redirect_doh" title="Server-Driven Redirection ">
             <t>The mechanism specified in this section is specific to DoH.</t>
@@ -919,10 +923,11 @@ Legend:
             in <xref target="auto"></xref> to upgrade to DoH.</t>
 
             <t>Once the DoH session is established, the ISP DoH server uses
-            HTTP redirection (Section 6.4.4 in <xref target="RFC7231"></xref>)
-            to redirect the DNS client to the DoH forwarder hosted on the CPE
-            (e.g., cpe1-internal.example.net). The DNS client either uses Do53
-            to resolve the domain name in the redirected URI and eventually
+            HTTP redirection (Section 6.4.4 in <xref target="RFC7231"></xref>
+            and <xref target="RFC7538"></xref>) to redirect the DNS client to
+            the DoH forwarder hosted on the CPE (e.g.,
+            cpe1-internal.example.net). The DNS client either uses Do53 to
+            resolve the domain name in the redirected URI and eventually
             establishes DoH session with the DoH forwarder in the CPE
             reachable on the LAN interface. A simplified example is
             illustrated in <xref target="redirection"></xref>.</t>
@@ -936,7 +941,7 @@ Legend:
             order to not have to repeat the Do53 query.</t>
 
             <t><figure align="center" anchor="redirection"
-                title="A Simplified Example of Redirection to the DNS Forwarder in the CPE">
+                title="A Simplified Example of Server-Driven Redirection">
                 <artwork><![CDATA[                                                --,--,-
                       ,+-,--,--.             ,/  ISP   \.
                    ,-'          `-.       ,-'            `-.
@@ -947,7 +952,7 @@ Legend:
              |       {RI, @1}       |       | 
              |                              | 
              |<============DoH=============>|
-             |<------303 (See Other)--------| 
+             |<--308 Permanent Redirect-----| 
              |                              | 
              |--------Do53 Query----------->| 
              |<--------CPE's LAN @----------|
@@ -961,13 +966,18 @@ Legend:
               </figure></t>
 
             <t><list style="empty">
-                <t>Discussion Note: As an optimization, the redirect response
-                can be modified to include a list of IPv4/IPv6 addresses in
-                addition to the CPE's name. </t>
+                <t>Notes: <list style="symbols">
+                    <t>As an optimization, the redirect response can be
+                    modified to include a list of IPv4/IPv6 addresses in
+                    addition to the CPE's name.</t>
+
+                    <t>Clients not caching the redirect information may
+                    experience an extra delay for each request.</t>
+                  </list></t>
               </list></t>
           </section>
 
-          <section title="Client-Initiated Redirection ">
+          <section anchor="init" title="Client-Initiated Redirection ">
             <t>An ISP-managed CPE can be configured with the ISP's DoH/DoT
             resolver IP addresses and ADN, which it will communicate to
             internal hosts using DHCP/RA (<xref target="RI"></xref>). In
@@ -995,7 +1005,7 @@ cpe1-internal.example.net  A 198.51.100.2
             <t>The &lt;Service&gt; portion of the DNS service instance name
             MUST be "_domain-s._tcp" (Section 6 of <xref
             target="RFC7858"></xref>) or "_doh._tcp" (<xref
-            target="name"></xref>). </t>
+            target="name"></xref>).</t>
 
             <t>The SRV record can only convey a sub-domain of the parent
             domain otherwise the SRV record MUST be rejected by the DoH/DoT
@@ -1004,7 +1014,81 @@ cpe1-internal.example.net  A 198.51.100.2
             <t>A DNS client that successfully connects to a redirected DoH/DoT
             server may choose to locally cache the server host IP addresses in
             order to not have to repeat the SRV lookup.</t>
+
+            <t><figure align="center" anchor="iredirection"
+                title="A Simplified Example of Client-Initiated Redirection">
+                <artwork><![CDATA[                                                --,--,-
+                      ,+-,--,--.             ,/  ISP   \.
+                   ,-'          `-.       ,-'            `-.
+         DoH/DoT --(      LAN      CPE----( S (@1)          )
+    capable client  `-.          ,-'|      `-.           ,-'
+             |        `--'--'--'    |       | `--'--'--'
+             |<========DHCP========>|       | 
+             |   {ADN, F=1, @1}     |       | 
+             |                              | 
+             | /==========================\ |
+             || DoH: SRV Lookup (ADN)      ||
+             || cpe1-internal.example.net  ||
+             || AAAA ==> 2001:db8:8:4::2   ||
+             || A    ==> 198.51.100.2      ||
+             | \==========================/ |
+             |  
+             |        
+             |<========DoH=========>|    
+             |                      |     
+Legend:
+  * S: DoH/DoT server
+  * @1: IP address of S
+  * F: Forwarding bit 
+]]></artwork>
+              </figure></t>
           </section>
+        </section>
+
+        <section title="Auto-Upgrade based on Domains and their Sub-domains">
+          <t>If the ADN conveyed in DHCP/RA (<xref target="RI"></xref>) is
+          pre-configured in popular OSes or browsers as a verified resolver
+          and auto-upgrade (<xref target="auto"></xref>) is allowed for both
+          the pre-configured ADN and its sub-domains, the redirection
+          mechanisms discussed in <xref target="redirect"></xref> can be
+          avoided. Concretely, the CPE can communicate the ADN of the local
+          DoH forwarder (<xref target="acme"></xref>) to internal hosts using
+          DHCP/RA (<xref target="RI"></xref>).</t>
+
+          <t>Let's suppose that "example.net" is pre-configured as a verified
+          resolved in the browser or OS. If the DoH/DoT client discovers a
+          local forwarder "cpe1-internal.example.net", the DoH/DoT client will
+          auto-upgrade because the pre-configured ADN would match
+          subjectAltName value "cpe1-internal.example.net" of type dNSName. As
+          shown in <xref target="subdomainex"></xref>, the auto-upgrade to a
+          rogue server advertising "rs.example.org" will fail. <figure
+              align="center" anchor="subdomainex"
+              title="A Simplified Example of Auto-upgrade based on Sub-domains">
+              <artwork><![CDATA[
+                         Rogue Server
+             |              | 
+             X<==DHCP=======|  
+             | {ADN=        |        
+             |  rs.example.org, F=0, @rs} 
+             |              |                  --,--,-
+             |        ,+-,--+--.             ,/  ISP   \.
+             |     ,-'          `-.       ,-'            `-.
+         DoH/DoT --(      LAN      CPE----( S (@1)          )
+    capable client  `-.          ,-'|      `-.           ,-'
+             |        `--'--'--'    |         `--'--'--'
+             |<========DHCP========>|        
+             |{ADN=                 |        
+             |  cpe1-internal.example.net, F=0, @i}    
+             |        
+             |<========DoH=========>|    
+             |                      |     
+Legend:
+  * S: DoH/DoT server
+  * @1: IP address of S
+  * @i: internal IP address of the CPE
+  * @rs: IP address of a rogue server
+]]></artwork>
+            </figure></t>
         </section>
       </section>
 
@@ -1114,7 +1198,7 @@ Legend:
       <xref target="RFC8310"></xref>). To protect against DNS-vectored
       attacks, DNSSEC can be used to ensure the validity of the received DNS
       records received. Impersonation of a DoH/DoT forwarder is prevented by
-      validating the certificate presented by the DoH/DoT forwarder. </t>
+      validating the certificate presented by the DoH/DoT forwarder.</t>
 
       <t>TCP connections received outside the home network MUST be discarded
       by the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
@@ -1282,6 +1366,8 @@ Legend:
       <?rfc include='reference.RFC.8126'?>
 
       <?rfc include='reference.RFC.3396'?>
+
+      <?rfc include='reference.RFC.7538'?>
     </references>
 
     <references title="Informative References">

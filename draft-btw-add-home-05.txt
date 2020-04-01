@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: October 2, 2020                                          McAfee
+Expires: October 3, 2020                                          McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                          March 31, 2020
+                                                           April 1, 2020
 
 
     DNS-over-HTTPS and DNS-over-TLS Server Discovery and Deployment
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 2, 2020.
+   This Internet-Draft will expire on October 3, 2020.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 1]
+Boucadair, et al.        Expires October 3, 2020                [Page 1]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -91,27 +91,27 @@ Table of Contents
        7.1.2.  Redirection . . . . . . . . . . . . . . . . . . . . .  18
          7.1.2.1.  Server-Driven Redirection . . . . . . . . . . . .  18
          7.1.2.2.  Client-Initiated Redirection  . . . . . . . . . .  19
-     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  20
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  22
-     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  22
-     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  23
-     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  23
-     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  23
-     9.5.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  24
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  24
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  24
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  25
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  28
+       7.1.3.  Auto-Upgrade based on Domains and their Sub-domains .  21
+     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  21
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  22
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
+     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  24
+     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  24
+     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  24
+     9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  25
+     9.5.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  25
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  25
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  25
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  27
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 
 
 
-
-Boucadair, et al.        Expires October 2, 2020                [Page 2]
+Boucadair, et al.        Expires October 3, 2020                [Page 2]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 3]
+Boucadair, et al.        Expires October 3, 2020                [Page 3]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
    ISPs use DNS to provide additional services such as (but not limited
@@ -221,9 +221,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 4]
+Boucadair, et al.        Expires October 3, 2020                [Page 4]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 2.  Terminology
@@ -277,9 +277,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 5]
+Boucadair, et al.        Expires October 3, 2020                [Page 5]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
            (a) Fixed Networks
@@ -333,9 +333,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 6]
+Boucadair, et al.        Expires October 3, 2020                [Page 6]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
    the request to an upstream DoH/DoT/Do53 resolver.  Such deployment is
@@ -389,9 +389,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 7]
+Boucadair, et al.        Expires October 3, 2020                [Page 7]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
                     ,--,--,--.                    ,--,--,--.
@@ -445,9 +445,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020                [Page 8]
+Boucadair, et al.        Expires October 3, 2020                [Page 8]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
    The DNS client establishes a DoH/DoT session with the discovered DNS
@@ -470,10 +470,10 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |     OPTION_V6_DNS_RI          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |F|Encr DNS Type|   Reserved    |         ADN Length            |
-      +-+-------------+---------------+-------------------------------+
+      |F|Encr DNS Type|                                               |
+      +-+-------------+                                               |
       |                                                               |
-      |                 Authentication Domain Name                    |
+      ~                 Authentication Domain Name                    ~
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -495,20 +495,16 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
          1: DoT
          2: DoH
          See Section 9.5 for future assignment considerations.
-   o  ADN Length: Length of the DNS Authentication Domain Name field in
-      octets.
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020                [Page 9]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
    o  Authentication Domain Name: A fully qualified domain name of the
       DoH/DoT server.  This field is formatted as specified in
       Section 10 of [RFC8415].
+
+
+
+Boucadair, et al.        Expires October 3, 2020                [Page 9]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    An example of the Authentication Domain Name encoding is shown in
    Figure 8.  This example conveys the FQDN "doh1.example.com.".
@@ -557,19 +553,23 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 10]
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 10]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
             0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
            |     TBA2      |     Length    |
            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |F|Encr DNS Type|   ADN Length  |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+           |F|Encr DNS Type|               |
+           +-+-+-+-+-+-+-+-+               |
            |                               |
-           :  Authentication Domain Name   :
+           ~  Authentication Domain Name   ~
            |                               |
            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -601,8 +601,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
          1: DoT
          2: DoH
          See Section 9.5 for future assignment considerations.
-   o  ADN Length: Includes the length of the Authentication Domain Name
-      field in octets.
    o  Authentication Domain Name: The domain name of the DoH/DoT server.
       This field is formatted as specified in Section 10 of [RFC8415].
 
@@ -610,16 +608,16 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    mechanism specified in [RFC3396] MUST be used if OPTION_V4_DNS_RI
    exceeds the maximum DHCP option size of 255 octets.
 
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 11]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
    To discover an encrypted DNS server, the DHCP client requests the
    Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 11]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    Parameter Request List option [RFC2132].  The DHCP client sets the
    Encrypted DNS Type field to the requested encrypted DNS server.
 
@@ -637,12 +635,10 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |     Type      |     Length    |           Reserved            |
+       |     Type      |     Length    |F|Encr DNS Type|   Unassigned  |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |F|Encr DNS Type|   Reserved    |         ADN Length            |
-       +-+-------------+---------------+-------------------------------+
        |                                                               |
        :                  Authentication Domain Name                   :
        |                                                               |
@@ -656,28 +652,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       assigned by IANA (TBA3, see Section 9.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
-   o  Reserved: This field is unused.  It MUST be initialized to zero by
-      the sender and MUST be ignored by the receiver.
-   o  Lifetime: 32-bit unsigned integer.  The maximum time in seconds
-      (relative to the time the packet is received) over which the
-      authentication domain name MAY be used as a DNS Reference
-      Identifier.
-
-      The value of Lifetime SHOULD by default be at least 3 *
-      MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
-      interval as defined in [RFC4861].
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 12]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
-
-      A value of all one bits (0xffffffff) represents infinity.
-
-      A value of zero means that the DNS Reference Identifier MUST no
-      longer be used.
    o  F bit: Forwarder bit.  If set, it instructs the DNS client to
       retrieve the forwarder identifier from the resolver identified by
       the Authentication Domain Name (Section 7).
@@ -689,8 +663,35 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
          1: DoT
          2: DoH
          See Section 9.5 for future assignment considerations.
+   o  Unassigned: This field is unused.  It MUST be initialized to zero
+      by the sender and MUST be ignored by the receiver.
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 12]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
+   o  Lifetime: 32-bit unsigned integer.  The maximum time in seconds
+      (relative to the time the packet is received) over which the
+      authentication domain name MAY be used as a DNS Reference
+      Identifier.
+
+      The value of Lifetime SHOULD by default be at least 3 *
+      MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
+      interval as defined in [RFC4861].
+
+      A value of all one bits (0xffffffff) represents infinity.
+
+      A value of zero means that the DNS Reference Identifier MUST no
+      longer be used.
    o  Authentication Domain Name: The domain name of the DoH/DoT server.
       This field is formatted as specified in Section 10 of [RFC8415].
+
+      This field MUST be padded with zeros so that its size is a
+      multiple of 8 octets.
 
 5.  DoH URI Templates
 
@@ -720,15 +721,17 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
       service), DHCP servers (or access routers for the RA case) have to
       be updated accordingly to reflect the DNS service change.
 
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 13]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    o  This dependency may be affordable if the ISP providing the
       connectivity service is also the one operating the DoH resolver.
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 13]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
    o  Nevertheless, if the DNS service is provided by a distinct entity
       than the ISP, an out-of-band mechanism is required to synchronize
@@ -775,16 +778,17 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
    or RA) to retrieve DoH/DoT servers' reachability information.  In the
    various scenarios sketched in Section 3, Do53, DoH, and DoT may
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 14]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    terminate on the same IP address (or distinct IP addresses as
    depicted in Figure 12).  Terminating Do53/DoH/DoT on the same or
    distinct IP addresses is deployment-specific.
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 14]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
    From an IP reachability standpoint, DoH/DoT servers SHOULD be located
    by their address literals rather than their names.  This avoids
@@ -833,13 +837,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 15]
+Boucadair, et al.        Expires October 3, 2020               [Page 15]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
                     Legacy Do53
@@ -893,9 +893,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 16]
+Boucadair, et al.        Expires October 3, 2020               [Page 16]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
       In such case, the DNS client matches the domain name in the DNS
@@ -949,12 +949,15 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
 
 
-Boucadair, et al.        Expires October 2, 2020               [Page 17]
+Boucadair, et al.        Expires October 3, 2020               [Page 17]
 
-Internet-Draft          DoH/DoT in Home Networks              March 2020
+Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 7.1.  Managed CPEs
+
+   The following mechanisms can be used to host a DoH/DoT forwarder in a
+   managed CPE (Section 3.1).
 
 7.1.1.  ACME
 
@@ -966,10 +969,16 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    automate certificate management functions such as domain validation
    procedure, certificate issuance and certificate revocation.
 
-7.1.2.  Redirection
+   The managed CPE should support a configuration parameter to instruct
+   the CPE whether it has to relay the encrypted DNS server received
+   from the ISP's network or has to announce itself as a forwarder
+   within the local network.  The default behavior of the CPE is to
+   supply the encrypted DNS server received from the ISP's network.
 
-   The following mechanisms can be used to host a DoH/DoT forwarder in a
-   managed CPE (Section 3.1).
+   If the CPE announces itself as a DNS forwarder, the F-bit MUST NOT be
+   set.
+
+7.1.2.  Redirection
 
 7.1.2.1.  Server-Driven Redirection
 
@@ -981,8 +990,8 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    the procedure specified in Section 6.1 to upgrade to DoH.
 
    Once the DoH session is established, the ISP DoH server uses HTTP
-   redirection (Section 6.4.4 in [RFC7231]) to redirect the DNS client
-   to the DoH forwarder hosted on the CPE (e.g.,
+   redirection (Section 6.4.4 in [RFC7231] and [RFC7538]) to redirect
+   the DNS client to the DoH forwarder hosted on the CPE (e.g.,
    cpe1-internal.example.net).  The DNS client either uses Do53 to
    resolve the domain name in the redirected URI and eventually
    establishes DoH session with the DoH forwarder in the CPE reachable
@@ -992,23 +1001,18 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    PKIX authentication [RFC6125] based upon the domain name in the
    redirected URI will detect rogue DNS servers.
 
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 18]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    A DNS client that successfully connects to a redirected DoH server
    may choose to locally cache the server host IP addresses in order to
    not have to repeat the Do53 query.
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 18]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
                                                    --,--,-
                          ,+-,--,--.             ,/  ISP   \.
@@ -1020,7 +1024,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
                 |       {RI, @1}       |       |
                 |                              |
                 |<============DoH=============>|
-                |<------303 (See Other)--------|
+                |<--308 Permanent Redirect-----|
                 |                              |
                 |--------Do53 Query----------->|
                 |<--------CPE's LAN @----------|
@@ -1031,12 +1035,16 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
      * S: DoH/DoT server
      * @1: IP address of S
 
-    Figure 13: A Simplified Example of Redirection to the DNS Forwarder
-                                in the CPE
+       Figure 13: A Simplified Example of Server-Driven Redirection
 
-      Discussion Note: As an optimization, the redirect response can be
-      modified to include a list of IPv4/IPv6 addresses in addition to
-      the CPE's name.
+      Notes:
+
+      *  As an optimization, the redirect response can be modified to
+         include a list of IPv4/IPv6 addresses in addition to the CPE's
+         name.
+
+      *  Clients not caching the redirect information may experience an
+         extra delay for each request.
 
 7.1.2.2.  Client-Initiated Redirection
 
@@ -1050,21 +1058,18 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
 
    Once the DoH/DoT session is established, and given that F-bit is set,
    the DoH/DoT client uses SRV resource record lookup for discovering
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 19]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    the DoH/DoT forwarder available in the local network to redirect the
    DNS client to the DoH/DoT forwarder hosted on the CPE (e.g.,
    cpe1-internal.example.net).  A simplified example is illustrated in
    Figure 14.
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 19]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
    _domain-s._tcp.example.net  SRV 0 0 853 cpe1-internal.example.net
    cpe1-internal.example.net  AAAA 2001:db8:8:4::2
@@ -1083,10 +1088,95 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    server may choose to locally cache the server host IP addresses in
    order to not have to repeat the SRV lookup.
 
+                                                   --,--,-
+                         ,+-,--,--.             ,/  ISP   \.
+                      ,-'          `-.       ,-'            `-.
+            DoH/DoT --(      LAN      CPE----( S (@1)          )
+       capable client  `-.          ,-'|      `-.           ,-'
+                |        `--'--'--'    |       | `--'--'--'
+                |<========DHCP========>|       |
+                |   {ADN, F=1, @1}     |       |
+                |                              |
+                | /==========================\ |
+                || DoH: SRV Lookup (ADN)      ||
+                || cpe1-internal.example.net  ||
+                || AAAA ==> 2001:db8:8:4::2   ||
+                || A    ==> 198.51.100.2      ||
+                | \==========================/ |
+                |
+                |
+                |<========DoH=========>|
+                |                      |
+   Legend:
+     * S: DoH/DoT server
+     * @1: IP address of S
+     * F: Forwarding bit
+
+      Figure 15: A Simplified Example of Client-Initiated Redirection
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 20]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
+7.1.3.  Auto-Upgrade based on Domains and their Sub-domains
+
+   If the ADN conveyed in DHCP/RA (Section 4) is pre-configured in
+   popular OSes or browsers as a verified resolver and auto-upgrade
+   (Section 6.1) is allowed for both the pre-configured ADN and its sub-
+   domains, the redirection mechanisms discussed in Section 7.1.2 can be
+   avoided.  Concretely, the CPE can communicate the ADN of the local
+   DoH forwarder (Section 7.1.1) to internal hosts using DHCP/RA
+   (Section 4).
+
+   Let's suppose that "example.net" is pre-configured as a verified
+   resolved in the browser or OS.  If the DoH/DoT client discovers a
+   local forwarder "cpe1-internal.example.net", the DoH/DoT client will
+   auto-upgrade because the pre-configured ADN would match
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
+   shown in Figure 16, the auto-upgrade to a rogue server advertising
+   "rs.example.org" will fail.
+
+                            Rogue Server
+                |              |
+                X<==DHCP=======|
+                | {ADN=        |
+                |  rs.example.org, F=0, @rs}
+                |              |                  --,--,-
+                |        ,+-,--+--.             ,/  ISP   \.
+                |     ,-'          `-.       ,-'            `-.
+            DoH/DoT --(      LAN      CPE----( S (@1)          )
+       capable client  `-.          ,-'|      `-.           ,-'
+                |        `--'--'--'    |         `--'--'--'
+                |<========DHCP========>|
+                |{ADN=                 |
+                |  cpe1-internal.example.net, F=0, @i}
+                |
+                |<========DoH=========>|
+                |                      |
+   Legend:
+     * S: DoH/DoT server
+     * @1: IP address of S
+     * @i: internal IP address of the CPE
+     * @rs: IP address of a rogue server
+
+   Figure 16: A Simplified Example of Auto-upgrade based on Sub-domains
+
 7.2.  Unmanaged CPEs
 
    The approach specified in Section 7.1 does not apply for hosting a
    DNS forwarder in an unmanaged CPE.
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 21]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    The unmanaged CPE administrator (referred to as administrator) can
    host a DoH/DoT forwarder on the unmanaged CPE.  This assumes the
@@ -1105,22 +1195,11 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    o  The unmanaged CPE will advertise the DoH/DoT forwarder ADN using
       DHCP/RA to internal hosts.
 
-   Figure 15 illustrates an example of an unmanaged CPE hosting a
+   Figure 17 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party DoH/DoT server.  In this
    example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
    forwarder.
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 20]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
               ,--,--,--.                         ,--,
             ,'         Internal   Managed     ,-'    '-     3rd Party
@@ -1136,7 +1215,7 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
        * @i: IP address of the DNS forwarder hosted in the Internal
              CPE.
 
-         Figure 15: Example of an Internal CPE Hosting a Forwarder
+         Figure 17: Example of an Internal CPE Hosting a Forwarder
 
 8.  Security Considerations
 
@@ -1146,6 +1225,14 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    network can use the public IP address, get an 'IP address'-validated
    public certificate from a CA, host a DoT/DoH server and claim the
    best DNS privacy preservation policy.
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 22]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    Because DHCP/RA messages are not encrypted or protected against
    modification in any way, their content can be spoofed or modified by
@@ -1168,15 +1255,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    to adhere to these policies.  This document does not make any
    assumption about the structure of such policies nor mandates specific
    requirements.  Such policies and their handling is out of scope.
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 21]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
    DoH/DoT servers discovered using insecure discovery mechanisms like
    DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
@@ -1205,6 +1283,13 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    forwarder is prevented by validating the certificate presented by the
    DoH/DoT forwarder.
 
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 23]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    TCP connections received outside the home network MUST be discarded
    by the DoH/DoT forwarder in the CPE.  This behavior adheres to REQ#8
    in [RFC6092]; it MUST apply for both IPv4 and IPv6.
@@ -1223,16 +1308,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    +-------+------------------+---------+-------------+----------------+
    | TBA1  | OPTION_V6_DNS_RI | Yes     | Yes         | [ThisDocument] |
    +-------+------------------+---------+-------------+----------------+
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 22]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
 9.2.  DHCP Option
 
@@ -1264,6 +1339,13 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
         | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
         +------+---------------------------------+----------------+
 
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 24]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
 9.4.  Service Name
 
    IANA is requested to allocate the following service name from the
@@ -1277,18 +1359,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
         Assignee:                IESG <iesg@ietf.org>
         Contact:                 IETF Chair <chair@ietf.org>
         Reference:               [ThisDocument]
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 23]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
 9.5.  Encrypted DNS Types
 
@@ -1323,6 +1393,15 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 25]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    [RFC2132]  Alexander, S. and R. Droms, "DHCP Options and BOOTP Vendor
               Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
               <https://www.rfc-editor.org/info/rfc2132>.
@@ -1337,14 +1416,9 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               DOI 10.17487/RFC4861, September 2007,
               <https://www.rfc-editor.org/info/rfc4861>.
 
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 24]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
+   [RFC7538]  Reschke, J., "The Hypertext Transfer Protocol Status Code
+              308 (Permanent Redirect)", RFC 7538, DOI 10.17487/RFC7538,
+              April 2015, <https://www.rfc-editor.org/info/rfc7538>.
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
@@ -1376,6 +1450,14 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               RFC 8415, DOI 10.17487/RFC8415, November 2018,
               <https://www.rfc-editor.org/info/rfc8415>.
 
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 26]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
@@ -1390,17 +1472,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
    [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
               Specification", <https://www.wi-fi.org/file/device-
               provisioning-protocol-specification>.
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 25]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
@@ -1434,6 +1505,15 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               DOI 10.17487/RFC3646, December 2003,
               <https://www.rfc-editor.org/info/rfc3646>.
 
+
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 27]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
               Capabilities in Customer Premises Equipment (CPE) for
               Providing Residential IPv6 Internet Service", RFC 6092,
@@ -1446,17 +1526,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               (PKIX) Certificates in the Context of Transport Layer
               Security (TLS)", RFC 6125, DOI 10.17487/RFC6125, March
               2011, <https://www.rfc-editor.org/info/rfc6125>.
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 26]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
    [RFC6731]  Savolainen, T., Kato, J., and T. Lemon, "Improved
               Recursive DNS Server Selection for Multi-Interfaced
@@ -1493,6 +1562,14 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
 
+
+
+
+Boucadair, et al.        Expires October 3, 2020               [Page 28]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
               forum.org/technical/download/TR-069.pdf>.
@@ -1501,18 +1578,6 @@ Internet-Draft          DoH/DoT in Home Networks              March 2020
               3GPP, "Mobile radio interface Layer 3 specification; Core
               network protocols; Stage 3 (Release 16)", December 2019,
               <http://www.3gpp.org/DynaReport/24008.htm>.
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 27]
-
-Internet-Draft          DoH/DoT in Home Networks              March 2020
-
 
 Authors' Addresses
 
@@ -1556,13 +1621,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires October 2, 2020               [Page 28]
+Boucadair, et al.        Expires October 3, 2020               [Page 29]
