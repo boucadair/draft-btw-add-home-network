@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: October 3, 2020                                          McAfee
+Expires: October 4, 2020                                          McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                           April 1, 2020
+                                                           April 2, 2020
 
 
     DNS-over-HTTPS and DNS-over-TLS Server Discovery and Deployment
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 3, 2020.
+   This Internet-Draft will expire on October 4, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 1]
+Boucadair, et al.        Expires October 4, 2020                [Page 1]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -92,24 +92,24 @@ Table of Contents
          7.1.2.1.  Server-Driven Redirection . . . . . . . . . . . .  18
          7.1.2.2.  Client-Initiated Redirection  . . . . . . . . . .  19
        7.1.3.  Auto-Upgrade based on Domains and their Sub-domains .  21
-     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  21
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  22
+     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  22
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  23
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
      9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  24
-     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  24
-     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  24
+     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  25
+     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  25
      9.4.  Service Name  . . . . . . . . . . . . . . . . . . . . . .  25
-     9.5.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  25
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  25
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  25
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  27
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
+     9.5.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  26
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  26
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  26
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  28
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  30
 
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 2]
+Boucadair, et al.        Expires October 4, 2020                [Page 2]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -165,7 +165,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 3]
+Boucadair, et al.        Expires October 4, 2020                [Page 3]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -209,22 +209,25 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    document permits such deployments.
 
    Both managed and unmanaged CPEs are discussed in the document
-   (Section 3).
+   (Section 3).  Also, considerations related to hosting a DNS forwarder
+   in the CPE are described (Section 7).
 
    Hosts and/or CPEs may be connected to multiple networks; each
    providing their own DNS configuration using the discovery mechanisms
    specified in this document.  Nevertheless, it is out of the scope of
    this specification to discuss DNS selection of multi-interface
    devices.  The reader may refer to [RFC6731] for a discussion of
-   issues and an example of DNS server selection for multi-interfaced
-   devices.
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 4]
+
+Boucadair, et al.        Expires October 4, 2020                [Page 4]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
+
+   issues and an example of DNS server selection for multi-interfaced
+   devices.
 
 2.  Terminology
 
@@ -274,10 +277,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-
-
-
-Boucadair, et al.        Expires October 3, 2020                [Page 5]
+Boucadair, et al.        Expires October 4, 2020                [Page 5]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -333,7 +333,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 6]
+Boucadair, et al.        Expires October 4, 2020                [Page 6]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -389,7 +389,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 7]
+Boucadair, et al.        Expires October 4, 2020                [Page 7]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -445,7 +445,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 8]
+Boucadair, et al.        Expires October 4, 2020                [Page 8]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -501,7 +501,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020                [Page 9]
+Boucadair, et al.        Expires October 4, 2020                [Page 9]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -557,7 +557,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 10]
+Boucadair, et al.        Expires October 4, 2020               [Page 10]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -613,7 +613,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 11]
+Boucadair, et al.        Expires October 4, 2020               [Page 11]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -669,7 +669,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 12]
+Boucadair, et al.        Expires October 4, 2020               [Page 12]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -725,7 +725,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 13]
+Boucadair, et al.        Expires October 4, 2020               [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -781,7 +781,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 14]
+Boucadair, et al.        Expires October 4, 2020               [Page 14]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -837,7 +837,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 15]
+Boucadair, et al.        Expires October 4, 2020               [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -893,7 +893,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 16]
+Boucadair, et al.        Expires October 4, 2020               [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -949,7 +949,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 17]
+Boucadair, et al.        Expires October 4, 2020               [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 18]
+Boucadair, et al.        Expires October 4, 2020               [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -1043,10 +1043,28 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
          include a list of IPv4/IPv6 addresses in addition to the CPE's
          name.
 
+         [RFC7838] allows an origin's resource to be authoritatively
+         available at a separate network location, nevertheless it
+         requires the alternative service to present a certificate for
+         the origin's host name.  This is not acceptable for the case
+         discussed in this section.
+
       *  Clients not caching the redirect information may experience an
          extra delay for each request.
 
 7.1.2.2.  Client-Initiated Redirection
+
+   This section assumes that the procedure discussed in Section 7.1.2.1
+   is disabled.
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 19]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    An ISP-managed CPE can be configured with the ISP's DoH/DoT resolver
    IP addresses and ADN, which it will communicate to internal hosts
@@ -1058,14 +1076,6 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
    Once the DoH/DoT session is established, and given that F-bit is set,
    the DoH/DoT client uses SRV resource record lookup for discovering
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 19]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    the DoH/DoT forwarder available in the local network to redirect the
    DNS client to the DoH/DoT forwarder hosted on the CPE (e.g.,
    cpe1-internal.example.net).  A simplified example is illustrated in
@@ -1087,6 +1097,30 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    A DNS client that successfully connects to a redirected DoH/DoT
    server may choose to locally cache the server IP addresses in order
    to avoid repeating the SRV lookup.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 20]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
                                                    --,--,-
                          ,+-,--,--.             ,/  ISP   \.
@@ -1114,14 +1148,6 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
       Figure 15: A Simplified Example of Client-Initiated Redirection
 
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 20]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
 7.1.3.  Auto-Upgrade based on Domains and their Sub-domains
 
    If the ADN conveyed in DHCP/RA (Section 4) is pre-configured in
@@ -1139,6 +1165,18 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 16, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail.
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 21]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
                             Rogue Server
                 |              |
@@ -1170,14 +1208,6 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    The approach specified in Section 7.1 does not apply for hosting a
    DNS forwarder in an unmanaged CPE.
 
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 21]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    The unmanaged CPE administrator (referred to as administrator) can
    host a DoH/DoT forwarder on the unmanaged CPE.  This assumes the
    following:
@@ -1194,6 +1224,15 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
    o  The unmanaged CPE will advertise the DoH/DoT forwarder ADN using
       DHCP/RA to internal hosts.
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 22]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    Figure 17 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party DoH/DoT server.  In this
@@ -1226,14 +1265,6 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    public certificate from a CA, host a DoT/DoH server and claim the
    best DNS privacy preservation policy.
 
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 22]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    Because DHCP/RA messages are not encrypted or protected against
    modification in any way, their content can be spoofed or modified by
    compromised devices within the home network.  An attacker can spoof
@@ -1251,6 +1282,14 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    discovered DoH/DoT server or request to review human-readable privacy
    policy information of a selected DNS server and to assess whether
    that DNS server performs DNS-based content filtering (e.g.,
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 23]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
+
    [I-D.reddy-dprive-dprive-privacy-policy]).  The DNS client is assumed
    to adhere to these policies.  This document does not make any
    assumption about the structure of such policies nor mandates specific
@@ -1283,13 +1322,6 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    forwarder is prevented by validating the certificate presented by the
    DoH/DoT forwarder.
 
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 23]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    TCP connections received outside the home network MUST be discarded
    by the DoH/DoT forwarder in the CPE.  This behavior adheres to REQ#8
    in [RFC6092]; it MUST apply for both IPv4 and IPv6.
@@ -1301,6 +1333,18 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in: https://www.iana.org/assignments/dhcpv6-
    parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 24]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    +-------+------------------+---------+-------------+----------------+
    | Value | Description      | Client  | Singleton   | Reference      |
@@ -1339,18 +1383,24 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
         | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
         +------+---------------------------------+----------------+
 
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 24]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
 9.4.  Service Name
 
    IANA is requested to allocate the following service name from the
    registry available at: https://www.iana.org/assignments/service-
    names-port-numbers/service-names-port-numbers.xhtml.
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 25]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
         Service Name:            doh
         Port Number:             N/A
@@ -1384,6 +1434,8 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
    Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
    Bertola, and Iain Sharp for the comments.
 
+   Thanks to Mark Nottingham for the feedback on HTTP redirection.
+
 11.  References
 
 11.1.  Normative References
@@ -1393,18 +1445,18 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 25]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    [RFC2132]  Alexander, S. and R. Droms, "DHCP Options and BOOTP Vendor
               Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
               <https://www.rfc-editor.org/info/rfc2132>.
+
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 26]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    [RFC3396]  Lemon, T. and S. Cheshire, "Encoding Long Options in the
               Dynamic Host Configuration Protocol (DHCPv4)", RFC 3396,
@@ -1450,17 +1502,17 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
               RFC 8415, DOI 10.17487/RFC8415, November 2018,
               <https://www.rfc-editor.org/info/rfc8415>.
 
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 26]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
+
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 27]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
 11.2.  Informative References
 
@@ -1505,20 +1557,18 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
               DOI 10.17487/RFC3646, December 2003,
               <https://www.rfc-editor.org/info/rfc3646>.
 
-
-
-
-
-Boucadair, et al.        Expires October 3, 2020               [Page 27]
-
-Internet-Draft          DoH/DoT in Home Networks              April 2020
-
-
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
               Capabilities in Customer Premises Equipment (CPE) for
               Providing Residential IPv6 Internet Service", RFC 6092,
               DOI 10.17487/RFC6092, January 2011,
               <https://www.rfc-editor.org/info/rfc6092>.
+
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 28]
+
+Internet-Draft          DoH/DoT in Home Networks              April 2020
+
 
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
@@ -1543,6 +1593,10 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
               Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
               June 2014, <https://www.rfc-editor.org/info/rfc7250>.
 
+   [RFC7838]  Nottingham, M., McManus, P., and J. Reschke, "HTTP
+              Alternative Services", RFC 7838, DOI 10.17487/RFC7838,
+              April 2016, <https://www.rfc-editor.org/info/rfc7838>.
+
    [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
               Configuration on the Basis of Network Topology", RFC 7969,
               DOI 10.17487/RFC7969, October 2016,
@@ -1565,7 +1619,9 @@ Internet-Draft          DoH/DoT in Home Networks              April 2020
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 28]
+
+
+Boucadair, et al.        Expires October 4, 2020               [Page 29]
 
 Internet-Draft          DoH/DoT in Home Networks              April 2020
 
@@ -1621,4 +1677,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires October 3, 2020               [Page 29]
+Boucadair, et al.        Expires October 4, 2020               [Page 30]

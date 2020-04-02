@@ -213,7 +213,9 @@ Legend:
       permits such deployments.</t>
 
       <t>Both managed and unmanaged CPEs are discussed in the document (<xref
-      target="depl"></xref>).</t>
+      target="depl"></xref>). Also, considerations related to hosting a DNS
+      forwarder in the CPE are described (<xref
+      target="forwarder"></xref>).</t>
 
       <t>Hosts and/or CPEs may be connected to multiple networks; each
       providing their own DNS configuration using the discovery mechanisms
@@ -967,7 +969,12 @@ Legend:
                 <t>Notes: <list style="symbols">
                     <t>As an optimization, the redirect response can be
                     modified to include a list of IPv4/IPv6 addresses in
-                    addition to the CPE's name.</t>
+                    addition to the CPE's name.<vspace blankLines="1" /><xref
+                    target="RFC7838"></xref> allows an origin's resource to be
+                    authoritatively available at a separate network location,
+                    nevertheless it requires the alternative service to
+                    present a certificate for the origin's host name. This is
+                    not acceptable for the case discussed in this section.</t>
 
                     <t>Clients not caching the redirect information may
                     experience an extra delay for each request.</t>
@@ -976,6 +983,9 @@ Legend:
           </section>
 
           <section anchor="init" title="Client-Initiated Redirection ">
+            <t>This section assumes that the procedure discussed in <xref
+            target="redirect_doh"></xref> is disabled. </t>
+
             <t>An ISP-managed CPE can be configured with the ISP's DoH/DoT
             resolver IP addresses and ADN, which it will communicate to
             internal hosts using DHCP/RA (<xref target="RI"></xref>). In
@@ -1336,6 +1346,8 @@ Legend:
 
       <t>Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
       Bertola, and Iain Sharp for the comments.</t>
+
+      <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
     </section>
   </middle>
 
@@ -1370,6 +1382,8 @@ Legend:
 
     <references title="Informative References">
       <?rfc include='reference.RFC.6092'?>
+
+      <?rfc include='reference.RFC.7838'?>
 
       <?rfc include='reference.RFC.7231'?>
 
