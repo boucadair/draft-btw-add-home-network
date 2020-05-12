@@ -661,11 +661,10 @@ with:
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
       client contacts that DoH resolver to retrieve the list of supported DoH
       services using the RESINFO RRtype <xref
-      target="I-D.pp-add-resinfo"></xref>. That information is cached by the
-      DoH client for a given period (e.g., 24h). DoH clients re-iterates that
-      request regularly (e.g., 24h) to retrieve an updated list of supported
-      DoH services. Note that a "push" mode can be considered using the
-      mechanism defined in <xref target="I-D.ietf-dnssd-push"></xref>.</t>
+      target="I-D.pp-add-resinfo"></xref>. DoH clients re-iterates that
+      request regularly to retrieve an updated list of supported DoH services.
+      Note that a "push" mode can be considered using the mechanism defined in
+      <xref target="I-D.ietf-dnssd-push"></xref>.</t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
       scope of this document.</t>
@@ -903,11 +902,6 @@ Legend:
 
             <t>The unmanaged CPE will advertise the DoH/DoT forwarder ADN
             using DHCP/RA to internal hosts.</t>
-
-            <t>If the unmanaged CPE configuration cannot be updated to use the
-            discovered DoH/DoT server, the special-use domain name defined in
-            <xref target="I-D.pp-add-resinfo"></xref> can be used by the
-            DoH/DoT client to learn the DoH/DoT server hosted by the ISP.</t>
           </list></t>
 
         <t><xref target="internal_forwarded"></xref> illustrates an example of
@@ -934,6 +928,14 @@ Legend:
 ]]></artwork>
           </figure></t>
       </section>
+    </section>
+
+    <section title="Legacy CPEs">
+      <t>Hosts serviced by legacy CPEs that can't be upgraded to support the
+      options defined in <xref target="RI"></xref> won't be able to learn the
+      DoH/DoT server hosted by the ISP, in particular. Such hosts will have to
+      fallback to use the special-use domain name defined in <xref
+      target="I-D.pp-add-resinfo"></xref> to discover the DoH/DoT server.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">

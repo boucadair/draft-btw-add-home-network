@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: November 12, 2020                                        McAfee
+Expires: November 13, 2020                                        McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                            May 11, 2020
+                                                            May 12, 2020
 
 
     DNS-over-HTTPS and DNS-over-TLS Server Discovery and Deployment
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 12, 2020.
+   This Internet-Draft will expire on November 13, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 1]
+Boucadair, et al.       Expires November 13, 2020               [Page 1]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -71,7 +71,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Sample Deployment Scenarios . . . . . . . . . . . . . . . . .   5
      3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   7
@@ -88,31 +88,34 @@ Table of Contents
        7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  17
        7.1.2.  Auto-Upgrade based on Domains and their Sub-domains .  17
      7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  18
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  20
-     9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  20
-     9.2.  DHCP Option . . . . . . . . . . . . . . . . . . . . . . .  21
-     9.3.  RA Option . . . . . . . . . . . . . . . . . . . . . . . .  21
-     9.4.  Encrypted DNS Types . . . . . . . . . . . . . . . . . . .  21
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  22
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  22
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  23
+   8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  19
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  20
+     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  20
+     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  21
+     10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  21
+     10.4.  Encrypted DNS Types  . . . . . . . . . . . . . . . . . .  21
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  22
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  22
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  23
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
 
 1.  Introduction
 
    Internet Service Providers (ISPs) traditionally provide DNS resolvers
    to their customers.  Typically, ISPs deploy the following mechanisms
-   to advertise a list of DNS Recursive DNS server(s) to their
-   customers:
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 2]
+
+Boucadair, et al.       Expires November 13, 2020               [Page 2]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
+
+   to advertise a list of DNS Recursive DNS server(s) to their
+   customers:
 
    o  Protocol Configuration Options in cellular networks [TS.24008].
    o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
@@ -159,16 +162,17 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    to) malware filtering, parental control, or VoD (Video on Demand)
    optimization.  DNS is also a central component for mastering the
    quality of experience for current latency-sensitive services, but
-   also emerging ones (such as those services that pertain to the Ultra
-   Reliability and Low Latency Communications (uRLLC) or Enhanced Mobile
-   Broadband (eMBB).
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 3]
+Boucadair, et al.       Expires November 13, 2020               [Page 3]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
+
+   also emerging ones (such as those services that pertain to the Ultra
+   Reliability and Low Latency Communications (uRLLC) or Enhanced Mobile
+   Broadband (eMBB).
 
       For example, the latency targets set in the context of 5G are 1ms
       (uRLLC) and 4ms (eMBB).  An ISP will be able to address such
@@ -212,20 +216,21 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    issues and an example of DNS server selection for multi-interfaced
    devices.
 
+
+
+
+
+
+Boucadair, et al.       Expires November 13, 2020               [Page 4]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
 2.  Terminology
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in BCP
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020               [Page 4]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
-
    14 [RFC2119][RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
@@ -272,12 +277,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020               [Page 5]
+Boucadair, et al.       Expires November 13, 2020               [Page 5]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -333,7 +333,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 6]
+Boucadair, et al.       Expires November 13, 2020               [Page 6]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -389,7 +389,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 7]
+Boucadair, et al.       Expires November 13, 2020               [Page 7]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -445,7 +445,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 8]
+Boucadair, et al.       Expires November 13, 2020               [Page 8]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -482,7 +482,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    The fields of the option shown in Figure 7 are as follows:
 
-   o  Option-code: OPTION_V6_DNS_RI (TBA1, see Section 9.1)
+   o  Option-code: OPTION_V6_DNS_RI (TBA1, see Section 10.1)
    o  Option-length: Length of the enclosed data in octets.
    o  Encr DNS Type (Encrypted DNS Type): Indicates the type of the
       encrypted DNS server conveyed in this attribute.  The following
@@ -491,7 +491,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
          0: Any encrypted DNS
          1: DoT
          2: DoH
-         See Section 9.4 for future assignment considerations.
+         See Section 10.4 for future assignment considerations.
    o  Authentication Domain Name: A fully qualified domain name of the
       DoH/DoT server.  This field is formatted as specified in
       Section 10 of [RFC8415].
@@ -501,7 +501,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020               [Page 9]
+Boucadair, et al.       Expires November 13, 2020               [Page 9]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -557,7 +557,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 10]
+Boucadair, et al.       Expires November 13, 2020              [Page 10]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -588,7 +588,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    The fields of the option shown in Figure 9 are as follows:
 
-   o  Code: OPTION_V4_DNS_RI (TBA2, see Section 9.2).
+   o  Code: OPTION_V4_DNS_RI (TBA2, see Section 10.2).
    o  Length: Length of the enclosed data in octets.
    o  Encr DNS Type (Encrypted DNS Type): Indicates the type of the
       encrypted DNS server conveyed in this attribute.  The following
@@ -597,7 +597,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
          0: Any encrypted DNS
          1: DoT
          2: DoH
-         See Section 9.4 for future assignment considerations.
+         See Section 10.4 for future assignment considerations.
    o  Authentication Domain Name: The domain name of the DoH/DoT server.
       This field is formatted as specified in Section 10 of [RFC8415].
 
@@ -613,7 +613,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 11]
+Boucadair, et al.       Expires November 13, 2020              [Page 11]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -646,7 +646,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    The fields of the option shown in Figure 10 are as follows:
 
    o  Type: 8-bit identifier of the DNS Reference Identifier Option as
-      assigned by IANA (TBA3, see Section 9.3).
+      assigned by IANA (TBA3, see Section 10.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
    o  Encr DNS Type (Encrypted DNS Type): Indicates the type of the
@@ -656,7 +656,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
          0: Any encrypted DNS
          1: DoT
          2: DoH
-         See Section 9.4 for future assignment considerations.
+         See Section 10.4 for future assignment considerations.
    o  Unassigned: This field is unused.  It MUST be initialized to zero
       by the sender and MUST be ignored by the receiver.
    o  Lifetime: 32-bit unsigned integer.  The maximum time in seconds
@@ -669,7 +669,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 12]
+Boucadair, et al.       Expires November 13, 2020              [Page 12]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -698,11 +698,10 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    Upon discovery of a DoH resolver (Section 4), the DoH client contacts
    that DoH resolver to retrieve the list of supported DoH services
-   using the RESINFO RRtype [I-D.pp-add-resinfo].  That information is
-   cached by the DoH client for a given period (e.g., 24h).  DoH clients
-   re-iterates that request regularly (e.g., 24h) to retrieve an updated
-   list of supported DoH services.  Note that a "push" mode can be
-   considered using the mechanism defined in [I-D.ietf-dnssd-push].
+   using the RESINFO RRtype [I-D.pp-add-resinfo].  DoH clients re-
+   iterates that request regularly to retrieve an updated list of
+   supported DoH services.  Note that a "push" mode can be considered
+   using the mechanism defined in [I-D.ietf-dnssd-push].
 
    How a DoH client makes use of the configured DoH services is out of
    scope of this document.
@@ -725,7 +724,8 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 13]
+
+Boucadair, et al.       Expires November 13, 2020              [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -781,7 +781,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 14]
+Boucadair, et al.       Expires November 13, 2020              [Page 14]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -837,7 +837,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 15]
+Boucadair, et al.       Expires November 13, 2020              [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -893,7 +893,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 16]
+Boucadair, et al.       Expires November 13, 2020              [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -949,7 +949,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 17]
+Boucadair, et al.       Expires November 13, 2020              [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1005,15 +1005,10 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 12, 2020              [Page 18]
+Boucadair, et al.       Expires November 13, 2020              [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
-
-   o  If the unmanaged CPE configuration cannot be updated to use the
-      discovered DoH/DoT server, the special-use domain name defined in
-      [I-D.pp-add-resinfo] can be used by the DoH/DoT client to learn
-      the DoH/DoT server hosted by the ISP.
 
    Figure 14 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party DoH/DoT server.  In this
@@ -1037,7 +1032,15 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
          Figure 14: Example of an Internal CPE Hosting a Forwarder
 
-8.  Security Considerations
+8.  Legacy CPEs
+
+   Hosts serviced by legacy CPEs that can't be upgraded to support the
+   options defined in Section 4 won't be able to learn the DoH/DoT
+   server hosted by the ISP, in particular.  Such hosts will have to
+   fallback to use the special-use domain name defined in
+   [I-D.pp-add-resinfo] to discover the DoH/DoT server.
+
+9.  Security Considerations
 
    An attacker can get a domain name, domain-validated public
    certificate from a CA, host a DoT/DoH server and claim the best DNS
@@ -1055,16 +1058,16 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    pre-configured with a list of DNS servers and some of which perform
    malware filtering while others do not, an attacker can prevent
    contacting the preferred filtering DNS servers causing a downgrade
-   attack to a non-filtering DNS server, which the attacker can leverage
-   to deliver malware.
 
 
 
-
-Boucadair, et al.       Expires November 12, 2020              [Page 19]
+Boucadair, et al.       Expires November 13, 2020              [Page 19]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
+
+   attack to a non-filtering DNS server, which the attacker can leverage
+   to deliver malware.
 
    The use of DoH/DoT also depends on the user's policies.  For example,
    the user may indicate his/her consent to use (or not) the locally-
@@ -1100,13 +1103,24 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    by the DoH/DoT forwarder in the CPE.  This behavior adheres to REQ#8
    in [RFC6092]; it MUST apply for both IPv4 and IPv6.
 
-9.  IANA Considerations
+10.  IANA Considerations
 
-9.1.  DHCPv6 Option
+10.1.  DHCPv6 Option
 
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in: https://www.iana.org/assignments/dhcpv6-
    parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.
+
+
+
+
+
+
+
+Boucadair, et al.       Expires November 13, 2020              [Page 20]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
 
    +-------+------------------+---------+-------------+----------------+
    | Value | Description      | Client  | Singleton   | Reference      |
@@ -1115,14 +1129,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    | TBA1  | OPTION_V6_DNS_RI | Yes     | Yes         | [ThisDocument] |
    +-------+------------------+---------+-------------+----------------+
 
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 20]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
-
-9.2.  DHCP Option
+10.2.  DHCP Option
 
    IANA is requested to assign the following new DHCP Option Code in the
    registry maintained in: https://www.iana.org/assignments/bootp-dhcp-
@@ -1137,7 +1144,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    |      |                  |       | domain name    |                |
    +------+------------------+-------+----------------+----------------+
 
-9.3.  RA Option
+10.3.  RA Option
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
    Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
@@ -1152,11 +1159,24 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
         | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
         +------+---------------------------------+----------------+
 
-9.4.  Encrypted DNS Types
+10.4.  Encrypted DNS Types
 
    This document requests IANA to create a new registry called
    "Encrypted DNS Types".  The initial values of the registery is as
    follows:
+
+
+
+
+
+
+
+
+
+Boucadair, et al.       Expires November 13, 2020              [Page 21]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
 
                +-------+----------------------+-----------+
                | Value | Description          | Reference |
@@ -1169,16 +1189,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    New values are assigned on a First Come, First Served (FCFS) basis
    (Section 4.4 of [RFC8126]).
 
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 21]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
-
-10.  Acknowledgements
+11.  Acknowledgements
 
    Many thanks to Christian Jacquenet for the review.
 
@@ -1187,9 +1198,9 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection.
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1215,6 +1226,14 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
+
+
+
+Boucadair, et al.       Expires November 13, 2020              [Page 22]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
    [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
               "IPv6 Router Advertisement Options for DNS Configuration",
               RFC 8106, DOI 10.17487/RFC8106, March 2017,
@@ -1224,15 +1243,6 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
               <https://www.rfc-editor.org/info/rfc8126>.
-
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 22]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1253,7 +1263,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [Auto-upgrade]
               The Unicode Consortium, "DoH providers: criteria, process
@@ -1273,6 +1283,13 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
               Pusateri, T. and S. Cheshire, "DNS Push Notifications",
               draft-ietf-dnssd-push-25 (work in progress), October 2019.
 
+
+
+Boucadair, et al.       Expires November 13, 2020              [Page 23]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
    [I-D.ietf-v6ops-rfc7084-bis]
               Palet, J., "Basic Requirements for IPv6 Customer Edge
               Routers", draft-ietf-v6ops-rfc7084-bis-04 (work in
@@ -1282,13 +1299,6 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
               Sood, P. and P. Hoffman, "DNS Resolver Information Self-
               publication", draft-pp-add-resinfo-00 (work in progress),
               April 2020.
-
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 23]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
    [I-D.reddy-add-iot-byod-bootstrap]
               Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
@@ -1326,6 +1336,16 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
               Nodes", RFC 6731, DOI 10.17487/RFC6731, December 2012,
               <https://www.rfc-editor.org/info/rfc6731>.
 
+
+
+
+
+
+Boucadair, et al.       Expires November 13, 2020              [Page 24]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
    [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
               Weiler, S., and T. Kivinen, "Using Raw Public Keys in
               Transport Layer Security (TLS) and Datagram Transport
@@ -1335,16 +1355,6 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
               January 2019, <https://www.rfc-editor.org/info/rfc8499>.
-
-
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 24]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
    [RFC8520]  Lear, E., Droms, R., and D. Romascanu, "Manufacturer Usage
               Description Specification", RFC 8520,
@@ -1384,22 +1394,19 @@ Authors' Addresses
    Email: TirumaleswarReddy_Konda@McAfee.com
 
 
+
+
+
+Boucadair, et al.       Expires November 13, 2020              [Page 25]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
    Dan Wing
    Citrix Systems, Inc.
    USA
 
    Email: dwing-ietf@fuggles.com
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 25]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
    Neil Cook
@@ -1446,11 +1453,4 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-
-
-
-
-
-
-
-Boucadair, et al.       Expires November 12, 2020              [Page 26]
+Boucadair, et al.       Expires November 13, 2020              [Page 26]
