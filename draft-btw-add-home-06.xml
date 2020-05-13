@@ -445,12 +445,12 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |     OPTION_V6_DNS_RI          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Encr DNS Type |                                               |
+   | Encr DNS Types|                                               |
    +-+-------------+                                               |
    |                                                               |
    ~                 Authentication Domain Name                    ~
    |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                                          
 
 ]]></artwork>
           </figure>The fields of the option shown in <xref
@@ -462,17 +462,30 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Option-length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Type (Encrypted DNS Type): Indicates the type of the
-            encrypted DNS server conveyed in this attribute. The following
-            values are defined:<list style="empty">
-                <t>0: Any encrypted DNS</t>
+            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
+            this 8-bit field is shown in <xref target="types"></xref>. <figure
+                align="center" anchor="types" title="Encrypted DNS Types">
+                <artwork><![CDATA[+-+-+-+-+-+-+-+-+
+|U|U|U|U|U|U|H|T|
++-+-+-+-+-+-+-+-+  ]]></artwork>
+              </figure><list style="empty">
+                <t>T: If set, this bit indicates that the server supports DoT
+                <xref target="RFC7858"></xref>.</t>
 
-                <t>1: DoT</t>
+                <t>H: If set, this bit indicates that the server supports DoH
+                <xref target="RFC8484"></xref>.</t>
 
-                <t>2: DoH</t>
+                <t>U: Unassigned bits. These bits MUST be unset by the sender.
+                Associating a meaning with an unassigned it can be done via
+                Standards Action <xref target="RFC8126"></xref>.</t>
+              </list>These bits are set as a function of the encrypted DNS
+            supported by the server. For example:<list style="symbols">
+                <t>If the server supports DoT only, T bit must be set while
+                other bits must be unset. </t>
 
-                <t>See <xref target="IANA2"></xref> for future assignment
-                considerations.</t>
+                <t>If the server supports both DoT and DoH, both T and H bits
+                must be set.</t>
               </list></t>
 
             <t>Authentication Domain Name: A fully qualified domain name of
@@ -520,7 +533,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |     TBA2      |     Length    |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         | Encr DNS Type |               |
+         | Encr DNS Types|               |
          +-+-+-+-+-+-+-+-+               |
          |                               |
          ~  Authentication Domain Name   ~
@@ -547,18 +560,9 @@ with:
 
             <t>Length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Type (Encrypted DNS Type): Indicates the type of the
-            encrypted DNS server conveyed in this attribute. The following
-            values are defined:<list style="empty">
-                <t>0: Any encrypted DNS</t>
-
-                <t>1: DoT</t>
-
-                <t>2: DoH</t>
-
-                <t>See <xref target="IANA2"></xref> for future assignment
-                considerations.</t>
-              </list></t>
+            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
+            this field is shown in <xref target="types"></xref>.</t>
 
             <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
@@ -592,7 +596,7 @@ with:
             <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     Type      |     Length    | Encr DNS Type |   Unassigned  |
+     |     Type      |     Length    | Encr DNS Types|   Unassigned  |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -613,17 +617,8 @@ with:
             octets.</t>
 
             <t>Encr DNS Type (Encrypted DNS Type): Indicates the type of the
-            encrypted DNS server conveyed in this attribute. The following
-            values are defined:<list style="empty">
-                <t>0: Any encrypted DNS</t>
-
-                <t>1: DoT</t>
-
-                <t>2: DoH</t>
-
-                <t>See <xref target="IANA2"></xref> for future assignment
-                considerations.</t>
-              </list></t>
+            encrypted DNS server conveyed in this attribute. The format of
+            this field is shown in <xref target="types"></xref>.</t>
 
             <t>Unassigned: This field is unused. It MUST be initialized to
             zero by the sender and MUST be ignored by the receiver.</t>
@@ -1068,41 +1063,6 @@ Legend:
 
           <c>[ThisDocument]</c>
         </texttable>
-      </section>
-
-      <section anchor="IANA2" title="Encrypted DNS Types">
-        <t>This document requests IANA to create a new registry called
-        "Encrypted DNS Types". The initial values of the registery is as
-        follows:</t>
-
-        <texttable>
-          <ttcol>Value</ttcol>
-
-          <ttcol>Description</ttcol>
-
-          <ttcol>Reference</ttcol>
-
-          <c>0</c>
-
-          <c>Any</c>
-
-          <c>RFC XXXX</c>
-
-          <c>1</c>
-
-          <c>DNS-over-TLS (DoT)</c>
-
-          <c>RFC XXXX</c>
-
-          <c>2</c>
-
-          <c>DNS-over-HTTPs (DoH)</c>
-
-          <c>RFC XXXX</c>
-        </texttable>
-
-        <t>New values are assigned on a First Come, First Served (FCFS) basis
-        (Section 4.4 of <xref target="RFC8126"></xref>).</t>
       </section>
     </section>
 
