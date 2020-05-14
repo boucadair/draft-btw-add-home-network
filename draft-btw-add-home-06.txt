@@ -81,24 +81,24 @@ Table of Contents
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  12
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  13
    6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  13
-     6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  15
-     6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  16
-   7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  16
-     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  16
-       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  17
-       7.1.2.  Auto-Upgrade based on Domains and their Sub-domains .  17
-     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  18
-   8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  19
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
-   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  20
-     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  20
-     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  21
-     10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  21
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  22
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  23
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
+     6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  14
+     6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  14
+   7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  15
+     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  15
+       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  15
+       7.1.2.  Auto-Upgrade based on Domains and their Sub-domains .  15
+     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  16
+   8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  17
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  18
+     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  19
+     10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  19
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  19
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  20
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  21
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
 
 1.  Introduction
 
@@ -507,16 +507,16 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
          U: Unassigned bits.  These bits MUST be unset by the sender.
-         Associating a meaning with an unassigned it can be done via
+         Associating a meaning with an unassigned bit can be done via
          Standards Action [RFC8126].
 
       These bits are set as a function of the encrypted DNS supported by
       the server.  For example:
 
-      *  If the server supports DoT only, T bit is be set while other
-         bits are unset.
+      *  If the server supports DoT only, T bit is set while other bits
+         are unset.
       *  If the server supports both DoT and DoH, both T and H bits are
-         be set.
+         set.
 
       If a DNS server supports more than one encrypted DNS type (e.g.,
       both DoH and DoT), it is RECOMMENDED to set the corresponding bits
@@ -649,7 +649,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
       assigned by IANA (TBA3, see Section 10.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
-   o  Encr DNS Type (Encrypted DNS Type): Indicates the type of the
+   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
    o  Unassigned: This field is unused.  It MUST be initialized to zero
@@ -705,9 +705,9 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
    or RA) to retrieve DoH/DoT servers' reachability information.  In the
    various scenarios sketched in Section 3, Do53, DoH, and DoT may
-   terminate on the same IP address (or distinct IP addresses as
-   depicted in Figure 13).  Terminating Do53/DoH/DoT on the same or
-   distinct IP addresses is deployment-specific.
+   terminate on the same IP address or distinct IP addresses.
+   Terminating Do53/DoH/DoT on the same or distinct IP addresses is
+   deployment-specific.
 
    From an IP reachability standpoint, DoH/DoT servers SHOULD be located
    by their address literals rather than their names.  This avoids
@@ -716,9 +716,9 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    discovery mechanisms [RFC2132][RFC3646][RFC8106] can be leveraged to
    learn the IP addresses of DoT/DoH servers while an authentication
    domain name is supplied by one of the options discussed in Section 4.
-   An example is depicted in Figure 12.
 
-
+   The following sub-sections discusses the conditions under which
+   discovered DoT/DoH server can be used.
 
 
 
@@ -729,91 +729,6 @@ Boucadair, et al.       Expires November 15, 2020              [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
-
-                    Legacy Do53
-                      client
-                          |<===DHCP===>|
-                          |    {@1}    |       |
-                          |            |       |
-                          |======Do53 Query===>|
-                          |            |       |   --,--,-
-                         ,+-,--,--.    |       |,/  ISP   \.
-                      ,-'          `-. |     ,-'            `-.
-            DoH/DoT --(      LAN      CPE----( S (@1)         )
-       capable client  `-.          ,-'|      `-.           ,-'
-                |        `--'--'--'    |       | `--'--'--'
-                |<========DHCP========>|       |
-                |       {RI, @1}       |       |
-                |                              |
-                |<=========DoT/DoH============>|
-
-   Legend:
-     * S: DNS server
-     * {@1}: IP address of S; returned in a DHCP
-       Domain Name Server option
-     * RI: DNS Reference Identifier
-
-            Figure 12: Locating DoH/DoT/Do53 (Same DNS Server)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 14]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
-
-                    Legacy Do53
-                      client
-                          |<===RA======|
-                          | {RI,@1,@2} |             |
-                          |            |             |
-                          |========Do53 Query=======>|
-                          |            |           --,--,-
-                         ,+-,--,--.    |        ,/  S1 (@1)\.
-                      ,-'          `-. |     ,-'    ISP     `-.
-            DoH/DoT --(      LAN      CPE----(                 )
-       capable client  `-.          ,-'|      `-.   S2 (@2)  ,-'
-                |        `--'--'--'    |         `--'--'--'
-                |<=========RA==========|             |
-                |      {RI,@1,@2}      |             |
-                |                                    |
-                |<===============DoT/DoH============>|
-
-   Legend:
-     * S1: Do53 server
-     * S2: DoH/DoT server
-     * @1: IP address of S1
-     * @1: IP address of S2
-     * RI: DNS Reference Identifier
-
-            Figure 13: Locating DoH/DoT/Do53 (Distinct Servers)
-
-   The following sub-sections discusses the conditions under which
-   discovered DoT/DoH server can be used.
 
 6.1.  DoT/DoH Auto-Upgrade
 
@@ -832,15 +747,6 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    o  Similarly, if the ADN conveyed in DHCP/RA (Section 4) is pre-
       configured in the OS or browser as a verified resolver, the DNS
       client auto-upgrades to establish a DoH/DoT session with the ADN.
-
-
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 15]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
       In such case, the DNS client matches the domain name in the DNS
       Reference Identifier DHCP/RA option with the 'DNS-ID' identifier
@@ -872,6 +778,14 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
       The OS would not know if the WPA pre-shared-key is the same for
       all clients or a unique pre-shared key is assigned to the host.
+
+
+
+Boucadair, et al.       Expires November 15, 2020              [Page 14]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
       Hence, the user has to indicate to the system that a unique pre-
       shared key is assigned to trigger the bootstrapping procedure.
 
@@ -886,17 +800,6 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    The following mechanisms can be used to host a DoH/DoT forwarder in a
    managed CPE (Section 3.1).
-
-
-
-
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 16]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
 7.1.1.  ACME
 
@@ -931,28 +834,18 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    Let's suppose that "example.net" is pre-configured as a verified
    resolved in the browser or OS.  If the DoH/DoT client discovers a
    local forwarder "cpe1-internal.example.net", the DoH/DoT client will
-   auto-upgrade because the pre-configured ADN would match
-   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
-   shown in Figure 14, the auto-upgrade to a rogue server advertising
-   "rs.example.org" will fail.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 17]
+Boucadair, et al.       Expires November 15, 2020              [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
+
+   auto-upgrade because the pre-configured ADN would match
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
+   shown in Figure 12, the auto-upgrade to a rogue server advertising
+   "rs.example.org" will fail.
 
                             Rogue Server
                 |              |
@@ -977,7 +870,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
      * @i: internal IP address of the CPE
      * @rs: IP address of a rogue server
 
-   Figure 14: A Simplified Example of Auto-upgrade based on Sub-domains
+   Figure 12: A Simplified Example of Auto-upgrade based on Sub-domains
 
 7.2.  Unmanaged CPEs
 
@@ -998,19 +891,17 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    o  The DoH/DoT forwarder will either be configured to use the ISP's
       or a 3rd party DoH/DoT server.
 
-   o  The unmanaged CPE will advertise the DoH/DoT forwarder ADN using
-      DHCP/RA to internal hosts.
 
 
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 18]
+Boucadair, et al.       Expires November 15, 2020              [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
-   Figure 15 illustrates an example of an unmanaged CPE hosting a
+   o  The unmanaged CPE will advertise the DoH/DoT forwarder ADN using
+      DHCP/RA to internal hosts.
+
+   Figure 13 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party DoH/DoT server.  In this
    example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
@@ -1030,7 +921,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
        * @i: IP address of the DNS forwarder hosted in the Internal
              CPE.
 
-         Figure 15: Example of an Internal CPE Hosting a Forwarder
+         Figure 13: Example of an Internal CPE Hosting a Forwarder
 
 8.  Legacy CPEs
 
@@ -1055,17 +946,17 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    the DHCP/RA response to provide the attacker's DoT/DoH server.  Note
    that such an attacker can launch other attacks as discussed in
    Section 22 of [RFC8415].  Furthermore, if the browser or the OS is
-   pre-configured with a list of DNS servers and some of which perform
-   malware filtering while others do not, an attacker can prevent
-   contacting the preferred filtering DNS servers causing a downgrade
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 19]
+Boucadair, et al.       Expires November 15, 2020              [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
+   pre-configured with a list of DNS servers and some of which perform
+   malware filtering while others do not, an attacker can prevent
+   contacting the preferred filtering DNS servers causing a downgrade
    attack to a non-filtering DNS server, which the attacker can leverage
    to deliver malware.
 
@@ -1114,10 +1005,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 20]
+Boucadair, et al.       Expires November 15, 2020              [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1173,7 +1061,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 21]
+Boucadair, et al.       Expires November 15, 2020              [Page 19]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1229,7 +1117,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 22]
+Boucadair, et al.       Expires November 15, 2020              [Page 20]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1285,7 +1173,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 23]
+Boucadair, et al.       Expires November 15, 2020              [Page 21]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1341,7 +1229,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 24]
+Boucadair, et al.       Expires November 15, 2020              [Page 22]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1397,4 +1285,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 25]
+Boucadair, et al.       Expires November 15, 2020              [Page 23]

@@ -477,15 +477,15 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
                 <xref target="RFC8484"></xref>.</t>
 
                 <t>U: Unassigned bits. These bits MUST be unset by the sender.
-                Associating a meaning with an unassigned it can be done via
+                Associating a meaning with an unassigned bit can be done via
                 Standards Action <xref target="RFC8126"></xref>.</t>
               </list>These bits are set as a function of the encrypted DNS
             supported by the server. For example:<list style="symbols">
-                <t>If the server supports DoT only, T bit is be set while
-                other bits are unset. </t>
+                <t>If the server supports DoT only, T bit is set while other
+                bits are unset. </t>
 
                 <t>If the server supports both DoT and DoH, both T and H bits
-                are be set.</t>
+                are set.</t>
               </list>If a DNS server supports more than one encrypted DNS type
             (e.g., both DoH and DoT), it is RECOMMENDED to set the
             corresponding bits in the 'Encrypted DNS Types' field of the same
@@ -619,8 +619,8 @@ with:
             (including the Type and Length fields) is in units of 8
             octets.</t>
 
-            <t>Encr DNS Type (Encrypted DNS Type): Indicates the type of the
-            encrypted DNS server conveyed in this attribute. The format of
+            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 
             <t>Unassigned: This field is unused. It MUST be initialized to
@@ -672,9 +672,8 @@ with:
       <t>A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
       or RA) to retrieve DoH/DoT servers' reachability information. In the
       various scenarios sketched in <xref target="depl"></xref>, Do53, DoH,
-      and DoT may terminate on the same IP address (or distinct IP addresses
-      as depicted in <xref target="selection"></xref>). Terminating
-      Do53/DoH/DoT on the same or distinct IP addresses is
+      and DoT may terminate on the same IP address or distinct IP addresses.
+      Terminating Do53/DoH/DoT on the same or distinct IP addresses is
       deployment-specific.</t>
 
       <t>From an IP reachability standpoint, DoH/DoT servers SHOULD be located
@@ -685,63 +684,7 @@ with:
       target="RFC3646"></xref><xref target="RFC8106"></xref> can be leveraged
       to learn the IP addresses of DoT/DoH servers while an authentication
       domain name is supplied by one of the options discussed in <xref
-      target="RI"></xref>. An example is depicted in <xref
-      target="selection-s"></xref>.<figure align="center" anchor="selection-s"
-          title="Locating DoH/DoT/Do53 (Same DNS Server)">
-          <artwork><![CDATA[
-                 Legacy Do53                       
-                   client                        
-                       |<===DHCP===>|
-                       |    {@1}    |       |
-                       |            |       |
-                       |======Do53 Query===>|
-                       |            |       |   --,--,-
-                      ,+-,--,--.    |       |,/  ISP   \.
-                   ,-'          `-. |     ,-'            `-.
-         DoH/DoT --(      LAN      CPE----( S (@1)         )
-    capable client  `-.          ,-'|      `-.           ,-'
-             |        `--'--'--'    |       | `--'--'--'
-             |<========DHCP========>|       | 
-             |       {RI, @1}       |       | 
-             |                              | 
-             |<=========DoT/DoH============>|
-
-Legend:
-  * S: DNS server 
-  * {@1}: IP address of S; returned in a DHCP 
-    Domain Name Server option
-  * RI: DNS Reference Identifier
-]]></artwork>
-        </figure></t>
-
-      <t><figure align="center" anchor="selection"
-          title="Locating DoH/DoT/Do53 (Distinct Servers)">
-          <artwork><![CDATA[
-                 Legacy Do53                       
-                   client                        
-                       |<===RA======|
-                       | {RI,@1,@2} |             |
-                       |            |             |
-                       |========Do53 Query=======>|
-                       |            |           --,--,-
-                      ,+-,--,--.    |        ,/  S1 (@1)\.
-                   ,-'          `-. |     ,-'    ISP     `-.
-         DoH/DoT --(      LAN      CPE----(                 )
-    capable client  `-.          ,-'|      `-.   S2 (@2)  ,-'
-             |        `--'--'--'    |         `--'--'--'
-             |<=========RA==========|             | 
-             |      {RI,@1,@2}      |             | 
-             |                                    | 
-             |<===============DoT/DoH============>|
-
-Legend:
-  * S1: Do53 server
-  * S2: DoH/DoT server
-  * @1: IP address of S1
-  * @1: IP address of S2
-  * RI: DNS Reference Identifier
-]]></artwork>
-        </figure></t>
+      target="RI"></xref>. </t>
 
       <t>The following sub-sections discusses the conditions under which
       discovered DoT/DoH server can be used.</t>
