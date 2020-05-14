@@ -5,16 +5,15 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: November 14, 2020                                        McAfee
+Expires: November 15, 2020                                        McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                            May 13, 2020
+                                                            May 14, 2020
 
 
-    DNS-over-HTTPS and DNS-over-TLS Server Discovery and Deployment
-                    Considerations for Home Networks
+Encrypted DNS Discovery and Deployment Considerations for Home Networks
                          draft-btw-add-home-06
 
 Abstract
@@ -43,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 14, 2020.
+   This Internet-Draft will expire on November 15, 2020.
 
 Copyright Notice
 
@@ -53,7 +52,8 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 1]
+
+Boucadair, et al.       Expires November 15, 2020               [Page 1]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -77,7 +77,7 @@ Table of Contents
      3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   7
    4.  DNS Reference Identifier Option . . . . . . . . . . . . . . .   8
      4.1.  DHCPv6 DNS Reference Identifier Option  . . . . . . . . .   9
-     4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .  10
+     4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .  11
      4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  12
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  13
    6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  13
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 2]
+Boucadair, et al.       Expires November 15, 2020               [Page 2]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -165,7 +165,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 3]
+Boucadair, et al.       Expires November 15, 2020               [Page 3]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -221,7 +221,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 4]
+Boucadair, et al.       Expires November 15, 2020               [Page 4]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -277,7 +277,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 5]
+Boucadair, et al.       Expires November 15, 2020               [Page 5]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -333,7 +333,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 6]
+Boucadair, et al.       Expires November 15, 2020               [Page 6]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -389,7 +389,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 7]
+Boucadair, et al.       Expires November 15, 2020               [Page 7]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -445,7 +445,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 8]
+Boucadair, et al.       Expires November 15, 2020               [Page 8]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -488,9 +488,9 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.
 
-   +-+-+-+-+-+-+-+-+
-   |U|U|U|U|U|U|H|T|
-   +-+-+-+-+-+-+-+-+
+                             +-+-+-+-+-+-+-+-+
+                             |U|U|U|U|U|U|H|T|
+                             +-+-+-+-+-+-+-+-+
 
                        Figure 8: Encrypted DNS Types
 
@@ -501,7 +501,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020               [Page 9]
+Boucadair, et al.       Expires November 15, 2020               [Page 9]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -513,10 +513,14 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
       These bits are set as a function of the encrypted DNS supported by
       the server.  For example:
 
-      *  If the server supports DoT only, T bit must be set while other
-         bits must be unset.
-      *  If the server supports both DoT and DoH, both T and H bits must
+      *  If the server supports DoT only, T bit is be set while other
+         bits are unset.
+      *  If the server supports both DoT and DoH, both T and H bits are
          be set.
+
+      If a DNS server supports more than one encrypted DNS type (e.g.,
+      both DoH and DoT), it is RECOMMENDED to set the corresponding bits
+      in the 'Encrypted DNS Types' field of the same option.
    o  Authentication Domain Name: A fully qualified domain name of the
       DoH/DoT server.  This field is formatted as specified in
       Section 10 of [RFC8415].
@@ -546,21 +550,23 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    options; each option is to be treated as a separate encrypted DNS
    server.
 
+
+
+
+
+
+
+
+Boucadair, et al.       Expires November 15, 2020              [Page 10]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
 4.2.  DHCP DNS Reference Identifier Option
 
    The DHCP DNS Reference Identifier option is used to configure an
    authentication domain name of the DoH/DoT server.  The format of this
    option is illustrated in Figure 10.
-
-
-
-
-
-
-Boucadair, et al.       Expires November 14, 2020              [Page 10]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
             0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -605,18 +611,17 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    Parameter Request List option [RFC2132].  The DHCP client sets the
    Encrypted DNS Type field to the requested encrypted DNS server.
 
+
+
+Boucadair, et al.       Expires November 15, 2020              [Page 11]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
    If the DHCP client requested any encrypted DNS server, the DHCP
    client MUST be prepared to receive multiple DHCP OPTION_V4_DNS_RI
    options; each option is to be treated as a separate encrypted DNS
    server.
-
-
-
-
-Boucadair, et al.       Expires November 14, 2020              [Page 11]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
 4.3.  RA DNS Reference Identifier Option
 
@@ -660,19 +665,19 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
       A value of all one bits (0xffffffff) represents infinity.
 
+
+
+
+
+Boucadair, et al.       Expires November 15, 2020              [Page 12]
+
+Internet-Draft          DoH/DoT in Home Networks                May 2020
+
+
       A value of zero means that the DNS Reference Identifier MUST no
       longer be used.
    o  Authentication Domain Name: The domain name of the DoH/DoT server.
       This field is formatted as specified in Section 10 of [RFC8415].
-
-
-
-
-
-Boucadair, et al.       Expires November 14, 2020              [Page 12]
-
-Internet-Draft          DoH/DoT in Home Networks                May 2020
-
 
       This field MUST be padded with zeros so that its size is a
       multiple of 8 octets.
@@ -720,12 +725,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-
-
-
-
-
-Boucadair, et al.       Expires November 14, 2020              [Page 13]
+Boucadair, et al.       Expires November 15, 2020              [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -781,7 +781,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 14]
+Boucadair, et al.       Expires November 15, 2020              [Page 14]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -837,7 +837,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 15]
+Boucadair, et al.       Expires November 15, 2020              [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -893,7 +893,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 16]
+Boucadair, et al.       Expires November 15, 2020              [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -949,7 +949,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 17]
+Boucadair, et al.       Expires November 15, 2020              [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 18]
+Boucadair, et al.       Expires November 15, 2020              [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 19]
+Boucadair, et al.       Expires November 15, 2020              [Page 19]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 20]
+Boucadair, et al.       Expires November 15, 2020              [Page 20]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 21]
+Boucadair, et al.       Expires November 15, 2020              [Page 21]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 22]
+Boucadair, et al.       Expires November 15, 2020              [Page 22]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 23]
+Boucadair, et al.       Expires November 15, 2020              [Page 23]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1341,7 +1341,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 24]
+Boucadair, et al.       Expires November 15, 2020              [Page 24]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1397,4 +1397,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires November 14, 2020              [Page 25]
+Boucadair, et al.       Expires November 15, 2020              [Page 25]

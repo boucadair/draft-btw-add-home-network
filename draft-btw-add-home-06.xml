@@ -33,8 +33,8 @@
 <!-- end of list of popular I-D processing instructions -->
 <rfc category="std" docName="draft-btw-add-home-06" ipr="trust200902">
   <front>
-    <title abbrev="DoH/DoT in Home Networks">DNS-over-HTTPS and DNS-over-TLS
-    Server Discovery and Deployment Considerations for Home Networks</title>
+    <title abbrev="DoH/DoT in Home Networks">Encrypted DNS Discovery and
+    Deployment Considerations for Home Networks</title>
 
     <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
       <organization>Orange</organization>
@@ -466,7 +466,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             the encrypted DNS server conveyed in this attribute. The format of
             this 8-bit field is shown in <xref target="types"></xref>. <figure
                 align="center" anchor="types" title="Encrypted DNS Types">
-                <artwork><![CDATA[+-+-+-+-+-+-+-+-+
+                <artwork align="center"><![CDATA[+-+-+-+-+-+-+-+-+
 |U|U|U|U|U|U|H|T|
 +-+-+-+-+-+-+-+-+  ]]></artwork>
               </figure><list style="empty">
@@ -481,12 +481,15 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
                 Standards Action <xref target="RFC8126"></xref>.</t>
               </list>These bits are set as a function of the encrypted DNS
             supported by the server. For example:<list style="symbols">
-                <t>If the server supports DoT only, T bit must be set while
-                other bits must be unset. </t>
+                <t>If the server supports DoT only, T bit is be set while
+                other bits are unset. </t>
 
                 <t>If the server supports both DoT and DoH, both T and H bits
-                must be set.</t>
-              </list></t>
+                are be set.</t>
+              </list>If a DNS server supports more than one encrypted DNS type
+            (e.g., both DoH and DoT), it is RECOMMENDED to set the
+            corresponding bits in the 'Encrypted DNS Types' field of the same
+            option. </t>
 
             <t>Authentication Domain Name: A fully qualified domain name of
             the DoH/DoT server. This field is formatted as specified in
