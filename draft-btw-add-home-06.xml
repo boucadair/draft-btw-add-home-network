@@ -481,16 +481,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             requested encrypted DNS server type(s) by the client. In a
             response, these bits are set as a function of the encrypted DNS
             supported by the server and the requested encrypted DNS server
-            type(s). For example, if the client requests any encrypted DNS
-            server but the server supports DoT only, T bit must be set while
-            other bits must be unset. <vspace blankLines="1" />To keep the
-            packet small, if more than one encrypted DNS type (e.g., both DoH
-            and DoT) are to be returned to a requesting client and the same
-            ADN is used for these types, the corresponding bits MUST be set in
-            the 'Encrypted DNS Types' field of the same option instance in a
-            response. For example, if the client requests any encrypted DNS
-            server and the server supports both DoT and DoH, then both T and H
-            bits must be set.</t>
+            type(s). <vspace blankLines="1" />To keep the packet small, if
+            more than one encrypted DNS type (e.g., both DoH and DoT) are to
+            be returned to a requesting client and the same ADN is used for
+            these types, the corresponding bits MUST be set in the 'Encrypted
+            DNS Types' field of the same option instance in a response. For
+            example, if the client requested DoH and DoTand the server
+            supports both, then both T and H bits must be set.</t>
 
             <t>Authentication Domain Name: A fully qualified domain name of
             the DoH/DoT server. This field is formatted as specified in
@@ -685,7 +682,7 @@ with:
       target="RFC3646"></xref><xref target="RFC8106"></xref> can be leveraged
       to learn the IP addresses of DoT/DoH servers while an authentication
       domain name is supplied by one of the options discussed in <xref
-      target="RI"></xref>. </t>
+      target="RI"></xref>.</t>
 
       <t>The following sub-sections discusses the conditions under which
       discovered DoT/DoH server can be used.</t>

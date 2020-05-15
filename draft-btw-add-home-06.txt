@@ -513,18 +513,15 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
       In a request, these bits are assigned to indicate the requested
       encrypted DNS server type(s) by the client.  In a response, these
       bits are set as a function of the encrypted DNS supported by the
-      server and the requested encrypted DNS server type(s).  For
-      example, if the client requests any encrypted DNS server but the
-      server supports DoT only, T bit must be set while other bits must
-      be unset.
+      server and the requested encrypted DNS server type(s).
 
       To keep the packet small, if more than one encrypted DNS type
       (e.g., both DoH and DoT) are to be returned to a requesting client
       and the same ADN is used for these types, the corresponding bits
       MUST be set in the 'Encrypted DNS Types' field of the same option
-      instance in a response.  For example, if the client requests any
-      encrypted DNS server and the server supports both DoT and DoH,
-      then both T and H bits must be set.
+      instance in a response.  For example, if the client requested DoH
+      and DoTand the server supports both, then both T and H bits must
+      be set.
    o  Authentication Domain Name: A fully qualified domain name of the
       DoH/DoT server.  This field is formatted as specified in
       Section 10 of [RFC8415].
@@ -553,6 +550,9 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    type, the DHCP client MUST be prepared to receive multiple DHCP
    OPTION_V6_DNS_RI options; each option is to be treated as a separate
    encrypted DNS server.
+
+
+
 
 
 
