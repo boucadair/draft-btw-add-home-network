@@ -111,9 +111,7 @@
       networks. It particularly sketches the required steps to use DoT/DoH
       capabilities provided by local networks.</t>
 
-      <t>One of the goals of this document is to assess to what extent
-      existing tools can be used to provide a DoT/DoH service. As an outcome,
-      new DHCP and Router Advertisement Options are specified in order to
+      <t>The document specifies new DHCP and Router Advertisement Options to
       convey a DNS Authentication Domain Name.</t>
     </abstract>
   </front>
@@ -258,7 +256,7 @@ Legend:
 
         <t>The DNS client discovers whether the DNS server in the local
         network supports DoH/DoT by using a dedicated field in the discovery
-        message: Encrypted DNS Type (<xref target="RI"></xref>).</t>
+        message: Encrypted DNS Types (<xref target="RI"></xref>).</t>
 
         <t><figure align="center" anchor="wan" title="DoH/DoT in the WAN">
             <artwork align="center"><![CDATA[(a) Fixed Networks
@@ -479,17 +477,20 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
                 <t>U: Unassigned bits. These bits MUST be unset by the sender.
                 Associating a meaning with an unassigned bit can be done via
                 Standards Action <xref target="RFC8126"></xref>.</t>
-              </list>These bits are set as a function of the encrypted DNS
-            supported by the server. For example:<list style="symbols">
-                <t>If the server supports DoT only, T bit is set while other
-                bits are unset. </t>
-
-                <t>If the server supports both DoT and DoH, both T and H bits
-                are set.</t>
-              </list>If a DNS server supports more than one encrypted DNS type
-            (e.g., both DoH and DoT), it is RECOMMENDED to set the
-            corresponding bits in the 'Encrypted DNS Types' field of the same
-            option. </t>
+              </list>In a request, these bits are assigned to indicate the
+            requested encrypted DNS server type(s) by the client. In a
+            response, these bits are set as a function of the encrypted DNS
+            supported by the server and the requested encrypted DNS server
+            type(s). For example, if the client requests any encrypted DNS
+            server but the server supports DoT only, T bit must be set while
+            other bits must be unset. <vspace blankLines="1" />To keep the
+            packet small, if more than one encrypted DNS type (e.g., both DoH
+            and DoT) are to be returned to a requesting client and the same
+            ADN is used for these types, the corresponding bits MUST be set in
+            the 'Encrypted DNS Types' field of the same option instance in a
+            response. For example, if the client requests any encrypted DNS
+            server and the server supports both DoT and DoH, then both T and H
+            bits must be set.</t>
 
             <t>Authentication Domain Name: A fully qualified domain name of
             the DoH/DoT server. This field is formatted as specified in
@@ -517,12 +518,12 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
         OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
         18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
         target="RFC8415"></xref>. The DHCPv6 client sets the Encrypted DNS
-        Type field to the requested encrypted DNS server.</t>
+        Types field to the requested encrypted DNS server type(s).</t>
 
-        <t>If the DHCPv6 client requested any encrypted DNS server, the DHCP
-        client MUST be prepared to receive multiple DHCP OPTION_V6_DNS_RI
-        options; each option is to be treated as a separate encrypted DNS
-        server.</t>
+        <t>If the DHCPv6 client requested more than one encrypted DNS server
+        type, the DHCP client MUST be prepared to receive multiple DHCP
+        OPTION_V6_DNS_RI options; each option is to be treated as a separate
+        encrypted DNS server.</t>
       </section>
 
       <section anchor="DHCP" title="DHCP DNS Reference Identifier Option">
@@ -580,13 +581,13 @@ with:
         <t>To discover an encrypted DNS server, the DHCP client requests the
         Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
         Parameter Request List option <xref target="RFC2132"></xref>. The DHCP
-        client sets the Encrypted DNS Type field to the requested encrypted
+        client sets the Encrypted DNS Types field to the requested encrypted
         DNS server.</t>
 
-        <t>If the DHCP client requested any encrypted DNS server, the DHCP
-        client MUST be prepared to receive multiple DHCP OPTION_V4_DNS_RI
-        options; each option is to be treated as a separate encrypted DNS
-        server.</t>
+        <t>If the DHCP client requested more than one encrypted DNS server
+        type, the DHCP client MUST be prepared to receive multiple DHCP
+        OPTION_V4_DNS_RI options; each option is to be treated as a separate
+        encrypted DNS server.</t>
       </section>
 
       <section anchor="RA" title="RA DNS Reference Identifier Option">
@@ -770,9 +771,6 @@ with:
           forwarder within the local network. The default behavior of the CPE
           is to supply the encrypted DNS server received from the ISP's
           network.</t>
-
-          <t>If the CPE announces itself as a DNS forwarder, the F-bit MUST
-          NOT be set.</t>
         </section>
 
         <section title="Auto-Upgrade based on Domains and their Sub-domains">

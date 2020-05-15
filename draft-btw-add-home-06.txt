@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: November 15, 2020                                        McAfee
+Expires: November 16, 2020                                        McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                            May 14, 2020
+                                                            May 15, 2020
 
 
 Encrypted DNS Discovery and Deployment Considerations for Home Networks
@@ -22,10 +22,8 @@ Abstract
    networks.  It particularly sketches the required steps to use DoT/DoH
    capabilities provided by local networks.
 
-   One of the goals of this document is to assess to what extent
-   existing tools can be used to provide a DoT/DoH service.  As an
-   outcome, new DHCP and Router Advertisement Options are specified in
-   order to convey a DNS Authentication Domain Name.
+   The document specifies new DHCP and Router Advertisement Options to
+   convey a DNS Authentication Domain Name.
 
 Status of This Memo
 
@@ -42,25 +40,24 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 15, 2020.
+   This Internet-Draft will expire on November 16, 2020.
 
 Copyright Notice
 
    Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (https://trustee.ietf.org/license-info) in effect on the date of
 
 
 
-
-Boucadair, et al.       Expires November 15, 2020               [Page 1]
+Boucadair, et al.       Expires November 16, 2020               [Page 1]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -107,14 +104,16 @@ Table of Contents
    to advertise a list of DNS Recursive DNS server(s) to their
    customers:
 
+   o  Protocol Configuration Options in cellular networks [TS.24008].
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 2]
+
+
+Boucadair, et al.       Expires November 16, 2020               [Page 2]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
-   o  Protocol Configuration Options in cellular networks [TS.24008].
    o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
       [RFC8415][RFC3646] (OPTION_DNS_SERVERS).
    o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
@@ -165,7 +164,8 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 3]
+
+Boucadair, et al.       Expires November 16, 2020               [Page 3]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -221,7 +221,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 4]
+Boucadair, et al.       Expires November 16, 2020               [Page 4]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -252,7 +252,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    The DNS client discovers whether the DNS server in the local network
    supports DoH/DoT by using a dedicated field in the discovery message:
-   Encrypted DNS Type (Section 4).
+   Encrypted DNS Types (Section 4).
 
 
 
@@ -277,7 +277,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 5]
+Boucadair, et al.       Expires November 16, 2020               [Page 5]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -333,7 +333,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 6]
+Boucadair, et al.       Expires November 16, 2020               [Page 6]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -389,7 +389,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 7]
+Boucadair, et al.       Expires November 16, 2020               [Page 7]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -445,7 +445,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 8]
+Boucadair, et al.       Expires November 16, 2020               [Page 8]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -501,7 +501,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020               [Page 9]
+Boucadair, et al.       Expires November 16, 2020               [Page 9]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -510,17 +510,21 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
          Associating a meaning with an unassigned bit can be done via
          Standards Action [RFC8126].
 
-      These bits are set as a function of the encrypted DNS supported by
-      the server.  For example:
+      In a request, these bits are assigned to indicate the requested
+      encrypted DNS server type(s) by the client.  In a response, these
+      bits are set as a function of the encrypted DNS supported by the
+      server and the requested encrypted DNS server type(s).  For
+      example, if the client requests any encrypted DNS server but the
+      server supports DoT only, T bit must be set while other bits must
+      be unset.
 
-      *  If the server supports DoT only, T bit is set while other bits
-         are unset.
-      *  If the server supports both DoT and DoH, both T and H bits are
-         set.
-
-      If a DNS server supports more than one encrypted DNS type (e.g.,
-      both DoH and DoT), it is RECOMMENDED to set the corresponding bits
-      in the 'Encrypted DNS Types' field of the same option.
+      To keep the packet small, if more than one encrypted DNS type
+      (e.g., both DoH and DoT) are to be returned to a requesting client
+      and the same ADN is used for these types, the corresponding bits
+      MUST be set in the 'Encrypted DNS Types' field of the same option
+      instance in a response.  For example, if the client requests any
+      encrypted DNS server and the server supports both DoT and DoH,
+      then both T and H bits must be set.
    o  Authentication Domain Name: A fully qualified domain name of the
       DoH/DoT server.  This field is formatted as specified in
       Section 10 of [RFC8415].
@@ -542,22 +546,18 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    To discover an encrypted DNS server, the DHCPv6 client including
    OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
    18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of [RFC8415].  The
-   DHCPv6 client sets the Encrypted DNS Type field to the requested
+   DHCPv6 client sets the Encrypted DNS Types field to the requested
+   encrypted DNS server type(s).
+
+   If the DHCPv6 client requested more than one encrypted DNS server
+   type, the DHCP client MUST be prepared to receive multiple DHCP
+   OPTION_V6_DNS_RI options; each option is to be treated as a separate
    encrypted DNS server.
 
-   If the DHCPv6 client requested any encrypted DNS server, the DHCP
-   client MUST be prepared to receive multiple DHCP OPTION_V6_DNS_RI
-   options; each option is to be treated as a separate encrypted DNS
-   server.
 
 
 
-
-
-
-
-
-Boucadair, et al.       Expires November 15, 2020              [Page 10]
+Boucadair, et al.       Expires November 16, 2020              [Page 10]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -609,19 +609,19 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    To discover an encrypted DNS server, the DHCP client requests the
    Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
    Parameter Request List option [RFC2132].  The DHCP client sets the
-   Encrypted DNS Type field to the requested encrypted DNS server.
+   Encrypted DNS Types field to the requested encrypted DNS server.
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 11]
+Boucadair, et al.       Expires November 16, 2020              [Page 11]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
-   If the DHCP client requested any encrypted DNS server, the DHCP
-   client MUST be prepared to receive multiple DHCP OPTION_V4_DNS_RI
-   options; each option is to be treated as a separate encrypted DNS
-   server.
+   If the DHCP client requested more than one encrypted DNS server type,
+   the DHCP client MUST be prepared to receive multiple DHCP
+   OPTION_V4_DNS_RI options; each option is to be treated as a separate
+   encrypted DNS server.
 
 4.3.  RA DNS Reference Identifier Option
 
@@ -669,7 +669,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 12]
+Boucadair, et al.       Expires November 16, 2020              [Page 12]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -725,7 +725,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 13]
+Boucadair, et al.       Expires November 16, 2020              [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -781,7 +781,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 14]
+Boucadair, et al.       Expires November 16, 2020              [Page 14]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -816,9 +816,6 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    within the local network.  The default behavior of the CPE is to
    supply the encrypted DNS server received from the ISP's network.
 
-   If the CPE announces itself as a DNS forwarder, the F-bit MUST NOT be
-   set.
-
 7.1.2.  Auto-Upgrade based on Domains and their Sub-domains
 
    If the ADN conveyed in DHCP/RA (Section 4) is pre-configured in
@@ -834,16 +831,17 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
    Let's suppose that "example.net" is pre-configured as a verified
    resolved in the browser or OS.  If the DoH/DoT client discovers a
    local forwarder "cpe1-internal.example.net", the DoH/DoT client will
+   auto-upgrade because the pre-configured ADN would match
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 15]
+
+Boucadair, et al.       Expires November 16, 2020              [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
-   auto-upgrade because the pre-configured ADN would match
-   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 12, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail.
 
@@ -893,7 +891,9 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 16]
+
+
+Boucadair, et al.       Expires November 16, 2020              [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -949,7 +949,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 17]
+Boucadair, et al.       Expires November 16, 2020              [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 18]
+Boucadair, et al.       Expires November 16, 2020              [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 19]
+Boucadair, et al.       Expires November 16, 2020              [Page 19]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 20]
+Boucadair, et al.       Expires November 16, 2020              [Page 20]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1159,8 +1159,8 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
    [I-D.pp-add-resinfo]
               Sood, P. and P. Hoffman, "DNS Resolver Information Self-
-              publication", draft-pp-add-resinfo-00 (work in progress),
-              April 2020.
+              publication", draft-pp-add-resinfo-01 (work in progress),
+              May 2020.
 
    [I-D.reddy-add-iot-byod-bootstrap]
               Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
@@ -1173,7 +1173,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 21]
+Boucadair, et al.       Expires November 16, 2020              [Page 21]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft          DoH/DoT in Home Networks                May 2020
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 22]
+Boucadair, et al.       Expires November 16, 2020              [Page 22]
 
 Internet-Draft          DoH/DoT in Home Networks                May 2020
 
@@ -1285,4 +1285,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires November 15, 2020              [Page 23]
+Boucadair, et al.       Expires November 16, 2020              [Page 23]
