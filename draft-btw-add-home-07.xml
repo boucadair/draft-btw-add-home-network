@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- This template is for creating an Internet Draft using xml2rfc,
+     which is available here: http://xml.resource.org. -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!-- One method to get references from the online citation libraries.
+     There has to be one entity for each item to be referenced. 
+     An alternate method (rfc include) is described in the references. -->
+]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs), 
+     please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+     (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="yes" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes" ?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space 
+     (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="yes" ?>
+<!-- do not start each main section on a new page -->
+<?rfc subcompact="no" ?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+<rfc category="std" docName="draft-btw-add-home-07" ipr="trust200902">
+  <front>
+    <title abbrev="DoH/DoT in Home Networks">Encrypted DNS Discovery and
+    Deployment Considerations for Home Networks</title>
+
+    <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
+      <organization>Orange</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city>Rennes</city>
+
+          <code>35000</code>
+
+          <country>France</country>
+        </postal>
+
+        <email>mohamed.boucadair@orange.com</email>
+      </address>
+    </author>
+
+    <author fullname="Tirumaleswar Reddy" initials="T." surname="Reddy">
+      <organization abbrev="McAfee">McAfee, Inc.</organization>
+
+      <address>
+        <postal>
+          <street>Embassy Golf Link Business Park</street>
+
+          <city>Bangalore</city>
+
+          <region>Karnataka</region>
+
+          <code>560071</code>
+
+          <country>India</country>
+        </postal>
+
+        <email>TirumaleswarReddy_Konda@McAfee.com</email>
+      </address>
+    </author>
+
+    <author fullname="Dan Wing" initials="D." surname="Wing">
+      <organization abbrev="Citrix">Citrix Systems, Inc.</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <country>USA</country>
+        </postal>
+
+        <email>dwing-ietf@fuggles.com</email>
+      </address>
+    </author>
+
+    <author fullname="Neil Cook" initials="N." surname="Cook">
+      <organization>Open-Xchange</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <country>UK</country>
+        </postal>
+
+        <email>neil.cook@noware.co.uk</email>
+      </address>
+    </author>
+
+    <date />
+
+    <workgroup>ADD</workgroup>
+
+    <abstract>
+      <t>This document discusses DoT/DoH deployment considerations for home
+      networks. It particularly sketches the required steps to use DoT/DoH
+      capabilities provided by local networks.</t>
+
+      <t>The document specifies new DHCP and Router Advertisement Options to
+      convey a DNS Authentication Domain Name.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section anchor="intro" title="Introduction">
+      <t>Internet Service Providers (ISPs) traditionally provide DNS resolvers
+      to their customers. Typically, ISPs deploy the following mechanisms to
+      advertise a list of DNS Recursive DNS server(s) to their customers:
+      <?rfc subcompact="yes" ?></t>
+
+      <t><list style="symbols">
+          <t>Protocol Configuration Options in cellular networks <xref
+          target="TS.24008"></xref>.</t>
+
+          <t>DHCP <xref target="RFC2132"></xref> (Domain Name Server Option)
+          or DHCPv6 <xref target="RFC8415"></xref><xref
+          target="RFC3646"></xref> (OPTION_DNS_SERVERS).</t>
+
+          <t>IPv6 Router Advertisement <xref target="RFC4861"></xref><xref
+          target="RFC8106"></xref> (Type 25 (Recursive DNS Server
+          Option)).<?rfc subcompact="no" ?></t>
+        </list></t>
+
+      <t>The communication between a customer's device (possibly via Customer
+      Premises Equipment (CPE)) and an ISP-supplied DNS resolver takes place
+      by using cleartext DNS messages (Do53, <xref
+      target="I-D.ietf-dnsop-terminology-ter"></xref>). Some examples are
+      depicted in <xref target="do53"></xref>. In the case of cellular
+      networks, the cellular network will provide connectivity directly to a
+      host (e.g., smartphone, tablet) or via a CPE. Do53 mechanisms used
+      within the Local Area Network (LAN) are similar in both fixed and
+      cellular CPE-based broadband service offerings.</t>
+
+      <t><figure align="center" anchor="do53"
+          title="Sample Legacy Deployments">
+          <artwork align="center"><![CDATA[(a) Fixed Networks
+           ,--,--,--.             ,--,--,--.
+        ,-'   +--+  `-.       ,-'   ISP    `-. 
+       ( LAN  |H |    CPE----(                 )
+        `-.   +--+   ,-'       `-.          ,-' 
+           `--'|-'--'             `--'--'--'    
+               |                     |
+               |<=======Do53========>| 
+
+(b) Cellular Networks
+                |<===========Do53=========>| 
+           ,--,-|,--.                      |
+        ,-'   +--+   `-.               ,--,--,--.    
+       ( LAN  |H |     CPE------------+          \
+        `-.   +--+   ,-'            ,'   ISP     `-. 
+           `--'--'--'              (                )
+                              +-----+-.          ,-'
+              +--+            |        `--'--'--'  
+              |H +------------+
+              +--+
+Legend:
+ * H: refers to a host.
+]]></artwork>
+        </figure></t>
+
+      <t>ISPs use DNS to provide additional services such as (but not limited
+      to) malware filtering, parental control, or VoD (Video on Demand)
+      optimization. DNS is also a central component for mastering the quality
+      of experience for current latency-sensitive services, but also emerging
+      ones (such as those services that pertain to the Ultra Reliability and
+      Low Latency Communications (uRLLC) or Enhanced Mobile Broadband (eMBB).
+      <list style="empty">
+          <t>For example, the latency targets set in the context of 5G are 1ms
+          (uRLLC) and 4ms (eMBB). An ISP will be able to address such
+          demanding latency requirements assuming the corresponding services
+          rely upon resources (network, compute, storage) that are located as
+          close to the user as possible (e.g., by means of Edge Computing
+          techniques and resources). Such latency requirements are likely to
+          be addressed by means of optimized designs (DNS, in particular),
+          too.</t>
+        </list>Relying upon local DNS resolvers will therefore contribute to
+      meet the aforementioned service requirements. The use of external
+      resolvers is likely to induce an extra service delay which exceeds by
+      far the service target.</t>
+
+      <t>This document focuses on the support of DNS-over-HTTPS (DoH) <xref
+      target="RFC8484"></xref> or DNS-over-TLS (DoT) <xref
+      target="RFC7858"></xref> in local networks. In particular, the document
+      describes how a local DoH/DoT server can be discovered and used by
+      connected hosts. This document specifies options that allow DNS clients
+      to discover local DoT/DoH servers. <xref target="RI"></xref> describes
+      DHCP, DHCPv6, and RA options to convey the Authentication Domain Name
+      (ADN, defined in <xref target="RFC8310"></xref>).</t>
+
+      <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
+      public resolvers); these ISPs provide their customers with the IP
+      addresses of these resolvers. These addresses are typically configured
+      on CPEs using the same mechanisms listed above. Likewise, users can
+      modify the default DNS configuration of their CPEs (e.g., supplied by
+      their ISP) to configure their favorite DNS servers. This document
+      permits such deployments.</t>
+
+      <t>Both managed and unmanaged CPEs are discussed in the document (<xref
+      target="depl"></xref>). Also, considerations related to hosting a DNS
+      forwarder in the CPE are described (<xref
+      target="forwarder"></xref>).</t>
+
+      <t>Hosts and/or CPEs may be connected to multiple networks; each
+      providing their own DNS configuration using the discovery mechanisms
+      specified in this document. Nevertheless, it is out of the scope of this
+      specification to discuss DNS selection of multi-interface devices. The
+      reader may refer to <xref target="RFC6731"></xref> for a discussion of
+      issues and an example of DNS server selection for multi-interfaced
+      devices.</t>
+    </section>
+
+    <section anchor="notation" title="Terminology">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in BCP 14
+      <xref target="RFC2119"></xref><xref target="RFC8174"></xref> when, and
+      only when, they appear in all capitals, as shown here.</t>
+
+      <t>This document makes use of the terms defined in <xref
+      target="RFC8499"></xref> and <xref
+      target="I-D.ietf-dnsop-terminology-ter"></xref>.</t>
+
+      <t>Do53 refers to unencrypted DNS.</t>
+
+      <t>'DoH/DoT' refers to DNS-over-HTTPS and/or DNS-over-TLS.</t>
+    </section>
+
+    <section anchor="depl" title="Sample Deployment Scenarios">
+      <t></t>
+
+      <section anchor="mcpe" title="Managed CPEs">
+        <t>ISPs have developed an expertise in managing service-specific
+        configuration information (e.g., CPE WAN Management Protocol <xref
+        target="TR-069"></xref>). For example, these tools may be used to
+        provision the authentication domain name information (ADN) to managed
+        CPEs if DoH/DoT is supported by a local network similar to what is
+        depicted in <xref target="wan"></xref>.</t>
+
+        <t>DoH-capable (or DoT) clients establish the DoH (or DoT) session
+        with the discovered DoH (or DoT) server.</t>
+
+        <t>The DNS client discovers whether the DNS server in the local
+        network supports DoH/DoT by using a dedicated field in the discovery
+        message: Encrypted DNS Types (<xref target="RI"></xref>).</t>
+
+        <t><figure align="center" anchor="wan" title="DoH/DoT in the WAN">
+            <artwork align="center"><![CDATA[(a) Fixed Networks
+
+           ,--,--,--.             ,--,--,--.
+        ,-'   +--+  `-.       ,-'   ISP    `-. 
+       ( LAN  |H |    CPE----(    DNS Server  )
+        `-.   +--+   ,-'       `-.         ,-' 
+           `--'|-'--'             `--'--'--'    
+               |                     |
+               |<=======DoH/DoT=====>| 
+
+
+(b) Cellular Networks    
+                                                                      
+                |<===========DoH/DoT======>| 
+           ,--,-|,--.                      |
+        ,-'   +--+   `-.               ,--,--,--.    
+       ( LAN  |H |     CPE------------+          \
+        `-.   +--+   ,-'            ,'   ISP     `-. 
+           `--'--'--'              (    DNS Server  )
+                              +-----+-.          ,-'
+               +--+           |        `--'--'--'  
+               |H +-----------+
+               +--+]]></artwork>
+          </figure></t>
+
+        <t><xref target="wan"></xref> shows the scenario where the CPE relays
+        the list of DoT/DoH servers it learns for the network by using
+        mechanisms like DHCP or a specific Router Advertisement message. In
+        such context, direct DoH/DoT sessions will be established between a
+        host serviced by a CPE and an ISP-supplied DoT/DoH server (see the
+        example depicted in <xref target="direct"></xref> for a
+        DoH/DoT-capable host).</t>
+
+        <t><figure align="center" anchor="direct"
+            title="Direct DoH/DoT Sessions">
+            <artwork><![CDATA[
+                      ,--,--,--.             ,--,--,--.
+                   ,-'          `-.       ,-'   ISP    `-.
+           Host---(      LAN      CPE----(    DNS Server  )
+             |     `-.          ,-'       `-.          ,-'
+             |        `--'--'--'             `--'--'--'
+             |                                   | 
+             |<==============DoT/DoH============>|
+]]></artwork>
+          </figure></t>
+
+        <t><xref target="proxied"></xref> shows a deployment where the CPE
+        embeds a caching DNS forwarder. The CPE advertises itself as the
+        default DNS server to the hosts it serves. The CPE relies upon DHCP or
+        RA to advertise itself to internal hosts as the default DoT/DoH/Do53
+        server. When receiving a DNS request it cannot handle locally, the CPE
+        forwards the request to an upstream DoH/DoT/Do53 resolver. Such
+        deployment is required for IPv4 service continuity purposes (e.g.,
+        <xref target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or for supporting
+        advanced services within the home (e.g., malware filtering, parental
+        control, Manufacturer Usage Description (MUD, <xref
+        target="RFC8520"></xref> to only allow intended communications to and
+        from an IoT device)). When the CPE behaves as a DNS forwarder, DNS
+        communications can be decomposed into two legs:<list style="symbols">
+            <t>The leg between an internal host and the CPE.</t>
+
+            <t>The leg between the CPE and an upstream DNS resolver.</t>
+          </list></t>
+
+        <t>An ISP that offers DoH/DoT to its customers may enable DoH/DoT in
+        both legs as shown in <xref target="proxied"></xref>. Additional
+        considerations related to this deployment are discussed in <xref
+        target="forwarder"></xref>.</t>
+
+        <t><figure align="center" anchor="proxied"
+            title="Proxied DoH/DoT Sessions">
+            <artwork><![CDATA[
+                      ,--,--,--.             ,--,--,--.
+                   ,-'          `-.       ,-'   ISP    `-.
+           Host---(      LAN      CPE----(    DNS Server  )
+             |     `-.          ,-'|      `-.          ,-'
+             |        `--'--'--'   |         `--'--'--'
+             |                     |             | 
+             |<======DoT/DoH======>|<==DoT/DoH==>| 
+
+]]></artwork>
+          </figure></t>
+
+        <t></t>
+      </section>
+
+      <section anchor="ucpe" title="Unmanaged CPEs">
+        <t>Customers may decide to deploy unmanaged CPEs (assuming the CPE is
+        compliant with the network access technical specification that is
+        usually published by ISPs). Upon attachment to the network, an
+        unmanaged CPE receives from the network its service configuration
+        (including the DNS information) by means of, e.g., DHCP. That DNS
+        information is shared within the LAN following the same mechanisms as
+        those discussed in <xref target="mcpe"></xref>. A host can thus
+        establish DoH/DoT session with a DoH/DoT server similar to what is
+        depicted in <xref target="direct"></xref>.</t>
+
+        <t>Customers may also decide to deploy internal home routers (called
+        hereafter, Internal CPEs) for a variety of reasons that are not
+        detailed here. Absent any explicit configuration on the internal CPE
+        to override the DNS configuration it receives from the ISP-supplied
+        CPE, an Internal CPE relays the DNS information it receives via
+        DHCP/RA from the ISP-supplied CPE to connected hosts. DoH/DoT sessions
+        can be established by a host with the DoH/DoT servers of the ISP (see
+        <xref target="internal_isp"></xref>).</t>
+
+        <t><figure align="center" anchor="internal_isp"
+            title="Direct DoH/DoT Sessions with the ISP DNS Resolver (Internal CPE)">
+            <artwork align="center"><![CDATA[
+          ,--,--,--.                    ,--,--,--.
+       ,-'          Internal         ,-'    ISP   `-.
+Host--(    Network#A   CPE----CPE---(    DNS Server   )
+ |     `-.          ,-'              `-.          ,-'
+ |        `--'--'--'                    `--'--'--'
+ |                                          | 
+ |<===================DoT/DoH==============>|
+]]></artwork>
+          </figure></t>
+
+        <t>Similar to managed CPEs, a user may modify the default DNS
+        configuration of an unmanaged CPE to use his/her favorite DNS servers
+        instead. DoH/DoT sessions can be established directly between a host
+        and a 3rd Party DNS server (see <xref
+        target="internal_3"></xref>).</t>
+
+        <t><figure align="center" anchor="internal_3"
+            title="Direct DoH/DoT Sessions with a Third Party DNS Resolver ">
+            <artwork align="center"><![CDATA[         ,--,--,--.                  ,--,
+       ,'         Internal        ,-'    '-     3rd Party
+Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
+ |     `.         ,-'             `-.    -'         |
+ |       `-'--'--'                   `--'           |
+ |                                                  | 
+ |<======================DoT/DoH===================>|
+]]></artwork>
+          </figure></t>
+
+        <t><xref target="forwarder_u"></xref> discusses considerations related
+        to hosting a forwarder in the Internal CPE.</t>
+      </section>
+    </section>
+
+    <section anchor="RI" title="DNS Reference Identifier Option">
+      <t>This section describes how a DNS client can discover the ADN of local
+      DoH/DoT server(s) using DHCP (Sections <xref format="counter"
+      target="DHCPv6"></xref> and <xref format="counter"
+      target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
+      target="RA"></xref>).</t>
+
+      <t>As reported in Section 1.7.2 of <xref target="RFC6125"></xref>:<list
+          style="empty">
+          <t>"few certification authorities issue server certificates based on
+          IP addresses, but preliminary evidence indicates that such
+          certificates are a very small percentage (less than 1%) of issued
+          certificates".</t>
+        </list></t>
+
+      <t>In order to allow for PKIX-based authentication between a DNS client
+      and a DoH/DoT server while accommodating the current best practices for
+      issuing certificates, this document allows for configuring an
+      authentication domain name to be presented as a reference identifier for
+      DNS authentication purposes.</t>
+
+      <t>The DNS client establishes a DoH/DoT session with the discovered DNS
+      IP address(es) (<xref target="address"></xref>) and uses the mechanism
+      discussed in Section 8 of <xref target="RFC8310"></xref> to authenticate
+      the DNS server certificate using the authentication domain name conveyed
+      in the DNS Reference Identifier.</t>
+
+      <t>If the DNS Reference Identifier is discovered by a host using both RA
+      and DHCP, the rules discussed in Section 5.3.1 of <xref
+      target="RFC8106"></xref> MUST be followed.</t>
+
+      <section anchor="DHCPv6" title="DHCPv6 DNS Reference Identifier Option">
+        <t>The DHCPv6 DNS Reference Identifier option is used to configure an
+        authentication domain name of the DoH/DoT server. The format of this
+        option is shown in <xref target="ri_option"></xref>.</t>
+
+        <t><figure anchor="ri_option"
+            title="DHCPv6 DNS Reference Identifier Option">
+            <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     OPTION_V6_DNS_RI          |         Option-length         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Encr DNS Types|                                               |
+   +-+-------------+                                               |
+   |                                                               |
+   ~                 Authentication Domain Name                    ~
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                                          
+
+]]></artwork>
+          </figure>The fields of the option shown in <xref
+        target="ri_option"></xref> are as follows:<?rfc subcompact="yes" ?></t>
+
+        <t><list style="symbols">
+            <t>Option-code: OPTION_V6_DNS_RI (TBA1, see <xref
+            target="iana6"></xref>)</t>
+
+            <t>Option-length: Length of the enclosed data in octets.</t>
+
+            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
+            this 8-bit field is shown in <xref target="types"></xref>. <figure
+                align="center" anchor="types" title="Encrypted DNS Types">
+                <artwork align="center"><![CDATA[+-+-+-+-+-+-+-+-+
+|U|U|U|U|U|U|H|T|
++-+-+-+-+-+-+-+-+  ]]></artwork>
+              </figure><list style="empty">
+                <t>T: If set, this bit indicates that the server supports DoT
+                <xref target="RFC7858"></xref>.</t>
+
+                <t>H: If set, this bit indicates that the server supports DoH
+                <xref target="RFC8484"></xref>.</t>
+
+                <t>U: Unassigned bits. These bits MUST be unset by the sender.
+                Associating a meaning with an unassigned bit can be done via
+                Standards Action <xref target="RFC8126"></xref>.</t>
+              </list>In a request, these bits are assigned to indicate the
+            requested encrypted DNS server type(s) by the client. In a
+            response, these bits are set as a function of the encrypted DNS
+            supported by the server and the requested encrypted DNS server
+            type(s). <vspace blankLines="1" />To keep the packet small, if
+            more than one encrypted DNS type (e.g., both DoH and DoT) are to
+            be returned to a requesting client and the same ADN is used for
+            these types, the corresponding bits MUST be set in the 'Encrypted
+            DNS Types' field of the same option instance in a response. For
+            example, if the client requested DoH and DoTand the server
+            supports both, then both T and H bits must be set.</t>
+
+            <t>Authentication Domain Name: A fully qualified domain name of
+            the DoH/DoT server. This field is formatted as specified in
+            Section 10 of <xref target="RFC8415"></xref>.</t>
+          </list></t>
+
+        <t><?rfc subcompact="no" ?>An example of the Authentication Domain
+        Name encoding is shown in <xref target="fqdn"></xref>. This example
+        conveys the FQDN "doh1.example.com.".</t>
+
+        <t><figure anchor="fqdn"
+            title="An example of the authentication-domain-name Encoding">
+            <artwork><![CDATA[      +------+------+------+------+------+------+------+------+------+
+      | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
+      +------+------+------+------+------+------+------+------+------+
+      |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
+      +------+------+------+------+------+------+------+------+------+
+]]></artwork>
+          </figure></t>
+
+        <t>Multiple instances of OPTION_V6_DNS_RI may be returned to a DHCPv6
+        client; each pointing to a distinct encrypted DNS server type.</t>
+
+        <t>To discover an encrypted DNS server, the DHCPv6 client including
+        OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
+        18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
+        target="RFC8415"></xref>. The DHCPv6 client sets the Encrypted DNS
+        Types field to the requested encrypted DNS server type(s).</t>
+
+        <t>If the DHCPv6 client requested more than one encrypted DNS server
+        type, the DHCP client MUST be prepared to receive multiple DHCP
+        OPTION_V6_DNS_RI options; each option is to be treated as a separate
+        encrypted DNS server.</t>
+      </section>
+
+      <section anchor="DHCP" title="DHCP DNS Reference Identifier Option">
+        <t>The DHCP DNS Reference Identifier option is used to configure an
+        authentication domain name of the DoH/DoT server. The format of this
+        option is illustrated in <xref target="dhcpri_dns"></xref>.</t>
+
+        <t><figure anchor="dhcpri_dns"
+            title="DHCP DNS Reference Identifier Option">
+            <artwork><![CDATA[          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         |     TBA2      |     Length    |
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         | Encr DNS Types|               |
+         +-+-+-+-+-+-+-+-+               |
+         |                               |
+         ~  Authentication Domain Name   ~
+         |                               |
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
+
+with:
+
+          Authentication Domain Name 
+         +-----+-----+-----+-----+-----+--
+         |  s1 |  s2 |  s3 |  s4 | s5  |  ...
+         +-----+-----+-----+-----+-----+--
+
+   The values s1, s2, s3, etc. represent the domain name labels in the
+   domain name encoding.
+
+]]></artwork>
+          </figure></t>
+
+        <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
+        are as follows:<?rfc subcompact="yes" ?><list style="symbols">
+            <t>Code: OPTION_V4_DNS_RI (TBA2, see <xref
+            target="iana4"></xref>).</t>
+
+            <t>Length: Length of the enclosed data in octets.</t>
+
+            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
+            this field is shown in <xref target="types"></xref>.</t>
+
+            <t>Authentication Domain Name: The domain name of the DoH/DoT
+            server. This field is formatted as specified in Section 10 of
+            <xref target="RFC8415"></xref>.</t>
+          </list></t>
+
+        <t><?rfc subcompact="no" ?>OPTION_V4_DNS_RI is a
+        concatenation-requiring option. As such, the mechanism specified in
+        <xref target="RFC3396"></xref> MUST be used if OPTION_V4_DNS_RI
+        exceeds the maximum DHCP option size of 255 octets.</t>
+
+        <t>To discover an encrypted DNS server, the DHCP client requests the
+        Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
+        Parameter Request List option <xref target="RFC2132"></xref>. The DHCP
+        client sets the Encrypted DNS Types field to the requested encrypted
+        DNS server.</t>
+
+        <t>If the DHCP client requested more than one encrypted DNS server
+        type, the DHCP client MUST be prepared to receive multiple DHCP
+        OPTION_V4_DNS_RI options; each option is to be treated as a separate
+        encrypted DNS server.</t>
+      </section>
+
+      <section anchor="RA" title="RA DNS Reference Identifier Option">
+        <t>The IPv6 Router Advertisement (RA) DNS Reference Identifier option
+        is used to configure an authentication domain name of the DoH/DoT
+        server. The format of this option is illustrated in <xref
+        target="ra_dns"></xref>.</t>
+
+        <t><figure anchor="ra_dns" title="RA DNS Reference Identifier Option">
+            <artwork><![CDATA[      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |     Type      |     Length    | Encr DNS Types|   Unassigned  |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                           Lifetime                            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                                                               |
+     :                  Authentication Domain Name                   :
+     |                                                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+          </figure></t>
+
+        <t>The fields of the option shown in <xref target="ra_dns"></xref> are
+        as follows:<?rfc subcompact="yes" ?><list style="symbols">
+            <t>Type: 8-bit identifier of the DNS Reference Identifier Option
+            as assigned by IANA (TBA3, see <xref target="iana7"></xref>).</t>
+
+            <t>Length: 8-bit unsigned integer. The length of the option
+            (including the Type and Length fields) is in units of 8
+            octets.</t>
+
+            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
+            this field is shown in <xref target="types"></xref>.</t>
+
+            <t>Unassigned: This field is unused. It MUST be initialized to
+            zero by the sender and MUST be ignored by the receiver.</t>
+
+            <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
+            (relative to the time the packet is received) over which the
+            authentication domain name MAY be used as a DNS Reference
+            Identifier. <vspace blankLines="1" />The value of Lifetime SHOULD
+            by default be at least 3 * MaxRtrAdvInterval, where
+            MaxRtrAdvInterval is the maximum RA interval as defined in <xref
+            target="RFC4861"></xref>. <vspace blankLines="1" />A value of all
+            one bits (0xffffffff) represents infinity. <vspace
+            blankLines="1" />A value of zero means that the DNS Reference
+            Identifier MUST no longer be used.</t>
+
+            <t>Authentication Domain Name: The domain name of the DoH/DoT
+            server. This field is formatted as specified in Section 10 of
+            <xref target="RFC8415"></xref>.<vspace blankLines="1" />This field
+            MUST be padded with zeros so that its size is a multiple of 8
+            octets.</t>
+          </list></t>
+
+        <t><?rfc subcompact="no" ?></t>
+      </section>
+    </section>
+
+    <section anchor="URI" title="DoH URI Templates">
+      <t>DoH servers may support more than one URI Template <xref
+      target="RFC8484"></xref>. The following discusses a mechanism for a DoH
+      client to retrieve the list of supported templates by a DoH server.
+      Also, if the resolver hosts several DoH services (e.g., no-filtering,
+      blocking adult content, blocking malware), these services can be
+      discovered as templates.</t>
+
+      <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
+      client contacts that DoH resolver to retrieve the list of supported DoH
+      services using the well-known URI defined in <xref
+      target="I-D.btw-add-rfc8484-clarification"></xref>. DoH clients
+      re-iterates that request regularly to retrieve an updated list of
+      supported DoH services. Note that a "push" mode can be considered using
+      the mechanism defined in <xref target="I-D.ietf-dnssd-push"></xref>.</t>
+
+      <t>How a DoH client makes use of the configured DoH services is out of
+      scope of this document.</t>
+    </section>
+
+    <section anchor="address" title="Locating DoH/DoT Servers">
+      <t>A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
+      or RA) to retrieve DoH/DoT servers' reachability information. In the
+      various scenarios sketched in <xref target="depl"></xref>, Do53, DoH,
+      and DoT may terminate on the same IP address or distinct IP addresses.
+      Terminating Do53/DoH/DoT on the same or distinct IP addresses is
+      deployment-specific.</t>
+
+      <t>From an IP reachability standpoint, DoH/DoT servers SHOULD be located
+      by their address literals rather than their names. This avoids adding a
+      dependency on another server to resolve the DoH/DoT name. Concretely, if
+      Do53/DoH/DoT terminate on same IP addresses, existing discovery
+      mechanisms <xref target="RFC2132"></xref><xref
+      target="RFC3646"></xref><xref target="RFC8106"></xref> can be leveraged
+      to learn the IP addresses of DoT/DoH servers while an authentication
+      domain name is supplied by one of the options discussed in <xref
+      target="RI"></xref>.</t>
+
+      <t>The following sub-sections discusses the conditions under which
+      discovered DoT/DoH server can be used.</t>
+
+      <section anchor="auto" title="DoT/DoH Auto-Upgrade">
+        <t>Additional considerations are discussed below for the use of DoH
+        and DoT servers provided by local networks:<list style="symbols">
+            <t>If the DNS server's IP address discovered by using DHCP/RA is
+            pre-configured in the OS or Browser as a verified resolver (e.g.,
+            part of an auto-upgrade program such as <xref
+            target="Auto-upgrade"></xref>), the DNS client auto-upgrades to
+            use the pre-configured DoH/DoT server tied to the discovered DNS
+            server IP address. In such a case the DNS client will perform
+            additional checks out of band, such as confirming that the Do53 IP
+            address and the DoH server are owned and operated by the same
+            organisation.</t>
+
+            <t>Similarly, if the ADN conveyed in DHCP/RA (<xref
+            target="RI"></xref>) is pre-configured in the OS or browser as a
+            verified resolver, the DNS client auto-upgrades to establish a
+            DoH/DoT session with the ADN.<vspace blankLines="1" />In such
+            case, the DNS client matches the domain name in the DNS Reference
+            Identifier DHCP/RA option with the 'DNS-ID' identifier type within
+            subjectAltName entry in the server certificate conveyed in the TLS
+            handshake.</t>
+          </list></t>
+      </section>
+
+      <section anchor="ad" title="Other Deployment Options">
+        <t>Some deployment options to securely configure hosts are discussed
+        below. These options are provided for the sake of completeness.</t>
+
+        <t><list style="symbols">
+            <t>If Device Provisioning Protocol (DPP) <xref
+            target="DPP"></xref> is used, the configurator can securely
+            configure devices in the home network with the local DoT/DoH
+            server using DPP. If the DoT/DoH servers use raw public keys <xref
+            target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin
+            set <xref target="RFC7250"></xref> of raw public keys may be
+            encoded in a QR code. The configurator (e.g., mobile device) can
+            scan the QR code and provision SPKI pin set in OS/Browser. The
+            configurator can in-turn securely configure devices (e.g.,
+            thermostat) in the home network with the SPKI pin set using
+            DPP.</t>
+
+            <t>If a CPE is co-located with security services within the home
+            network, the CPE can use WPA-PSK but with unique pre-shared keys
+            for different endpoints to deal with security issues. In such
+            networks, <xref target="I-D.reddy-add-iot-byod-bootstrap"></xref>
+            may be used to securely bootstrap endpoint devices with the
+            authentication domain name and DNS server certificate of the local
+            network's DoH/DoT server. <vspace blankLines="1" />The OS would
+            not know if the WPA pre-shared-key is the same for all clients or
+            a unique pre-shared key is assigned to the host. Hence, the user
+            has to indicate to the system that a unique pre-shared key is
+            assigned to trigger the bootstrapping procedure. <vspace
+            blankLines="1" />If the device joins a home network using a single
+            shared password among all the attached devices, a compromised
+            device can host a fake access point, and the device cannot be
+            securely bootstrapped with the home network's DoH/DoT server.</t>
+          </list></t>
+      </section>
+    </section>
+
+    <section anchor="forwarder" title="Hosting DoH/DoT Forwarder in the CPE">
+      <t></t>
+
+      <section anchor="forwarder_m" title="Managed CPEs">
+        <t>The following mechanisms can be used to host a DoH/DoT forwarder in
+        a managed CPE (<xref target="mcpe"></xref>).</t>
+
+        <section anchor="acme" title="ACME">
+          <t>The ISP can assign a unique FQDN (e.g., cpe1.example.com) and a
+          domain-validated public certificate to the DoH/DoT forwarder hosted
+          on the CPE. Automatic Certificate Management Environment (ACME)
+          <xref target="RFC8555"></xref> can be used by the ISP to automate
+          certificate management functions such as domain validation
+          procedure, certificate issuance and certificate revocation.</t>
+
+          <t>The managed CPE should support a configuration parameter to
+          instruct the CPE whether it has to relay the encrypted DNS server
+          received from the ISP's network or has to announce itself as a
+          forwarder within the local network. The default behavior of the CPE
+          is to supply the encrypted DNS server received from the ISP's
+          network.</t>
+        </section>
+
+        <section title="Auto-Upgrade based on Domains and their Sub-domains">
+          <t>If the ADN conveyed in DHCP/RA (<xref target="RI"></xref>) is
+          pre-configured in popular OSes or browsers as a verified resolver
+          and the auto-upgrade (<xref target="auto"></xref>) is allowed for
+          both the pre-configured ADN and its sub-domains, the DoH/DoT client
+          will learn the local DoH/DoT forwarder using DHCP/RA and
+          auto-upgrade because the left-most label of the pre-configured ADN
+          would match the subjectAltName value in the server certificate.
+          Concretely, the CPE can communicate the ADN of the local DoH
+          forwarder (<xref target="acme"></xref>) to internal hosts using
+          DHCP/RA (<xref target="RI"></xref>).</t>
+
+          <t>Let's suppose that "example.net" is pre-configured as a verified
+          resolved in the browser or OS. If the DoH/DoT client discovers a
+          local forwarder "cpe1-internal.example.net", the DoH/DoT client will
+          auto-upgrade because the pre-configured ADN would match
+          subjectAltName value "cpe1-internal.example.net" of type dNSName. As
+          shown in <xref target="subdomainex"></xref>, the auto-upgrade to a
+          rogue server advertising "rs.example.org" will fail. <figure
+              align="center" anchor="subdomainex"
+              title="A Simplified Example of Auto-upgrade based on Sub-domains">
+              <artwork><![CDATA[
+                         Rogue Server
+             |              | 
+             X<==DHCP=======|  
+             | {ADN=        |        
+             |  rs.example.org, @rs} 
+             |              |                  --,--,-
+             |        ,+-,--+--.             ,/  ISP   \.
+             |     ,-'          `-.       ,-'            `-.
+         DoH/DoT --(      LAN      CPE----( S (@1)          )
+    capable client  `-.          ,-'|      `-.           ,-'
+             |        `--'--'--'    |         `--'--'--'
+             |<========DHCP========>|        
+             |{ADN=                 |        
+             |  cpe1-internal.example.net, @i}    
+             |        
+             |<========DoH=========>|    
+             |                      |     
+Legend:
+  * S: DoH/DoT server
+  * @1: IP address of S
+  * @i: internal IP address of the CPE
+  * @rs: IP address of a rogue server
+]]></artwork>
+            </figure></t>
+        </section>
+      </section>
+
+      <section anchor="forwarder_u" title="Unmanaged CPEs">
+        <t>The approach specified in <xref target="forwarder_m"></xref> does
+        not apply for hosting a DNS forwarder in an unmanaged CPE.</t>
+
+        <t>The unmanaged CPE administrator (referred to as administrator) can
+        host a DoH/DoT forwarder on the unmanaged CPE. This assumes the
+        following:<list style="symbols">
+            <t>The DoH/DoT server certificate is managed by the entity
+            in-charge of hosting the DoT/DoH forwarder. <vspace
+            blankLines="1" />Alternatively, a security service provider can
+            assign a unique FQDN to the CPE. The DoH/DoT forwarder will act
+            like a private DoT/DoH server only be accessible from within the
+            home network.</t>
+
+            <t>The DoH/DoT forwarder will either be configured to use the
+            ISP's or a 3rd party DoH/DoT server.</t>
+
+            <t>The unmanaged CPE will advertise the DoH/DoT forwarder ADN
+            using DHCP/RA to internal hosts.</t>
+          </list></t>
+
+        <t><xref target="internal_forwarded"></xref> illustrates an example of
+        an unmanaged CPE hosting a forwarder which connects to a 3rd party
+        DoH/DoT server. In this example, the DNS information received from the
+        managed CPE (and therefore from the ISP) is ignored by the Internal
+        CPE hosting the forwarder.</t>
+
+        <t><figure align="center" anchor="internal_forwarded"
+            title="Example of an Internal CPE Hosting a Forwarder">
+            <artwork align="center"><![CDATA[         ,--,--,--.                         ,--,
+       ,'         Internal   Managed     ,-'    '-     3rd Party
+Host--(  Network#A  CPE--------CPE------(   ISP   )--- DNS Server
+ |     `.         ,-'|          |        `-.    -'       |
+ |       `-'--'--'   |          |<==DHCP==>|`--'         |
+ |                   |<==DHCP==>|          |             | 
+ |<======DHCP=======>|          |                        |
+ |     {RI, @i}      |                                   |
+ |<=====DoT/DoH=====>|<=============DoT/DoH=============>|
+
+Legend:
+  * @i: IP address of the DNS forwarder hosted in the Internal
+        CPE. 
+]]></artwork>
+          </figure></t>
+      </section>
+    </section>
+
+    <section title="Legacy CPEs">
+      <t>Hosts serviced by legacy CPEs that can't be upgraded to support the
+      options defined in <xref target="RI"></xref> won't be able to learn the
+      DoH/DoT server hosted by the ISP, in particular. If the ADN is not
+      discovered using DHCP/RA, such hosts will have to fallback to use the
+      special-use domain name defined in <xref
+      target="I-D.pp-add-resinfo"></xref> to discover the DoH/DoT server and
+      to retrieve the list of supported DoH services using the RESINFO RRtype
+      <xref target="I-D.pp-add-resinfo"></xref>. The DHCP/RA option to
+      discover ADN takes precedence over special-use domain name since the
+      special-use domain name is suseptible to both internal and external
+      attacks whereas DHCP/RA is only vulnerable to internal attacks.</t>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>An attacker can get a domain name, domain-validated public
+      certificate from a CA, host a DoT/DoH server and claim the best DNS
+      privacy preservation policy. Also, an attacker within the home network
+      can use the public IP address, get an 'IP address'-validated public
+      certificate from a CA, host a DoT/DoH server and claim the best DNS
+      privacy preservation policy.</t>
+
+      <t>WLAN as frequently deployed in home networks is vulnerable to various
+      attacks (<xref target="Evil-Twin"></xref>,<xref target="Krack"></xref>
+      and <xref target="Dragonblood"></xref>). Because of these attacks, only
+      cryptographically authenticated communications are trusted on WLAN
+      networks. This means information provided by such networks via DHCP,
+      DHCPv6, or RA (e.g., NTP server, DNS server, default domain) are
+      untrusted because DHCP and RA are not authenticated.</t>
+
+      <t>Because DHCP/RA messages are not encrypted or protected against
+      modification in any way, their content can be spoofed or modified by
+      active attackers (e.g., compromised devices within the home network). An
+      active attacker (Section 3.3 of <xref target="RFC3552"></xref>) can
+      spoof the DHCP/RA response to provide the attacker's DoT/DoH server.
+      Note that such an attacker can launch other attacks as discussed in
+      Section 22 of <xref target="RFC8415"></xref>. Furthermore, if the
+      browser or the OS is pre-configured with a list of DNS servers and some
+      of which perform malware filtering while others do not, an attacker can
+      prevent contacting the preferred filtering DNS servers causing a
+      downgrade attack to a non-filtering DNS server, which the attacker can
+      leverage to deliver malware.<!----></t>
+
+      <t>DoH/DoT servers discovered using insecure discovery mechanisms like
+      DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
+      server is pre-configured in the OS or the browser. <xref
+      target="auto"></xref> identifies a set of deployment options under which
+      DHCP/RA RI options can be used. If the insecurely discovered DoH/DoT
+      server is not pre-configured in the OS or browser, the client must
+      validate the signatory (e.g., cryptographically attested by the ISP
+      <xref target="I-D.reddy-add-server-policy-selection"></xref>). If the
+      DHCP/RA response is dropped by the attacker, the client can fallback to
+      use a pre-configured DoH/DoT server. However, the use of policies to
+      select servers is out of scope of this document.</t>
+
+      <t>The use of DoH/DoT also depends on the user's policies. For example,
+      the user may indicate his/her consent to use (or not) the locally-
+      discovered DoH/DoT server or request to review human-readable privacy
+      policy information of a selected DNS server and to assess whether that
+      DNS server performs DNS-based content filtering (e.g., <xref
+      target="I-D.reddy-add-server-policy-selection"></xref>). The DNS client
+      is assumed to adhere to these policies. This document does not make any
+      assumption about the structure of such policies nor mandates specific
+      requirements. Such policies and their handling is out of scope.</t>
+
+      <t>DoT/DoH sessions with rogue servers spoofing the IP address of a DNS
+      server will fail because the DNS client will fail to authenticate that
+      rogue server based upon PKIX authentication <xref
+      target="RFC6125"></xref> based upon the authentication domain name in
+      the Reference Identifier Option. DNS clients that ignore authentication
+      failures and accept spoofed certificates will be subject to attacks
+      (e.g., redirect to malicious servers, intercept sensitive data).</t>
+
+      <t>A passive attacker (Section 3.2 of <xref target="RFC3552"></xref>)
+      can identify the host is using DHCP/RA to discover the DoH/DoT server
+      and can infer the host is capable of using DoH/DoT to encrypt DNS
+      messages. However, a passive attacker cannot spoof or modify DHCP/RA
+      messages.</t>
+
+      <t>TCP connections received outside the home network MUST be discarded
+      by the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
+      <xref target="RFC6092"></xref>; it MUST apply for both IPv4 and
+      IPv6.</t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t></t>
+
+      <section anchor="iana6" title="DHCPv6 Option">
+        <t>IANA is requested to assign the following new DHCPv6 Option Code in
+        the registry maintained in:
+        https://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.</t>
+
+        <texttable>
+          <ttcol>Value</ttcol>
+
+          <ttcol>Description</ttcol>
+
+          <ttcol>Client ORO</ttcol>
+
+          <ttcol>Singleton Option</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA1</c>
+
+          <c>OPTION_V6_DNS_RI</c>
+
+          <c>Yes</c>
+
+          <c>Yes</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+
+        <t></t>
+      </section>
+
+      <section anchor="iana4" title="DHCP Option">
+        <t>IANA is requested to assign the following new DHCP Option Code in
+        the registry maintained in:
+        https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml#options.</t>
+
+        <figure>
+          <artwork><![CDATA[+------+------------------+-------+----------------+----------------+
+| Tag  | Name             | Data  | Meaning        | Reference      |
+|      |                  | Length|                |                |
++------+------------------+-------+----------------+----------------+
+| TBA2 | OPTION_V4_DNS_RI | N     | DoT/DoH server | [ThisDocument] |
+|      |                  |       | authentication |                |
+|      |                  |       | domain name    |                |
++------+------------------+-------+----------------+----------------+]]></artwork>
+        </figure>
+      </section>
+
+      <section anchor="iana7" title="RA Option">
+        <t>IANA is requested to assign the following new IPv6 Neighbor
+        Discovery Option type in the "IPv6 Neighbor Discovery Option Formats"
+        sub-registry under the "Internet Control Message Protocol version 6
+        (ICMPv6) Parameters" registry maintained in
+        http://www.iana.org/assignments/icmpv6-parameters/icmpv6-parameters.xhtml#icmpv6-parameters-5.</t>
+
+        <texttable>
+          <ttcol>Type</ttcol>
+
+          <ttcol>Description</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA3</c>
+
+          <c>DNS Reference Identifier Option</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+      </section>
+    </section>
+
+    <section title="Acknowledgements">
+      <t>Many thanks to Christian Jacquenet for the review.</t>
+
+      <t>Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
+      Bertola, and Iain Sharp for the comments.</t>
+
+      <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
+    </section>
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+    <references title="Normative References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.8174'?>
+
+      <?rfc include='reference.RFC.8484'?>
+
+      <?rfc include='reference.RFC.7858'?>
+
+      <?rfc include='reference.RFC.8310'?>
+
+      <?rfc include='reference.RFC.4861'?>
+
+      <?rfc include='reference.RFC.8415'?>
+
+      <?rfc include='reference.RFC.2132'?>
+
+      <?rfc include='reference.RFC.8106'?>
+
+      <?rfc include='reference.RFC.8126'?>
+
+      <?rfc include='reference.RFC.3396'?>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='reference.RFC.6092'?>
+
+      <?rfc include='reference.RFC.8499'?>
+
+      <?rfc include='reference.RFC.6125'?>
+
+      <?rfc include='reference.RFC.3646'?>
+
+      <?rfc include='reference.RFC.8520'?>
+
+      <?rfc include='reference.RFC.8555'?>
+
+      <?rfc include='reference.RFC.7250'?>
+
+      <?rfc include='reference.I-D.reddy-add-server-policy-selection'?>
+
+      <?rfc include='reference.I-D.reddy-add-iot-byod-bootstrap'?>
+
+      <?rfc include='reference.I-D.ietf-v6ops-rfc7084-bis' ?>
+
+      <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
+
+      <?rfc include='reference.I-D.pp-add-resinfo'?>
+
+      <?rfc include='reference.I-D.ietf-dnssd-push'?>
+
+      <?rfc include='reference.I-D.btw-add-rfc8484-clarification'?>
+
+      <?rfc include='reference.RFC.6731'?>
+
+      <?rfc include='reference.RFC.3552'?>
+
+      <reference anchor="TR-069"
+                 target="https://www.broadband-forum.org/technical/download/TR-069.pdf">
+        <front>
+          <title>CPE WAN Management Protocol</title>
+
+          <author fullname="The Broadband Forum" initials=""
+                  surname="The Broadband Forum">
+            <organization></organization>
+          </author>
+
+          <date month="December" year="2018" />
+        </front>
+      </reference>
+
+      <reference anchor="DPP"
+                 target="https://www.wi-fi.org/file/device-provisioning-protocol-specification">
+        <front>
+          <title>Device Provisioning Protocol Specification</title>
+
+          <author fullname="The Wi-Fi Alliance" initials=""
+                  surname="The Wi-Fi Alliance">
+            <organization></organization>
+          </author>
+
+          <date />
+        </front>
+      </reference>
+
+      <reference anchor="TS.24008"
+                 target="http://www.3gpp.org/DynaReport/24008.htm">
+        <front>
+          <title>Mobile radio interface Layer 3 specification; Core network
+          protocols; Stage 3 (Release 16)</title>
+
+          <author fullname="" surname="">
+            <organization>3GPP</organization>
+          </author>
+
+          <date day="0" month="December" year="2019" />
+        </front>
+      </reference>
+
+      <reference anchor="Auto-upgrade"
+                 target="docs.google.com/document/d/128i2YTV2C7T6Gr3I-81zlQ-_Lprnsp24qzy_20Z1Psw/edit">
+        <front>
+          <title>DoH providers: criteria, process for Chrome</title>
+
+          <author>
+            <organization>The Unicode Consortium</organization>
+          </author>
+
+          <date day="" month="" year="" />
+        </front>
+      </reference>
+
+      <reference anchor="Evil-Twin"
+                 target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">
+        <front>
+          <title>Evil twin (wireless networks)</title>
+
+          <author>
+            <organization>The Unicode Consortium</organization>
+          </author>
+
+          <date day="" month="" year="" />
+        </front>
+      </reference>
+
+      <reference anchor="Krack" target="https://www.krackattacks.com/">
+        <front>
+          <title>Key Reinstallation Attacks</title>
+
+          <author>
+            <organization>The Unicode Consortium</organization>
+          </author>
+
+          <date day="" month="" year="2017" />
+        </front>
+      </reference>
+
+      <reference anchor="Dragonblood"
+                 target="https://papers.mathyvanhoef.com/dragonblood.pdf">
+        <front>
+          <title>Dragonblood: Analyzing the Dragonfly Handshake of WPA3 and
+          EAP-pwd</title>
+
+          <author>
+            <organization>The Unicode Consortium</organization>
+          </author>
+
+          <date day="" month="" year="" />
+        </front>
+      </reference>
+    </references>
+  </back>
+</rfc>
