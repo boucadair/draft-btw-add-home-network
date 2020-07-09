@@ -888,10 +888,10 @@ Legend:
       certificate from a CA, host a DoT/DoH server and claim the best DNS
       privacy preservation policy.</t>
 
-      <t>WLAN as frequently deployed in home networks is vulnerable to various
-      attacks (<xref target="Evil-Twin"></xref>,<xref target="Krack"></xref>
-      and <xref target="Dragonblood"></xref>). Because of these attacks, only
-      cryptographically authenticated communications are trusted on WLAN
+      <t>Wireless LAN as frequently deployed in home networks is vulnerable to various
+      attacks (e.g., <xref target="Evil-Twin"></xref>, <xref target="Krack"></xref>, 
+       <xref target="Dragonblood"></xref>). Because of these attacks, only
+      cryptographically authenticated communications are trusted on Wireless LAN
       networks. This means information provided by such networks via DHCP,
       DHCPv6, or RA (e.g., NTP server, DNS server, default domain) are
       untrusted because DHCP and RA are not authenticated.</t>
@@ -909,8 +909,8 @@ Legend:
       downgrade attack to a non-filtering DNS server, which the attacker can
       leverage to deliver malware.<!----></t>
 
-      <t>DoH/DoT servers discovered using insecure discovery mechanisms like
-      DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
+      <t>In this specification, DoH/DoT servers discovered using insecure discovery mechanisms (like
+      DHCP/RA) are only used if that DoH/DoT
       server is pre-configured in the OS or the browser. <xref
       target="auto"></xref> identifies a set of deployment options under which
       DHCP/RA RI options can be used. If the insecurely discovered DoH/DoT
