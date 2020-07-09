@@ -888,13 +888,14 @@ Legend:
       certificate from a CA, host a DoT/DoH server and claim the best DNS
       privacy preservation policy.</t>
 
-      <t>Wireless LAN as frequently deployed in home networks is vulnerable to various
-      attacks (e.g., <xref target="Evil-Twin"></xref>, <xref target="Krack"></xref>, 
-       <xref target="Dragonblood"></xref>). Because of these attacks, only
-      cryptographically authenticated communications are trusted on Wireless LAN
-      networks. This means information provided by such networks via DHCP,
-      DHCPv6, or RA (e.g., NTP server, DNS server, default domain) are
-      untrusted because DHCP and RA are not authenticated.</t>
+      <t>Wireless LAN as frequently deployed in home networks is vulnerable to
+      various attacks (e.g., <xref target="Evil-Twin"></xref>, <xref
+      target="Krack"></xref>, <xref target="Dragonblood"></xref>). Because of
+      these attacks, only cryptographically authenticated communications are
+      trusted on Wireless LAN networks. This means information provided by
+      such networks via DHCP, DHCPv6, or RA (e.g., NTP server, DNS server,
+      default domain) are untrusted because DHCP and RA are not
+      authenticated.</t>
 
       <t>Because DHCP/RA messages are not encrypted or protected against
       modification in any way, their content can be spoofed or modified by
@@ -909,17 +910,17 @@ Legend:
       downgrade attack to a non-filtering DNS server, which the attacker can
       leverage to deliver malware.<!----></t>
 
-      <t>In this specification, DoH/DoT servers discovered using insecure discovery mechanisms (like
-      DHCP/RA) are only used if that DoH/DoT
-      server is pre-configured in the OS or the browser. <xref
-      target="auto"></xref> identifies a set of deployment options under which
-      DHCP/RA RI options can be used. If the insecurely discovered DoH/DoT
-      server is not pre-configured in the OS or browser, the client must
-      validate the signatory (e.g., cryptographically attested by the ISP
-      <xref target="I-D.reddy-add-server-policy-selection"></xref>). If the
-      DHCP/RA response is dropped by the attacker, the client can fallback to
-      use a pre-configured DoH/DoT server. However, the use of policies to
-      select servers is out of scope of this document.</t>
+      <t>In this specification, DoH/DoT servers discovered using insecure
+      discovery mechanisms (like DHCP/RA) are only used if that DoH/DoT server
+      is pre-configured in the OS or the browser. <xref target="auto"></xref>
+      identifies a set of deployment options under which DHCP/RA RI options
+      can be used. If the insecurely discovered DoH/DoT server is not
+      pre-configured in the OS or browser, the client must validate the
+      signatory (e.g., cryptographically attested by the ISP <xref
+      target="I-D.reddy-add-server-policy-selection"></xref>). If the DHCP/RA
+      response is dropped by the attacker, the client can fallback to use a
+      pre-configured DoH/DoT server. However, the use of policies to select
+      servers is out of scope of this document.</t>
 
       <t>The use of DoH/DoT also depends on the user's policies. For example,
       the user may indicate his/her consent to use (or not) the locally-
@@ -944,6 +945,11 @@ Legend:
       and can infer the host is capable of using DoH/DoT to encrypt DNS
       messages. However, a passive attacker cannot spoof or modify DHCP/RA
       messages.</t>
+
+      <t>Attacks of spoofed or modified DHCP responses and RA messages by
+      attackers in the home network can possibly be mitigated by making use of
+      the mechanisms described in <xref target="RFC7610"></xref>, <xref
+      target="RFC7113"></xref>, and <xref target="RFC7513"></xref>.</t>
 
       <t>TCP connections received outside the home network MUST be discarded
       by the DoH/DoT forwarder in the CPE. This behavior adheres to REQ#8 in
@@ -1076,6 +1082,10 @@ Legend:
 
       <?rfc include='reference.RFC.7250'?>
 
+      <?rfc include='reference.RFC.7610'?>
+
+      <?rfc include='reference.RFC.7113'?>
+
       <?rfc include='reference.I-D.reddy-add-server-policy-selection'?>
 
       <?rfc include='reference.I-D.reddy-add-iot-byod-bootstrap'?>
@@ -1093,6 +1103,8 @@ Legend:
       <?rfc include='reference.RFC.6731'?>
 
       <?rfc include='reference.RFC.3552'?>
+
+      <?rfc include='reference.RFC.7513'?>
 
       <reference anchor="TR-069"
                  target="https://www.broadband-forum.org/technical/download/TR-069.pdf">

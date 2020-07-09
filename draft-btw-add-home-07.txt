@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: January 8, 2021                                          McAfee
+Expires: January 10, 2021                                         McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                            July 7, 2020
+                                                            July 9, 2020
 
 
 Encrypted DNS Discovery and Deployment Considerations for Home Networks
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 8, 2021.
+   This Internet-Draft will expire on January 10, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 1]
+Boucadair, et al.       Expires January 10, 2021                [Page 1]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -90,7 +90,7 @@ Table of Contents
    10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
      10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  19
      10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  19
-     10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  19
+     10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  20
    11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  20
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 2]
+Boucadair, et al.       Expires January 10, 2021                [Page 2]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -165,7 +165,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 3]
+Boucadair, et al.       Expires January 10, 2021                [Page 3]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -221,7 +221,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 4]
+Boucadair, et al.       Expires January 10, 2021                [Page 4]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -277,7 +277,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 5]
+Boucadair, et al.       Expires January 10, 2021                [Page 5]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -333,7 +333,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 6]
+Boucadair, et al.       Expires January 10, 2021                [Page 6]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -389,7 +389,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 7]
+Boucadair, et al.       Expires January 10, 2021                [Page 7]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -445,7 +445,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 8]
+Boucadair, et al.       Expires January 10, 2021                [Page 8]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -501,7 +501,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021                [Page 9]
+Boucadair, et al.       Expires January 10, 2021                [Page 9]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -557,7 +557,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 10]
+Boucadair, et al.       Expires January 10, 2021               [Page 10]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -613,7 +613,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 11]
+Boucadair, et al.       Expires January 10, 2021               [Page 11]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -669,7 +669,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 12]
+Boucadair, et al.       Expires January 10, 2021               [Page 12]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -725,7 +725,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 13]
+Boucadair, et al.       Expires January 10, 2021               [Page 13]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -781,7 +781,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 14]
+Boucadair, et al.       Expires January 10, 2021               [Page 14]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -837,7 +837,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 15]
+Boucadair, et al.       Expires January 10, 2021               [Page 15]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -893,7 +893,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 16]
+Boucadair, et al.       Expires January 10, 2021               [Page 16]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -949,17 +949,17 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 17]
+Boucadair, et al.       Expires January 10, 2021               [Page 17]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
-   WLAN as frequently deployed in home networks is vulnerable to various
-   attacks ([Evil-Twin],[Krack] and [Dragonblood]).  Because of these
-   attacks, only cryptographically authenticated communications are
-   trusted on WLAN networks.  This means information provided by such
-   networks via DHCP, DHCPv6, or RA (e.g., NTP server, DNS server,
-   default domain) are untrusted because DHCP and RA are not
+   Wireless LAN as frequently deployed in home networks is vulnerable to
+   various attacks (e.g., [Evil-Twin], [Krack], [Dragonblood]).  Because
+   of these attacks, only cryptographically authenticated communications
+   are trusted on Wireless LAN networks.  This means information
+   provided by such networks via DHCP, DHCPv6, or RA (e.g., NTP server,
+   DNS server, default domain) are untrusted because DHCP and RA are not
    authenticated.
 
    Because DHCP/RA messages are not encrypted or protected against
@@ -975,8 +975,8 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    filtering DNS server, which the attacker can leverage to deliver
    malware.
 
-   DoH/DoT servers discovered using insecure discovery mechanisms like
-   DHCP/RA are used by a DNS client if the insecurely discovered DoH/DoT
+   In this specification, DoH/DoT servers discovered using insecure
+   discovery mechanisms (like DHCP/RA) are only used if that DoH/DoT
    server is pre-configured in the OS or the browser.  Section 6.1
    identifies a set of deployment options under which DHCP/RA RI options
    can be used.  If the insecurely discovered DoH/DoT server is not pre-
@@ -1005,7 +1005,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 18]
+Boucadair, et al.       Expires January 10, 2021               [Page 18]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
@@ -1017,6 +1017,10 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    is using DHCP/RA to discover the DoH/DoT server and can infer the
    host is capable of using DoH/DoT to encrypt DNS messages.  However, a
    passive attacker cannot spoof or modify DHCP/RA messages.
+
+   Attacks of spoofed or modified DHCP responses and RA messages by
+   attackers in the home network can possibly be mitigated by making use
+   of the mechanisms described in [RFC7610], [RFC7113], and [RFC7513].
 
    TCP connections received outside the home network MUST be discarded
    by the DoH/DoT forwarder in the CPE.  This behavior adheres to REQ#8
@@ -1052,20 +1056,22 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    |      |                  |       | domain name    |                |
    +------+------------------+-------+----------------+----------------+
 
+
+
+
+
+
+Boucadair, et al.       Expires January 10, 2021               [Page 19]
+
+Internet-Draft          DoH/DoT in Home Networks               July 2020
+
+
 10.3.  RA Option
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
    Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
    registry under the "Internet Control Message Protocol version 6
    (ICMPv6) Parameters" registry maintained in
-
-
-
-Boucadair, et al.        Expires January 8, 2021               [Page 19]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
    http://www.iana.org/assignments/icmpv6-parameters/
    icmpv6-parameters.xhtml#icmpv6-parameters-5.
 
@@ -1107,20 +1113,19 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               DOI 10.17487/RFC4861, September 2007,
               <https://www.rfc-editor.org/info/rfc4861>.
 
+
+
+
+
+Boucadair, et al.       Expires January 10, 2021               [Page 20]
+
+Internet-Draft          DoH/DoT in Home Networks               July 2020
+
+
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
-
-
-
-
-
-
-Boucadair, et al.        Expires January 8, 2021               [Page 20]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
 
    [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
               "IPv6 Router Advertisement Options for DNS Configuration",
@@ -1162,21 +1167,21 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               Specification", <https://www.wi-fi.org/file/device-
               provisioning-protocol-specification>.
 
+
+
+
+
+
+
+Boucadair, et al.       Expires January 10, 2021               [Page 21]
+
+Internet-Draft          DoH/DoT in Home Networks               July 2020
+
+
    [Dragonblood]
               The Unicode Consortium, "Dragonblood: Analyzing the
               Dragonfly Handshake of WPA3 and EAP-pwd",
               <https://papers.mathyvanhoef.com/dragonblood.pdf>.
-
-
-
-
-
-
-
-Boucadair, et al.        Expires January 8, 2021               [Page 21]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
 
    [Evil-Twin]
               The Unicode Consortium, "Evil twin (wireless networks)",
@@ -1221,18 +1226,16 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               Assertion Token", draft-reddy-add-server-policy-
               selection-03 (work in progress), June 2020.
 
-   [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
-              2017, <https://www.krackattacks.com/>.
 
 
 
-
-
-
-Boucadair, et al.        Expires January 8, 2021               [Page 22]
+Boucadair, et al.       Expires January 10, 2021               [Page 22]
 
 Internet-Draft          DoH/DoT in Home Networks               July 2020
 
+
+   [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
+              2017, <https://www.krackattacks.com/>.
 
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
               Text on Security Considerations", BCP 72, RFC 3552,
@@ -1262,11 +1265,35 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               Nodes", RFC 6731, DOI 10.17487/RFC6731, December 2012,
               <https://www.rfc-editor.org/info/rfc6731>.
 
+   [RFC7113]  Gont, F., "Implementation Advice for IPv6 Router
+              Advertisement Guard (RA-Guard)", RFC 7113,
+              DOI 10.17487/RFC7113, February 2014,
+              <https://www.rfc-editor.org/info/rfc7113>.
+
    [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
               Weiler, S., and T. Kivinen, "Using Raw Public Keys in
               Transport Layer Security (TLS) and Datagram Transport
               Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
               June 2014, <https://www.rfc-editor.org/info/rfc7250>.
+
+   [RFC7513]  Bi, J., Wu, J., Yao, G., and F. Baker, "Source Address
+              Validation Improvement (SAVI) Solution for DHCP",
+              RFC 7513, DOI 10.17487/RFC7513, May 2015,
+              <https://www.rfc-editor.org/info/rfc7513>.
+
+
+
+
+
+Boucadair, et al.       Expires January 10, 2021               [Page 23]
+
+Internet-Draft          DoH/DoT in Home Networks               July 2020
+
+
+   [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
+              Protecting against Rogue DHCPv6 Servers", BCP 199,
+              RFC 7610, DOI 10.17487/RFC7610, August 2015,
+              <https://www.rfc-editor.org/info/rfc7610>.
 
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
@@ -1281,14 +1308,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               Kasten, "Automatic Certificate Management Environment
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
-
-
-
-
-Boucadair, et al.        Expires January 8, 2021               [Page 23]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
 
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
@@ -1318,6 +1337,15 @@ Authors' Addresses
    Email: TirumaleswarReddy_Konda@McAfee.com
 
 
+
+
+
+
+Boucadair, et al.       Expires January 10, 2021               [Page 24]
+
+Internet-Draft          DoH/DoT in Home Networks               July 2020
+
+
    Dan Wing
    Citrix Systems, Inc.
    USA
@@ -1341,4 +1369,32 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires January 8, 2021               [Page 24]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.       Expires January 10, 2021               [Page 25]
