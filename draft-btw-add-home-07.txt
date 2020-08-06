@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: January 10, 2021                                         McAfee
+Expires: February 7, 2021                                         McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                            July 9, 2020
+                                                          August 6, 2020
 
 
 Encrypted DNS Discovery and Deployment Considerations for Home Networks
@@ -18,9 +18,10 @@ Encrypted DNS Discovery and Deployment Considerations for Home Networks
 
 Abstract
 
-   This document discusses DoT/DoH deployment considerations for home
-   networks.  It particularly sketches the required steps to use DoT/DoH
-   capabilities provided by local networks.
+   This document discusses encrypted DNS (e.g., DoH, DoT, DoQ)
+   deployment considerations for home networks.  It particularly
+   sketches the required steps to use of encrypted DNS capabilities
+   provided by local networks.
 
    The document specifies new DHCP and Router Advertisement Options to
    convey a DNS Authentication Domain Name.
@@ -40,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 10, 2021.
+   This Internet-Draft will expire on February 7, 2021.
 
 Copyright Notice
 
@@ -49,15 +50,15 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
 
 
 
-Boucadair, et al.       Expires January 10, 2021                [Page 1]
+Boucadair, et al.       Expires February 7, 2021                [Page 1]
 
-Internet-Draft          DoH/DoT in Home Networks               July 2020
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
 
 
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -69,33 +70,35 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   3.  Sample Deployment Scenarios . . . . . . . . . . . . . . . . .   5
-     3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   5
-     3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   7
-   4.  DNS Reference Identifier Option . . . . . . . . . . . . . . .   8
-     4.1.  DHCPv6 DNS Reference Identifier Option  . . . . . . . . .   9
-     4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .  11
-     4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  12
-   5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  13
-   6.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  13
-     6.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  14
-     6.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  14
-   7.  Hosting DoH/DoT Forwarder in the CPE  . . . . . . . . . . . .  15
-     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  15
-       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  15
-       7.1.2.  Auto-Upgrade based on Domains and their Sub-domains .  15
-     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  16
-   8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  17
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
-   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-     10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  19
-     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  19
-     10.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  20
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  20
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
+   3.  Sample Deployment Scenarios . . . . . . . . . . . . . . . . .   4
+     3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   4
+     3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   6
+   4.  DNS Reference Identifier Option . . . . . . . . . . . . . . .   7
+     4.1.  DHCPv6 Reference Identifier Option  . . . . . . . . . . .   8
+     4.2.  DHCP DNS Reference Identifier Option  . . . . . . . . . .  10
+     4.3.  RA DNS Reference Identifier Option  . . . . . . . . . . .  11
+   5.  Locating DoH/DoT Servers  . . . . . . . . . . . . . . . . . .  12
+   6.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  13
+   7.  Make Use of Discovered Encrypted DNS Server . . . . . . . . .  14
+     7.1.  DoT/DoH Auto-Upgrade  . . . . . . . . . . . . . . . . . .  14
+     7.2.  Other Deployment Options  . . . . . . . . . . . . . . . .  14
+   8.  Hosting Encrypted DNS Forwarder in the CPE  . . . . . . . . .  15
+     8.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  15
+       8.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  15
+       8.1.2.  Auto-Upgrade based on Domains and their Sub-domains .  16
+     8.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  17
+   9.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  18
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  18
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+     11.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  19
+     11.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  20
+     11.3.  RA Option  . . . . . . . . . . . . . . . . . . . . . . .  20
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  21
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  22
+   Appendix A.  Customized Port Numbers and IP Addresses . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
 
 1.  Introduction
 
@@ -104,16 +107,14 @@ Table of Contents
    to advertise a list of DNS Recursive DNS server(s) to their
    customers:
 
-   o  Protocol Configuration Options in cellular networks [TS.24008].
 
 
-
-
-Boucadair, et al.       Expires January 10, 2021                [Page 2]
+Boucadair, et al.       Expires February 7, 2021                [Page 2]
 
-Internet-Draft          DoH/DoT in Home Networks               July 2020
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
 
 
+   o  Protocol Configuration Options in cellular networks [TS.24008].
    o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
       [RFC8415][RFC3646] (OPTION_DNS_SERVERS).
    o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
@@ -121,8 +122,8 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    The communication between a customer's device (possibly via Customer
    Premises Equipment (CPE)) and an ISP-supplied DNS resolver takes
-   place by using cleartext DNS messages (Do53,
-   [I-D.ietf-dnsop-terminology-ter]).  Some examples are depicted in
+   place by using cleartext DNS messages (Do53)
+   [I-D.ietf-dnsop-terminology-ter].  Some examples are depicted in
    Figure 1.  In the case of cellular networks, the cellular network
    will provide connectivity directly to a host (e.g., smartphone,
    tablet) or via a CPE.  Do53 mechanisms used within the Local Area
@@ -154,43 +155,23 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
                     Figure 1: Sample Legacy Deployments
 
-   ISPs use DNS to provide additional services such as (but not limited
-   to) malware filtering, parental control, or VoD (Video on Demand)
-   optimization.  DNS is also a central component for mastering the
-   quality of experience for current latency-sensitive services, but
-   also emerging ones (such as those services that pertain to the Ultra
-   Reliability and Low Latency Communications (uRLLC) or Enhanced Mobile
-   Broadband (eMBB).
+   This document focuses on the support of encrypted DNS such as DNS-
+   over-HTTPS (DoH) [RFC8484], DNS-over-TLS (DoT) [RFC7858], or DNS-
+   over-QUIC (DoQ) [I-D.ietf-dprive-dnsoquic] in local networks.  In
+   particular, the document describes how a local encrypted DNS server
+   can be discovered and used by connected hosts.  This document
+   specifies options that allow DNS clients to discover local encrypted
 
 
 
 
-Boucadair, et al.       Expires January 10, 2021                [Page 3]
+Boucadair, et al.       Expires February 7, 2021                [Page 3]
 
-Internet-Draft          DoH/DoT in Home Networks               July 2020
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
 
 
-      For example, the latency targets set in the context of 5G are 1ms
-      (uRLLC) and 4ms (eMBB).  An ISP will be able to address such
-      demanding latency requirements assuming the corresponding services
-      rely upon resources (network, compute, storage) that are located
-      as close to the user as possible (e.g., by means of Edge Computing
-      techniques and resources).  Such latency requirements are likely
-      to be addressed by means of optimized designs (DNS, in
-      particular), too.
-
-   Relying upon local DNS resolvers will therefore contribute to meet
-   the aforementioned service requirements.  The use of external
-   resolvers is likely to induce an extra service delay which exceeds by
-   far the service target.
-
-   This document focuses on the support of DNS-over-HTTPS (DoH)
-   [RFC8484] or DNS-over-TLS (DoT) [RFC7858] in local networks.  In
-   particular, the document describes how a local DoH/DoT server can be
-   discovered and used by connected hosts.  This document specifies
-   options that allow DNS clients to discover local DoT/DoH servers.
-   Section 4 describes DHCP, DHCPv6, and RA options to convey the
-   Authentication Domain Name (ADN, defined in [RFC8310]).
+   DNS servers.  Section 4 describes DHCP, DHCPv6, and RA options to
+   convey the DNS Authentication Domain Name (ADN) [RFC8310].
 
    Some ISPs rely upon external resolvers (e.g., outsourced service or
    public resolvers); these ISPs provide their customers with the IP
@@ -202,7 +183,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    Both managed and unmanaged CPEs are discussed in the document
    (Section 3).  Also, considerations related to hosting a DNS forwarder
-   in the CPE are described (Section 7).
+   in the CPE are described (Section 8).
 
    Hosts and/or CPEs may be connected to multiple networks; each
    providing their own DNS configuration using the discovery mechanisms
@@ -217,15 +198,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in BCP
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021                [Page 4]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
    14 [RFC2119][RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
@@ -242,45 +214,24 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    ISPs have developed an expertise in managing service-specific
    configuration information (e.g., CPE WAN Management Protocol
-   [TR-069]).  For example, these tools may be used to provision the
-   authentication domain name information (ADN) to managed CPEs if DoH/
-   DoT is supported by a local network similar to what is depicted in
-   Figure 2.
+   [TR-069]).  For example, these tools may be used to provision the ADN
+   to managed CPEs if an encrypted DNS is supported by a local network
+   similar to what is depicted in Figure 2.
 
-   DoH-capable (or DoT) clients establish the DoH (or DoT) session with
-   the discovered DoH (or DoT) server.
+
+
+
+Boucadair, et al.       Expires February 7, 2021                [Page 4]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+   For example, DoH-capable (or DoT) clients establish the DoH (or DoT)
+   session with the discovered DoH (or DoT) server.
 
    The DNS client discovers whether the DNS server in the local network
-   supports DoH/DoT by using a dedicated field in the discovery message:
-   Encrypted DNS Types (Section 4).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021                [Page 5]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
+   supports DoH/DoT/DoQ by using a dedicated field in the discovery
+   message: Encrypted DNS Types (Section 4).
 
            (a) Fixed Networks
 
@@ -290,12 +241,11 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
                    `-.   +--+   ,-'       `-.         ,-'
                       `--'|-'--'             `--'--'--'
                           |                     |
-                          |<=======DoH/DoT=====>|
-
+                          |<===Encrypted DNS===>|
 
            (b) Cellular Networks
 
-                           |<===========DoH/DoT======>|
+                           |<=====Encrypted DNS======>|
                       ,--,-|,--.                      |
                    ,-'   +--+   `-.               ,--,--,--.
                   ( LAN  |H |     CPE------------+          \
@@ -306,14 +256,14 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
                           |H +-----------+
                           +--+
 
-                       Figure 2: DoH/DoT in the WAN
+                    Figure 2: Encrypted DNS in the WAN
 
-   Figure 2 shows the scenario where the CPE relays the list of DoT/DoH
-   servers it learns for the network by using mechanisms like DHCP or a
-   specific Router Advertisement message.  In such context, direct DoH/
-   DoT sessions will be established between a host serviced by a CPE and
-   an ISP-supplied DoT/DoH server (see the example depicted in Figure 3
-   for a DoH/DoT-capable host).
+   Figure 2 shows the scenario where the CPE relays the list of
+   encrypted DNS servers it learns for the network by using mechanisms
+   like DHCP or a specific Router Advertisement message.  In such
+   context, direct encrypted DNS sessions will be established between a
+   host serviced by a CPE and an ISP-supplied encrypted DNS server (see
+   the example depicted in Figure 3 for a DoH/DoT-capable host).
 
                          ,--,--,--.             ,--,--,--.
                       ,-'          `-.       ,-'   ISP    `-.
@@ -321,38 +271,37 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
                 |     `-.          ,-'       `-.          ,-'
                 |        `--'--'--'             `--'--'--'
                 |                                   |
-                |<==============DoT/DoH============>|
+                |<=========Encrypted DNS===========>|
 
-                     Figure 3: Direct DoH/DoT Sessions
+                  Figure 3: Direct Encrypted DNS Sessions
+
+
+
+Boucadair, et al.       Expires February 7, 2021                [Page 5]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
 
    Figure 4 shows a deployment where the CPE embeds a caching DNS
    forwarder.  The CPE advertises itself as the default DNS server to
    the hosts it serves.  The CPE relies upon DHCP or RA to advertise
    itself to internal hosts as the default DoT/DoH/Do53 server.  When
    receiving a DNS request it cannot handle locally, the CPE forwards
-
-
-
-Boucadair, et al.       Expires January 10, 2021                [Page 6]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
    the request to an upstream DoH/DoT/Do53 resolver.  Such deployment is
    required for IPv4 service continuity purposes (e.g.,
    [I-D.ietf-v6ops-rfc7084-bis]) or for supporting advanced services
    within the home (e.g., malware filtering, parental control,
-   Manufacturer Usage Description (MUD, [RFC8520] to only allow intended
-   communications to and from an IoT device)).  When the CPE behaves as
-   a DNS forwarder, DNS communications can be decomposed into two legs:
+   Manufacturer Usage Description (MUD) [RFC8520] to only allow intended
+   communications to and from an IoT device).  When the CPE behaves as a
+   DNS forwarder, DNS communications can be decomposed into two legs:
 
    o  The leg between an internal host and the CPE.
 
    o  The leg between the CPE and an upstream DNS resolver.
 
-   An ISP that offers DoH/DoT to its customers may enable DoH/DoT in
-   both legs as shown in Figure 4.  Additional considerations related to
-   this deployment are discussed in Section 7.
+   An ISP that offers encrypted DNS to its customers may enable
+   encrypted DNS in both legs as shown in Figure 4.  Additional
+   considerations related to this deployment are discussed in Section 8.
 
                          ,--,--,--.             ,--,--,--.
                       ,-'          `-.       ,-'   ISP    `-.
@@ -360,10 +309,10 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
                 |     `-.          ,-'|      `-.          ,-'
                 |        `--'--'--'   |         `--'--'--'
                 |                     |             |
-                |<======DoT/DoH======>|<==DoT/DoH==>|
+                |<=====Encrypted=====>|<=Encrypted=>|
+                          DNS                DNS
 
-
-                    Figure 4: Proxied DoH/DoT Sessions
+                 Figure 4: Proxied Encrypted DNS Sessions
 
 3.2.  Unmanaged CPEs
 
@@ -373,26 +322,26 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    unmanaged CPE receives from the network its service configuration
    (including the DNS information) by means of, e.g., DHCP.  That DNS
    information is shared within the LAN following the same mechanisms as
-   those discussed in Section 3.1.  A host can thus establish DoH/DoT
-   session with a DoH/DoT server similar to what is depicted in
-   Figure 3.
+   those discussed in Section 3.1.  A host can thus, for example,
+   establish DoH/DoT session with a DoH/DoT server similar to what is
+   depicted in Figure 3.
 
    Customers may also decide to deploy internal home routers (called
    hereafter, Internal CPEs) for a variety of reasons that are not
    detailed here.  Absent any explicit configuration on the internal CPE
    to override the DNS configuration it receives from the ISP-supplied
-   CPE, an Internal CPE relays the DNS information it receives via DHCP/
-   RA from the ISP-supplied CPE to connected hosts.  DoH/DoT sessions
-   can be established by a host with the DoH/DoT servers of the ISP (see
-   Figure 5).
 
 
 
-
-Boucadair, et al.       Expires January 10, 2021                [Page 7]
+Boucadair, et al.       Expires February 7, 2021                [Page 6]
 
-Internet-Draft          DoH/DoT in Home Networks               July 2020
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
 
+
+   CPE, an Internal CPE relays the DNS information it receives via DHCP/
+   RA from the ISP-supplied CPE to connected hosts.  Encrypted DNS
+   sessions can be established by a host with the DNS servers of the ISP
+   (see Figure 5).
 
                     ,--,--,--.                    ,--,--,--.
                  ,-'          Internal         ,-'    ISP   `-.
@@ -400,15 +349,15 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
            |     `-.          ,-'              `-.          ,-'
            |        `--'--'--'                    `--'--'--'
            |                                          |
-           |<===================DoT/DoH==============>|
+           |<==============Encrypted DNS=============>|
 
-   Figure 5: Direct DoH/DoT Sessions with the ISP DNS Resolver (Internal
-                                   CPE)
+     Figure 5: Direct Encrypted DNS Sessions with the ISP DNS Resolver
+                              (Internal CPE)
 
    Similar to managed CPEs, a user may modify the default DNS
    configuration of an unmanaged CPE to use his/her favorite DNS servers
-   instead.  DoH/DoT sessions can be established directly between a host
-   and a 3rd Party DNS server (see Figure 6).
+   instead.  Encrypted DNS sessions can be established directly between
+   a host and a 3rd Party DNS server (see Figure 6).
 
                  ,--,--,--.                  ,--,
                ,'         Internal        ,-'    '-     3rd Party
@@ -416,18 +365,19 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
          |     `.         ,-'             `-.    -'         |
          |       `-'--'--'                   `--'           |
          |                                                  |
-         |<======================DoT/DoH===================>|
+         |<=================Encrypted DNS==================>|
 
-     Figure 6: Direct DoH/DoT Sessions with a Third Party DNS Resolver
+      Figure 6: Direct Encrypted DNS Sessions with a Third Party DNS
+                                 Resolver
 
-   Section 7.2 discusses considerations related to hosting a forwarder
+   Section 8.2 discusses considerations related to hosting a forwarder
    in the Internal CPE.
 
 4.  DNS Reference Identifier Option
 
    This section describes how a DNS client can discover the ADN of local
-   DoH/DoT server(s) using DHCP (Sections 4.1 and 4.2) and Neighbor
-   Discovery protocol (Section 4.3).
+   encrypted DNS server(s) using DHCP (Sections 4.1 and 4.2) and
+   Neighbor Discovery protocol (Section 4.3).
 
    As reported in Section 1.7.2 of [RFC6125]:
 
@@ -436,60 +386,72 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       certificates are a very small percentage (less than 1%) of issued
       certificates".
 
-   In order to allow for PKIX-based authentication between a DNS client
-   and a DoH/DoT server while accommodating the current best practices
-   for issuing certificates, this document allows for configuring an
-   authentication domain name to be presented as a reference identifier
-   for DNS authentication purposes.
 
 
 
-
-Boucadair, et al.       Expires January 10, 2021                [Page 8]
+Boucadair, et al.       Expires February 7, 2021                [Page 7]
 
-Internet-Draft          DoH/DoT in Home Networks               July 2020
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
 
 
-   The DNS client establishes a DoH/DoT session with the discovered DNS
-   IP address(es) (Section 6) and uses the mechanism discussed in
-   Section 8 of [RFC8310] to authenticate the DNS server certificate
-   using the authentication domain name conveyed in the DNS Reference
-   Identifier.
+   In order to allow for PKIX-based authentication between a DNS client
+   and an encrypted DNS server while accommodating the current best
+   practices for issuing certificates, this document allows for
+   configuring an authentication domain name to be presented as a
+   reference identifier for DNS authentication purposes.
+
+   The DNS client establishes an encrypted DNS session with the
+   discovered DNS IP address(es) (Section 5) and uses the mechanism
+   discussed in Section 8 of [RFC8310] to authenticate the DNS server
+   certificate using the authentication domain name conveyed in the DNS
+   Reference Identifier.  This assumes that default port numbers are
+   used to establish an encrypted DNS session (e.g., 853 for DoT, 443
+   for DoH).  A discussion on the use of customized port numbers is
+   included in Appendix A.
 
    If the DNS Reference Identifier is discovered by a host using both RA
    and DHCP, the rules discussed in Section 5.3.1 of [RFC8106] MUST be
    followed.
 
-4.1.  DHCPv6 DNS Reference Identifier Option
+4.1.  DHCPv6 Reference Identifier Option
 
-   The DHCPv6 DNS Reference Identifier option is used to configure an
-   authentication domain name of the DoH/DoT server.  The format of this
-   option is shown in Figure 7.
+   The DHCPv6 Reference Identifier option is used to configure an
+   authentication domain name of the encrypted DNS server.  The format
+   of this option is shown in Figure 7.
 
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |     OPTION_V6_DNS_RI          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       | Encr DNS Types|                                               |
-      +-+-------------+                                               |
+      +---------------+                                               |
       |                                                               |
       ~                 Authentication Domain Name                    ~
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-
              Figure 7: DHCPv6 DNS Reference Identifier Option
 
    The fields of the option shown in Figure 7 are as follows:
 
-   o  Option-code: OPTION_V6_DNS_RI (TBA1, see Section 10.1)
+   o  Option-code: OPTION_V6_DNS_RI (TBA1, see Section 11.1)
    o  Option-length: Length of the enclosed data in octets.
    o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.
 
+
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021                [Page 8]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
                              +-+-+-+-+-+-+-+-+
-                             |U|U|U|U|U|U|H|T|
+                             |U|U|U|U|U|Q|H|T|
                              +-+-+-+-+-+-+-+-+
 
                        Figure 8: Encrypted DNS Types
@@ -498,14 +460,8 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
          [RFC7858].
          H: If set, this bit indicates that the server supports DoH
          [RFC8484].
-
-
-
-Boucadair, et al.       Expires January 10, 2021                [Page 9]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
+         Q: If set, this bit indicates that the server supports DoQ
+         [I-D.ietf-dprive-dnsoquic].
          U: Unassigned bits.  These bits MUST be unset by the sender.
          Associating a meaning with an unassigned bit can be done via
          Standards Action [RFC8126].
@@ -523,7 +479,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       and DoTand the server supports both, then both T and H bits must
       be set.
    o  Authentication Domain Name: A fully qualified domain name of the
-      DoH/DoT server.  This field is formatted as specified in
+      encrypted DNS server.  This field is formatted as specified in
       Section 10 of [RFC8415].
 
    An example of the Authentication Domain Name encoding is shown in
@@ -542,6 +498,14 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    To discover an encrypted DNS server, the DHCPv6 client including
    OPTION_V6_DNS_RI in an Option Request Option (ORO), as in Sections
+
+
+
+Boucadair, et al.       Expires February 7, 2021                [Page 9]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
    18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of [RFC8415].  The
    DHCPv6 client sets the Encrypted DNS Types field to the requested
    encrypted DNS server type(s).
@@ -551,22 +515,11 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    OPTION_V6_DNS_RI options; each option is to be treated as a separate
    encrypted DNS server.
 
-
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 10]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
 4.2.  DHCP DNS Reference Identifier Option
 
    The DHCP DNS Reference Identifier option is used to configure an
-   authentication domain name of the DoH/DoT server.  The format of this
-   option is illustrated in Figure 10.
+   authentication domain name of the encrypted DNS server.  The format
+   of this option is illustrated in Figure 10.
 
             0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -594,13 +547,20 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    The fields of the option shown in Figure 10 are as follows:
 
-   o  Code: OPTION_V4_DNS_RI (TBA2, see Section 10.2).
+   o  Code: OPTION_V4_DNS_RI (TBA2, see Section 11.2).
    o  Length: Length of the enclosed data in octets.
    o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
    o  Authentication Domain Name: The domain name of the DoH/DoT server.
       This field is formatted as specified in Section 10 of [RFC8415].
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 10]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
 
    OPTION_V4_DNS_RI is a concatenation-requiring option.  As such, the
    mechanism specified in [RFC3396] MUST be used if OPTION_V4_DNS_RI
@@ -610,13 +570,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    Encrypted DNS Reference Identifier by including OPTION_V4_DNS_RI in a
    Parameter Request List option [RFC2132].  The DHCP client sets the
    Encrypted DNS Types field to the requested encrypted DNS server.
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 11]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
 
    If the DHCP client requested more than one encrypted DNS server type,
    the DHCP client MUST be prepared to receive multiple DHCP
@@ -646,7 +599,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    The fields of the option shown in Figure 11 are as follows:
 
    o  Type: 8-bit identifier of the DNS Reference Identifier Option as
-      assigned by IANA (TBA3, see Section 10.3).
+      assigned by IANA (TBA3, see Section 11.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
    o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
@@ -656,6 +609,15 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       by the sender and MUST be ignored by the receiver.
    o  Lifetime: 32-bit unsigned integer.  The maximum time in seconds
       (relative to the time the packet is received) over which the
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 11]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
       authentication domain name MAY be used as a DNS Reference
       Identifier.
 
@@ -665,30 +627,108 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
       A value of all one bits (0xffffffff) represents infinity.
 
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 12]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
       A value of zero means that the DNS Reference Identifier MUST no
       longer be used.
-   o  Authentication Domain Name: The domain name of the DoH/DoT server.
-      This field is formatted as specified in Section 10 of [RFC8415].
+   o  Authentication Domain Name: The domain name of the encrypted DNS
+      server.  This field is formatted as specified in Section 10 of
+      [RFC8415].
 
       This field MUST be padded with zeros so that its size is a
       multiple of 8 octets.
 
-5.  DoH URI Templates
+5.  Locating DoH/DoT Servers
 
-   DoH servers may support more than one URI Template [RFC8484].  The
-   following discusses a mechanism for a DoH client to retrieve the list
-   of supported templates by a DoH server.  Also, if the resolver hosts
-   several DoH services (e.g., no-filtering, blocking adult content,
-   blocking malware), these services can be discovered as templates.
+   From an IP reachability standpoint, encrypted DNS servers SHOULD be
+   located by their address literals rather than passing the discovered
+   names (ADN) to a resolution library.  This avoids adding a dependency
+   on another server to resolve the ADN.
+
+   In the various scenarios sketched in Section 3, Do53, DoH, DoT, and
+   DoQ may terminate on the same IP address or distinct IP addresses.
+   Terminating Do53/DoH/DoT/DoQ on the same or distinct IP addresses is
+   deployment-specific.
+
+   In order to optimize the size of discovery messages when all servers
+   terminate on the same IP address, a CPE or a host relies upon the
+   discovery mechanisms specified in [RFC2132][RFC3646][RFC8106] to
+   retrieve a list of IP addresses to reach their DNS servers.
+
+   In deployments where DoH/DoT/Do53 are not co-located, a list of
+   servers that is composed of DoH (and/or DoT) and Do53 servers may be
+   returned using in [RFC2132][RFC3646][RFC8106].  A host that is also
+   DoH-capable (and/or DoT-capable), will try to establish a DoH (and/or
+   DoT) session to that list.  DoT and/or DoH are supported if the
+   client succeeds to establish a session.
+
+   Let's consider that the DoH server is reachable at
+   2001:db8:122:300::2 while the Do53 server is reachable at
+   2001:db8:122:300::1.  The DHCP server will then return a list that
+   includes both 2001:db8:122:300::1 and 2001:db8:122:300::2 to a
+   requesting DNS client.  That list is passed to the DNS client.  A
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 12]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+   legacy Do53 client will select 2001:db8:122:300::1 while a DoH client
+   will select 2001:db8:122:300::2.
+
+                         Legacy Do53
+                           client
+                               |<===RA======|
+                               | {RI,@1,@2} |             |
+                               |            |             |
+                               |========Do53 Query=======>|
+                               |            |           --,--,-
+                              ,+-,--,--.    |        ,/  S1 (@1)\.
+                           ,-'          `-. |     ,-'    ISP     `-.
+                 DoH/DoT --(      LAN      CPE----(                 )
+            capable client  `-.          ,-'|      `-.   S2 (@2)  ,-'
+                     |        `--'--'--'    |         `--'--'--'
+                     |<=========RA==========|             |
+                     |      {RI,@1,@2}      |             |
+                     |                                    |
+                     |<===============DoT/DoH============>|
+
+        Legend:
+          * S1: Do53 server
+          * S2: DoH/DoT server
+          * @1: IP address of S1
+          * @1: IP address of S2
+          * RI: DNS Reference Identifier
+
+   The DHCP server may return a customized DNS configuration ([RFC7969])
+   as a function of the requested DHCP options.  For example, if the
+   DHCP client does not include a DNS Reference Identifier option in its
+   request, the DHCP server will return the IP address of the Do53
+   server (2001:db8:122:300::1).  If a DNS Reference Identifier option
+   is present in the request, the DHCP server returns the IP address(es)
+   of the DoH server (2001:db8:122:300::2) (or 2001:db8:122:300::2 and
+   2001:db8:122:300::1 in this order).
+
+   An alternate design where a list of IP addresses is also included in
+   the same option conveying ADN is discussed in Appendix A.
+
+6.  DoH URI Templates
+
+   DoH servers may support more than one URI Template [RFC8484].  Also,
+   if the resolver hosts several DoH services (e.g., no-filtering,
+   blocking adult content, blocking malware), these services can be
+   discovered as templates.  The following discusses a mechanism for a
+   DoH client to retrieve the list of supported templates by a DoH
+   server.
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 13]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
 
    Upon discovery of a DoH resolver (Section 4), the DoH client contacts
    that DoH resolver to retrieve the list of supported DoH services
@@ -701,36 +741,12 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    How a DoH client makes use of the configured DoH services is out of
    scope of this document.
 
-6.  Locating DoH/DoT Servers
-
-   A CPE or a host relies upon discovery mechanisms (such as PCO, DHCP,
-   or RA) to retrieve DoH/DoT servers' reachability information.  In the
-   various scenarios sketched in Section 3, Do53, DoH, and DoT may
-   terminate on the same IP address or distinct IP addresses.
-   Terminating Do53/DoH/DoT on the same or distinct IP addresses is
-   deployment-specific.
-
-   From an IP reachability standpoint, DoH/DoT servers SHOULD be located
-   by their address literals rather than their names.  This avoids
-   adding a dependency on another server to resolve the DoH/DoT name.
-   Concretely, if Do53/DoH/DoT terminate on same IP addresses, existing
-   discovery mechanisms [RFC2132][RFC3646][RFC8106] can be leveraged to
-   learn the IP addresses of DoT/DoH servers while an authentication
-   domain name is supplied by one of the options discussed in Section 4.
+7.  Make Use of Discovered Encrypted DNS Server
 
    The following sub-sections discusses the conditions under which
    discovered DoT/DoH server can be used.
 
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 13]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
-6.1.  DoT/DoH Auto-Upgrade
+7.1.  DoT/DoH Auto-Upgrade
 
    Additional considerations are discussed below for the use of DoH and
    DoT servers provided by local networks:
@@ -753,7 +769,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       type within subjectAltName entry in the server certificate
       conveyed in the TLS handshake.
 
-6.2.  Other Deployment Options
+7.2.  Other Deployment Options
 
    Some deployment options to securely configure hosts are discussed
    below.  These options are provided for the sake of completeness.
@@ -762,6 +778,14 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       configurator can securely configure devices in the home network
       with the local DoT/DoH server using DPP.  If the DoT/DoH servers
       use raw public keys [RFC7250], the Subject Public Key Info (SPKI)
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 14]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
       pin set [RFC7250] of raw public keys may be encoded in a QR code.
       The configurator (e.g., mobile device) can scan the QR code and
       provision SPKI pin set in OS/Browser.  The configurator can in-
@@ -778,14 +802,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
       The OS would not know if the WPA pre-shared-key is the same for
       all clients or a unique pre-shared key is assigned to the host.
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 14]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
       Hence, the user has to indicate to the system that a unique pre-
       shared key is assigned to trigger the bootstrapping procedure.
 
@@ -794,21 +810,21 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       fake access point, and the device cannot be securely bootstrapped
       with the home network's DoH/DoT server.
 
-7.  Hosting DoH/DoT Forwarder in the CPE
+8.  Hosting Encrypted DNS Forwarder in the CPE
 
-7.1.  Managed CPEs
+8.1.  Managed CPEs
 
    The following mechanisms can be used to host a DoH/DoT forwarder in a
    managed CPE (Section 3.1).
 
-7.1.1.  ACME
+8.1.1.  ACME
 
    The ISP can assign a unique FQDN (e.g., cpe1.example.com) and a
-   domain-validated public certificate to the DoH/DoT forwarder hosted
-   on the CPE.  Automatic Certificate Management Environment (ACME)
-   [RFC8555] can be used by the ISP to automate certificate management
-   functions such as domain validation procedure, certificate issuance
-   and certificate revocation.
+   domain-validated public certificate to the encrypted DNS forwarder
+   hosted on the CPE.  Automatic Certificate Management Environment
+   (ACME) [RFC8555] can be used by the ISP to automate certificate
+   management functions such as domain validation procedure, certificate
+   issuance and certificate revocation.
 
    The managed CPE should support a configuration parameter to instruct
    the CPE whether it has to relay the encrypted DNS server received
@@ -816,32 +832,33 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    within the local network.  The default behavior of the CPE is to
    supply the encrypted DNS server received from the ISP's network.
 
-7.1.2.  Auto-Upgrade based on Domains and their Sub-domains
+
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 15]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+8.1.2.  Auto-Upgrade based on Domains and their Sub-domains
 
    If the ADN conveyed in DHCP/RA (Section 4) is pre-configured in
    popular OSes or browsers as a verified resolver and the auto-upgrade
-   (Section 6.1) is allowed for both the pre-configured ADN and its sub-
-   domains, the DoH/DoT client will learn the local DoH/DoT forwarder
-   using DHCP/RA and auto-upgrade because the left-most label of the
-   pre-configured ADN would match the subjectAltName value in the server
-   certificate.  Concretely, the CPE can communicate the ADN of the
-   local DoH forwarder (Section 7.1.1) to internal hosts using DHCP/RA
-   (Section 4).
+   (Section 7.1) is allowed for both the pre-configured ADN and its sub-
+   domains, the DoH/DoT client will learn the local encrypted DNS
+   forwarder using DHCP/RA and auto-upgrade because the left-most label
+   of the pre-configured ADN would match the subjectAltName value in the
+   server certificate.  Concretely, the CPE can communicate the ADN of
+   the local DoH forwarder (Section 8.1.1) to internal hosts using DHCP/
+   RA (Section 4).
 
    Let's suppose that "example.net" is pre-configured as a verified
    resolved in the browser or OS.  If the DoH/DoT client discovers a
-   local forwarder "cpe1-internal.example.net", the DoH/DoT client will
-   auto-upgrade because the pre-configured ADN would match
+   local forwarder "cpe1-internal.example.net", the encrypted DNS client
+   will auto-upgrade because the pre-configured ADN would match
    subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 15]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
    shown in Figure 12, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail.
 
@@ -870,40 +887,43 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    Figure 12: A Simplified Example of Auto-upgrade based on Sub-domains
 
-7.2.  Unmanaged CPEs
 
-   The approach specified in Section 7.1 does not apply for hosting a
+
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 16]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+8.2.  Unmanaged CPEs
+
+   The approach specified in Section 8.1 does not apply for hosting a
    DNS forwarder in an unmanaged CPE.
 
    The unmanaged CPE administrator (referred to as administrator) can
    host a DoH/DoT forwarder on the unmanaged CPE.  This assumes the
    following:
 
-   o  The DoH/DoT server certificate is managed by the entity in-charge
-      of hosting the DoT/DoH forwarder.
+   o  The encrypted DNS server certificate is managed by the entity in-
+      charge of hosting the encrypted DNS forwarder.
 
       Alternatively, a security service provider can assign a unique
-      FQDN to the CPE.  The DoH/DoT forwarder will act like a private
-      DoT/DoH server only be accessible from within the home network.
+      FQDN to the CPE.  The encrypted DNS forwarder will act like a
+      private encrypted DNS server only be accessible from within the
+      home network.
 
-   o  The DoH/DoT forwarder will either be configured to use the ISP's
-      or a 3rd party DoH/DoT server.
+   o  The encrypted DNS forwarder will either be configured to use the
+      ISP's or a 3rd party encrypted DNS server.
 
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 16]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
-   o  The unmanaged CPE will advertise the DoH/DoT forwarder ADN using
-      DHCP/RA to internal hosts.
+   o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
+      using DHCP/RA to internal hosts.
 
    Figure 13 illustrates an example of an unmanaged CPE hosting a
-   forwarder which connects to a 3rd party DoH/DoT server.  In this
-   example, the DNS information received from the managed CPE (and
+   forwarder which connects to a 3rd party encrypted DNS server.  In
+   this example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
    forwarder.
 
@@ -915,7 +935,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
       |                   |<==DHCP==>|          |             |
       |<======DHCP=======>|          |                        |
       |     {RI, @i}      |                                   |
-      |<=====DoT/DoH=====>|<=============DoT/DoH=============>|
+      |<==Encrypted DNS==>|<==========Encrypted DNS==========>|
 
      Legend:
        * @i: IP address of the DNS forwarder hosted in the Internal
@@ -923,20 +943,33 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
          Figure 13: Example of an Internal CPE Hosting a Forwarder
 
-8.  Legacy CPEs
+
+
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 17]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+9.  Legacy CPEs
 
    Hosts serviced by legacy CPEs that can't be upgraded to support the
-   options defined in Section 4 won't be able to learn the DoH/DoT
+   options defined in Section 4 won't be able to learn the encrypted DNS
    server hosted by the ISP, in particular.  If the ADN is not
    discovered using DHCP/RA, such hosts will have to fallback to use the
    special-use domain name defined in [I-D.pp-add-resinfo] to discover
-   the DoH/DoT server and to retrieve the list of supported DoH services
-   using the RESINFO RRtype [I-D.pp-add-resinfo].  The DHCP/RA option to
-   discover ADN takes precedence over special-use domain name since the
-   special-use domain name is suseptible to both internal and external
-   attacks whereas DHCP/RA is only vulnerable to internal attacks.
+   the encrypted DNS server and to retrieve the list of supported DoH
+   services using the RESINFO RRtype [I-D.pp-add-resinfo].
 
-9.  Security Considerations
+   The DHCP/RA option to discover ADN takes precedence over special-use
+   domain name since the special-use domain name is suseptible to both
+   internal and external attacks whereas DHCP/RA is only vulnerable to
+   internal attacks.
+
+10.  Security Considerations
 
    An attacker can get a domain name, domain-validated public
    certificate from a CA, host a DoT/DoH server and claim the best DNS
@@ -944,15 +977,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    network can use the public IP address, get an 'IP address'-validated
    public certificate from a CA, host a DoT/DoH server and claim the
    best DNS privacy preservation policy.
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 17]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
 
    Wireless LAN as frequently deployed in home networks is vulnerable to
    various attacks (e.g., [Evil-Twin], [Krack], [Dragonblood]).  Because
@@ -977,7 +1001,15 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    In this specification, DoH/DoT servers discovered using insecure
    discovery mechanisms (like DHCP/RA) are only used if that DoH/DoT
-   server is pre-configured in the OS or the browser.  Section 6.1
+   server is pre-configured in the OS or the browser.  Section 7.1
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 18]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
    identifies a set of deployment options under which DHCP/RA RI options
    can be used.  If the insecurely discovered DoH/DoT server is not pre-
    configured in the OS or browser, the client must validate the
@@ -1002,14 +1034,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    that rogue server based upon PKIX authentication [RFC6125] based upon
    the authentication domain name in the Reference Identifier Option.
    DNS clients that ignore authentication failures and accept spoofed
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 18]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
    certificates will be subject to attacks (e.g., redirect to malicious
    servers, intercept sensitive data).
 
@@ -1026,13 +1050,21 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    by the DoH/DoT forwarder in the CPE.  This behavior adheres to REQ#8
    in [RFC6092]; it MUST apply for both IPv4 and IPv6.
 
-10.  IANA Considerations
+11.  IANA Considerations
 
-10.1.  DHCPv6 Option
+11.1.  DHCPv6 Option
 
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in: https://www.iana.org/assignments/dhcpv6-
    parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2.
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 19]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
 
    +-------+------------------+---------+-------------+----------------+
    | Value | Description      | Client  | Singleton   | Reference      |
@@ -1041,7 +1073,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    | TBA1  | OPTION_V6_DNS_RI | Yes     | Yes         | [ThisDocument] |
    +-------+------------------+---------+-------------+----------------+
 
-10.2.  DHCP Option
+11.2.  DHCP Option
 
    IANA is requested to assign the following new DHCP Option Code in the
    registry maintained in: https://www.iana.org/assignments/bootp-dhcp-
@@ -1056,17 +1088,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    |      |                  |       | domain name    |                |
    +------+------------------+-------+----------------+----------------+
 
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 19]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
-10.3.  RA Option
+11.3.  RA Option
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
    Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
@@ -1081,7 +1103,7 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
         | TBA3 | DNS Reference Identifier Option | [ThisDocument] |
         +------+---------------------------------+----------------+
 
-11.  Acknowledgements
+12.  Acknowledgements
 
    Many thanks to Christian Jacquenet for the review.
 
@@ -1090,9 +1112,19 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection.
 
-12.  References
 
-12.1.  Normative References
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 20]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+13.  References
+
+13.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1112,20 +1144,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
               DOI 10.17487/RFC4861, September 2007,
               <https://www.rfc-editor.org/info/rfc4861>.
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 20]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
-   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
-              and P. Hoffman, "Specification for DNS over Transport
-              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
-              2016, <https://www.rfc-editor.org/info/rfc7858>.
 
    [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
               "IPv6 Router Advertisement Options for DNS Configuration",
@@ -1152,11 +1170,15 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               RFC 8415, DOI 10.17487/RFC8415, November 2018,
               <https://www.rfc-editor.org/info/rfc8415>.
 
-   [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
-              (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
-              <https://www.rfc-editor.org/info/rfc8484>.
 
-12.2.  Informative References
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 21]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
+13.2.  Informative References
 
    [Auto-upgrade]
               The Unicode Consortium, "DoH providers: criteria, process
@@ -1166,17 +1188,6 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
    [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
               Specification", <https://www.wi-fi.org/file/device-
               provisioning-protocol-specification>.
-
-
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 21]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
 
    [Dragonblood]
               The Unicode Consortium, "Dragonblood: Analyzing the
@@ -1196,17 +1207,32 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
-              Location", draft-ietf-dnsop-terminology-ter-01 (work in
-              progress), February 2020.
+              Location", draft-ietf-dnsop-terminology-ter-02 (work in
+              progress), August 2020.
 
    [I-D.ietf-dnssd-push]
               Pusateri, T. and S. Cheshire, "DNS Push Notifications",
               draft-ietf-dnssd-push-25 (work in progress), October 2019.
 
+   [I-D.ietf-dprive-dnsoquic]
+              Huitema, C., Mankin, A., and S. Dickinson, "Specification
+              of DNS over Dedicated QUIC Connections", draft-ietf-
+              dprive-dnsoquic-00 (work in progress), April 2020.
+
    [I-D.ietf-v6ops-rfc7084-bis]
               Palet, J., "Basic Requirements for IPv6 Customer Edge
               Routers", draft-ietf-v6ops-rfc7084-bis-04 (work in
               progress), June 2017.
+
+
+
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 22]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
 
    [I-D.pp-add-resinfo]
               Sood, P. and P. Hoffman, "DNS Resolver Information Self-
@@ -1217,22 +1243,14 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
               "A Bootstrapping Procedure to Discover and Authenticate
               DNS-over-TLS and DNS-over-HTTPS Servers for IoT and BYOD
-              Devices", draft-reddy-add-iot-byod-bootstrap-00 (work in
-              progress), May 2020.
+              Devices", draft-reddy-add-iot-byod-bootstrap-01 (work in
+              progress), July 2020.
 
    [I-D.reddy-add-server-policy-selection]
               Reddy.K, T., Wing, D., Richardson, M., and M. Boucadair,
               "DNS Server Selection: DNS Server Information with
               Assertion Token", draft-reddy-add-server-policy-
-              selection-03 (work in progress), June 2020.
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 22]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
+              selection-04 (work in progress), July 2020.
 
    [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
               2017, <https://www.krackattacks.com/>.
@@ -1265,6 +1283,13 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               Nodes", RFC 6731, DOI 10.17487/RFC6731, December 2012,
               <https://www.rfc-editor.org/info/rfc6731>.
 
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 23]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
    [RFC7113]  Gont, F., "Implementation Advice for IPv6 Router
               Advertisement Guard (RA-Guard)", RFC 7113,
               DOI 10.17487/RFC7113, February 2014,
@@ -1281,19 +1306,24 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               RFC 7513, DOI 10.17487/RFC7513, May 2015,
               <https://www.rfc-editor.org/info/rfc7513>.
 
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 23]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
-
-
    [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
               Protecting against Rogue DHCPv6 Servers", BCP 199,
               RFC 7610, DOI 10.17487/RFC7610, August 2015,
               <https://www.rfc-editor.org/info/rfc7610>.
+
+   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
+              and P. Hoffman, "Specification for DNS over Transport
+              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
+              2016, <https://www.rfc-editor.org/info/rfc7858>.
+
+   [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
+              Configuration on the Basis of Network Topology", RFC 7969,
+              DOI 10.17487/RFC7969, October 2016,
+              <https://www.rfc-editor.org/info/rfc7969>.
+
+   [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
+              (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
+              <https://www.rfc-editor.org/info/rfc8484>.
 
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
@@ -1309,6 +1339,13 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
 
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 24]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
               forum.org/technical/download/TR-069.pdf>.
@@ -1317,6 +1354,35 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
               3GPP, "Mobile radio interface Layer 3 specification; Core
               network protocols; Stage 3 (Release 16)", December 2019,
               <http://www.3gpp.org/DynaReport/24008.htm>.
+
+Appendix A.  Customized Port Numbers and IP Addresses
+
+   DoT and DoQ may make use of customized port numbers instead of
+   default ones.  Also, if many encrypted DNS types are supported by a
+   network but terminate in distinct IP addresses, it is tempting to
+   simply the probing at the client side by returning both a port number
+   and a list of IP addresses in the option that conveys the ADN.  An
+   example of such option is shown in Figure 14.  This design will
+   exacerbate the size of discovery messages.
+
+   More input is required from the WG.
+
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |     OPTION_V6_DNS_RI          |         Option-length         |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |  Enc DNS Type | Num addresses |          Port Number          |
+      +---------------+---------------+-------------------------------+
+      |                                                               |
+      ~                         IPv6 Addresses                        ~
+      |                                                               |
+      +---------------------------------------------------------------+
+      |                                                               |
+      ~                  DNS Authentication Domain Name               ~
+      |                                                               |
+      +---------------------------------------------------------------+
+
+                                 Figure 14
 
 Authors' Addresses
 
@@ -1328,6 +1394,14 @@ Authors' Addresses
    Email: mohamed.boucadair@orange.com
 
 
+
+
+
+Boucadair, et al.       Expires February 7, 2021               [Page 25]
+
+Internet-Draft       Encrypted DNS in Home Networks          August 2020
+
+
    Tirumaleswar Reddy
    McAfee, Inc.
    Embassy Golf Link Business Park
@@ -1335,15 +1409,6 @@ Authors' Addresses
    India
 
    Email: TirumaleswarReddy_Konda@McAfee.com
-
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 24]
-
-Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
    Dan Wing
@@ -1388,13 +1453,4 @@ Internet-Draft          DoH/DoT in Home Networks               July 2020
 
 
 
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires January 10, 2021               [Page 25]
+Boucadair, et al.       Expires February 7, 2021               [Page 26]
