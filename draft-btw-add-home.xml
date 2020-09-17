@@ -934,19 +934,16 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>If a CPE is co-located with security services within the home
             network, the CPE can use WPA-PSK but with unique pre-shared keys
-            for different endpoints to deal with security issues. In such
-            networks, <xref target="I-D.reddy-add-iot-byod-bootstrap"></xref>
-            may be used to securely bootstrap endpoint devices with the
-            authentication domain name and DNS server certificate of the local
-            network's DoH/DoT server. <vspace blankLines="1" />The OS would
-            not know if the WPA pre-shared-key is the same for all clients or
-            a unique pre-shared key is assigned to the host. Hence, the user
-            has to indicate to the system that a unique pre-shared key is
-            assigned to trigger the bootstrapping procedure. <vspace
-            blankLines="1" />If the device joins a home network using a single
-            shared password among all the attached devices, a compromised
-            device can host a fake access point, and the device cannot be
-            securely bootstrapped with the home network's DoH/DoT server.</t>
+            for different endpoints to deal with security issues.<vspace
+            blankLines="1" />The OS would not know if the WPA pre-shared-key
+            is the same for all clients or a unique pre-shared key is assigned
+            to the host. Hence, the user has to indicate to the system that a
+            unique pre-shared key is assigned to trigger the bootstrapping
+            procedure. <vspace blankLines="1" />If the device joins a home
+            network using a single shared password among all the attached
+            devices, a compromised device can host a fake access point, and
+            the device cannot be securely bootstrapped with the home network's
+            DoH/DoT server.</t>
           </list></t>
       </section>
     </section>
@@ -954,8 +951,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
     <section anchor="forwarder"
              title="Hosting Encrypted DNS Forwarder in the CPE">
       <section anchor="forwarder_m" title="Managed CPEs">
-        <t>The following mechanisms can be used to host a DoH/DoT forwarder in
-        a managed CPE (<xref target="mcpe"></xref>).</t>
+        <t>The following mechanisms can be used to host an encrypted DNS
+        forwarder in a managed CPE (<xref target="mcpe"></xref>).</t>
 
         <section anchor="acme" title="ACME">
           <t>The ISP can assign a unique FQDN (e.g., cpe1.example.com) and a
@@ -977,17 +974,17 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           <t>If the ADN conveyed in DHCP/RA (<xref target="RI"></xref>) is
           pre-configured in popular OSes or browsers as a verified resolver
           and the auto-upgrade (<xref target="auto"></xref>) is allowed for
-          both the pre-configured ADN and its sub-domains, the DoH/DoT client
-          will learn the local encrypted DNS forwarder using DHCP/RA and
-          auto-upgrade because the left-most label of the pre-configured ADN
-          would match the subjectAltName value in the server certificate.
+          both the pre-configured ADN and its sub-domains, the encrypted DNS
+          client will learn the local encrypted DNS forwarder using DHCP/RA
+          and auto-upgrade because the left-most label of the pre-configured
+          ADN would match the subjectAltName value in the server certificate.
           Concretely, the CPE can communicate the ADN of the local DoH
           forwarder (<xref target="acme"></xref>) to internal hosts using
           DHCP/RA (<xref target="RI"></xref>).</t>
 
           <t>Let's suppose that "example.net" is pre-configured as a verified
-          resolved in the browser or OS. If the DoH/DoT client discovers a
-          local forwarder "cpe1-internal.example.net", the encrypted DNS
+          resolved in the browser or OS. If the encrypted DNS client discovers
+          a local forwarder "cpe1-internal.example.net", the encrypted DNS
           client will auto-upgrade because the pre-configured ADN would match
           subjectAltName value "cpe1-internal.example.net" of type dNSName. As
           shown in <xref target="subdomainex"></xref>, the auto-upgrade to a
@@ -1027,7 +1024,7 @@ Legend:
         not apply for hosting a DNS forwarder in an unmanaged CPE.</t>
 
         <t>The unmanaged CPE administrator (referred to as administrator) can
-        host a DoH/DoT forwarder on the unmanaged CPE. This assumes the
+        host an encrypted DNS forwarder on the unmanaged CPE. This assumes the
         following:<list style="symbols">
             <t>The encrypted DNS server certificate is managed by the entity
             in-charge of hosting the encrypted DNS forwarder. <vspace
@@ -1105,13 +1102,13 @@ Legend:
 
         <t><list style="symbols">
             <t>Encrypted DNS server pre-configured in the OS or browser. If
-            the local DoH/DoT server offers malware and phishing filtering
-            service, an attacker can spoof the DHCP/RA response to provide an
-            non-filtering DNS server pre-configured in the OS or browser,
-            which the attacker can leverage to deliver malware or mislead the
-            user to access phishing sites. If the discovered encrypted DNS
-            server does not meet the filtering requirements of the user, the
-            DNS client can take appropriate actions. </t>
+            the local encrypted DNS server offers malware and phishing
+            filtering service, an attacker can spoof the DHCP/RA response to
+            provide an non-filtering DNS server pre-configured in the OS or
+            browser, which the attacker can leverage to deliver malware or
+            mislead the user to access phishing sites. If the discovered
+            encrypted DNS server does not meet the filtering requirements of
+            the user, the DNS client can take appropriate actions. </t>
 
             <t>Cryptographically assert the DNS server identity for the DNS
             client to identify it is connecting to an is encrypted DNS server
@@ -1344,8 +1341,6 @@ Legend:
       <?rfc include='reference.RFC.8484'?>
 
       <?rfc include='reference.I-D.ietf-dprive-dnsoquic'?>
-
-      <?rfc include='reference.I-D.reddy-add-iot-byod-bootstrap'?>
 
       <?rfc include='reference.I-D.ietf-v6ops-rfc7084-bis' ?>
 
