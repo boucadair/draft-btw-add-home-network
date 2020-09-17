@@ -834,10 +834,10 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
       client may contact that DoH resolver to retrieve the list of supported
-      DoH services using the well-known URI defined in. DoH clients
-      re-iterates that request regularly to retrieve an updated list of
-      supported DoH services. Note that a "push" mode can be considered using
-      the mechanism defined in <xref target="I-D.ietf-dnssd-push"></xref>.</t>
+      DoH services using the well-known URI. DoH clients re-iterates that
+      request regularly to retrieve an updated list of supported DoH services.
+      Note that a "push" mode can be considered using the mechanism defined in
+      <xref target="I-D.ietf-dnssd-push"></xref>.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template. An example of such option is depicted in <xref
@@ -871,14 +871,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
     <section title="Make Use of Discovered Encrypted DNS Server">
       <t>Even if the use of a discovered encrypted DNS server is beyond the
       discovery process and falls under encrypted server selection, the
-      following subsections discuss conditions under which discovered
+      following subsection discusses conditions under which discovered
       encrypted DNS server can be used.</t>
-
-      <t><list style="symbols">
-          <t>Note: Validation has to be discussed in the WG to address the
-          requirement of associated/equivalent resolver (see Section 3 of
-          <xref target="I-D.box-add-requirements"></xref>). </t>
-        </list></t>
 
       <section anchor="auto" title="Encrypted DNS Auto-Upgrade">
         <t>Additional considerations are discussed below for the use of DoH
@@ -901,49 +895,6 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             name in the Encrypted DNS DHCP/RA option with the 'DNS-ID'
             identifier type within subjectAltName entry in the server
             certificate conveyed in the TLS handshake.</t>
-          </list></t>
-      </section>
-
-      <section anchor="identity" title="DNS Server Identity Assertion">
-        <t>If the discovered encrypted DNS server information is not
-        pre-configured in the OS or the browser, the DNS client needs evidence
-        about the encrypted server to assess its trustworthiness and a way to
-        appraise such evidence. The DNS client can validate the Policy
-        Assertion Token signature to cryptographically assert the DNS server
-        identity to identify it is connecting to an encrypted DNS server
-        hosted by a legal organization and the user can identify the encrypted
-        DNS server hosted by a specific organization (e.g., ISP).</t>
-      </section>
-
-      <section anchor="ad" title="Other Deployment Options">
-        <t>Some deployment options to securely configure hosts are discussed
-        below. These options are provided for the sake of completeness.</t>
-
-        <t><list style="symbols">
-            <t>If Device Provisioning Protocol (DPP) <xref
-            target="DPP"></xref> is used, the configurator can securely
-            configure devices in the home network with the local DoT/DoH
-            server using DPP. If the DoT/DoH servers use raw public keys <xref
-            target="RFC7250"></xref>, the Subject Public Key Info (SPKI) pin
-            set <xref target="RFC7250"></xref> of raw public keys may be
-            encoded in a QR code. The configurator (e.g., mobile device) can
-            scan the QR code and provision SPKI pin set in OS/Browser. The
-            configurator can in-turn securely configure devices (e.g.,
-            thermostat) in the home network with the SPKI pin set using
-            DPP.</t>
-
-            <t>If a CPE is co-located with security services within the home
-            network, the CPE can use WPA-PSK but with unique pre-shared keys
-            for different endpoints to deal with security issues.<vspace
-            blankLines="1" />The OS would not know if the WPA pre-shared-key
-            is the same for all clients or a unique pre-shared key is assigned
-            to the host. Hence, the user has to indicate to the system that a
-            unique pre-shared key is assigned to trigger the bootstrapping
-            procedure. <vspace blankLines="1" />If the device joins a home
-            network using a single shared password among all the attached
-            devices, a compromised device can host a fake access point, and
-            the device cannot be securely bootstrapped with the home network's
-            DoH/DoT server.</t>
           </list></t>
       </section>
     </section>
@@ -1098,22 +1049,26 @@ Legend:
         public certificate from a CA, host an Encryptd DNS server and claim
         the best DNS privacy preservation policy.</t>
 
-        <t>Some possible mitigations for this attack are listed below:</t>
+        <t>TCP connections received from outside the home network MUST be
+        discarded by the encrypted DNS forwarder in the CPE. This behavior
+        adheres to REQ#8 in <xref target="RFC6092"></xref>; it MUST apply for
+        both IPv4 and IPv6.</t>
+
+        <t>Attacks of spoofed or modified DHCP responses and RA messages by
+        attackers within the home network may be mitigated by making use of
+        the following mechanisms:</t>
 
         <t><list style="symbols">
-            <t>Encrypted DNS server pre-configured in the OS or browser. If
-            the local encrypted DNS server offers malware and phishing
-            filtering service, an attacker can spoof the DHCP/RA response to
-            provide an non-filtering DNS server pre-configured in the OS or
-            browser, which the attacker can leverage to deliver malware or
-            mislead the user to access phishing sites. If the discovered
-            encrypted DNS server does not meet the filtering requirements of
-            the user, the DNS client can take appropriate actions. </t>
+            <t>DHCPv6-Shield described in <xref target="RFC7610"></xref>, the
+            CPEs discards DHCP response messages received from any local
+            endpoint.</t>
 
-            <t>Cryptographically assert the DNS server identity for the DNS
-            client to identify it is connecting to an is encrypted DNS server
-            hosted by an legal organization and for the user to identify the
-            encrypted DNS server hosted by a specific organization.</t>
+            <t>RA-Guard described in <xref target="RFC7113"></xref>, the CPE
+            discards RAs messages received from any local endpoint.</t>
+
+            <t>Source Address Validation Improvement (SAVI) solution for DHCP
+            described in <xref target="RFC7513"></xref>, the CPE filters
+            packets with forged source IP addresses.</t>
           </list></t>
 
         <t>Encrypted DNS sessions with rogue servers spoofing the IP address
@@ -1140,31 +1095,6 @@ Legend:
         server and can infer that host is capable of using DoH/DoT/DoQ to
         encrypt DNS messages. However, a passive attacker cannot spoof or
         modify DHCP/RA messages.</t>
-      </section>
-
-      <section title="Security Capabilities of CPEs">
-        <t>TCP connections received from outside the home network MUST be
-        discarded by the encrypted DNS forwarder in the CPE. This behavior
-        adheres to REQ#8 in <xref target="RFC6092"></xref>; it MUST apply for
-        both IPv4 and IPv6.</t>
-
-        <t>Various home routers also offer levels of security. Attacks of
-        spoofed or modified DHCP responses and RA messages by attackers within
-        the home network may be mitigated by making use of the following
-        mechanisms:</t>
-
-        <t><list style="symbols">
-            <t>DHCPv6-Shield described in <xref target="RFC7610"></xref>, the
-            CPEs discards DHCP response messages received from any local
-            endpoint.</t>
-
-            <t>RA-Guard described in <xref target="RFC7113"></xref>, the CPE
-            discards RAs messages received from any local endpoint.</t>
-
-            <t>Source Address Validation Improvement (SAVI) solution for DHCP
-            described in <xref target="RFC7513"></xref>, the CPE filters
-            packets with forged source IP addresses.</t>
-          </list></t>
       </section>
 
       <section title="Wireless Security - Authentication Attacks">

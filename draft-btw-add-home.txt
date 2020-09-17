@@ -82,29 +82,29 @@ Table of Contents
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  17
    6.  Make Use of Discovered Encrypted DNS Server . . . . . . . . .  18
      6.1.  Encrypted DNS Auto-Upgrade  . . . . . . . . . . . . . . .  18
-     6.2.  DNS Server Identity Assertion . . . . . . . . . . . . . .  18
-     6.3.  Other Deployment Options  . . . . . . . . . . . . . . . .  19
-   7.  Hosting Encrypted DNS Forwarder in the CPE  . . . . . . . . .  19
-     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  19
-       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  19
-       7.1.2.  Auto-Upgrade Based on Domains and their Subdomains  .  20
-     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  21
-   8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  22
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  22
-     9.1.  Spoofing Attacks  . . . . . . . . . . . . . . . . . . . .  22
-     9.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  23
-     9.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  23
-     9.4.  Security Capabilities of CPEs . . . . . . . . . . . . . .  23
-     9.5.  Wireless Security - Authentication Attacks  . . . . . . .  24
-   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
-     10.1.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  24
-     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  24
-     10.3.  RA Options . . . . . . . . . . . . . . . . . . . . . . .  25
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  25
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  25
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  26
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  30
+   7.  Hosting Encrypted DNS Forwarder in the CPE  . . . . . . . . .  18
+     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  18
+       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  18
+       7.1.2.  Auto-Upgrade Based on Domains and their Subdomains  .  19
+     7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  20
+   8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  21
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  21
+     9.1.  Spoofing Attacks  . . . . . . . . . . . . . . . . . . . .  21
+     9.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  22
+     9.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  22
+     9.4.  Wireless Security - Authentication Attacks  . . . . . . .  23
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
+     10.1.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  23
+     10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  23
+     10.3.  RA Options . . . . . . . . . . . . . . . . . . . . . . .  24
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  24
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  24
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
+
+
+
 
 
 
@@ -915,10 +915,10 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    Upon discovery of a DoH resolver (Section 4), the DoH client may
    contact that DoH resolver to retrieve the list of supported DoH
-   services using the well-known URI defined in.  DoH clients re-
-   iterates that request regularly to retrieve an updated list of
-   supported DoH services.  Note that a "push" mode can be considered
-   using the mechanism defined in [I-D.ietf-dnssd-push].
+   services using the well-known URI.  DoH clients re-iterates that
+   request regularly to retrieve an updated list of supported DoH
+   services.  Note that a "push" mode can be considered using the
+   mechanism defined in [I-D.ietf-dnssd-push].
 
    Alternatively, dedicated DHCP/RA options may be defined to convey an
    URI template.  An example of such option is depicted in Figure 16.
@@ -958,12 +958,8 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    Even if the use of a discovered encrypted DNS server is beyond the
    discovery process and falls under encrypted server selection, the
-   following subsections discuss conditions under which discovered
+   following subsection discusses conditions under which discovered
    encrypted DNS server can be used.
-
-   o  Note: Validation has to be discussed in the WG to address the
-      requirement of associated/equivalent resolver (see Section 3 of
-      [I-D.box-add-requirements]).
 
 6.1.  Encrypted DNS Auto-Upgrade
 
@@ -989,56 +985,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       within subjectAltName entry in the server certificate conveyed in
       the TLS handshake.
 
-6.2.  DNS Server Identity Assertion
-
-   If the discovered encrypted DNS server information is not pre-
-   configured in the OS or the browser, the DNS client needs evidence
-   about the encrypted server to assess its trustworthiness and a way to
-   appraise such evidence.  The DNS client can validate the Policy
-   Assertion Token signature to cryptographically assert the DNS server
-   identity to identify it is connecting to an encrypted DNS server
-   hosted by a legal organization and the user can identify the
-   encrypted DNS server hosted by a specific organization (e.g., ISP).
-
-
-
-
-
-
-Boucadair, et al.        Expires March 21, 2021                [Page 18]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
-6.3.  Other Deployment Options
-
-   Some deployment options to securely configure hosts are discussed
-   below.  These options are provided for the sake of completeness.
-
-   o  If Device Provisioning Protocol (DPP) [DPP] is used, the
-      configurator can securely configure devices in the home network
-      with the local DoT/DoH server using DPP.  If the DoT/DoH servers
-      use raw public keys [RFC7250], the Subject Public Key Info (SPKI)
-      pin set [RFC7250] of raw public keys may be encoded in a QR code.
-      The configurator (e.g., mobile device) can scan the QR code and
-      provision SPKI pin set in OS/Browser.  The configurator can in-
-      turn securely configure devices (e.g., thermostat) in the home
-      network with the SPKI pin set using DPP.
-
-   o  If a CPE is co-located with security services within the home
-      network, the CPE can use WPA-PSK but with unique pre-shared keys
-      for different endpoints to deal with security issues.
-
-      The OS would not know if the WPA pre-shared-key is the same for
-      all clients or a unique pre-shared key is assigned to the host.
-      Hence, the user has to indicate to the system that a unique pre-
-      shared key is assigned to trigger the bootstrapping procedure.
-
-      If the device joins a home network using a single shared password
-      among all the attached devices, a compromised device can host a
-      fake access point, and the device cannot be securely bootstrapped
-      with the home network's DoH/DoT server.
-
 7.  Hosting Encrypted DNS Forwarder in the CPE
 
 7.1.  Managed CPEs
@@ -1055,17 +1001,18 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    management functions such as domain validation procedure, certificate
    issuance and certificate revocation.
 
-   The managed CPE should support a configuration parameter to instruct
-   the CPE whether it has to relay the encrypted DNS server received
-   from the ISP's network or has to announce itself as a forwarder
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 19]
+
+Boucadair, et al.        Expires March 21, 2021                [Page 18]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
+   The managed CPE should support a configuration parameter to instruct
+   the CPE whether it has to relay the encrypted DNS server received
+   from the ISP's network or has to announce itself as a forwarder
    within the local network.  The default behavior of the CPE is to
    supply the encrypted DNS server received from the ISP's network.
 
@@ -1088,6 +1035,36 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 17, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires March 21, 2021                [Page 19]
+
+Internet-Draft       Encrypted DNS in Home Networks       September 2020
+
 
                             Rogue Server
                 |              |
@@ -1114,14 +1091,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    Figure 17: A Simplified Example of Auto-upgrade based on Sub-domains
 
-
-
-
-Boucadair, et al.        Expires March 21, 2021                [Page 20]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
 7.2.  Unmanaged CPEs
 
    The approach specified in Section 7.1 does not apply for hosting a
@@ -1145,6 +1114,14 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
       using DHCP/RA to internal hosts.
 
+
+
+
+Boucadair, et al.        Expires March 21, 2021                [Page 20]
+
+Internet-Draft       Encrypted DNS in Home Networks       September 2020
+
+
    Figure 18 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party encrypted DNS server.  In
    this example, the DNS information received from the managed CPE (and
@@ -1166,17 +1143,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
              CPE.
 
          Figure 18: Example of an Internal CPE Hosting a Forwarder
-
-
-
-
-
-
-
-Boucadair, et al.        Expires March 21, 2021                [Page 21]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
 8.  Legacy CPEs
 
@@ -1204,35 +1170,37 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    the DHCP/RA response to provide the attacker's Encrypted DNS server.
    Note that such an attacker can launch other attacks as discussed in
    Section 22 of [RFC8415].  The attacker can get a domain name, domain-
+
+
+
+Boucadair, et al.        Expires March 21, 2021                [Page 21]
+
+Internet-Draft       Encrypted DNS in Home Networks       September 2020
+
+
    validated public certificate from a CA, host an Encrypted DNS server
    and claim the best DNS privacy preservation policy.  Also, an
    attacker can use a public IP address, get an 'IP address'-validated
    public certificate from a CA, host an Encryptd DNS server and claim
    the best DNS privacy preservation policy.
 
-   Some possible mitigations for this attack are listed below:
+   TCP connections received from outside the home network MUST be
+   discarded by the encrypted DNS forwarder in the CPE.  This behavior
+   adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4 and IPv6.
 
-   o  Encrypted DNS server pre-configured in the OS or browser.  If the
-      local encrypted DNS server offers malware and phishing filtering
-      service, an attacker can spoof the DHCP/RA response to provide an
-      non-filtering DNS server pre-configured in the OS or browser,
-      which the attacker can leverage to deliver malware or mislead the
-      user to access phishing sites.  If the discovered encrypted DNS
-      server does not meet the filtering requirements of the user, the
-      DNS client can take appropriate actions.
+   Attacks of spoofed or modified DHCP responses and RA messages by
+   attackers within the home network may be mitigated by making use of
+   the following mechanisms:
 
-   o  Cryptographically assert the DNS server identity for the DNS
-      client to identify it is connecting to an is encrypted DNS server
-      hosted by an legal organization and for the user to identify the
-      encrypted DNS server hosted by a specific organization.
+   o  DHCPv6-Shield described in [RFC7610], the CPEs discards DHCP
+      response messages received from any local endpoint.
 
+   o  RA-Guard described in [RFC7113], the CPE discards RAs messages
+      received from any local endpoint.
 
-
-
-Boucadair, et al.        Expires March 21, 2021                [Page 22]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
+   o  Source Address Validation Improvement (SAVI) solution for DHCP
+      described in [RFC7513], the CPE filters packets with forged source
+      IP addresses.
 
    Encrypted DNS sessions with rogue servers spoofing the IP address of
    a DNS server will fail because the DNS client will fail to
@@ -1258,39 +1226,15 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
    However, a passive attacker cannot spoof or modify DHCP/RA messages.
 
-9.4.  Security Capabilities of CPEs
-
-   TCP connections received from outside the home network MUST be
-   discarded by the encrypted DNS forwarder in the CPE.  This behavior
-   adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4 and IPv6.
-
-   Various home routers also offer levels of security.  Attacks of
-   spoofed or modified DHCP responses and RA messages by attackers
-   within the home network may be mitigated by making use of the
-   following mechanisms:
-
-   o  DHCPv6-Shield described in [RFC7610], the CPEs discards DHCP
-      response messages received from any local endpoint.
-
-   o  RA-Guard described in [RFC7113], the CPE discards RAs messages
-      received from any local endpoint.
-
-   o  Source Address Validation Improvement (SAVI) solution for DHCP
-      described in [RFC7513], the CPE filters packets with forged source
-      IP addresses.
 
 
 
-
-
-
-
-Boucadair, et al.        Expires March 21, 2021                [Page 23]
+Boucadair, et al.        Expires March 21, 2021                [Page 22]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
-9.5.  Wireless Security - Authentication Attacks
+9.4.  Wireless Security - Authentication Attacks
 
    Wireless LAN (WLAN) as frequently deployed in home networks is
    vulnerable to various attacks (e.g., [Evil-Twin], [Krack],
@@ -1341,7 +1285,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 24]
+Boucadair, et al.        Expires March 21, 2021                [Page 23]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1397,7 +1341,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 25]
+Boucadair, et al.        Expires March 21, 2021                [Page 24]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1453,7 +1397,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 26]
+Boucadair, et al.        Expires March 21, 2021                [Page 25]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1509,7 +1453,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 27]
+Boucadair, et al.        Expires March 21, 2021                [Page 26]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1565,7 +1509,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 28]
+Boucadair, et al.        Expires March 21, 2021                [Page 27]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1621,7 +1565,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 29]
+Boucadair, et al.        Expires March 21, 2021                [Page 28]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1677,7 +1621,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 30]
+Boucadair, et al.        Expires March 21, 2021                [Page 29]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
@@ -1733,4 +1677,4 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 21, 2021                [Page 31]
+Boucadair, et al.        Expires March 21, 2021                [Page 30]
