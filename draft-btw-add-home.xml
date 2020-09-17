@@ -547,10 +547,18 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |  Enc DNS Type |   Unassigned  |          Port Number          |
    +---------------+---------------+-------------------------------+
-   |                                                               | 
-   ~                         IPv6 Addresses                        ~
    |                                                               |
-   +---------------------------------------------------------------+
+   |                         IPv6 Address                          |
+   |                                                               |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   |                         IPv6 Address                          |
+   |                                                               |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                              ...                              |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure>The fields of the option shown in <xref
         target="dhcpv6_add"></xref> are as follows:</t>
@@ -578,7 +586,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             that default port numbers should be used. As a reminder, the
             default port number is 853 for DoT and 443 for DoH.</t>
 
-            <t>IPv6 Addresses: Indicates one or more IPv6 addresses to reach
+            <t>IPv6 Address(es): Indicates one or more IPv6 addresses to reach
             the encrypted DNS server.</t>
           </list></t>
 
@@ -831,7 +839,26 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       the mechanism defined in <xref target="I-D.ietf-dnssd-push"></xref>.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
-      URI template.</t>
+      URI template. An example of such option is depicted in <xref
+      target="uri"></xref>.</t>
+
+      <figure anchor="uri" title="Example of a DHCPv6 URI Template Option">
+        <artwork><![CDATA[    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   OPTION_V6_DOH_TEMPLATE      |         Option-length         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   ~                         uri-template-data                     ~
+   |                             . . .                             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+   Each instance of the uri-template-data is formatted as follows:
+
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...-+-+-+-+-+-+-+
+   |   uri-template-len            |          URI Template         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...-+-+-+-+-+-+-+]]></artwork>
+      </figure>
 
       <t><list style="empty">
           <t>Note: More feedback form the WG is needed to decide which
