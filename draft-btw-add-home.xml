@@ -411,12 +411,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       for DNS authentication purposes.</t>
 
       <t>To avoid adding a dependency on another server to resolve the ADN,
-      the options return a list of IP addresses to locate the encryptd DNS
+      the options return a list of IP addresses to locate the encrypted DNS
       server. In the various scenarios sketched in <xref
       target="depl"></xref>, encrypted DNS servers may terminate on the same
       IP address or distinct IP addresses. Terminating encrypted DNS servers
-      on the same or distinct IP addresses is deployment-specific. It is
-      RECOMMENDED to return both the ADN and a list of IP addresses.</t>
+      on the same or distinct IP addresses is deployment specific. It is
+      RECOMMENDED to return both the ADN and a list of IP addresses to a
+      requesting host.</t>
 
       <t>Note that in order to optimize the size of discovery messages when
       all servers terminate on the same IP address, a host may rely upon the
@@ -424,13 +425,24 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       target="RFC3646"></xref><xref target="RFC8106"></xref> to retrieve a
       list of IP addresses to reach their DNS servers. Nevertheless, this
       approach requires a client that supports more than one encrypted DNS to
-      probe the list of IP addresses. To avoid such probing, the options
-      defined in the following sections are designed to associate an IP
-      address with an encrypted DNS type.</t>
+      probe that list of IP addresses. To avoid such probing, the options
+      defined in the following subsections associate an IP address with an
+      encrypted DNS type. No probing is required in such design. </t>
+
+      <t>A list of IP addresses to reach an encrypted DNS server can be
+      returned in the option to accommodate current deployments relying upon
+      primary and backup servers. Whether one IP address or more are returned
+      in an option is deployment specific. For example, a home router
+      embedding a forwarder has to include one single IP address pointing to
+      one of its LAN-facing interfaces. </t>
+
+      <t>If more than one IP address are to be returned in an Encrypted DNS
+      server option, these addresses are ordered in the preference for use by
+      the client. </t>
 
       <t>Because DoT and DoQ may make use of customized port numbers instead
-      of default ones, the options are also designed to return alternate port
-      numbers.</t>
+      of default ones, the Encrypted DNS server options are designed to return
+      alternate port numbers.</t>
 
       <t>The DNS client establishes an encrypted DNS session with the
       discovered DNS IP address(es) and port number, and uses the mechanism
@@ -445,7 +457,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <section anchor="DHCPv6" title="DHCPv6 Encrypted DNS Options">
         <t>The DHCPv6 Encrypted DNS ADN option is used to configure an
         authentication domain name of the encrypted DNS server. The format of
-        this option is shown in <xref target="ri_option"></xref>.</t>
+        this option is shown in <xref target="ri_option"></xref>. </t>
 
         <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS ADN Option">
             <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -497,7 +509,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             type(s).<vspace blankLines="1" />To keep the packet small, if more
             than one encrypted DNS type (e.g., both DoH and DoT) are to be
             returned to a requesting client and the same ADN is used for these
-            types, the corresponding bits MUST be set in the 'Encrypted DNS
+            types, the corresponding bits must be set in the 'Encrypted DNS
             Types' field of the same option instance in a response. For
             example, if the client requested DoH and DoT and the server
             supports both with the same ADN, then both T and H bits must be
@@ -741,7 +753,11 @@ with:
         <t><?rfc subcompact="no" ?>The IPv6 Router Advertisement (RA)
         Encrypted DNS Address option is used to configure a port number and a
         list of IPv6 addresses of the encrypted DNS server. The format of this
-        option is illustrated in <xref target="ra_add"></xref>.</t>
+        option is illustrated in <xref target="ra_add"></xref>. All of the
+        addresses share the same Lifetime value. Simialr to <xref
+        target="RFC8106"></xref>, if it is desirable to have different
+        Lifetime values per IP address, multiple Encrypted DNS Address Options
+        may be used. </t>
 
         <t><figure anchor="ra_add" title="RA Encrypted DNS Address Option">
             <artwork><![CDATA[      0                   1                   2                   3
