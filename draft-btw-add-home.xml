@@ -33,8 +33,9 @@
 <!-- end of list of popular I-D processing instructions -->
 <rfc category="std" docName="draft-btw-add-home-latest" ipr="trust200902">
   <front>
-    <title abbrev="Encrypted DNS in Home Networks">Encrypted DNS Discovery and
-    Deployment Considerations for Home Networks</title>
+    <title abbrev="Encrypted DNS in Home Networks">DHCP and Router
+    Advertisement Options for Encrypted DNS Discovery within Home
+    Networks</title>
 
     <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
       <organization>Orange</organization>
@@ -875,9 +876,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
       <t><list style="symbols">
           <t>Note: Validation has to be discussed in the WG to address the
-          requirement of associated/equivalent resolver (see
-          https://tools.ietf.org/html/draft-box-add-requirements-00#section-3).
-          </t>
+          requirement of associated/equivalent resolver (see Section 3 of
+          <xref target="I-D.box-add-requirements"></xref>). </t>
         </list></t>
 
       <section anchor="auto" title="Encrypted DNS Auto-Upgrade">
@@ -1088,20 +1088,20 @@ Legend:
     <section anchor="Security" title="Security Considerations">
       <section title="Spoofing Attacks">
         <t>Because DHCP/RA messages are not encrypted or protected against
-        modification in any way, their content can be spoofed or modified by
-        active attackers (e.g., compromised devices within the home network).
-        An active attacker (Section 3.3 of <xref target="RFC3552"></xref>) can
-        spoof the DHCP/RA response to provide the attacker's DoH/DoT/DoQ
-        server. Note that such an attacker can launch other attacks as
-        discussed in Section 22 of <xref target="RFC8415"></xref>. The
-        attacker can get a domain name, domain-validated public certificate
-        from a CA, host a DoH/DoT/DoQ server and claim the best DNS privacy
-        preservation policy. Also, an attacker can use a public IP address,
-        get an 'IP address'-validated public certificate from a CA, host a
-        DoH/DoT/DoQ server and claim the best DNS privacy preservation
-        policy.</t>
+        modification within the LAN, their content can be spoofed or modified
+        by active attackers (e.g., compromised devices within the home
+        network). An active attacker (Section 3.3 of <xref
+        target="RFC3552"></xref>) can spoof the DHCP/RA response to provide
+        the attacker's Encrypted DNS server. Note that such an attacker can
+        launch other attacks as discussed in Section 22 of <xref
+        target="RFC8415"></xref>. The attacker can get a domain name,
+        domain-validated public certificate from a CA, host an Encrypted DNS
+        server and claim the best DNS privacy preservation policy. Also, an
+        attacker can use a public IP address, get an 'IP address'-validated
+        public certificate from a CA, host an Encryptd DNS server and claim
+        the best DNS privacy preservation policy.</t>
 
-        <t>The possible mitigations for this attack are listed below:</t>
+        <t>Some possible mitigations for this attack are listed below:</t>
 
         <t><list style="symbols">
             <t>Encrypted DNS server pre-configured in the OS or browser. If
@@ -1119,14 +1119,13 @@ Legend:
             encrypted DNS server hosted by a specific organization.</t>
           </list></t>
 
-        <t>DoT/DoH sessions with rogue servers spoofing the IP address of a
-        DNS server will fail because the DNS client will fail to authenticate
-        that rogue server based upon PKIX authentication <xref
-        target="RFC6125"></xref> based upon the authentication domain name in
-        the Reference Identifier Option. DNS clients that ignore
-        authentication failures and accept spoofed certificates will be
-        subject to attacks (e.g., redirect to malicious servers, intercept
-        sensitive data).</t>
+        <t>Encrypted DNS sessions with rogue servers spoofing the IP address
+        of a DNS server will fail because the DNS client will fail to
+        authenticate that rogue server based upon PKIX authentication <xref
+        target="RFC6125"></xref>, particularly the authentication domain name
+        in the Encrypted DNS Option. DNS clients that ignore authentication
+        failures and accept spoofed certificates will be subject to attacks
+        (e.g., redirect to malicious servers, intercept sensitive data).</t>
       </section>
 
       <section title="Deletion Attacks">
@@ -1369,6 +1368,8 @@ Legend:
       <?rfc include='reference.RFC.8146'?>
 
       <?rfc include='reference.RFC.8305'?>
+
+      <?rfc include='reference.I-D.box-add-requirements'?>
 
       <reference anchor="TR-069"
                  target="https://www.broadband-forum.org/technical/download/TR-069.pdf">
