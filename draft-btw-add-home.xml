@@ -115,7 +115,7 @@
       servers.</t>
 
       <t>This document focuses on encrypted DNS deployment within home
-      networks. </t>
+      networks.</t>
     </abstract>
   </front>
 
@@ -123,7 +123,7 @@
     <section anchor="intro" title="Introduction">
       <t>Internet Service Providers (ISPs) traditionally provide DNS resolvers
       to their customers. Typically, ISPs deploy the following mechanisms to
-      advertise a list of DNS Recursive DNS server(s) to their customers: </t>
+      advertise a list of DNS Recursive DNS server(s) to their customers:</t>
 
       <t><list style="symbols">
           <t>Protocol Configuration Options in cellular networks <xref
@@ -428,18 +428,18 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       approach requires a client that supports more than one encrypted DNS to
       probe that list of IP addresses. To avoid such probing, the options
       defined in the following subsections associate an IP address with an
-      encrypted DNS type. No probing is required in such design. </t>
+      encrypted DNS type. No probing is required in such design.</t>
 
       <t>A list of IP addresses to reach an encrypted DNS server can be
       returned in the option to accommodate current deployments relying upon
       primary and backup servers. Whether one IP address or more are returned
       in an option is deployment specific. For example, a home router
       embedding a forwarder has to include one single IP address pointing to
-      one of its LAN-facing interfaces. </t>
+      one of its LAN-facing interfaces.</t>
 
       <t>If more than one IP address are to be returned in an Encrypted DNS
       server option, these addresses are ordered in the preference for use by
-      the client. </t>
+      the client.</t>
 
       <t>Because DoT and DoQ may make use of customized port numbers instead
       of default ones, the Encrypted DNS server options are designed to return
@@ -458,7 +458,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <section anchor="DHCPv6" title="DHCPv6 Encrypted DNS Options">
         <t>The DHCPv6 Encrypted DNS ADN option is used to configure an
         authentication domain name of the encrypted DNS server. The format of
-        this option is shown in <xref target="ri_option"></xref>. </t>
+        this option is shown in <xref target="ri_option"></xref>.</t>
 
         <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS ADN Option">
             <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -605,12 +605,12 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
         <t>If the DHCPv6 client requested more than one encrypted DNS server
         type, the DHCP client MUST be prepared to receive multiple
         OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) options; each option is to be
-        treated as a separate encrypted DNS server. </t>
+        treated as a separate encrypted DNS server.</t>
 
         <t>If more than one encrypted DNS server types is supported on the
         same IP address and default port numbers are used, one instance of
         OPTION_V6_ENC_ADD option with the appropriate bits set in "Encr DNS
-        Types" field should be returned by the DHCP server. </t>
+        Types" field should be returned by the DHCP server.</t>
       </section>
 
       <section anchor="DHCP" title="DHCP Encrypted DNS Option">
@@ -770,7 +770,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
         <xref target="ra_add"></xref>. All of the addresses share the same
         Lifetime value. Simialr to <xref target="RFC8106"></xref>, if it is
         desirable to have different Lifetime values per IP address, multiple
-        Encrypted DNS Address options may be used. </t>
+        Encrypted DNS Address options may be used.</t>
 
         <t><figure anchor="ra_add" title="RA Encrypted DNS Address Option">
             <artwork><![CDATA[      0                   1                   2                   3
@@ -822,7 +822,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             this field is shown in <xref target="types"></xref>.</t>
 
             <t>IPv6 Address(es) : One or more IPv6 addresses of the encrypted
-            DNS server. Link-local addresses MAY be used. </t>
+            DNS server. Link-local addresses MAY be used.</t>
           </list></t>
       </section>
     </section>
@@ -838,8 +838,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
       client may contact that DoH resolver to retrieve the list of supported
       DoH services using the well-known URI. DoH clients re-iterates that
-      request regularly to retrieve an updated list of supported DoH services.
-      </t>
+      request regularly to retrieve an updated list of supported DoH
+      services.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template. An example of such option is depicted in <xref
@@ -865,7 +865,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
       <t><list style="empty">
           <t>Note: More feedback form the WG is needed to decide which
-          approach to follow. </t>
+          approach to follow.</t>
         </list>How a DoH client makes use of the configured DoH services is
       out of scope of this document.</t>
     </section>
@@ -1029,11 +1029,11 @@ Legend:
       the Do53 server in the subjectAltName extension. After validating the
       server certificate, the client can retrieve the IP address in the
       certificate to identify that both Do53 and Encrypted DNS servers are
-      operated by the same entity. </t>
+      operated by the same entity.</t>
 
       <t>If the Do53 and Encrypted DNS server are hosted on a private IP
       address, they should use the same private IP address to prove to the
-      client they are operated by the same entity. </t>
+      client they are operated by the same entity.</t>
 
       <t>The DHCP/RA option to discover ADN takes precedence over special-use
       domain name since the special-use domain name is susceptible to both
@@ -1235,6 +1235,10 @@ Legend:
       comments.</t>
 
       <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
+
+      <t>The use of DHCP to retrieve an authentication domain name was
+      discussed in Section 7.3.1 of <xref target="RFC8310"></xref> and <xref
+      target="I-D.pusateri-dhc-dns-driu"></xref>.</t>
     </section>
   </middle>
 
@@ -1307,6 +1311,8 @@ Legend:
       <?rfc include='reference.RFC.8305'?>
 
       <?rfc include='reference.I-D.box-add-requirements'?>
+
+      <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
       <reference anchor="TR-069"
                  target="https://www.broadband-forum.org/technical/download/TR-069.pdf">

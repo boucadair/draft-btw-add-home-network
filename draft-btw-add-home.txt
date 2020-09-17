@@ -1314,6 +1314,10 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection.
 
+   The use of DHCP to retrieve an authentication domain name was
+   discussed in Section 7.3.1 of [RFC8310] and
+   [I-D.pusateri-dhc-dns-driu].
+
 12.  References
 
 12.1.  Normative References
@@ -1332,10 +1336,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               DOI 10.17487/RFC3396, November 2002,
               <https://www.rfc-editor.org/info/rfc3396>.
 
-   [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
-              "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
-              DOI 10.17487/RFC4861, September 2007,
-              <https://www.rfc-editor.org/info/rfc4861>.
 
 
 
@@ -1345,6 +1345,11 @@ Boucadair, et al.        Expires March 21, 2021                [Page 24]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
+              "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
+              DOI 10.17487/RFC4861, September 2007,
+              <https://www.rfc-editor.org/info/rfc4861>.
 
    [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
               "IPv6 Router Advertisement Options for DNS Configuration",
@@ -1388,11 +1393,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               <https://openwrt.org/docs/guide-user/network/wifi/
               wireless.security.8021x>.
 
-   [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
-              Specification", <https://www.wi-fi.org/file/device-
-              provisioning-protocol-specification>.
-
-
 
 
 
@@ -1401,6 +1401,10 @@ Boucadair, et al.        Expires March 21, 2021                [Page 25]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
+              Specification", <https://www.wi-fi.org/file/device-
+              provisioning-protocol-specification>.
 
    [Dragonblood]
               The Unicode Consortium, "Dragonblood: Analyzing the
@@ -1437,17 +1441,13 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               publication", draft-pp-add-resinfo-02 (work in progress),
               June 2020.
 
+   [I-D.pusateri-dhc-dns-driu]
+              Pusateri, T. and W. Toorop, "DHCPv6 Options for private
+              DNS Discovery", draft-pusateri-dhc-dns-driu-00 (work in
+              progress), July 2018.
+
    [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
               2017, <https://www.krackattacks.com/>.
-
-   [ND]       , <http://www.iana.org/assignments/icmpv6-parameters/
-              icmpv6-parameters.xhtml#icmpv6-parameters-5>.
-
-   [PSK]      Cisco, "Identity PSK Feature Deployment Guide",
-              <https://www.cisco.com/c/en/us/td/docs/wireless/
-              controller/technotes/8-5/
-              b_Identity_PSK_Feature_Deployment_Guide.html>.
-
 
 
 
@@ -1457,6 +1457,14 @@ Boucadair, et al.        Expires March 21, 2021                [Page 26]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   [ND]       , <http://www.iana.org/assignments/icmpv6-parameters/
+              icmpv6-parameters.xhtml#icmpv6-parameters-5>.
+
+   [PSK]      Cisco, "Identity PSK Feature Deployment Guide",
+              <https://www.cisco.com/c/en/us/td/docs/wireless/
+              controller/technotes/8-5/
+              b_Identity_PSK_Feature_Deployment_Guide.html>.
 
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
               Text on Security Considerations", BCP 72, RFC 3552,
@@ -1497,6 +1505,15 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
               June 2014, <https://www.rfc-editor.org/info/rfc7250>.
 
+
+
+
+
+Boucadair, et al.        Expires March 21, 2021                [Page 27]
+
+Internet-Draft       Encrypted DNS in Home Networks       September 2020
+
+
    [RFC7513]  Bi, J., Wu, J., Yao, G., and F. Baker, "Source Address
               Validation Improvement (SAVI) Solution for DHCP",
               RFC 7513, DOI 10.17487/RFC7513, May 2015,
@@ -1506,13 +1523,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               Protecting against Rogue DHCPv6 Servers", BCP 199,
               RFC 7610, DOI 10.17487/RFC7610, August 2015,
               <https://www.rfc-editor.org/info/rfc7610>.
-
-
-
-Boucadair, et al.        Expires March 21, 2021                [Page 27]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
@@ -1551,16 +1561,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               DOI 10.17487/RFC8520, March 2019,
               <https://www.rfc-editor.org/info/rfc8520>.
 
-   [RFC8555]  Barnes, R., Hoffman-Andrews, J., McCarney, D., and J.
-              Kasten, "Automatic Certificate Management Environment
-              (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
-              <https://www.rfc-editor.org/info/rfc8555>.
-
-   [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
-              December 2018, <https://www.broadband-
-              forum.org/technical/download/TR-069.pdf>.
-
-
 
 
 
@@ -1569,6 +1569,15 @@ Boucadair, et al.        Expires March 21, 2021                [Page 28]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   [RFC8555]  Barnes, R., Hoffman-Andrews, J., McCarney, D., and J.
+              Kasten, "Automatic Certificate Management Environment
+              (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
+              <https://www.rfc-editor.org/info/rfc8555>.
+
+   [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
+              December 2018, <https://www.broadband-
+              forum.org/technical/download/TR-069.pdf>.
 
    [TS.24008]
               3GPP, "Mobile radio interface Layer 3 specification; Core
@@ -1606,15 +1615,6 @@ Authors' Addresses
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-
-
-
-
-
-
-
 
 
 
