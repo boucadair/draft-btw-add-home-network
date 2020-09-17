@@ -107,14 +107,14 @@
     <workgroup>ADD</workgroup>
 
     <abstract>
-      <t>This document discusses encrypted DNS (e.g., DoH, DoT, DoQ)
-      deployment considerations for home networks. It particularly sketches
-      the required steps to use of encrypted DNS capabilities provided by
-      local networks.</t>
-
       <t>The document specifies new DHCP and Router Advertisement Options to
-      convey a DNS Authentication Domain Name together with a list of IP
-      addresses.</t>
+      discover encrypted DNS servers (e.g., DoH, DoT, DoQ). Particularly, it
+      allows to learn an Authentication Domain Name together with a list of IP
+      addresses and optionally a port number to reach such encrypted DNS
+      servers.</t>
+
+      <t>This document focuses on encrypted DNS deployment within home
+      networks. </t>
     </abstract>
   </front>
 
@@ -122,8 +122,7 @@
     <section anchor="intro" title="Introduction">
       <t>Internet Service Providers (ISPs) traditionally provide DNS resolvers
       to their customers. Typically, ISPs deploy the following mechanisms to
-      advertise a list of DNS Recursive DNS server(s) to their customers:
-      <?rfc subcompact="yes" ?></t>
+      advertise a list of DNS Recursive DNS server(s) to their customers: </t>
 
       <t><list style="symbols">
           <t>Protocol Configuration Options in cellular networks <xref
@@ -135,7 +134,7 @@
 
           <t>IPv6 Router Advertisement <xref target="RFC4861"></xref><xref
           target="RFC8106"></xref> (Type 25 (Recursive DNS Server
-          Option)).<?rfc subcompact="no" ?></t>
+          Option)).</t>
         </list></t>
 
       <t>The communication between a customer's device (possibly via Customer
@@ -1245,7 +1244,7 @@ Legend:
       <t>Many thanks to Christian Jacquenet for the review.</t>
 
       <t>Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
-      Bertola, Stephane Bortzmeyer, Ben Schwartz and Iain Sharp for the
+      Bertola, Stephane Bortzmeyer, Ben Schwartz, and Iain Sharp for the
       comments.</t>
 
       <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
