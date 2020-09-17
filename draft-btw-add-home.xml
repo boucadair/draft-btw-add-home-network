@@ -179,11 +179,11 @@ Legend:
       <xref target="RFC7858"></xref>, or DNS-over-QUIC (DoQ) <xref
       target="I-D.ietf-dprive-dnsoquic"></xref> in local networks. In
       particular, the document describes how a local encrypted DNS server can
-      be discovered and used by connected hosts. This document specifies
-      options that allow DNS clients to discover local encrypted DNS servers.
-      <xref target="RI"></xref> describes DHCP, DHCPv6, and RA options to
-      convey the DNS Authentication Domain Name (ADN) <xref
-      target="RFC8310"></xref>.</t>
+      be discovered and used by connected hosts by means of DHCP, DHCPv6, and
+      RA options (<xref target="RI"></xref>). These options are designed to
+      convey the following information: the DNS Authentication Domain Name
+      (ADN) <xref target="RFC8310"></xref>, a list of IP addresses, and
+      optionally a port number.</t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP

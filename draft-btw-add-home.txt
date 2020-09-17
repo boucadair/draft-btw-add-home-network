@@ -199,10 +199,11 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    over-HTTPS (DoH) [RFC8484], DNS-over-TLS (DoT) [RFC7858], or DNS-
    over-QUIC (DoQ) [I-D.ietf-dprive-dnsoquic] in local networks.  In
    particular, the document describes how a local encrypted DNS server
-   can be discovered and used by connected hosts.  This document
-   specifies options that allow DNS clients to discover local encrypted
-   DNS servers.  Section 4 describes DHCP, DHCPv6, and RA options to
-   convey the DNS Authentication Domain Name (ADN) [RFC8310].
+   can be discovered and used by connected hosts by means of DHCP,
+   DHCPv6, and RA options (Section 4).  These options are designed to
+   convey the following information: the DNS Authentication Domain Name
+   (ADN) [RFC8310], a list of IP addresses, and optionally a port
+   number.
 
    Some ISPs rely upon external resolvers (e.g., outsourced service or
    public resolvers); these ISPs provide their customers with the IP
@@ -216,8 +217,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    (Section 3).  Also, considerations related to hosting a DNS forwarder
    in the CPE are described (Section 7).
 
-   Hosts and/or CPEs may be connected to multiple networks; each
-   providing their own DNS configuration using the discovery mechanisms
+
 
 
 
@@ -226,6 +226,8 @@ Boucadair, et al.        Expires March 20, 2021                 [Page 4]
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
+   Hosts and/or CPEs may be connected to multiple networks; each
+   providing their own DNS configuration using the discovery mechanisms
    specified in this document.  Nevertheless, it is out of the scope of
    this specification to discuss DNS selection of multi-interface
    devices.  The reader may refer to [RFC6731] for a discussion of
@@ -264,8 +266,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The DNS client discovers whether the DNS server in the local network
    supports DoH/DoT/DoQ by using a dedicated field in the discovery
    message: Encrypted DNS Types (Section 4).
-
-
 
 
 
