@@ -220,11 +220,14 @@ Legend:
 
       <t>Do53 refers to unencrypted DNS.</t>
 
-      <t>'Encrypted DNS' refers to a scheme where DNS exchanges are transport
-      over an encrypted channel.</t>
+      <t>'Encrypted DNS' refers to a scheme where DNS exchanges are
+      transported over an encrypted channel. Examples of encrypted DNS are
+      DNS-over-TLS (DoT) <xref target="RFC7858"></xref>, DNS-over-HTTPS (DoH)
+      <xref target="RFC8484"></xref>, or DNS-over-QUIC (DoQ) <xref
+      target="I-D.ietf-dprive-dnsoquic"></xref>.</t>
     </section>
 
-    <section anchor="depl" title="Sample Deployment Scenarios">
+    <section anchor="depl" title="Sample Target Deployment Scenarios">
       <t></t>
 
       <section anchor="mcpe" title="Managed CPEs">

@@ -72,7 +72,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   3.  Sample Deployment Scenarios . . . . . . . . . . . . . . . . .   5
+   3.  Sample Target Deployment Scenarios  . . . . . . . . . . . . .   5
      3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   7
    4.  Encrypted DNS Discovery Options . . . . . . . . . . . . . . .   8
@@ -247,10 +247,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    Do53 refers to unencrypted DNS.
 
-   'Encrypted DNS' refers to a scheme where DNS exchanges are transport
-   over an encrypted channel.
+   'Encrypted DNS' refers to a scheme where DNS exchanges are
+   transported over an encrypted channel.  Examples of encrypted DNS are
+   DNS-over-TLS (DoT) [RFC7858], DNS-over-HTTPS (DoH) [RFC8484], or DNS-
+   over-QUIC (DoQ) [I-D.ietf-dprive-dnsoquic].
 
-3.  Sample Deployment Scenarios
+3.  Sample Target Deployment Scenarios
 
 3.1.  Managed CPEs
 
@@ -266,8 +268,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The DNS client discovers whether the DNS server in the local network
    supports DoH/DoT/DoQ by using a dedicated field in the discovery
    message: Encrypted DNS Types (Section 4).
-
-
 
 
 
