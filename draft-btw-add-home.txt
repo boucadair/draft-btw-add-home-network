@@ -867,15 +867,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
 
-   o  Port Number: If not null, it iIndicates the port number to be used
-      for the encrypted DNS.  A null value indicates that default port
-      numbers must be used.  As a reminder, the default port number is
-      853 for DoT and 443 for DoH.
-
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
-      encrypted DNS server conveyed in this attribute.  The format of
-      this field is shown in Figure 8.
-
    o  Unassigned: This field is unused.  It MUST be initialized to zero
       by the sender and MUST be ignored by the receiver.
 
@@ -889,6 +880,15 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
       A value of all one bits (0xffffffff) represents infinity.
 
+      A value of zero means that this encrypted DNS server MUST no
+      longer be used.
+
+   o  Port Number: If not null, it iIndicates the port number to be used
+      for the encrypted DNS.  A null value indicates that default port
+      numbers must be used.  As a reminder, the default port number is
+      853 for DoT and 443 for DoH.
+
+
 
 
 
@@ -898,8 +898,9 @@ Boucadair, et al.        Expires March 21, 2021                [Page 16]
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
-      A value of zero means that this encrypted DNS server MUST no
-      longer be used.
+   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+      encrypted DNS server conveyed in this attribute.  The format of
+      this field is shown in Figure 8.
 
    o  IPv6 Address(es) : One or more IPv6 addresses of the encrypted DNS
       server.  Link-local addresses MAY be used.
@@ -944,8 +945,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       Note: More feedback form the WG is needed to decide which approach
       to follow.
 
-   How a DoH client makes use of the configured DoH services is out of
-   scope of this document.
+
 
 
 
@@ -954,24 +954,27 @@ Boucadair, et al.        Expires March 21, 2021                [Page 17]
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
+   How a DoH client makes use of the configured DoH services is out of
+   scope of this document.
+
 6.  Make Use of Discovered Encrypted DNS Server
 
    Even if the use of a discovered encrypted DNS server is beyond the
    discovery process and falls under encrypted server selection, the
-   following discusses typicall conditions under which discovered
+   following discusses typical conditions under which discovered
    encrypted DNS server can be used.
 
-   o  If the DNS server's IP address discovered by using DHCP/RA is pre-
-      configured in the OS or Browser as a verified resolver (e.g., part
-      of an auto-upgrade program such as [Auto-upgrade]), the DNS client
-      auto-upgrades to use the pre-configured encrypted DNS server tied
-      to the discovered DNS server IP address.  In such a case the DNS
-      client will perform additional checks out of band, such as
+   o  If the DNS server's IP address discovered by using DHCP/RA is
+      preconfigured in the OS or Browser as a verified resolver (e.g.,
+      part of an auto-upgrade program such as [Auto-upgrade]), the DNS
+      client auto-upgrades to use the preconfigured encrypted DNS server
+      tied to the discovered DNS server IP address.  In such a case the
+      DNS client will perform additional checks out of band, such as
       confirming that the Do53 IP address and the encrypted DNS server
       are owned and operated by the same organisation.
 
-   o  Similarly, if the ADN conveyed in DHCP/RA (Section 4) is pre-
-      configured in the OS or browser as a verified resolver, the DNS
+   o  Similarly, if the ADN conveyed in DHCP/RA (Section 4) is
+      preconfigured in the OS or browser as a verified resolver, the DNS
       client auto-upgrades to establish an encrypted a DoH/DoT/DoQ
       session with the ADN.
 
@@ -999,9 +1002,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The managed CPE should support a configuration parameter to instruct
    the CPE whether it has to relay the encrypted DNS server received
    from the ISP's network or has to announce itself as a forwarder
-   within the local network.  The default behavior of the CPE is to
-   supply the encrypted DNS server received from the ISP's network.
-
 
 
 
@@ -1009,6 +1009,9 @@ Boucadair, et al.        Expires March 21, 2021                [Page 18]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   within the local network.  The default behavior of the CPE is to
+   supply the encrypted DNS server received from the ISP's network.
 
 7.1.2.  Auto-Upgrade Based on Domains and their Subdomains
 
@@ -1054,9 +1057,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
      * @rs: IP address of a rogue server
 
    Figure 17: A Simplified Example of Auto-upgrade based on Sub-domains
-
-
-
 
 
 
