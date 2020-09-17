@@ -773,11 +773,11 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA5      |     Length    |           Port Number         |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     | Encr DNS Types|                    Unassigned                 |
+     |     TBA5      |     Length    |         Unassigned            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     | Encr DNS Types|  Unassigned   |           Port Number         |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
      :                         IPv6 Address(es)                      :
@@ -868,35 +868,30 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       out of scope of this document.</t>
     </section>
 
-    <section title="Make Use of Discovered Encrypted DNS Server">
+    <section anchor="auto" title="Make Use of Discovered Encrypted DNS Server">
       <t>Even if the use of a discovered encrypted DNS server is beyond the
       discovery process and falls under encrypted server selection, the
-      following subsection discusses conditions under which discovered
-      encrypted DNS server can be used.</t>
+      following discusses typicall conditions under which discovered encrypted
+      DNS server can be used.<list style="symbols">
+          <t>If the DNS server's IP address discovered by using DHCP/RA is
+          pre-configured in the OS or Browser as a verified resolver (e.g.,
+          part of an auto-upgrade program such as <xref
+          target="Auto-upgrade"></xref>), the DNS client auto-upgrades to use
+          the pre-configured encrypted DNS server tied to the discovered DNS
+          server IP address. In such a case the DNS client will perform
+          additional checks out of band, such as confirming that the Do53 IP
+          address and the encrypted DNS server are owned and operated by the
+          same organisation.</t>
 
-      <section anchor="auto" title="Encrypted DNS Auto-Upgrade">
-        <t>Additional considerations are discussed below for the use of DoH
-        and DoT servers provided by local networks:<list style="symbols">
-            <t>If the DNS server's IP address discovered by using DHCP/RA is
-            pre-configured in the OS or Browser as a verified resolver (e.g.,
-            part of an auto-upgrade program such as <xref
-            target="Auto-upgrade"></xref>), the DNS client auto-upgrades to
-            use the pre-configured encrypted DNS server tied to the discovered
-            DNS server IP address. In such a case the DNS client will perform
-            additional checks out of band, such as confirming that the Do53 IP
-            address and the encrypted DNS server are owned and operated by the
-            same organisation.</t>
-
-            <t>Similarly, if the ADN conveyed in DHCP/RA (<xref
-            target="RI"></xref>) is pre-configured in the OS or browser as a
-            verified resolver, the DNS client auto-upgrades to establish an
-            encrypted a DoH/DoT/DoQ session with the ADN.<vspace
-            blankLines="1" />In such case, the DNS client matches the domain
-            name in the Encrypted DNS DHCP/RA option with the 'DNS-ID'
-            identifier type within subjectAltName entry in the server
-            certificate conveyed in the TLS handshake.</t>
-          </list></t>
-      </section>
+          <t>Similarly, if the ADN conveyed in DHCP/RA (<xref
+          target="RI"></xref>) is pre-configured in the OS or browser as a
+          verified resolver, the DNS client auto-upgrades to establish an
+          encrypted a DoH/DoT/DoQ session with the ADN.<vspace
+          blankLines="1" />In such case, the DNS client matches the domain
+          name in the Encrypted DNS DHCP/RA option with the 'DNS-ID'
+          identifier type within subjectAltName entry in the server
+          certificate conveyed in the TLS handshake.</t>
+        </list></t>
     </section>
 
     <section anchor="forwarder"
@@ -1027,8 +1022,19 @@ Legend:
       and to retrieve the list of supported DoH services using the RESINFO
       RRtype <xref target="I-D.pp-add-resinfo"></xref>.</t>
 
+      <t>If the Do53 and Encrypted DNS servers are hosted on different public
+      IP addresses, the DNS server certificate can include the IP address of
+      the Do53 server in the subjectAltName extension. After validating the
+      server certificate, the client can retrieve the IP address in the
+      certificate to identify that both Do53 and Encrypted DNS servers are
+      operated by the same entity. </t>
+
+      <t>If the Do53 and Encrypted DNS server are hosted on a private IP
+      address, they should use the same private IP address to prove to the
+      client they are operated by the same entity. </t>
+
       <t>The DHCP/RA option to discover ADN takes precedence over special-use
-      domain name since the special-use domain name is suseptible to both
+      domain name since the special-use domain name is susceptible to both
       internal and external attacks whereas DHCP/RA is only vulnerable to
       internal attacks.</t>
     </section>
