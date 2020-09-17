@@ -812,7 +812,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             represents infinity. <vspace blankLines="1" />A value of zero
             means that these IPv6 addresses MUST no longer be used.</t>
 
-            <t>Port Number: If not null, it iIndicates the port number to be
+            <t>Port Number: If not null, it indicates the port number to be
             used for the encrypted DNS. A null value indicates that default
             port numbers must be used. As a reminder, the default port number
             is 853 for DoT and 443 for DoH.</t>
@@ -839,8 +839,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       client may contact that DoH resolver to retrieve the list of supported
       DoH services using the well-known URI. DoH clients re-iterates that
       request regularly to retrieve an updated list of supported DoH services.
-      Note that a "push" mode can be considered using the mechanism defined in
-      <xref target="I-D.ietf-dnssd-push"></xref>.</t>
+      </t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template. An example of such option is depicted in <xref
@@ -1292,8 +1291,6 @@ Legend:
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
 
       <?rfc include='reference.I-D.pp-add-resinfo'?>
-
-      <?rfc include='reference.I-D.ietf-dnssd-push'?>
 
       <?rfc include='reference.RFC.6731'?>
 
