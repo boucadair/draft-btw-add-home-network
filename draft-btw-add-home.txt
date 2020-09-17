@@ -653,9 +653,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 4.2.  DHCP Encrypted DNS Option
 
    The DHCP Encrypted DNS option is used to configure an authentication
-   domain name of the encrypted DNS server.  The format of this option
-   is illustrated in Figure 11.
-
+   domain name, a list of IP addresses, and a port number of the
+   encrypted DNS server.  The format of this option is illustrated in
+   Figure 11.
 
 
 
@@ -674,44 +674,22 @@ Boucadair, et al.        Expires March 20, 2021                [Page 12]
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
-            0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |     TBA3      |     Length    |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           | Encr DNS Types| Num Addresses |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |           Port Number         |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |                               |
-           ~         IPv4 Address(es)      ~
-           |                               |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |                               |
-           ~  Authentication Domain Name   ~
-           |                               |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-  with:
-
-     The format of IPv4 Address(es) field is as follows:
-
-           0     8     16    24    32    40
-           +-----+-----+-----+-----+-----+---
-           |  a1 |  a2 |  a3 |  a4 |  a1 |  ...
-           +-----+-----+-----+-----+-----+---
-            IPv4 Address 1          IPv4 Address 2
-
-     This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.
-
-     The format of the Authentication Domain Name field is as follows:
-
-            Authentication Domain Name
-           +-----+-----+-----+-----+-----+--
-           |  s1 |  s2 |  s3 |  s4 | s5  |  ...
-           +-----+-----+-----+-----+-----+--
-
-     The values s1, s2, s3, etc. represent the domain name labels in the
-     domain name encoding.
+             0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |     TBA3      |     Length    |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            | Encr DNS Types| Num Addresses |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |           Port Number         |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |                               |
+            ~         IPv4 Address(es)      ~
+            |                               |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |                               |
+            ~  Authentication Domain Name   ~
+            |                               |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                    Figure 11: DHCP Encrypted DNS Option
@@ -720,8 +698,30 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    o  Code: OPTION_V4_ENC_DNS (TBA3, see Section 10.2).
    o  Length: Length of the enclosed data in octets.
+   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+      encrypted DNS server conveyed in this attribute.  The format of
+      this field is shown in Figure 8.
+   o  Num Addresses: Indicates the number of included IPv4 addresses.
+   o  Port Number: If not null, it indicates the port number to be used
+      for the encrypted DNS.  A null value indicates that default port
+      numbers are used.  As a reminder, the default port number is 853
+      for DoT and 443 for DoH.
+   o  IPv4 Addresses: Indicates one or more IPv4 addresses to reach the
+      encrypted DNS server.  The format of this field is shown in
+      Figure 12.
 
+           0     8     16    24    32    40    48
+           +-----+-----+-----+-----+-----+-----+--
+           |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 | ...
+           +-----+-----+-----+-----+-----+-----+--
+            IPv4 Address 1          IPv4 Address 2 ...
 
+     This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.
+
+               Figure 12: Format of the IPv4 Addresses Field
+   o  Authentication Domain Name: The domain name of the DoH/DoT server.
+      This field is formatted as specified in Section 10 of [RFC8415].
+      The format of this field is shown in Figure 13.
 
 
 
@@ -730,18 +730,16 @@ Boucadair, et al.        Expires March 20, 2021                [Page 13]
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
-      encrypted DNS server conveyed in this attribute.  The format of
-      this field is shown in Figure 8.
-   o  Num Addresses: Number of included IPv4 addresses.
-   o  Port Number: If set, it indicates the port number to be used for
-      the encrypted DNS.  A null value indicates that defaults port
-      numbers are used.  As a reminder, the default port number is 853
-      for DoT and 443 for DoH.
-   o  IPv4 Addresses: Indicates one or more IPv4 addresses to reach the
-      encrypted DNS server.
-   o  Authentication Domain Name: The domain name of the DoH/DoT server.
-      This field is formatted as specified in Section 10 of [RFC8415].
+           0     8     16    24    32    40    48
+           +-----+-----+-----+-----+-----+--
+           |  s1 |  s2 |  s3 |  s4 | s5  |  ...
+           +-----+-----+-----+-----+-----+--
+            Authentication Domain Name
+
+     The values s1, s2, s3, etc. represent the domain name labels in the
+     domain name encoding.
+
+         Figure 13: Format of the Authentication Domain Name Field
 
    OPTION_V4_ENC_DNS is a concatenation-requiring option.  As such, the
    mechanism specified in [RFC3396] MUST be used if OPTION_V4_ENC_DNS
@@ -761,7 +759,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    The IPv6 Router Advertisement (RA) Encrypted DNS ADN option is used
    to configure an authentication domain name of the encrypted DNS
-   server.  The format of this option is illustrated in Figure 12.
+   server.  The format of this option is illustrated in Figure 14.
 
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -776,7 +774,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                  Figure 12: RA Encrypted DNS ADN Option
+                  Figure 14: RA Encrypted DNS ADN Option
+
+   The fields of the option shown in Figure 14 are as follows:
 
 
 
@@ -785,8 +785,6 @@ Boucadair, et al.        Expires March 20, 2021                [Page 14]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
-
-   The fields of the option shown in Figure 12 are as follows:
 
    o  Type: 8-bit identifier of the Encrypted DNS Option as assigned by
       IANA (TBA3, see Section 10.3).
@@ -819,10 +817,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The IPv6 Router Advertisement (RA) Encrypted DNS Address option is
    used to configure a port number and a list of IPv6 addresses of the
    encrypted DNS server.  The format of this option is illustrated in
-   Figure 13.  All of the addresses share the same Lifetime value.
+   Figure 15.  All of the addresses share the same Lifetime value.
    Simialr to [RFC8106], if it is desirable to have different Lifetime
    values per IP address, multiple Encrypted DNS Address Options may be
    used.
+
+
 
 
 
@@ -857,9 +857,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                Figure 13: RA Encrypted DNS Address Option
+                Figure 15: RA Encrypted DNS Address Option
 
-   The fields of the option shown in Figure 13 are as follows:
+   The fields of the option shown in Figure 15 are as follows:
 
    o  Type: 8-bit identifier of the Encrypted DNS Address Option as
       assigned by IANA (TBA5, see Section 10.3).
@@ -1071,7 +1071,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    local forwarder "cpe1-internal.example.net", the encrypted DNS client
    will auto-upgrade because the pre-configured ADN would match
    subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
-   shown in Figure 14, the auto-upgrade to a rogue server advertising
+   shown in Figure 16, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail.
 
                             Rogue Server
@@ -1097,7 +1097,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
      * @i: internal IP address of the CPE
      * @rs: IP address of a rogue server
 
-   Figure 14: A Simplified Example of Auto-upgrade based on Sub-domains
+   Figure 16: A Simplified Example of Auto-upgrade based on Sub-domains
 
 7.2.  Unmanaged CPEs
 
@@ -1131,7 +1131,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
       using DHCP/RA to internal hosts.
 
-   Figure 15 illustrates an example of an unmanaged CPE hosting a
+   Figure 17 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party encrypted DNS server.  In
    this example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
@@ -1151,7 +1151,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
        * @i: IP address of the DNS forwarder hosted in the Internal
              CPE.
 
-         Figure 15: Example of an Internal CPE Hosting a Forwarder
+         Figure 17: Example of an Internal CPE Hosting a Forwarder
 
 8.  Legacy CPEs
 

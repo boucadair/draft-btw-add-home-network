@@ -606,8 +606,9 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
       <section anchor="DHCP" title="DHCP Encrypted DNS Option">
         <t>The DHCP Encrypted DNS option is used to configure an
-        authentication domain name of the encrypted DNS server. The format of
-        this option is illustrated in <xref target="dhcpri_dns"></xref>.</t>
+        authentication domain name, a list of IP addresses, and a port number
+        of the encrypted DNS server. The format of this option is illustrated
+        in <xref target="dhcpri_dns"></xref>.</t>
 
         <t><figure anchor="dhcpri_dns" title="DHCP Encrypted DNS Option">
             <artwork><![CDATA[          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
@@ -627,28 +628,6 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
          |                               |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
 
-with:
-
-   The format of IPv4 Address(es) field is as follows:
-
-         0     8     16    24    32    40    
-         +-----+-----+-----+-----+-----+---
-         |  a1 |  a2 |  a3 |  a4 |  a1 |  ...
-         +-----+-----+-----+-----+-----+---
-          IPv4 Address 1          IPv4 Address 2
-
-   This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.
-
-   The format of the Authentication Domain Name field is as follows:
-
-          Authentication Domain Name 
-         +-----+-----+-----+-----+-----+--
-         |  s1 |  s2 |  s3 |  s4 | s5  |  ...
-         +-----+-----+-----+-----+-----+--
-
-   The values s1, s2, s3, etc. represent the domain name labels in the
-   domain name encoding.
-
 ]]></artwork>
           </figure></t>
 
@@ -663,19 +642,41 @@ with:
             the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 
-            <t>Num Addresses: Number of included IPv4 addresses.</t>
+            <t>Num Addresses: Indicates the number of included IPv4
+            addresses.</t>
 
-            <t>Port Number: If set, it indicates the port number to be used
-            for the encrypted DNS. A null value indicates that defaults port
-            numbers are used. As a reminder, the default port number is 853
-            for DoT and 443 for DoH.</t>
+            <t>Port Number: If not null, it indicates the port number to be
+            used for the encrypted DNS. A null value indicates that default
+            port numbers are used. As a reminder, the default port number is
+            853 for DoT and 443 for DoH.</t>
 
             <t>IPv4 Addresses: Indicates one or more IPv4 addresses to reach
-            the encrypted DNS server.</t>
+            the encrypted DNS server. The format of this field is shown in
+            <xref target="v4"></xref>.<figure align="center" anchor="v4"
+                title="Format of the IPv4 Addresses Field">
+                <artwork><![CDATA[         0     8     16    24    32    40    48
+         +-----+-----+-----+-----+-----+-----+--
+         |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 | ...
+         +-----+-----+-----+-----+-----+-----+--
+          IPv4 Address 1          IPv4 Address 2 ...
+
+   This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.]]></artwork>
+              </figure></t>
 
             <t>Authentication Domain Name: The domain name of the DoH/DoT
             server. This field is formatted as specified in Section 10 of
-            <xref target="RFC8415"></xref>.</t>
+            <xref target="RFC8415"></xref>. The format of this field is shown
+            in <xref target="adn"></xref>.<figure align="center" anchor="adn"
+                title="Format of the Authentication Domain Name Field">
+                <artwork><![CDATA[         0     8     16    24    32    40    48
+         +-----+-----+-----+-----+-----+--
+         |  s1 |  s2 |  s3 |  s4 | s5  |  ...
+         +-----+-----+-----+-----+-----+--
+          Authentication Domain Name 
+
+   The values s1, s2, s3, etc. represent the domain name labels in the
+   domain name encoding.]]></artwork>
+              </figure></t>
           </list></t>
 
         <t><?rfc subcompact="no" ?>OPTION_V4_ENC_DNS is a
