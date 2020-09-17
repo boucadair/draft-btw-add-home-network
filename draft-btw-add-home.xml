@@ -1055,6 +1055,12 @@ Legend:
         public certificate from a CA, host an Encryptd DNS server and claim
         the best DNS privacy preservation policy.</t>
 
+        <t>Authentication (and encryption) of messages sent between servers
+        and relay agents using IPsec and protection against misconfiguration
+        of a client caused by a Reconfigure message sent by a malicious DHCP
+        server are discussed in Section 20 of <xref
+        target="RFC8415"></xref>.</t>
+
         <t>TCP connections received from outside the home network MUST be
         discarded by the encrypted DNS forwarder in the CPE. This behavior
         adheres to REQ#8 in <xref target="RFC6092"></xref>; it MUST apply for

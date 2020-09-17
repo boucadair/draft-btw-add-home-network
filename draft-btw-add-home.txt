@@ -1165,10 +1165,10 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    public certificate from a CA, host an Encryptd DNS server and claim
    the best DNS privacy preservation policy.
 
-   TCP connections received from outside the home network MUST be
-   discarded by the encrypted DNS forwarder in the CPE.  This behavior
-   adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4 and IPv6.
-
+   Authentication (and encryption) of messages sent between servers and
+   relay agents using IPsec and protection against misconfiguration of a
+   client caused by a Reconfigure message sent by a malicious DHCP
+   server are discussed in Section 20 of [RFC8415].
 
 
 
@@ -1177,6 +1177,10 @@ Boucadair, et al.        Expires March 21, 2021                [Page 21]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   TCP connections received from outside the home network MUST be
+   discarded by the encrypted DNS forwarder in the CPE.  This behavior
+   adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4 and IPv6.
 
    Attacks of spoofed or modified DHCP responses and RA messages by
    attackers within the home network may be mitigated by making use of
@@ -1222,10 +1226,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    vulnerable to various attacks (e.g., [Evil-Twin], [Krack],
    [Dragonblood]).  Because of these attacks, only cryptographically
    authenticated communications are trusted on WLANs.  This means
-   information provided by such networks via DHCP, DHCPv6, or RA (e.g.,
-   NTP server, DNS server, default domain) are untrusted because DHCP
-   and RA are not authenticated.
-
 
 
 
@@ -1233,6 +1233,10 @@ Boucadair, et al.        Expires March 21, 2021                [Page 22]
 
 Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
+
+   information provided by such networks via DHCP, DHCPv6, or RA (e.g.,
+   NTP server, DNS server, default domain) are untrusted because DHCP
+   and RA are not authenticated.
 
    With the current deployments (2020), the pre-shared-key is the same
    for all clients that connect to the same WLAN.  This results in the
@@ -1278,10 +1282,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    | TBA3 | OPTION_V4_ENC_DNS| N     | Encrypted DNS  | [ThisDocument] |
    |      |                  |       | Server         |                |
    +------+------------------+-------+----------------+----------------+
-
-
-
-
 
 
 
