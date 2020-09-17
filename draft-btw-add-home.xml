@@ -705,11 +705,14 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
         encrypted DNS server.</t>
       </section>
 
-      <section anchor="RA" title="RA Encrypted DNS Option">
-        <t>The IPv6 Router Advertisement (RA) Encrypted DNS ADN option is used
-        to configure an authentication domain name of the encrypted DNS
-        server. The format of this option is illustrated in <xref
-        target="ra_dns"></xref>.</t>
+      <section anchor="RA" title="IPv6 RA Encrypted DNS Options">
+        <t>This section defines two Neighbor Discovery <xref
+        target="RFC4861"></xref>: IPv6 Router Advertisement (RA) Encrypted DNS
+        ADN option and IPv6 RA Encrypted DNS Address option.</t>
+
+        <t>The IPv6 RA Encrypted DNS ADN option is used to configure an
+        authentication domain name of the encrypted DNS server. The format of
+        this option is illustrated in <xref target="ra_dns"></xref>.</t>
 
         <t><figure anchor="ra_dns" title="RA Encrypted DNS ADN Option">
             <artwork><![CDATA[      0                   1                   2                   3
@@ -745,13 +748,14 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
             (relative to the time the packet is received) over which the
-            discovered encrypted DNS servers are valid. <vspace
+            discovered Authentication Domain Name is valid. <vspace
             blankLines="1" />The value of Lifetime SHOULD by default be at
             least 3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the
             maximum RA interval as defined in <xref target="RFC4861"></xref>.
             <vspace blankLines="1" />A value of all one bits (0xffffffff)
             represents infinity. <vspace blankLines="1" />A value of zero
-            means that this encrypted DNS server MUST no longer be used.</t>
+            means that this Authentication Domain Name MUST no longer be
+            used.</t>
 
             <t>Authentication Domain Name: The domain name of the encrypted
             DNS server. This field is formatted as specified in Section 10 of
@@ -760,14 +764,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             octets.</t>
           </list></t>
 
-        <t><?rfc subcompact="no" ?>The IPv6 Router Advertisement (RA)
-        Encrypted DNS Address option is used to configure a port number and a
-        list of IPv6 addresses of the encrypted DNS server. The format of this
-        option is illustrated in <xref target="ra_add"></xref>. All of the
-        addresses share the same Lifetime value. Simialr to <xref
-        target="RFC8106"></xref>, if it is desirable to have different
-        Lifetime values per IP address, multiple Encrypted DNS Address Options
-        may be used. </t>
+        <t><?rfc subcompact="no" ?>The IPv6 RA Encrypted DNS Address option is
+        used to configure a port number and a list of IPv6 addresses of the
+        encrypted DNS server. The format of this option is illustrated in
+        <xref target="ra_add"></xref>. All of the addresses share the same
+        Lifetime value. Simialr to <xref target="RFC8106"></xref>, if it is
+        desirable to have different Lifetime values per IP address, multiple
+        Encrypted DNS Address options may be used. </t>
 
         <t><figure anchor="ra_add" title="RA Encrypted DNS Address Option">
             <artwork><![CDATA[      0                   1                   2                   3
@@ -785,8 +788,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ]]></artwork>
-          </figure>The fields of the option shown in <xref
-        target="ra_add"></xref> are as follows:</t>
+          </figure>The fields of the RA Encrypted DNS Address option shown in
+        <xref target="ra_add"></xref> are as follows:</t>
 
         <t><list style="symbols">
             <t>Type: 8-bit identifier of the Encrypted DNS Address Option as
@@ -801,13 +804,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
             (relative to the time the packet is received) over which the
-            discovered encrypted DNS servers are valid. <vspace
+            discovered encrypted DNS IPv6 addresses are valid. <vspace
             blankLines="1" />The value of Lifetime SHOULD by default be at
             least 3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the
             maximum RA interval as defined in <xref target="RFC4861"></xref>.
             <vspace blankLines="1" />A value of all one bits (0xffffffff)
             represents infinity. <vspace blankLines="1" />A value of zero
-            means that this encrypted DNS server MUST no longer be used.</t>
+            means that these IPv6 addresses MUST no longer be used.</t>
 
             <t>Port Number: If not null, it iIndicates the port number to be
             used for the encrypted DNS. A null value indicates that default
