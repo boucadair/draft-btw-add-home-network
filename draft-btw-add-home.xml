@@ -1057,10 +1057,9 @@ Legend:
     <section anchor="Security" title="Security Considerations">
       <section title="Spoofing Attacks">
         <t>Authentication (and encryption) of messages sent between servers
-        and relay agents using IPsec and protection against misconfiguration
-        of a client caused by a Reconfigure message sent by a malicious DHCP
-        server are discussed in Section 20 of <xref
-        target="RFC8415"></xref>.</t>
+        and relay agents and protection against misconfiguration of a client
+        caused by a Reconfigure message sent by a malicious DHCP server are
+        discussed in Section 20 of <xref target="RFC8415"></xref>.</t>
 
         <t>Because DHCP/RA messages are not encrypted or protected against
         modification within the LAN, their content can be spoofed or modified
