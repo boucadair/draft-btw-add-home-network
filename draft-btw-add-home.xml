@@ -836,10 +836,23 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       by a DoH server.</t>
 
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
-      client may contact that DoH resolver to retrieve the list of supported
-      DoH services using the well-known URI. DoH clients re-iterates that
-      request regularly to retrieve an updated list of supported DoH
-      services.</t>
+      client may contact that DoH server to retrieve the list of supported DoH
+      services using the well-known URI. DoH clients re-iterates that request
+      regularly to retrieve an updated list of supported DoH services. </t>
+
+      <t>Let's suppose that a host has discovered an encrypted DNS server that
+      is DoH-capable. The host has also discovered the following
+      information:</t>
+
+      <t><list style="symbols">
+          <t>ADN: doh.example.com</t>
+
+          <t>Locator: 2001:db8:1::1</t>
+        </list></t>
+
+      <t>The client requests "https://doh.example.com/.well-known/resinfo" to
+      retrieve the list of the URI Templates associated with this discovered
+      server. </t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template. An example of such option is depicted in <xref
@@ -1043,6 +1056,12 @@ Legend:
 
     <section anchor="Security" title="Security Considerations">
       <section title="Spoofing Attacks">
+        <t>Authentication (and encryption) of messages sent between servers
+        and relay agents using IPsec and protection against misconfiguration
+        of a client caused by a Reconfigure message sent by a malicious DHCP
+        server are discussed in Section 20 of <xref
+        target="RFC8415"></xref>.</t>
+
         <t>Because DHCP/RA messages are not encrypted or protected against
         modification within the LAN, their content can be spoofed or modified
         by active attackers (e.g., compromised devices within the home
@@ -1056,17 +1075,6 @@ Legend:
         attacker can use a public IP address, get an 'IP address'-validated
         public certificate from a CA, host an Encryptd DNS server and claim
         the best DNS privacy preservation policy.</t>
-
-        <t>Authentication (and encryption) of messages sent between servers
-        and relay agents using IPsec and protection against misconfiguration
-        of a client caused by a Reconfigure message sent by a malicious DHCP
-        server are discussed in Section 20 of <xref
-        target="RFC8415"></xref>.</t>
-
-        <t>TCP connections received from outside the home network MUST be
-        discarded by the encrypted DNS forwarder in the CPE. This behavior
-        adheres to REQ#8 in <xref target="RFC6092"></xref>; it MUST apply for
-        both IPv4 and IPv6.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the home network may be mitigated by making use of
@@ -1092,6 +1100,11 @@ Legend:
         in the Encrypted DNS Option. DNS clients that ignore authentication
         failures and accept spoofed certificates will be subject to attacks
         (e.g., redirect to malicious servers, intercept sensitive data).</t>
+
+        <t>Encrypted DNS connections received from outside the home network
+        MUST be discarded by the encrypted DNS forwarder in the CPE. This
+        behavior adheres to REQ#8 in <xref target="RFC6092"></xref>; it MUST
+        apply for both IPv4 and IPv6.</t>
       </section>
 
       <section title="Deletion Attacks">
