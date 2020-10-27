@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: March 22, 2021                                           McAfee
+Expires: April 30, 2021                                           McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                      September 18, 2020
+                                                        October 27, 2020
 
 
 DHCP and Router Advertisement Options for Encrypted DNS Discovery within
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 22, 2021.
+   This Internet-Draft will expire on April 30, 2021.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires March 22, 2021                 [Page 1]
+Boucadair, et al.        Expires April 30, 2021                 [Page 1]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -76,15 +76,16 @@ Table of Contents
      3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   7
    4.  Encrypted DNS Discovery Options . . . . . . . . . . . . . . .   8
-     4.1.  DHCPv6 Encrypted DNS Options  . . . . . . . . . . . . . .   9
-     4.2.  DHCP Encrypted DNS Option . . . . . . . . . . . . . . . .  12
-     4.3.  IPv6 RA Encrypted DNS Options . . . . . . . . . . . . . .  14
+     4.1.  DHCPv6 Encrypted DNS Options  . . . . . . . . . . . . . .  10
+     4.2.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . .  13
+     4.3.  IPv6 RA Encrypted DNS Options . . . . . . . . . . . . . .  15
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  17
    6.  Make Use of Discovered Encrypted DNS Server . . . . . . . . .  18
    7.  Hosting Encrypted DNS Forwarder in the CPE  . . . . . . . . .  19
      7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  19
-       7.1.1.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  19
-       7.1.2.  Auto-Upgrade Based on Domains and their Subdomains  .  19
+       7.1.1.  DNS Forwarders  . . . . . . . . . . . . . . . . . . .  19
+       7.1.2.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  19
+       7.1.3.  Auto-Upgrade Based on Domains and their Subdomains  .  19
      7.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  20
    8.  Legacy CPEs . . . . . . . . . . . . . . . . . . . . . . . . .  21
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .  22
@@ -92,7 +93,7 @@ Table of Contents
      9.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  23
      9.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  23
      9.4.  Wireless Security - Authentication Attacks  . . . . . . .  23
-   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
      10.1.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  24
      10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  24
      10.3.  RA Options . . . . . . . . . . . . . . . . . . . . . . .  24
@@ -108,10 +109,9 @@ Table of Contents
 
 
 
-
-Boucadair, et al.        Expires March 22, 2021                 [Page 2]
+Boucadair, et al.        Expires April 30, 2021                 [Page 2]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 1.  Introduction
@@ -123,7 +123,7 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    o  Protocol Configuration Options in cellular networks [TS.24008].
 
-   o  DHCP [RFC2132] (Domain Name Server Option) or DHCPv6
+   o  DHCPv4 [RFC2132] (Domain Name Server Option) or DHCPv6
       [RFC8415][RFC3646] (OPTION_DNS_SERVERS).
 
    o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
@@ -165,9 +165,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                 [Page 3]
+Boucadair, et al.        Expires April 30, 2021                 [Page 3]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
            (a) Fixed Networks
@@ -221,9 +221,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                 [Page 4]
+Boucadair, et al.        Expires April 30, 2021                 [Page 4]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
    Hosts and/or CPEs may be connected to multiple networks; each
@@ -252,6 +252,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    DNS-over-TLS (DoT) [RFC7858], DNS-over-HTTPS (DoH) [RFC8484], or DNS-
    over-QUIC (DoQ) [I-D.ietf-dprive-dnsoquic].
 
+   "Managed CPE" refers to a CPE that is managed by the ISP.
+
+   "Unmanaged CPE" refers to a CPE that is not managed by the ISP.
+
+   DHCP refers to both DHCPv4 and DHCPv6.
+
 3.  Sample Target Deployment Scenarios
 
 3.1.  Managed CPEs
@@ -271,15 +277,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                 [Page 5]
+Boucadair, et al.        Expires April 30, 2021                 [Page 5]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
            (a) Fixed Networks
@@ -333,12 +333,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                 [Page 6]
+Boucadair, et al.        Expires April 30, 2021                 [Page 6]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
-   required for IPv4 service continuity purposes (e.g.,
+   required for IPv4 service continuity purposes (e.g., Section 5.4.1 of
    [I-D.ietf-v6ops-rfc7084-bis]) or for supporting advanced services
    within the home (e.g., malware filtering, parental control,
    Manufacturer Usage Description (MUD) [RFC8520] to only allow intended
@@ -350,9 +350,10 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    o  The leg between the CPE and an upstream DNS resolver.
 
    An ISP that offers encrypted DNS to its customers may enable
-   encrypted DNS in both legs as shown in Figure 4.  Additional
+   encrypted DNS in one or both legs as shown in Figure 4.  Additional
    considerations related to this deployment are discussed in Section 7.
 
+   (a)
                          ,--,--,--.             ,--,--,--.
                       ,-'          `-.       ,-'   ISP    `-.
               Host---(      LAN      CPE----(    DNS Server  )
@@ -361,6 +362,16 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
                 |                     |             |
                 |<=====Encrypted=====>|<=Encrypted=>|
                           DNS                DNS
+
+   (b)
+                         ,--,--,--.             ,--,--,--.
+            Legacy    ,-'          `-.       ,-'   ISP    `-.
+              Host---(      LAN      CPE----(    DNS Server  )
+                |     `-.          ,-'|      `-.          ,-'
+                |        `--'--'--'   |         `--'--'--'
+                |                     |             |
+                |<=======Do53========>|<=Encrypted=>|
+                                           DNS
 
                  Figure 4: Proxied Encrypted DNS Sessions
 
@@ -376,6 +387,13 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    establish DoH/DoT session with a DoH/DoT server similar to what is
    depicted in Figure 3.
 
+
+
+Boucadair, et al.        Expires April 30, 2021                 [Page 7]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    Customers may also decide to deploy internal home routers (called
    hereafter, Internal CPEs) for a variety of reasons that are not
    detailed here.  Absent any explicit configuration on the internal CPE
@@ -384,15 +402,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    RA from the ISP-supplied CPE to connected hosts.  Encrypted DNS
    sessions can be established by a host with the DNS servers of the ISP
    (see Figure 5).
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                 [Page 7]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
                     ,--,--,--.                    ,--,--,--.
                  ,-'          Internal         ,-'    ISP   `-.
@@ -432,6 +441,15 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    As reported in Section 1.7.2 of [RFC6125]:
 
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                 [Page 8]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
       "few certification authorities issue server certificates based on
       IP addresses, but preliminary evidence indicates that such
       certificates are a very small percentage (less than 1%) of issued
@@ -442,13 +460,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    practices for issuing certificates, this document allows for
    configuring an authentication domain name to be presented as a
    reference identifier for DNS authentication purposes.
-
-
-
-Boucadair, et al.        Expires March 22, 2021                 [Page 8]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
    To avoid adding a dependency on another server to resolve the ADN,
    the options return a list of IP addresses to locate the encrypted DNS
@@ -486,6 +497,15 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The DNS client establishes an encrypted DNS session with the
    discovered DNS IP address(es) and port number, and uses the mechanism
    discussed in Section 8 of [RFC8310] to authenticate the DNS server
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                 [Page 9]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    certificate using the authentication domain name conveyed in the
    encrypted DNS options.
 
@@ -498,20 +518,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    authentication domain name of the encrypted DNS server.  The format
    of this option is shown in Figure 7.
 
-
-
-
-Boucadair, et al.        Expires March 22, 2021                 [Page 9]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |    OPTION_V6_ENC_ADN          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |  Enc DNS Type |                 Unassigned                    |
-      +---------------+-----------------------------------------------+
+      |  Enc DNS Type |                                               |
+      +---------------+                                               +
       |                                                               |
       ~                  DNS Authentication Domain Name               ~
       |                                                               |
@@ -543,6 +555,13 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
          Associating a meaning with an unassigned bit can be done via
          Standards Action [RFC8126].
 
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 10]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
       In a request, these bits are assigned to indicate the requested
       encrypted DNS server type(s) by the client.  In a response, these
       bits are set as a function of the encrypted DNS supported by the
@@ -553,15 +572,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       and the same ADN is used for these types, the corresponding bits
       must be set in the 'Encrypted DNS Types' field of the same option
       instance in a response.  For example, if the client requested DoH
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 10]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
       and DoT and the server supports both with the same ADN, then both
       T and H bits must be set.
    o  Authentication Domain Name: A fully qualified domain name of the
@@ -582,6 +592,31 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The DHCPv6 Encrypted DNS Address option is used to configure a list
    of IP addresses and a port number of the encrypted DNS server.  The
    format of this option is shown in Figure 10.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 11]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
 
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -610,14 +645,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    o  Option-length: Length of the enclosed data in octets.
 
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 11]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
    o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.  In a request, these bits
@@ -636,7 +663,16 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       port number is 853 for DoT and 443 for DoH.
 
    o  IPv6 Address(es): Indicates one or more IPv6 addresses to reach
-      the encrypted DNS server.
+      the encrypted DNS server.  Link-local addresses MAY be used.
+
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 12]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
 
    Multiple instances of OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) may be
    returned to a DHCPv6 client; each pointing to a distinct encrypted
@@ -658,21 +694,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    OPTION_V6_ENC_ADD option with the appropriate bits set in "Encr DNS
    Types" field should be returned by the DHCP server.
 
-4.2.  DHCP Encrypted DNS Option
+4.2.  DHCPv4 Encrypted DNS Option
 
-   The DHCP Encrypted DNS option is used to configure an authentication
-   domain name, a list of IP addresses, and a port number of the
-   encrypted DNS server.  The format of this option is illustrated in
-   Figure 11.
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 12]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
+   The DHCPv4 Encrypted DNS option is used to configure an
+   authentication domain name, a list of IP addresses, and a port number
+   of the encrypted DNS server.  The format of this option is
+   illustrated in Figure 11.
 
              0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -692,9 +719,16 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                   Figure 11: DHCP Encrypted DNS Option
+                  Figure 11: DHCPv4 Encrypted DNS Option
 
    The fields of the option shown in Figure 11 are as follows:
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 13]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
 
    o  Code: OPTION_V4_ENC_DNS (TBA3, see Section 10.2).
    o  Length: Length of the enclosed data in octets.
@@ -723,14 +757,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       This field is formatted as specified in Section 10 of [RFC8415].
       The format of this field is shown in Figure 13.
 
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 13]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
-           0     8     16    24    32    40    48
            +-----+-----+-----+-----+-----+--
            |  s1 |  s2 |  s3 |  s4 | s5  |  ...
            +-----+-----+-----+-----+-----+--
@@ -743,15 +769,23 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    OPTION_V4_ENC_DNS is a concatenation-requiring option.  As such, the
    mechanism specified in [RFC3396] MUST be used if OPTION_V4_ENC_DNS
-   exceeds the maximum DHCP option size of 255 octets.
+   exceeds the maximum DHCPv4 option size of 255 octets.
 
-   To discover an encrypted DNS server, the DHCP client requests the
+   To discover an encrypted DNS server, the DHCPv4 client requests the
    Encrypted DNS server by including OPTION_V4_ENC_DNS in a Parameter
-   Request List option [RFC2132].  The DHCP client sets the Encrypted
+   Request List option [RFC2132].  The DHCPv4 client sets the Encrypted
    DNS Types field to the requested encrypted DNS server.
 
-   If the DHCP client requested more than one encrypted DNS server type,
-   the DHCP client MUST be prepared to receive multiple DHCP
+   If the DHCPv4 client requested more than one encrypted DNS server
+   type, the DHCPv4 client MUST be prepared to receive multiple DHCP
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 14]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    OPTION_V4_ENC_DNS options; each option is to be treated as a separate
    encrypted DNS server.
 
@@ -764,27 +798,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The IPv6 RA Encrypted DNS ADN option is used to configure an
    authentication domain name of the encrypted DNS server.  The format
    of this option is illustrated in Figure 14.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 14]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -822,6 +835,13 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
       A value of all one bits (0xffffffff) represents infinity.
 
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 15]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
       A value of zero means that this Authentication Domain Name MUST no
       longer be used.
    o  Authentication Domain Name: The domain name of the encrypted DNS
@@ -834,14 +854,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The IPv6 RA Encrypted DNS Address option is used to configure a port
    number and a list of IPv6 addresses of the encrypted DNS server.  The
    format of this option is illustrated in Figure 15.  All of the
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 15]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
    addresses share the same Lifetime value.  Simialr to [RFC8106], if it
    is desirable to have different Lifetime values per IP address,
    multiple Encrypted DNS Address options may be used.
@@ -879,6 +891,13 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       (relative to the time the packet is received) over which the
       discovered encrypted DNS IPv6 addresses are valid.
 
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 16]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
       The value of Lifetime SHOULD by default be at least 3 *
       MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
       interval as defined in [RFC4861].
@@ -890,14 +909,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    o  Port Number: If not null, it indicates the port number to be used
       for the encrypted DNS.  A null value indicates that default port
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 16]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
       numbers must be used.  As a reminder, the default port number is
       853 for DoT and 443 for DoH.
 
@@ -919,9 +930,8 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
    Upon discovery of a DoH resolver (Section 4), the DoH client may
    contact that DoH server to retrieve the list of supported DoH
-   services using the well-known URI.  DoH clients re-iterates that
-   request regularly to retrieve an updated list of supported DoH
-   services.
+   services using the well-known URI.  DoH clients repeats that request
+   regularly to retrieve an updated list of supported DoH services.
 
    Let's suppose that a host has discovered an encrypted DNS server that
    is DoH-capable.  The host has also discovered the following
@@ -935,24 +945,17 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    retrieve the list of the URI Templates associated with this
    discovered server.
 
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 17]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    Alternatively, dedicated DHCP/RA options may be defined to convey an
    URI template.  An example of such option is depicted in Figure 16.
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 17]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -999,17 +1002,16 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       client auto-upgrades to establish an encrypted a DoH/DoT/DoQ
       session with the ADN.
 
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 18]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
       In such case, the DNS client matches the domain name in the
       Encrypted DNS DHCP/RA option with the 'DNS-ID' identifier type
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 18]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
       within subjectAltName entry in the server certificate conveyed in
       the TLS handshake.
 
@@ -1020,7 +1022,15 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    The following mechanisms can be used to host an encrypted DNS
    forwarder in a managed CPE (Section 3.1).
 
-7.1.1.  ACME
+7.1.1.  DNS Forwarders
+
+   The managed CPE should support a configuration parameter to instruct
+   the CPE whether it has to relay the encrypted DNS server received
+   from the ISP's network or has to announce itself as a forwarder
+   within the local network.  The default behavior of the CPE is to
+   supply the encrypted DNS server received from the ISP's network.
+
+7.1.2.  ACME
 
    The ISP can assign a unique FQDN (e.g., cpe1.example.com) and a
    domain-validated public certificate to the encrypted DNS forwarder
@@ -1029,23 +1039,17 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    management functions such as domain validation procedure, certificate
    issuance and certificate revocation.
 
-   The managed CPE should support a configuration parameter to instruct
-   the CPE whether it has to relay the encrypted DNS server received
-   from the ISP's network or has to announce itself as a forwarder
-   within the local network.  The default behavior of the CPE is to
-   supply the encrypted DNS server received from the ISP's network.
-
-7.1.2.  Auto-Upgrade Based on Domains and their Subdomains
+7.1.3.  Auto-Upgrade Based on Domains and their Subdomains
 
    If the ADN conveyed in DHCP/RA (Section 4) is pre-configured in
    popular OSes or browsers as a verified resolver and the auto-upgrade
    (Section 6) is allowed for both the pre-configured ADN and its sub-
    domains, the encrypted DNS client will learn the local encrypted DNS
-   forwarder using DHCP/RA and auto-upgrade because the left-most label
-   of the pre-configured ADN would match the subjectAltName value in the
-   server certificate.  Concretely, the CPE can communicate the ADN of
-   the local DoH forwarder (Section 7.1.1) to internal hosts using DHCP/
-   RA (Section 4).
+   forwarder using DHCP/RA and auto-upgrade because the pre-configured
+   ADN would match the subjectAltName value in the server certificate.
+   Concretely, the CPE can communicate the ADN of the local DoH
+   forwarder (Section 7.1.2) to internal hosts using DHCP/RA
+   (Section 4).
 
    Let's suppose that "example.net" is pre-configured as a verified
    resolved in the browser or OS.  If the encrypted DNS client discovers
@@ -1057,13 +1061,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 19]
+Boucadair, et al.        Expires April 30, 2021                [Page 19]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
                             Rogue Server
@@ -1117,9 +1117,9 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                [Page 20]
+Boucadair, et al.        Expires April 30, 2021                [Page 20]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
    Figure 18 illustrates an example of an unmanaged CPE hosting a
@@ -1173,32 +1173,28 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                [Page 21]
+Boucadair, et al.        Expires April 30, 2021                [Page 21]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 9.  Security Considerations
 
 9.1.  Spoofing Attacks
 
-   Authentication (and encryption) of messages sent between servers and
-   relay agents and protection against misconfiguration of a client
-   caused by a Reconfigure message sent by a malicious DHCP server are
-   discussed in Section 20 of [RFC8415].
-
-   Because DHCP/RA messages are not encrypted or protected against
-   modification within the LAN, their content can be spoofed or modified
-   by active attackers (e.g., compromised devices within the home
-   network).  An active attacker (Section 3.3 of [RFC3552]) can spoof
-   the DHCP/RA response to provide the attacker's Encrypted DNS server.
-   Note that such an attacker can launch other attacks as discussed in
-   Section 22 of [RFC8415].  The attacker can get a domain name, domain-
-   validated public certificate from a CA, host an Encrypted DNS server
-   and claim the best DNS privacy preservation policy.  Also, an
-   attacker can use a public IP address, get an 'IP address'-validated
-   public certificate from a CA, host an Encryptd DNS server and claim
-   the best DNS privacy preservation policy.
+   DHCP/RA messages are not encrypted or protected against >
+   modification within the LAN.  Unless mitigated (described below), the
+   content of DHCP and RA messages can be spoofed or modified by active
+   attackers, such as compromised devices within the home network.  An
+   active attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA
+   response to provide the attacker's Encrypted DNS server.  Note that
+   such an attacker can launch other attacks as discussed in Section 22
+   of [RFC8415].  The attacker can get a domain name, domain-validated
+   public certificate from a CA, host an Encrypted DNS server and claim
+   the best DNS privacy preservation policy.  Also, an attacker can use
+   a public IP address, get an 'IP address'-validated public certificate
+   from a CA, host an Encryptd DNS server and claim the best DNS privacy
+   preservation policy.
 
    Attacks of spoofed or modified DHCP responses and RA messages by
    attackers within the home network may be mitigated by making use of
@@ -1214,8 +1210,8 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
       described in [RFC7513], the CPE filters packets with forged source
       IP addresses.
 
-   Encrypted DNS sessions with rogue servers spoofing the IP address of
-   a DNS server will fail because the DNS client will fail to
+   Encrypted DNS sessions with rogue servers that spoof the IP address
+   of a DNS server will fail because the DNS client will fail to
    authenticate that rogue server based upon PKIX authentication
    [RFC6125], particularly the authentication domain name in the
    Encrypted DNS Option.  DNS clients that ignore authentication
@@ -1229,9 +1225,13 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                [Page 22]
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 22]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 9.2.  Deletion Attacks
@@ -1261,10 +1261,11 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    and RA are not authenticated.
 
    With the current deployments (2020), the pre-shared-key is the same
-   for all clients that connect to the same WLAN.  This results in the
-   key being shared to attackers resulting in security breach.  Man-in-
-   the-middle attacks are possible within home networks because WLAN
-   authentication lacks peer entity authentication.
+   for all clients that connect to the same WLAN.  The shared key is
+   available to all nodes, including attackers, so it is possible to
+   mount an active on-path attack.  Man-in-the-middle attacks are
+   possible within home networks because WLAN authentication lacks peer
+   entity authentication.
 
    This leads to the need for provisioning unique credentials for
    different clients.  Endpoints can be provisioned with unique
@@ -1277,7 +1278,6 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
    keys can be created for each such device and WPA-PSK is used (e.g.,
    [PSK]).
 
-10.  IANA Considerations
 
 
 
@@ -1285,10 +1285,12 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-Boucadair, et al.        Expires March 22, 2021                [Page 23]
+Boucadair, et al.        Expires April 30, 2021                [Page 23]
 
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+10.  IANA Considerations
 
 10.1.  DHCPv6 Options
 
@@ -1332,19 +1334,21 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 11.  Acknowledgements
 
-   Many thanks to Christian Jacquenet for the review.
+   Many thanks to Christian Jacquenet and Michael Richardson for the
+   review.
+
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 24]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
 
    Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
    Bertola, Stephane Bortzmeyer, Ben Schwartz, and Iain Sharp for the
    comments.
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 24]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection.
 
@@ -1389,18 +1393,19 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 25]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
               DOI 10.17487/RFC8310, March 2018,
               <https://www.rfc-editor.org/info/rfc8310>.
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 25]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
    [RFC8415]  Mrugalski, T., Siodelski, M., Volz, B., Yourtchenko, A.,
               Richardson, M., Jiang, S., Lemon, T., and T. Winters,
@@ -1444,24 +1449,24 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               "Requirements for Adaptive DNS Discovery", draft-box-add-
               requirements-00 (work in progress), September 2020.
 
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 26]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
               Location", draft-ietf-dnsop-terminology-ter-02 (work in
               progress), August 2020.
 
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 26]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
-
    [I-D.ietf-dprive-dnsoquic]
               Huitema, C., Mankin, A., and S. Dickinson, "Specification
               of DNS over Dedicated QUIC Connections", draft-ietf-
-              dprive-dnsoquic-00 (work in progress), April 2020.
+              dprive-dnsoquic-01 (work in progress), October 2020.
 
    [I-D.ietf-v6ops-rfc7084-bis]
               Palet, J., "Basic Requirements for IPv6 Customer Edge
@@ -1499,20 +1504,21 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               DOI 10.17487/RFC3646, December 2003,
               <https://www.rfc-editor.org/info/rfc3646>.
 
+
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 27]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
               Capabilities in Customer Premises Equipment (CPE) for
               Providing Residential IPv6 Internet Service", RFC 6092,
               DOI 10.17487/RFC6092, January 2011,
               <https://www.rfc-editor.org/info/rfc6092>.
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 27]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
@@ -1557,18 +1563,16 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
               DOI 10.17487/RFC7969, October 2016,
               <https://www.rfc-editor.org/info/rfc7969>.
 
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 28]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
               to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
               <https://www.rfc-editor.org/info/rfc8146>.
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 28]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
-
 
    [RFC8305]  Schinazi, D. and T. Pauly, "Happy Eyeballs Version 2:
               Better Connectivity Using Concurrency", RFC 8305,
@@ -1609,21 +1613,25 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 Authors' Addresses
 
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires April 30, 2021                [Page 29]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    Mohamed Boucadair
    Orange
    Rennes  35000
    France
 
    Email: mohamed.boucadair@orange.com
-
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 29]
-
-Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
    Tirumaleswar Reddy
@@ -1669,12 +1677,4 @@ Internet-Draft       Encrypted DNS in Home Networks       September 2020
 
 
 
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires March 22, 2021                [Page 30]
+Boucadair, et al.        Expires April 30, 2021                [Page 30]
