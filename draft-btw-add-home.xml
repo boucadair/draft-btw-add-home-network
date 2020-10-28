@@ -103,6 +103,32 @@
       </address>
     </author>
 
+    <author fullname="Nicolai Leymann" initials="N." surname="Leymann">
+      <organization>Deutsche Telekom</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city></city>
+
+          <region></region>
+
+          <code></code>
+
+          <country>Germany</country>
+        </postal>
+
+        <phone></phone>
+
+        <facsimile></facsimile>
+
+        <email>n.leymann@telekom.de</email>
+
+        <uri></uri>
+      </address>
+    </author>
+
     <date />
 
     <workgroup>ADD</workgroup>
@@ -227,9 +253,9 @@ Legend:
       <xref target="RFC8484"></xref>, or DNS-over-QUIC (DoQ) <xref
       target="I-D.ietf-dprive-dnsoquic"></xref>.</t>
 
-      <t>"Managed CPE" refers to a CPE that is managed by the ISP. </t>
+      <t>"Managed CPE" refers to a CPE that is managed by the ISP.</t>
 
-      <t>"Unmanaged CPE" refers to a CPE that is not managed by the ISP. </t>
+      <t>"Unmanaged CPE" refers to a CPE that is not managed by the ISP.</t>
 
       <t>DHCP refers to both DHCPv4 and DHCPv6.</t>
     </section>
