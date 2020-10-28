@@ -10,8 +10,6 @@ Expires: May 1, 2021                                              McAfee
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                              N. Leymann
-                                                        Deutsche Telekom
                                                         October 28, 2020
 
 
@@ -47,8 +45,10 @@ Status of This Memo
 
    This Internet-Draft will expire on May 1, 2021.
 
+Copyright Notice
 
-
+   Copyright (c) 2020 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
 
 
 
@@ -57,11 +57,6 @@ Boucadair, et al.          Expires May 1, 2021                  [Page 1]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
-
-Copyright Notice
-
-   Copyright (c) 2020 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -103,9 +98,14 @@ Table of Contents
      10.2.  DHCP Option  . . . . . . . . . . . . . . . . . . . . . .  24
      10.3.  RA Options . . . . . . . . . . . . . . . . . . . . . . .  24
    11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  24
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  25
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  26
+   12. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  25
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  25
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  26
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  30
+
+
+
 
 
 
@@ -113,8 +113,6 @@ Boucadair, et al.          Expires May 1, 2021                  [Page 2]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
-
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  29
 
 1.  Introduction
 
@@ -140,6 +138,8 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    tablet) or via a CPE.  Do53 mechanisms used within the Local Area
    Network (LAN) are similar in both fixed and cellular CPE-based
    broadband service offerings.
+
+
 
 
 
@@ -1356,9 +1356,17 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    discussed in Section 7.3.1 of [RFC8310] and
    [I-D.pusateri-dhc-dns-driu].
 
-12.  References
+12.  Contributing Authors
 
-12.1.  Normative References
+      Nicolai Leymann
+      Deutsche Telekom
+      Germany
+
+      Email: n.leymann@telekom.de
+
+13.  References
+
+13.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1384,14 +1392,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               RFC 8106, DOI 10.17487/RFC8106, March 2017,
               <https://www.rfc-editor.org/info/rfc8106>.
 
-   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
-              Writing an IANA Considerations Section in RFCs", BCP 26,
-              RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/info/rfc8126>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 
 
@@ -1401,6 +1401,15 @@ Boucadair, et al.          Expires May 1, 2021                 [Page 25]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/info/rfc8126>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -1413,7 +1422,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               RFC 8415, DOI 10.17487/RFC8415, November 2018,
               <https://www.rfc-editor.org/info/rfc8415>.
 
-12.2.  Informative References
+13.2.  Informative References
 
    [Auto-upgrade]
               The Unicode Consortium, "DoH providers: criteria, process
@@ -1439,15 +1448,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               Dragonfly Handshake of WPA3 and EAP-pwd",
               <https://papers.mathyvanhoef.com/dragonblood.pdf>.
 
-   [Evil-Twin]
-              The Unicode Consortium, "Evil twin (wireless networks)",
-              <https://en.wikipedia.org/wiki/
-              Evil_twin_(wireless_networks)>.
-
-   [I-D.box-add-requirements]
-              Box, C., Pauly, T., Wood, C., and T. Reddy.K,
-              "Requirements for Adaptive DNS Discovery", draft-box-add-
-              requirements-00 (work in progress), September 2020.
 
 
 
@@ -1457,6 +1457,16 @@ Boucadair, et al.          Expires May 1, 2021                 [Page 26]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+   [Evil-Twin]
+              The Unicode Consortium, "Evil twin (wireless networks)",
+              <https://en.wikipedia.org/wiki/
+              Evil_twin_(wireless_networks)>.
+
+   [I-D.box-add-requirements]
+              Box, C., Pauly, T., Wood, C., and T. Reddy.K,
+              "Requirements for Adaptive DNS Discovery", draft-box-add-
+              requirements-00 (work in progress), September 2020.
 
    [I-D.ietf-dnsop-terminology-ter]
               Hoffman, P., "Terminology for DNS Transports and
@@ -1494,16 +1504,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               controller/technotes/8-5/
               b_Identity_PSK_Feature_Deployment_Guide.html>.
 
-   [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
-              Text on Security Considerations", BCP 72, RFC 3552,
-              DOI 10.17487/RFC3552, July 2003,
-              <https://www.rfc-editor.org/info/rfc3552>.
-
-   [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
-              Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
-              DOI 10.17487/RFC3646, December 2003,
-              <https://www.rfc-editor.org/info/rfc3646>.
-
 
 
 
@@ -1513,6 +1513,16 @@ Boucadair, et al.          Expires May 1, 2021                 [Page 27]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+   [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
+              Text on Security Considerations", BCP 72, RFC 3552,
+              DOI 10.17487/RFC3552, July 2003,
+              <https://www.rfc-editor.org/info/rfc3552>.
+
+   [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
+              Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
+              DOI 10.17487/RFC3646, December 2003,
+              <https://www.rfc-editor.org/info/rfc3646>.
 
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
               Capabilities in Customer Premises Equipment (CPE) for
@@ -1553,6 +1563,13 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               RFC 7610, DOI 10.17487/RFC7610, August 2015,
               <https://www.rfc-editor.org/info/rfc7610>.
 
+
+
+Boucadair, et al.          Expires May 1, 2021                 [Page 28]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
@@ -1562,13 +1579,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               Configuration on the Basis of Network Topology", RFC 7969,
               DOI 10.17487/RFC7969, October 2016,
               <https://www.rfc-editor.org/info/rfc7969>.
-
-
-
-Boucadair, et al.          Expires May 1, 2021                 [Page 28]
-
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
-
 
    [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
               to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
@@ -1606,16 +1616,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
               December 2018, <https://www.broadband-
               forum.org/technical/download/TR-069.pdf>.
 
-   [TS.24008]
-              3GPP, "Mobile radio interface Layer 3 specification; Core
-              network protocols; Stage 3 (Release 16)", December 2019,
-              <http://www.3gpp.org/DynaReport/24008.htm>.
-
-Authors' Addresses
-
-
-
-
 
 
 
@@ -1625,6 +1625,13 @@ Boucadair, et al.          Expires May 1, 2021                 [Page 29]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+   [TS.24008]
+              3GPP, "Mobile radio interface Layer 3 specification; Core
+              network protocols; Stage 3 (Release 16)", December 2019,
+              <http://www.3gpp.org/DynaReport/24008.htm>.
+
+Authors' Addresses
 
    Mohamed Boucadair
    Orange
@@ -1655,13 +1662,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    UK
 
    Email: neil.cook@noware.co.uk
-
-
-   Nicolai Leymann
-   Deutsche Telekom
-   Germany
-
-   Email: n.leymann@telekom.de
 
 
 

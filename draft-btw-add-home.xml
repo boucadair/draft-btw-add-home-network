@@ -103,32 +103,6 @@
       </address>
     </author>
 
-    <author fullname="Nicolai Leymann" initials="N." surname="Leymann">
-      <organization>Deutsche Telekom</organization>
-
-      <address>
-        <postal>
-          <street></street>
-
-          <city></city>
-
-          <region></region>
-
-          <code></code>
-
-          <country>Germany</country>
-        </postal>
-
-        <phone></phone>
-
-        <facsimile></facsimile>
-
-        <email>n.leymann@telekom.de</email>
-
-        <uri></uri>
-      </address>
-    </author>
-
     <date />
 
     <workgroup>ADD</workgroup>
@@ -1294,6 +1268,16 @@ Legend:
       <t>The use of DHCP to retrieve an authentication domain name was
       discussed in Section 7.3.1 of <xref target="RFC8310"></xref> and <xref
       target="I-D.pusateri-dhc-dns-driu"></xref>.</t>
+    </section>
+
+    <section title="Contributing Authors">
+      <t><figure>
+          <artwork><![CDATA[   Nicolai Leymann
+   Deutsche Telekom
+   Germany
+
+   Email: n.leymann@telekom.de]]></artwork>
+        </figure></t>
     </section>
   </middle>
 
