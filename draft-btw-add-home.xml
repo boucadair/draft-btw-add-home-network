@@ -1101,7 +1101,7 @@ Legend:
 
     <section anchor="Security" title="Security Considerations">
       <section title="Spoofing Attacks">
-        <t>DHCP/RA messages are not encrypted or protected against &gt;
+        <t>DHCP/RA messages are not encrypted or protected against
         modification within the LAN. Unless mitigated (described below), the
         content of DHCP and RA messages can be spoofed or modified by active
         attackers, such as compromised devices within the home network. An

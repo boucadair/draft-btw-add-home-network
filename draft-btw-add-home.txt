@@ -1182,14 +1182,14 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 9.1.  Spoofing Attacks
 
-   DHCP/RA messages are not encrypted or protected against >
-   modification within the LAN.  Unless mitigated (described below), the
-   content of DHCP and RA messages can be spoofed or modified by active
-   attackers, such as compromised devices within the home network.  An
-   active attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA
-   response to provide the attacker's Encrypted DNS server.  Note that
-   such an attacker can launch other attacks as discussed in Section 22
-   of [RFC8415].  The attacker can get a domain name, domain-validated
+   DHCP/RA messages are not encrypted or protected against modification
+   within the LAN.  Unless mitigated (described below), the content of
+   DHCP and RA messages can be spoofed or modified by active attackers,
+   such as compromised devices within the home network.  An active
+   attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA response to
+   provide the attacker's Encrypted DNS server.  Note that such an
+   attacker can launch other attacks as discussed in Section 22 of
+   [RFC8415].  The attacker can get a domain name, domain-validated
    public certificate from a CA, host an Encrypted DNS server and claim
    the best DNS privacy preservation policy.  Also, an attacker can use
    a public IP address, get an 'IP address'-validated public certificate
