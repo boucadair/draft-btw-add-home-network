@@ -246,24 +246,27 @@ Legend:
       <t></t>
 
       <section anchor="mcpe" title="Managed CPEs">
-        <t>ISPs have developed an expertise in managing service-specific
-        configuration information (e.g., CPE WAN Management Protocol <xref
-        target="TR-069"></xref>). For example, these tools may be used to
-        provision the DNS server's ADN to managed CPEs if an encrypted DNS is
-        supported by a local network similar to what is depicted in <xref
-        target="wan"></xref>.</t>
+        <t>This section focuses on CPEs that are managed by CPEs.</t>
 
-        <t>For example, DoH-capable (or DoT) clients establish the DoH (or
-        DoT) session with the discovered DoH (or DoT) server.</t>
+        <section title="Direct DNS">
+          <t>ISPs have developed an expertise in managing service-specific
+          configuration information (e.g., CPE WAN Management Protocol <xref
+          target="TR-069"></xref>). For example, these tools may be used to
+          provision the DNS server's ADN to managed CPEs if an encrypted DNS
+          is supported by a local network similar to what is depicted in <xref
+          target="wan"></xref>.</t>
 
-        <t>The DNS client discovers whether the DNS server in the local
-        network supports DoH/DoT/DoQ by using a dedicated field in the
-        discovery message: Encrypted DNS Types (<xref
-        target="RI"></xref>).</t>
+          <t>For example, DoH-capable (or DoT) clients establish the DoH (or
+          DoT) session with the discovered DoH (or DoT) server.</t>
 
-        <t><figure align="center" anchor="wan"
-            title="Encrypted DNS in the WAN">
-            <artwork align="center"><![CDATA[(a) Fixed Networks
+          <t>The DNS client discovers whether the DNS server in the local
+          network supports DoH/DoT/DoQ by using a dedicated field in the
+          discovery message: Encrypted DNS Types (<xref
+          target="RI"></xref>).</t>
+
+          <t><figure align="center" anchor="wan"
+              title="Encrypted DNS in the WAN">
+              <artwork align="center"><![CDATA[(a) Fixed Networks
 
                                  ,--,--,--.
     +-+      LAN     +---+    ,-'           `-. 
@@ -291,19 +294,19 @@ Legend:
      |                               |
      |<========Encrypted DNS========>| 
      |                               |]]></artwork>
-          </figure></t>
+            </figure></t>
 
-        <t><xref target="wan"></xref> shows the scenario where the CPE relays
-        the list of encrypted DNS servers it learns for the network by using
-        mechanisms like DHCP or a specific Router Advertisement message. In
-        such context, direct encrypted DNS sessions will be established
-        between a host serviced by a CPE and an ISP-supplied encrypted DNS
-        server (see the example depicted in <xref target="direct"></xref> for
-        a DoH/DoT-capable host).</t>
+          <t><xref target="wan"></xref> shows the scenario where the CPE
+          relays the list of encrypted DNS servers it learns for the network
+          by using mechanisms like DHCP or a specific Router Advertisement
+          message. In such context, direct encrypted DNS sessions will be
+          established between a host serviced by a CPE and an ISP-supplied
+          encrypted DNS server (see the example depicted in <xref
+          target="direct"></xref> for a DoH/DoT-capable host).</t>
 
-        <t><figure align="center" anchor="direct"
-            title="Direct Encrypted DNS Sessions">
-            <artwork><![CDATA[
+          <t><figure align="center" anchor="direct"
+              title="Direct Encrypted DNS Sessions">
+              <artwork><![CDATA[
                       ,--,--,--.             ,--,--,--.
                    ,-'          `-.       ,-'   ISP    `-.
            Host---(      LAN      CPE----(    DNS Server  )
@@ -312,35 +315,40 @@ Legend:
              |                                   | 
              |<=========Encrypted DNS===========>|
 ]]></artwork>
-          </figure></t>
+            </figure></t>
 
-        <t><xref target="proxied"></xref> shows a deployment where the CPE
-        embeds a caching DNS forwarder. The CPE advertises itself as the
-        default DNS server to the hosts it serves. The CPE relies upon DHCP or
-        RA to advertise itself to internal hosts as the default DoT/DoH/Do53
-        server. When receiving a DNS request it cannot handle locally, the CPE
-        forwards the request to an upstream DoH/DoT/Do53 resolver. Such
-        deployment is required for IPv4 service continuity purposes (e.g.,
-        Section 5.4.1 of <xref target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or
-        for supporting advanced services within the home (e.g., malware
-        filtering, parental control, Manufacturer Usage Description (MUD)
-        <xref target="RFC8520"></xref> to only allow intended communications
-        to and from an IoT device). When the CPE behaves as a DNS forwarder,
-        DNS communications can be decomposed into two legs:<list
-            style="symbols">
-            <t>The leg between an internal host and the CPE.</t>
+          <t></t>
+        </section>
 
-            <t>The leg between the CPE and an upstream DNS resolver.</t>
-          </list></t>
+        <section title="Proxied DNS">
+          <t><xref target="proxied"></xref> shows a deployment where the CPE
+          embeds a caching DNS forwarder. The CPE advertises itself as the
+          default DNS server to the hosts it serves. The CPE relies upon DHCP
+          or RA to advertise itself to internal hosts as the default
+          DoT/DoH/Do53 server. When receiving a DNS request it cannot handle
+          locally, the CPE forwards the request to an upstream DoH/DoT/Do53
+          resolver. Such deployment is required for IPv4 service continuity
+          purposes (e.g., Section 5.4.1 of <xref
+          target="I-D.ietf-v6ops-rfc7084-bis"></xref>) or for supporting
+          advanced services within the home (e.g., malware filtering, parental
+          control, Manufacturer Usage Description (MUD) <xref
+          target="RFC8520"></xref> to only allow intended communications to
+          and from an IoT device). When the CPE behaves as a DNS forwarder,
+          DNS communications can be decomposed into two legs:<list
+              style="symbols">
+              <t>The leg between an internal host and the CPE.</t>
 
-        <t>An ISP that offers encrypted DNS to its customers may enable
-        encrypted DNS in one or both legs as shown in <xref
-        target="proxied"></xref>. Additional considerations related to this
-        deployment are discussed in <xref target="forwarder"></xref>.</t>
+              <t>The leg between the CPE and an upstream DNS resolver.</t>
+            </list></t>
 
-        <t><figure align="center" anchor="proxied"
-            title="Proxied Encrypted DNS Sessions">
-            <artwork><![CDATA[(a)
+          <t>An ISP that offers encrypted DNS to its customers may enable
+          encrypted DNS in one or both legs as shown in <xref
+          target="proxied"></xref>. Additional considerations related to this
+          deployment are discussed in <xref target="forwarder"></xref>.</t>
+
+          <t><figure align="center" anchor="proxied"
+              title="Proxied Encrypted DNS Sessions">
+              <artwork><![CDATA[(a)
                       ,--,--,--.             ,--,--,--.
                    ,-'          `-.       ,-'   ISP    `-.
            Host---(      LAN      CPE----(    DNS Server  )
@@ -360,34 +368,41 @@ Legend:
              |<=======Do53========>|<=Encrypted=>| 
              |                     |     DNS     | 
 ]]></artwork>
-          </figure></t>
+            </figure></t>
 
-        <t></t>
+          <t></t>
+        </section>
       </section>
 
       <section anchor="ucpe" title="Unmanaged CPEs">
-        <t>Customers may decide to deploy unmanaged CPEs (assuming the CPE is
-        compliant with the network access technical specification that is
-        usually published by ISPs). Upon attachment to the network, an
-        unmanaged CPE receives from the network its service configuration
-        (including the DNS information) by means of, e.g., DHCP. That DNS
-        information is shared within the LAN following the same mechanisms as
-        those discussed in <xref target="mcpe"></xref>. A host can thus, for
-        example, establish DoH/DoT session with a DoH/DoT server similar to
-        what is depicted in <xref target="direct"></xref>.</t>
+        <t></t>
 
-        <t>Customers may also decide to deploy internal home routers (called
-        hereafter, Internal CPEs) for a variety of reasons that are not
-        detailed here. Absent any explicit configuration on the internal CPE
-        to override the DNS configuration it receives from the ISP-supplied
-        CPE, an Internal CPE relays the DNS information it receives via
-        DHCP/RA from the ISP-supplied CPE to connected hosts. Encrypted DNS
-        sessions can be established by a host with the DNS servers of the ISP
-        (see <xref target="internal_isp"></xref>).</t>
+        <section title="ISP-facing Unmanaged CPEs">
+          <t>Customers may decide to deploy unmanaged CPEs (assuming the CPE
+          is compliant with the network access technical specification that is
+          usually published by ISPs). Upon attachment to the network, an
+          unmanaged CPE receives from the network its service configuration
+          (including the DNS information) by means of, e.g., DHCP. That DNS
+          information is shared within the LAN following the same mechanisms
+          as those discussed in <xref target="mcpe"></xref>. A host can thus
+          establish DoH/DoT session with a DoH/DoT server similar to what is
+          depicted in <xref target="direct"></xref> or <xref
+          target="proxied"></xref>.</t>
+        </section>
 
-        <t><figure align="center" anchor="internal_isp"
-            title="Direct Encrypted DNS Sessions with the ISP DNS Resolver (Internal CPE)">
-            <artwork align="center"><![CDATA[
+        <section title="Internal Unmanaged CPEs">
+          <t>Customers may also decide to deploy internal home routers (called
+          hereafter, Internal CPEs) for a variety of reasons that are not
+          detailed here. Absent any explicit configuration on the internal CPE
+          to override the DNS configuration it receives from the ISP-supplied
+          CPE, an Internal CPE relays the DNS information it receives via
+          DHCP/RA from the ISP-supplied CPE to connected hosts. Encrypted DNS
+          sessions can be established by a host with the DNS servers of the
+          ISP (see <xref target="internal_isp"></xref>).</t>
+
+          <t><figure align="center" anchor="internal_isp"
+              title="Direct Encrypted DNS Sessions with the ISP DNS Resolver (Internal CPE)">
+              <artwork align="center"><![CDATA[
           ,--,--,--.                    ,--,--,--.
        ,-'          Internal         ,-'    ISP   `-.
 Host--(    Network#A   CPE----CPE---(    DNS Server   )
@@ -396,17 +411,17 @@ Host--(    Network#A   CPE----CPE---(    DNS Server   )
  |                                          | 
  |<==============Encrypted DNS=============>|
 ]]></artwork>
-          </figure></t>
+            </figure></t>
 
-        <t>Similar to managed CPEs, a user may modify the default DNS
-        configuration of an unmanaged CPE to use his/her favorite DNS servers
-        instead. Encrypted DNS sessions can be established directly between a
-        host and a 3rd Party DNS server (see <xref
-        target="internal_3"></xref>).</t>
+          <t>Similar to managed CPEs, a user may modify the default DNS
+          configuration of an unmanaged CPE to use his/her favorite DNS
+          servers instead. Encrypted DNS sessions can be established directly
+          between a host and a 3rd Party DNS server (see <xref
+          target="internal_3"></xref>).</t>
 
-        <t><figure align="center" anchor="internal_3"
-            title="Direct Encrypted DNS Sessions with a Third Party DNS Resolver ">
-            <artwork align="center"><![CDATA[         ,--,--,--.                  ,--,
+          <t><figure align="center" anchor="internal_3"
+              title="Direct Encrypted DNS Sessions with a Third Party DNS Resolver ">
+              <artwork align="center"><![CDATA[         ,--,--,--.                  ,--,
        ,'         Internal        ,-'    '-     3rd Party
 Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
  |     `.         ,-'             `-.    -'         |
@@ -414,10 +429,11 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
  |                                                  | 
  |<=================Encrypted DNS==================>|
 ]]></artwork>
-          </figure></t>
+            </figure></t>
 
-        <t><xref target="forwarder_u"></xref> discusses considerations related
-        to hosting a forwarder in the Internal CPE.</t>
+          <t><xref target="forwarder_u"></xref> discusses considerations
+          related to hosting a forwarder in the Internal CPE.</t>
+        </section>
       </section>
     </section>
 
@@ -466,7 +482,9 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       primary and backup servers. Whether one IP address or more are returned
       in an option is deployment specific. For example, a home router
       embedding a forwarder has to include one single IP address pointing to
-      one of its LAN-facing interfaces.</t>
+      one of its LAN-facing interfaces. This address can be a private IPv4
+      address, a link-local address, a Unique Local IPv6 unicast Address
+      (ULA), or a global unicast address. </t>
 
       <t>If more than one IP address are to be returned in an Encrypted DNS
       server option, these addresses are ordered in the preference for use by
@@ -496,7 +514,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |    OPTION_V6_ENC_ADN          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Enc DNS Type |                                               |
+   |  Enc DNS Flags|                                               |
    +---------------+                                               +
    |                                                               |
    ~                  DNS Authentication Domain Name               ~
@@ -514,7 +532,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Option-length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this 8-bit field is shown in <xref target="types"></xref>. <figure
                 align="center" anchor="types" title="Encrypted DNS Types">
@@ -577,7 +595,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |    OPTION_V6_ENC_ADD          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Enc DNS Type |   Unassigned  |          Port Number          |
+   |  Enc DNS Flags|   Unassigned  |          Port Number          |
    +---------------+---------------+-------------------------------+
    |                                                               |
    |                         IPv6 Address                          |
@@ -601,7 +619,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Option-length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this 8-bit field is shown in <xref target="types"></xref>. In a
             request, these bits are set to indicate the requested encrypted
@@ -655,7 +673,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |     TBA3      |     Length    |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         | Encr DNS Types| Num Addresses |
+         | Encr DNS Flags| Num Addresses |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |           Port Number         |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -678,7 +696,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 
@@ -703,8 +721,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.]]></artwork>
               </figure></t>
 
-            <t>Authentication Domain Name: The domain name of the DoH/DoT
-            server. This field is formatted as specified in Section 10 of
+            <t>Authentication Domain Name: The domain name of the encrypted
+            DNS server. This field is formatted as specified in Section 10 of
             <xref target="RFC8415"></xref>. The format of this field is shown
             in <xref target="adn"></xref>.<figure align="center" anchor="adn"
                 title="Format of the Authentication Domain Name Field">
@@ -749,7 +767,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA3      |     Length    | Encr DNS Types|   Unassigned  |
+     |     TBA3      |     Length    | Encr DNS Flags|   Unassigned  |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -770,7 +788,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             (including the Type and Length fields) is in units of 8
             octets.</t>
 
-            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 
@@ -811,7 +829,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     | Encr DNS Types|  Unassigned   |           Port Number         |
+     | Encr DNS Flags|  Unassigned   |           Port Number         |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
      :                         IPv6 Address(es)                      :
@@ -848,7 +866,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             port numbers must be used. As a reminder, the default port number
             is 853 for DoT and 443 for DoH.</t>
 
-            <t>Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of
+            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 

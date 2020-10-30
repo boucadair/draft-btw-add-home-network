@@ -74,10 +74,14 @@ Table of Contents
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Sample Target Deployment Scenarios  . . . . . . . . . . . . .   5
      3.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .   5
+       3.1.1.  Direct DNS  . . . . . . . . . . . . . . . . . . . . .   6
+       3.1.2.  Proxied DNS . . . . . . . . . . . . . . . . . . . . .   7
      3.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .   8
+       3.2.1.  ISP-facing Unmanaged CPEs . . . . . . . . . . . . . .   8
+       3.2.2.  Internal Unmanaged CPEs . . . . . . . . . . . . . . .   8
    4.  Encrypted DNS Discovery Options . . . . . . . . . . . . . . .   9
-     4.1.  DHCPv6 Encrypted DNS Options  . . . . . . . . . . . . . .  10
-     4.2.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . .  13
+     4.1.  DHCPv6 Encrypted DNS Options  . . . . . . . . . . . . . .  11
+     4.2.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . .  14
      4.3.  IPv6 RA Encrypted DNS Options . . . . . . . . . . . . . .  15
    5.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  18
    6.  Make Use of Discovered Encrypted DNS Server . . . . . . . . .  19
@@ -102,10 +106,6 @@ Table of Contents
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  26
      13.2.  Informative References . . . . . . . . . . . . . . . . .  27
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
-
-
-
 
 
 
@@ -113,6 +113,8 @@ Boucadair, et al.          Expires May 3, 2021                  [Page 2]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
 
 1.  Introduction
 
@@ -138,8 +140,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    tablet) or via a CPE.  Do53 mechanisms used within the Local Area
    Network (LAN) are similar in both fixed and cellular CPE-based
    broadband service offerings.
-
-
 
 
 
@@ -269,11 +269,11 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 3.1.  Managed CPEs
 
-   ISPs have developed an expertise in managing service-specific
-   configuration information (e.g., CPE WAN Management Protocol
-   [TR-069]).  For example, these tools may be used to provision the DNS
-   server's ADN to managed CPEs if an encrypted DNS is supported by a
-   local network similar to what is depicted in Figure 2.
+   This section focuses on CPEs that are managed by CPEs.
+
+
+
+
 
 
 
@@ -281,6 +281,14 @@ Boucadair, et al.          Expires May 3, 2021                  [Page 5]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+3.1.1.  Direct DNS
+
+   ISPs have developed an expertise in managing service-specific
+   configuration information (e.g., CPE WAN Management Protocol
+   [TR-069]).  For example, these tools may be used to provision the DNS
+   server's ADN to managed CPEs if an encrypted DNS is supported by a
+   local network similar to what is depicted in Figure 2.
 
    For example, DoH-capable (or DoT) clients establish the DoH (or DoT)
    session with the discovered DoH (or DoT) server.
@@ -322,14 +330,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    Figure 2 shows the scenario where the CPE relays the list of
    encrypted DNS servers it learns for the network by using mechanisms
-   like DHCP or a specific Router Advertisement message.  In such
-   context, direct encrypted DNS sessions will be established between a
-   host serviced by a CPE and an ISP-supplied encrypted DNS server (see
-   the example depicted in Figure 3 for a DoH/DoT-capable host).
-
-
-
-
 
 
 
@@ -337,6 +337,11 @@ Boucadair, et al.          Expires May 3, 2021                  [Page 6]
 
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
+
+   like DHCP or a specific Router Advertisement message.  In such
+   context, direct encrypted DNS sessions will be established between a
+   host serviced by a CPE and an ISP-supplied encrypted DNS server (see
+   the example depicted in Figure 3 for a DoH/DoT-capable host).
 
                          ,--,--,--.             ,--,--,--.
                       ,-'          `-.       ,-'   ISP    `-.
@@ -347,6 +352,8 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
                 |<=========Encrypted DNS===========>|
 
                   Figure 3: Direct Encrypted DNS Sessions
+
+3.1.2.  Proxied DNS
 
    Figure 4 shows a deployment where the CPE embeds a caching DNS
    forwarder.  The CPE advertises itself as the default DNS server to
@@ -368,13 +375,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    An ISP that offers encrypted DNS to its customers may enable
    encrypted DNS in one or both legs as shown in Figure 4.  Additional
    considerations related to this deployment are discussed in Section 7.
-
-
-
-
-
-
-
 
 
 
@@ -418,15 +418,19 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 3.2.  Unmanaged CPEs
 
+3.2.1.  ISP-facing Unmanaged CPEs
+
    Customers may decide to deploy unmanaged CPEs (assuming the CPE is
    compliant with the network access technical specification that is
    usually published by ISPs).  Upon attachment to the network, an
    unmanaged CPE receives from the network its service configuration
    (including the DNS information) by means of, e.g., DHCP.  That DNS
    information is shared within the LAN following the same mechanisms as
-   those discussed in Section 3.1.  A host can thus, for example,
-   establish DoH/DoT session with a DoH/DoT server similar to what is
-   depicted in Figure 3.
+   those discussed in Section 3.1.  A host can thus establish DoH/DoT
+   session with a DoH/DoT server similar to what is depicted in Figure 3
+   or Figure 4.
+
+3.2.2.  Internal Unmanaged CPEs
 
    Customers may also decide to deploy internal home routers (called
    hereafter, Internal CPEs) for a variety of reasons that are not
@@ -436,10 +440,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    RA from the ISP-supplied CPE to connected hosts.  Encrypted DNS
    sessions can be established by a host with the DNS servers of the ISP
    (see Figure 5).
-
-
-
-
 
 
 
@@ -529,7 +529,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    upon primary and backup servers.  Whether one IP address or more are
    returned in an option is deployment specific.  For example, a home
    router embedding a forwarder has to include one single IP address
-   pointing to one of its LAN-facing interfaces.
+   pointing to one of its LAN-facing interfaces.  This address can be a
+   private IPv4 address, a link-local address, a Unique Local IPv6
+   unicast Address (ULA), or a global unicast address.
 
    If more than one IP address are to be returned in an Encrypted DNS
    server option, these addresses are ordered in the preference for use
@@ -548,11 +550,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    If the encrypted DNS is discovered by a host using both RA and DHCP,
    the rules discussed in Section 5.3.1 of [RFC8106] MUST be followed.
 
-4.1.  DHCPv6 Encrypted DNS Options
 
-   The DHCPv6 Encrypted DNS ADN option is used to configure an
-   authentication domain name of the encrypted DNS server.  The format
-   of this option is shown in Figure 7.
+
+
 
 
 
@@ -562,11 +562,17 @@ Boucadair, et al.          Expires May 3, 2021                 [Page 10]
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
+4.1.  DHCPv6 Encrypted DNS Options
+
+   The DHCPv6 Encrypted DNS ADN option is used to configure an
+   authentication domain name of the encrypted DNS server.  The format
+   of this option is shown in Figure 7.
+
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |    OPTION_V6_ENC_ADN          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |  Enc DNS Type |                                               |
+      |  Enc DNS Flags|                                               |
       +---------------+                                               +
       |                                                               |
       ~                  DNS Authentication Domain Name               ~
@@ -579,7 +585,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    o  Option-code: OPTION_V6_ENC_ADN (TBA1, see Section 10.1)
    o  Option-length: Length of the enclosed data in octets.
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.
 
@@ -604,12 +610,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       bits are set as a function of the encrypted DNS supported by the
       server and the requested encrypted DNS server type(s).
 
-      To keep the packet small, if more than one encrypted DNS type
-      (e.g., both DoH and DoT) are to be returned to a requesting client
-      and the same ADN is used for these types, the corresponding bits
-      must be set in the 'Encrypted DNS Types' field of the same option
-      instance in a response.  For example, if the client requested DoH
-
 
 
 
@@ -618,6 +618,11 @@ Boucadair, et al.          Expires May 3, 2021                 [Page 11]
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
+      To keep the packet small, if more than one encrypted DNS type
+      (e.g., both DoH and DoT) are to be returned to a requesting client
+      and the same ADN is used for these types, the corresponding bits
+      must be set in the 'Encrypted DNS Types' field of the same option
+      instance in a response.  For example, if the client requested DoH
       and DoT and the server supports both with the same ADN, then both
       T and H bits must be set.
    o  Authentication Domain Name: A fully qualified domain name of the
@@ -643,7 +648,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |    OPTION_V6_ENC_ADD          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |  Enc DNS Type |   Unassigned  |          Port Number          |
+      |  Enc DNS Flags|   Unassigned  |          Port Number          |
       +---------------+---------------+-------------------------------+
       |                                                               |
       |                         IPv6 Address                          |
@@ -662,11 +667,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    The fields of the option shown in Figure 10 are as follows:
 
-   o  Option-code: OPTION_V6_ENC_ADD (TBA2, see Section 10.1)
-
-   o  Option-length: Length of the enclosed data in octets.
-
-
 
 
 Boucadair, et al.          Expires May 3, 2021                 [Page 12]
@@ -674,7 +674,11 @@ Boucadair, et al.          Expires May 3, 2021                 [Page 12]
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+   o  Option-code: OPTION_V6_ENC_ADD (TBA2, see Section 10.1)
+
+   o  Option-length: Length of the enclosed data in octets.
+
+   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.  In a request, these bits
       are set to indicate the requested encrypted DNS server type(s) by
@@ -714,12 +718,8 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    OPTION_V6_ENC_ADD option with the appropriate bits set in "Encr DNS
    Types" field should be returned by the DHCP server.
 
-4.2.  DHCPv4 Encrypted DNS Option
 
-   The DHCPv4 Encrypted DNS option is used to configure an
-   authentication domain name, a list of IP addresses, and a port number
-   of the encrypted DNS server.  The format of this option is
-   illustrated in Figure 11.
+
 
 
 
@@ -730,11 +730,18 @@ Boucadair, et al.          Expires May 3, 2021                 [Page 13]
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
+4.2.  DHCPv4 Encrypted DNS Option
+
+   The DHCPv4 Encrypted DNS option is used to configure an
+   authentication domain name, a list of IP addresses, and a port number
+   of the encrypted DNS server.  The format of this option is
+   illustrated in Figure 11.
+
              0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             |     TBA3      |     Length    |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-            | Encr DNS Types| Num Addresses |
+            | Encr DNS Flags| Num Addresses |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             |           Port Number         |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -754,7 +761,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    o  Code: OPTION_V4_ENC_DNS (TBA3, see Section 10.2).
    o  Length: Length of the enclosed data in octets.
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
    o  Num Addresses: Indicates the number of included IPv4 addresses.
@@ -766,6 +773,19 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       encrypted DNS server.  The format of this field is shown in
       Figure 12.
 
+
+
+
+
+
+
+
+
+Boucadair, et al.          Expires May 3, 2021                 [Page 14]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
            0     8     16    24    32    40    48
            +-----+-----+-----+-----+-----+-----+--
            |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 | ...
@@ -775,16 +795,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
      This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.
 
                Figure 12: Format of the IPv4 Addresses Field
-   o  Authentication Domain Name: The domain name of the DoH/DoT server.
-      This field is formatted as specified in Section 10 of [RFC8415].
-      The format of this field is shown in Figure 13.
-
-
-
-Boucadair, et al.          Expires May 3, 2021                 [Page 14]
-
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
-
+   o  Authentication Domain Name: The domain name of the encrypted DNS
+      server.  This field is formatted as specified in Section 10 of
+      [RFC8415].  The format of this field is shown in Figure 13.
 
            +-----+-----+-----+-----+-----+--
            |  s1 |  s2 |  s3 |  s4 | s5  |  ...
@@ -820,10 +833,19 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    authentication domain name of the encrypted DNS server.  The format
    of this option is illustrated in Figure 14.
 
+
+
+
+
+Boucadair, et al.          Expires May 3, 2021                 [Page 15]
+
+Internet-Draft       Encrypted DNS in Home Networks         October 2020
+
+
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |     TBA3      |     Length    | Encr DNS Types|   Unassigned  |
+       |     TBA3      |     Length    | Encr DNS Flags|   Unassigned  |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -835,20 +857,13 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
                   Figure 14: RA Encrypted DNS ADN Option
 
-
-
-Boucadair, et al.          Expires May 3, 2021                 [Page 15]
-
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
-
-
    The fields of the option shown in Figure 14 are as follows:
 
    o  Type: 8-bit identifier of the Encrypted DNS Option as assigned by
       IANA (TBA3, see Section 10.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
    o  Unassigned: This field is unused.  It MUST be initialized to zero
@@ -875,21 +890,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    The IPv6 RA Encrypted DNS Address option is used to configure a port
    number and a list of IPv6 addresses of the encrypted DNS server.  The
    format of this option is illustrated in Figure 15.  All of the
-   addresses share the same Lifetime value.  Simialr to [RFC8106], if it
-   is desirable to have different Lifetime values per IP address,
-   multiple Encrypted DNS Address options may be used.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -898,6 +898,10 @@ Boucadair, et al.          Expires May 3, 2021                 [Page 16]
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
+   addresses share the same Lifetime value.  Simialr to [RFC8106], if it
+   is desirable to have different Lifetime values per IP address,
+   multiple Encrypted DNS Address options may be used.
+
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -905,7 +909,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Encr DNS Types|  Unassigned   |           Port Number         |
+       | Encr DNS Flags|  Unassigned   |           Port Number         |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                                                               |
        :                         IPv6 Address(es)                      :
@@ -942,10 +946,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    o  Port Number: If not null, it indicates the port number to be used
       for the encrypted DNS.  A null value indicates that default port
-      numbers must be used.  As a reminder, the default port number is
-      853 for DoT and 443 for DoH.
-
-
 
 
 
@@ -954,7 +954,10 @@ Boucadair, et al.          Expires May 3, 2021                 [Page 17]
 Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
-   o  Encr DNS Types (Encrypted DNS Types): Indicates the type(s) of the
+      numbers must be used.  As a reminder, the default port number is
+      853 for DoT and 443 for DoH.
+
+   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
 
@@ -989,9 +992,6 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    Alternatively, dedicated DHCP/RA options may be defined to convey an
    URI template.  An example of such option is depicted in Figure 16.
-
-
-
 
 
 
