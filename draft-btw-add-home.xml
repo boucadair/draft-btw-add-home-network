@@ -151,25 +151,33 @@
       <t><figure align="center" anchor="do53"
           title="Sample Legacy Deployments">
           <artwork align="center"><![CDATA[(a) Fixed Networks
-           ,--,--,--.             ,--,--,--.
-        ,-'   +--+  `-.       ,-'   ISP    `-. 
-       ( LAN  |H |    CPE----(                 )
-        `-.   +--+   ,-'       `-.          ,-' 
-           `--'|-'--'             `--'--'--'    
-               |                     |
-               |<=======Do53========>| 
+                                 ,--,--,--.
+    +-+      LAN     +---+    ,-'           `-. 
+    |H+--------------+CPE+---+      ISP        )
+    +-+              +---+    `-.          ,-' 
+     |                           `--'--'--'    
+     |                               |
+     |<=============Do53============>| 
+     |                               |
 
 (b) Cellular Networks
-                |<===========Do53=========>| 
-           ,--,-|,--.                      |
-        ,-'   +--+   `-.               ,--,--,--.    
-       ( LAN  |H |     CPE------------+          \
-        `-.   +--+   ,-'            ,'   ISP     `-. 
-           `--'--'--'              (                )
-                              +-----+-.          ,-'
-              +--+            |        `--'--'--'  
-              |H +------------+
-              +--+
+
+     |                               |
+     |<=============Do53============>| 
+     |                               |
+     |                           ,--,--,-.
+    +-+      LAN     +---+    ,-'         . 
+    |H+--------------+CPE+---+             \
+    +-+              +---+  ,'     ISP     `-.
+                            (                )
+                       +-----+-.          ,-'
+    +-+                |        `--'--'--'  
+    |H+----------------+             |
+    +-+                              |
+     |                               |
+     |<=============Do53============>| 
+     |                               |
+
 Legend:
  * H: refers to a host.
 ]]></artwork>
@@ -257,26 +265,32 @@ Legend:
             title="Encrypted DNS in the WAN">
             <artwork align="center"><![CDATA[(a) Fixed Networks
 
-           ,--,--,--.             ,--,--,--.
-        ,-'   +--+  `-.       ,-'   ISP    `-. 
-       ( LAN  |H |    CPE----(    DNS Server  )
-        `-.   +--+   ,-'       `-.         ,-' 
-           `--'|-'--'             `--'--'--'    
-               |                     |
-               |<===Encrypted DNS===>| 
+                                 ,--,--,--.
+    +-+      LAN     +---+    ,-'           `-. 
+    |H+--------------+CPE+---+      ISP        )
+    +-+              +---+    `-.          ,-' 
+     |                           `--'--'--'    
+     |                               |
+     |<========Encrypted DNS========>| 
+     |                               |
 
 (b) Cellular Networks    
                                                                       
-                |<=====Encrypted DNS======>| 
-           ,--,-|,--.                      |
-        ,-'   +--+   `-.               ,--,--,--.    
-       ( LAN  |H |     CPE------------+          \
-        `-.   +--+   ,-'            ,'   ISP     `-. 
-           `--'--'--'              (    DNS Server  )
-                              +-----+-.          ,-'
-               +--+           |        `--'--'--'  
-               |H +-----------+
-               +--+]]></artwork>
+     |                               |
+     |<========Encrypted DNS========>| 
+     |                               |
+     |                           ,--,--,-.
+    +-+      LAN     +---+    ,-'         . 
+    |H+--------------+CPE+---+             \
+    +-+              +---+  ,'     ISP     `-.
+                            (                )
+                       +-----+-.          ,-'
+    +-+                |        `--'--'--'  
+    |H+----------------+             |
+    +-+                              |
+     |                               |
+     |<========Encrypted DNS========>| 
+     |                               |]]></artwork>
           </figure></t>
 
         <t><xref target="wan"></xref> shows the scenario where the CPE relays
@@ -334,7 +348,7 @@ Legend:
              |        `--'--'--'   |         `--'--'--'
              |                     |             | 
              |<=====Encrypted=====>|<=Encrypted=>| 
-                       DNS                DNS
+             |         DNS         |     DNS     | 
 
 (b)
                       ,--,--,--.             ,--,--,--.
@@ -344,7 +358,7 @@ Legend:
              |        `--'--'--'   |         `--'--'--'
              |                     |             | 
              |<=======Do53========>|<=Encrypted=>| 
-                                        DNS
+             |                     |     DNS     | 
 ]]></artwork>
           </figure></t>
 
@@ -957,41 +971,42 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           both the pre-configured ADN and its sub-domains, the encrypted DNS
           client will learn the local encrypted DNS forwarder using DHCP/RA
           and auto-upgrade because the pre-configured ADN would match the
-          subjectAltName value in the server certificate. Concretely, the CPE
-          can communicate the ADN of the local DoH forwarder (<xref
-          target="acme"></xref>) to internal hosts using DHCP/RA (<xref
-          target="RI"></xref>).</t>
+          subjectAltName value in the server certificate. For example, if the
+          pre-configured ADN is "*.example.com" and the discovered encrypted
+          DNS forwarder is "cpe1.example.com", auto-upgrade will take place.
+          </t>
 
-          <t>Let's suppose that "example.net" is pre-configured as a verified
-          resolved in the browser or OS. If the encrypted DNS client discovers
-          a local forwarder "cpe1-internal.example.net", the encrypted DNS
-          client will auto-upgrade because the pre-configured ADN would match
-          subjectAltName value "cpe1-internal.example.net" of type dNSName. As
-          shown in <xref target="subdomainex"></xref>, the auto-upgrade to a
-          rogue server advertising "rs.example.org" will fail. <figure
+          <t>In this case, the CPE can communicate the ADN of the local DoH
+          forwarder (<xref target="acme"></xref>) to internal hosts using
+          DHCP/RA (<xref target="RI"></xref>).</t>
+
+          <t>Let's suppose that "*.example.net" is pre-configured as a
+          verified resolved in the browser or OS. If the encrypted DNS client
+          discovers a local forwarder "cpe1-internal.example.net", the
+          encrypted DNS client will auto-upgrade because the pre-configured
+          ADN would match subjectAltName value "cpe1-internal.example.net" of
+          type dNSName. As shown in <xref target="subdomainex"></xref>, the
+          auto-upgrade to a rogue server advertising "rs.example.org" will
+          fail because it does not match "*.example.net". <figure
               align="center" anchor="subdomainex"
-              title="A Simplified Example of Auto-upgrade based on Sub-domains">
-              <artwork><![CDATA[
-                         Rogue Server
-             |              | 
-             X<==DHCP=======|  
-             | {ADN=        |        
-             |  rs.example.org, @rs} 
-             |              |                  --,--,-
-             |        ,+-,--+--.             ,/  ISP   \.
-             |     ,-'          `-.       ,-'            `-.
-         DoH/DoT --(      LAN      CPE----( S (@1)          )
-    capable client  `-.          ,-'|      `-.           ,-'
-             |        `--'--'--'    |         `--'--'--'
-             |<========DHCP========>|        
-             |{ADN=                 |        
-             |  cpe1-internal.example.net, @i}    
-             |        
-             |<========DoH=========>|    
-             |                      |     
+              title="A Simplified Example of Auto-upgrade based on Subdomains">
+              <artwork><![CDATA[Encrypted DNS                              CPE
+capable client                             (@i) 
+      |                                     | 
+      |<=================DHCP==============>| 
+      | {ADN=cpe1-internal.example.net, @i} |  
+      |                                     |
+      |                   Rogue Server      |
+      |                       (@rs)         |
+      |                         |           |
+      X<===========DHCP=========|           |
+      |{ADN=rs.example.org, @rs}|           |
+      |                         |           |
+      |                                     |
+      |<=================DoH===============>|
+      |                                     |
+
 Legend:
-  * S: DoH/DoT server
-  * @1: IP address of S
   * @i: internal IP address of the CPE
   * @rs: IP address of a rogue server
 ]]></artwork>
