@@ -122,7 +122,7 @@
   <middle>
     <section anchor="intro" title="Introduction">
       <t>Internet Service Providers (ISPs) traditionally provide DNS resolvers
-      to their customers. Typically, ISPs deploy the following mechanisms to
+      to their customers. To that aim, ISPs deploy the following mechanisms to
       advertise a list of DNS Recursive DNS server(s) to their customers:</t>
 
       <t><list style="symbols">
@@ -246,7 +246,7 @@ Legend:
       <t></t>
 
       <section anchor="mcpe" title="Managed CPEs">
-        <t>This section focuses on CPEs that are managed by CPEs.</t>
+        <t>This section focuses on CPEs that are managed by ISPs.</t>
 
         <section title="Direct DNS">
           <t>ISPs have developed an expertise in managing service-specific
@@ -360,7 +360,7 @@ Legend:
 
 (b)
                       ,--,--,--.             ,--,--,--.
-         Legacy    ,-'          `-.       ,-'   ISP    `-.
+          Legacy   ,-'          `-.       ,-'   ISP    `-.
            Host---(      LAN      CPE----(    DNS Server  )
              |     `-.          ,-'|      `-.          ,-'
              |        `--'--'--'   |         `--'--'--'
@@ -484,7 +484,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       embedding a forwarder has to include one single IP address pointing to
       one of its LAN-facing interfaces. This address can be a private IPv4
       address, a link-local address, a Unique Local IPv6 unicast Address
-      (ULA), or a global unicast address. </t>
+      (ULA), or a Global Unicast Address (GUA).</t>
 
       <t>If more than one IP address are to be returned in an Encrypted DNS
       server option, these addresses are ordered in the preference for use by
@@ -514,7 +514,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |    OPTION_V6_ENC_ADN          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Enc DNS Flags|                                               |
+   | Enc DNS Flags |                                               |
    +---------------+                                               +
    |                                                               |
    ~                  DNS Authentication Domain Name               ~
@@ -532,7 +532,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Option-length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
+            <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this 8-bit field is shown in <xref target="types"></xref>. <figure
                 align="center" anchor="types" title="Encrypted DNS Types">
@@ -595,7 +595,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |    OPTION_V6_ENC_ADD          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Enc DNS Flags|   Unassigned  |          Port Number          |
+   | Enc DNS Flags |   Unassigned  |          Port Number          |
    +---------------+---------------+-------------------------------+
    |                                                               |
    |                         IPv6 Address                          |
@@ -619,7 +619,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Option-length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
+            <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this 8-bit field is shown in <xref target="types"></xref>. In a
             request, these bits are set to indicate the requested encrypted
@@ -637,7 +637,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             default port number is 853 for DoT and 443 for DoH.</t>
 
             <t>IPv6 Address(es): Indicates one or more IPv6 addresses to reach
-            the encrypted DNS server. Link-local addresses MAY be used.</t>
+            the encrypted DNS server. </t>
           </list></t>
 
         <t>Multiple instances of OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) may
@@ -673,7 +673,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |     TBA3      |     Length    |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         | Encr DNS Flags| Num Addresses |
+         | Enc DNS Flags | Num Addresses |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |           Port Number         |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -696,7 +696,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
             <t>Length: Length of the enclosed data in octets.</t>
 
-            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
+            <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 
@@ -767,7 +767,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA3      |     Length    | Encr DNS Flags|   Unassigned  |
+     |     TBA3      |     Length    | Enc DNS Flags |   Unassigned  |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -788,7 +788,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             (including the Type and Length fields) is in units of 8
             octets.</t>
 
-            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
+            <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
             the encrypted DNS server conveyed in this attribute. The format of
             this field is shown in <xref target="types"></xref>.</t>
 
@@ -829,7 +829,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     | Encr DNS Flags|  Unassigned   |           Port Number         |
+     | Enc DNS Flags |  Unassigned   |           Port Number         |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
      :                         IPv6 Address(es)                      :
@@ -861,17 +861,17 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             represents infinity. <vspace blankLines="1" />A value of zero
             means that these IPv6 addresses MUST no longer be used.</t>
 
+            <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
+            the encrypted DNS server conveyed in this attribute. The format of
+            this field is shown in <xref target="types"></xref>.</t>
+
             <t>Port Number: If not null, it indicates the port number to be
             used for the encrypted DNS. A null value indicates that default
             port numbers must be used. As a reminder, the default port number
             is 853 for DoT and 443 for DoH.</t>
 
-            <t>Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of
-            the encrypted DNS server conveyed in this attribute. The format of
-            this field is shown in <xref target="types"></xref>.</t>
-
             <t>IPv6 Address(es) : One or more IPv6 addresses of the encrypted
-            DNS server. Link-local addresses MAY be used.</t>
+            DNS server. </t>
           </list></t>
       </section>
     </section>
@@ -991,8 +991,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           and auto-upgrade because the pre-configured ADN would match the
           subjectAltName value in the server certificate. For example, if the
           pre-configured ADN is "*.example.com" and the discovered encrypted
-          DNS forwarder is "cpe1.example.com", auto-upgrade will take place.
-          </t>
+          DNS forwarder is "cpe1.example.com", auto-upgrade will take
+          place.</t>
 
           <t>In this case, the CPE can communicate the ADN of the local DoH
           forwarder (<xref target="acme"></xref>) to internal hosts using
@@ -1011,7 +1011,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
               <artwork><![CDATA[Encrypted DNS                              CPE
 capable client                             (@i) 
       |                                     | 
-      |<=================DHCP==============>| 
+      |<=================DHCP===============| 
       | {ADN=cpe1-internal.example.net, @i} |  
       |                                     |
       |                   Rogue Server      |

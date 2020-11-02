@@ -5,12 +5,12 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: May 3, 2021                                              McAfee
+Expires: May 6, 2021                                              McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
-                                                        October 30, 2020
+                                                        November 2, 2020
 
 
 DHCP and Router Advertisement Options for Encrypted DNS Discovery within
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 3, 2021.
+   This Internet-Draft will expire on May 6, 2021.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 1]
+Boucadair, et al.          Expires May 6, 2021                  [Page 1]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 2]
+Boucadair, et al.          Expires May 6, 2021                  [Page 2]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
@@ -119,9 +119,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 1.  Introduction
 
    Internet Service Providers (ISPs) traditionally provide DNS resolvers
-   to their customers.  Typically, ISPs deploy the following mechanisms
-   to advertise a list of DNS Recursive DNS server(s) to their
-   customers:
+   to their customers.  To that aim, ISPs deploy the following
+   mechanisms to advertise a list of DNS Recursive DNS server(s) to
+   their customers:
 
    o  Protocol Configuration Options in cellular networks [TS.24008].
 
@@ -165,9 +165,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 3]
+Boucadair, et al.          Expires May 6, 2021                  [Page 3]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
              (a) Fixed Networks
@@ -221,9 +221,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 4]
+Boucadair, et al.          Expires May 6, 2021                  [Page 4]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    supplied by their ISP) to configure their favorite DNS servers.  This
@@ -269,7 +269,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 3.1.  Managed CPEs
 
-   This section focuses on CPEs that are managed by CPEs.
+   This section focuses on CPEs that are managed by ISPs.
 
 
 
@@ -277,9 +277,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 5]
+Boucadair, et al.          Expires May 6, 2021                  [Page 5]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
 3.1.1.  Direct DNS
@@ -333,9 +333,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 6]
+Boucadair, et al.          Expires May 6, 2021                  [Page 6]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    like DHCP or a specific Router Advertisement message.  In such
@@ -389,9 +389,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 7]
+Boucadair, et al.          Expires May 6, 2021                  [Page 7]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    (a)
@@ -406,7 +406,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    (b)
                          ,--,--,--.             ,--,--,--.
-            Legacy    ,-'          `-.       ,-'   ISP    `-.
+             Legacy   ,-'          `-.       ,-'   ISP    `-.
               Host---(      LAN      CPE----(    DNS Server  )
                 |     `-.          ,-'|      `-.          ,-'
                 |        `--'--'--'   |         `--'--'--'
@@ -445,9 +445,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 8]
+Boucadair, et al.          Expires May 6, 2021                  [Page 8]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
                     ,--,--,--.                    ,--,--,--.
@@ -501,9 +501,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                  [Page 9]
+Boucadair, et al.          Expires May 6, 2021                  [Page 9]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    To avoid adding a dependency on another server to resolve the ADN,
@@ -531,7 +531,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    router embedding a forwarder has to include one single IP address
    pointing to one of its LAN-facing interfaces.  This address can be a
    private IPv4 address, a link-local address, a Unique Local IPv6
-   unicast Address (ULA), or a global unicast address.
+   unicast Address (ULA), or a Global Unicast Address (GUA).
 
    If more than one IP address are to be returned in an Encrypted DNS
    server option, these addresses are ordered in the preference for use
@@ -557,9 +557,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 10]
+Boucadair, et al.          Expires May 6, 2021                 [Page 10]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
 4.1.  DHCPv6 Encrypted DNS Options
@@ -572,7 +572,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |    OPTION_V6_ENC_ADN          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |  Enc DNS Flags|                                               |
+      | Enc DNS Flags |                                               |
       +---------------+                                               +
       |                                                               |
       ~                  DNS Authentication Domain Name               ~
@@ -585,7 +585,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    o  Option-code: OPTION_V6_ENC_ADN (TBA1, see Section 10.1)
    o  Option-length: Length of the enclosed data in octets.
-   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
+   o  Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.
 
@@ -613,9 +613,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 11]
+Boucadair, et al.          Expires May 6, 2021                 [Page 11]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
       To keep the packet small, if more than one encrypted DNS type
@@ -648,7 +648,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |    OPTION_V6_ENC_ADD          |         Option-length         |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |  Enc DNS Flags|   Unassigned  |          Port Number          |
+      | Enc DNS Flags |   Unassigned  |          Port Number          |
       +---------------+---------------+-------------------------------+
       |                                                               |
       |                         IPv6 Address                          |
@@ -669,16 +669,16 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 12]
+Boucadair, et al.          Expires May 6, 2021                 [Page 12]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    o  Option-code: OPTION_V6_ENC_ADD (TBA2, see Section 10.1)
 
    o  Option-length: Length of the enclosed data in octets.
 
-   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
+   o  Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this 8-bit field is shown in Figure 8.  In a request, these bits
       are set to indicate the requested encrypted DNS server type(s) by
@@ -696,7 +696,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       port number is 853 for DoT and 443 for DoH.
 
    o  IPv6 Address(es): Indicates one or more IPv6 addresses to reach
-      the encrypted DNS server.  Link-local addresses MAY be used.
+      the encrypted DNS server.
 
    Multiple instances of OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) may be
    returned to a DHCPv6 client; each pointing to a distinct encrypted
@@ -725,9 +725,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 13]
+Boucadair, et al.          Expires May 6, 2021                 [Page 13]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
 4.2.  DHCPv4 Encrypted DNS Option
@@ -741,7 +741,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             |     TBA3      |     Length    |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-            | Encr DNS Flags| Num Addresses |
+            | Enc DNS Flags | Num Addresses |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             |           Port Number         |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -761,7 +761,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
    o  Code: OPTION_V4_ENC_DNS (TBA3, see Section 10.2).
    o  Length: Length of the enclosed data in octets.
-   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
+   o  Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
    o  Num Addresses: Indicates the number of included IPv4 addresses.
@@ -781,9 +781,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 14]
+Boucadair, et al.          Expires May 6, 2021                 [Page 14]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
            0     8     16    24    32    40    48
@@ -837,15 +837,15 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 15]
+Boucadair, et al.          Expires May 6, 2021                 [Page 15]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |     TBA3      |     Length    | Encr DNS Flags|   Unassigned  |
+       |     TBA3      |     Length    | Enc DNS Flags |   Unassigned  |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -863,7 +863,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       IANA (TBA3, see Section 10.3).
    o  Length: 8-bit unsigned integer.  The length of the option
       (including the Type and Length fields) is in units of 8 octets.
-   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
+   o  Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
    o  Unassigned: This field is unused.  It MUST be initialized to zero
@@ -893,9 +893,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 16]
+Boucadair, et al.          Expires May 6, 2021                 [Page 16]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    addresses share the same Lifetime value.  Simialr to [RFC8106], if it
@@ -909,7 +909,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Encr DNS Flags|  Unassigned   |           Port Number         |
+       | Enc DNS Flags |  Unassigned   |           Port Number         |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                                                               |
        :                         IPv6 Address(es)                      :
@@ -944,25 +944,27 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
       A value of zero means that these IPv6 addresses MUST no longer be
       used.
 
-   o  Port Number: If not null, it indicates the port number to be used
-      for the encrypted DNS.  A null value indicates that default port
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 17]
+
+
+Boucadair, et al.          Expires May 6, 2021                 [Page 17]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
-      numbers must be used.  As a reminder, the default port number is
-      853 for DoT and 443 for DoH.
-
-   o  Encr DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
+   o  Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
       encrypted DNS server conveyed in this attribute.  The format of
       this field is shown in Figure 8.
 
+   o  Port Number: If not null, it indicates the port number to be used
+      for the encrypted DNS.  A null value indicates that default port
+      numbers must be used.  As a reminder, the default port number is
+      853 for DoT and 443 for DoH.
+
    o  IPv6 Address(es) : One or more IPv6 addresses of the encrypted DNS
-      server.  Link-local addresses MAY be used.
+      server.
 
 5.  DoH URI Templates
 
@@ -1003,11 +1005,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-
-
-Boucadair, et al.          Expires May 3, 2021                 [Page 18]
+Boucadair, et al.          Expires May 6, 2021                 [Page 18]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
        0                   1                   2                   3
@@ -1061,9 +1061,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 19]
+Boucadair, et al.          Expires May 6, 2021                 [Page 19]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
       within subjectAltName entry in the server certificate conveyed in
@@ -1117,9 +1117,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 20]
+Boucadair, et al.          Expires May 6, 2021                 [Page 20]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    shown in Figure 17, the auto-upgrade to a rogue server advertising
@@ -1128,7 +1128,7 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
    Encrypted DNS                              CPE
    capable client                             (@i)
          |                                     |
-         |<=================DHCP==============>|
+         |<=================DHCP===============|
          | {ADN=cpe1-internal.example.net, @i} |
          |                                     |
          |                   Rogue Server      |
@@ -1173,9 +1173,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 21]
+Boucadair, et al.          Expires May 6, 2021                 [Page 21]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    Figure 18 illustrates an example of an unmanaged CPE hosting a
@@ -1229,9 +1229,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 22]
+Boucadair, et al.          Expires May 6, 2021                 [Page 22]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
 9.  Security Considerations
@@ -1285,9 +1285,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 23]
+Boucadair, et al.          Expires May 6, 2021                 [Page 23]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
 9.2.  Deletion Attacks
@@ -1341,9 +1341,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 24]
+Boucadair, et al.          Expires May 6, 2021                 [Page 24]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
 10.  IANA Considerations
@@ -1397,9 +1397,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 25]
+Boucadair, et al.          Expires May 6, 2021                 [Page 25]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
@@ -1453,9 +1453,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 26]
+Boucadair, et al.          Expires May 6, 2021                 [Page 26]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
@@ -1509,9 +1509,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 27]
+Boucadair, et al.          Expires May 6, 2021                 [Page 27]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    [Evil-Twin]
@@ -1565,9 +1565,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 28]
+Boucadair, et al.          Expires May 6, 2021                 [Page 28]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
@@ -1621,9 +1621,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 29]
+Boucadair, et al.          Expires May 6, 2021                 [Page 29]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
@@ -1677,9 +1677,9 @@ Internet-Draft       Encrypted DNS in Home Networks         October 2020
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 30]
+Boucadair, et al.          Expires May 6, 2021                 [Page 30]
 
-Internet-Draft       Encrypted DNS in Home Networks         October 2020
+Internet-Draft       Encrypted DNS in Home Networks        November 2020
 
 
    [TS.24008]
@@ -1733,4 +1733,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.          Expires May 3, 2021                 [Page 31]
+Boucadair, et al.          Expires May 6, 2021                 [Page 31]
