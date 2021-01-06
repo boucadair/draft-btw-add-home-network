@@ -1386,14 +1386,14 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    Many thanks to Christian Jacquenet and Michael Richardson for the
    review.
 
-   Thanks to Tommy Jensen, Stephen Farrell, Martin Thomson, Vittorio
-   Bertola, Stephane Bortzmeyer, Ben Schwartz, and Iain Sharp for the
-   comments.
+   Thanks to Stephen Farrell, Martin Thomson, Vittorio Bertola, Stephane
+   Bortzmeyer, Ben Schwartz, and Iain Sharp for the comments.
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection.
 
-
-
+   The use of DHCP to retrieve an authentication domain name was
+   discussed in Section 7.3.1 of [RFC8310] and
+   [I-D.pusateri-dhc-dns-driu].
 
 
 
@@ -1401,10 +1401,6 @@ Boucadair, et al.         Expires July 9, 2021                 [Page 25]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   The use of DHCP to retrieve an authentication domain name was
-   discussed in Section 7.3.1 of [RFC8310] and
-   [I-D.pusateri-dhc-dns-driu].
 
 12.  Contributing Authors
 
@@ -1450,6 +1446,10 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+
+
+
 
 
 
