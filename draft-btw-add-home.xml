@@ -902,7 +902,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       client may contact that DoH resolver to retrieve the list of supported DoH
       services using DEER <xref target="I-D.pauly-add-deer"></xref>. This will
 	  allow the client to discover the resolver's supported DoH templates (or DoH
-	  resolvers the discovered resolver designates) using DNS SVCB queries.</t>
+	  resolvers that the discovered resolver designates) using DNS SVCB queries
+	  <xref target="I-D.schwartz-svcb-dns"></xref>.</t>
 
       <t>Let's suppose that a host has discovered an encrypted DNS server that
       is DoH-capable. The host has also discovered the following
@@ -1109,7 +1110,7 @@ Legend:
       as defined in <xref
       target="I-D.pauly-add-deer"></xref> to discover the encrypted DNS server
       and to retrieve the list of supported DoH services using the SVCB
-      RRtype <xref target="I-D.pauly-add-deer"></xref> without verifying the
+      RRtype <xref target="I-D.schwartz-svcb-dns"></xref> without verifying the
 	  hostname of discovered templates with the ADN. Other guidance in DEER
 	  relating to resolver verification must be followed in this case.</t>
 
@@ -1381,6 +1382,8 @@ Legend:
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
 	  
 	  <?rfc include='reference.I-D.pauly-add-deer'?>
+	  
+	  <?rfc include='reference.I-D.schwartz-svcb-dns'?>
 
       <?rfc include='reference.RFC.6731'?>
 
