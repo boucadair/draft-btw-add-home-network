@@ -102,6 +102,20 @@
         <email>neil.cook@noware.co.uk</email>
       </address>
     </author>
+	
+	<author fullname="Tommy Jensen" initials="T." surname="Jensen">
+      <organization>Microsoft</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <country>USA</country>
+        </postal>
+
+        <email>tojens@microsoft.com</email>
+      </address>
+    </author>
 
     <date />
 
@@ -885,9 +899,10 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       by a DoH server.</t>
 
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
-      client may contact that DoH server to retrieve the list of supported DoH
-      services using the well-known URI. DoH clients repeats that request
-      regularly to retrieve an updated list of supported DoH services.</t>
+      client may contact that DoH resolver to retrieve the list of supported DoH
+      services using DEER <xref target="I-D.pauly-add-deer"></xref>. This will
+	  allow the client to discover the resolver's supported DoH templates (or DoH
+	  resolvers the discovered resolver designates) using DNS SVCB queries.</t>
 
       <t>Let's suppose that a host has discovered an encrypted DNS server that
       is DoH-capable. The host has also discovered the following
@@ -899,13 +914,20 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           <t>Locator: 2001:db8:1::1</t>
         </list></t>
 
-      <t>The client requests "https://doh.example.com/.well-known/resinfo" to
-      retrieve the list of the URI Templates associated with this discovered
-      server.</t>
+      <t>The client will use DEER <xref target="I-D.pauly-add-deer"></xref> to
+	  discover the DoH templates supported by 
+	  the DNS server at the Locator address. In addition to the checks included
+	  in DEER, clients should verify the ADN matches the hostname in the
+	  DEER-provided templates. The IP address of the DEER-discovered resolver
+	  may differ from the Locator field value so long as the domain name matches
+	  the ADN. This will allow ISPs to have local forwarders send clients to
+	  off-network but ISP-owned resolvers whose IP address may not be known in
+	  advance.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
-      URI template. An example of such option is depicted in <xref
-      target="uri"></xref>.</t>
+      URI template to avoid additional network traffic to bootstrap DoH
+	  configuration. An example of such option is depicted in
+	  <xref target="uri"></xref>.</t>
 
       <figure anchor="uri" title="Example of a DHCPv6 URI Template Option">
         <artwork><![CDATA[    0                   1                   2                   3
@@ -1083,27 +1105,19 @@ Legend:
       <t>Hosts serviced by legacy CPEs that can't be upgraded to support the
       options defined in <xref target="RI"></xref> won't be able to learn the
       encrypted DNS server hosted by the ISP, in particular. If the ADN is not
-      discovered using DHCP/RA, such hosts will have to fallback to use the
-      special-use domain name defined in <xref
-      target="I-D.pp-add-resinfo"></xref> to discover the encrypted DNS server
-      and to retrieve the list of supported DoH services using the RESINFO
-      RRtype <xref target="I-D.pp-add-resinfo"></xref>.</t>
+      discovered using DHCP/RA, such hosts will have to fallback to use DEER 
+      as defined in <xref
+      target="I-D.pauly-add-deer"></xref> to discover the encrypted DNS server
+      and to retrieve the list of supported DoH services using the SVCB
+      RRtype <xref target="I-D.pauly-add-deer"></xref> without verifying the
+	  hostname of discovered templates with the ADN. Other guidance in DEER
+	  relating to resolver verification must be followed in this case.</t>
 
-      <t>If the Do53 and Encrypted DNS servers are hosted on different public
-      IP addresses, the DNS server certificate can include the IP address of
-      the Do53 server in the subjectAltName extension. After validating the
-      server certificate, the client can retrieve the IP address in the
-      certificate to identify that both Do53 and Encrypted DNS servers are
-      operated by the same entity.</t>
-
-      <t>If the Do53 and Encrypted DNS server are hosted on a private IP
-      address, they should use the same private IP address to prove to the
-      client they are operated by the same entity.</t>
-
-      <t>The DHCP/RA option to discover ADN takes precedence over special-use
-      domain name since the special-use domain name is susceptible to both
-      internal and external attacks whereas DHCP/RA is only vulnerable to
-      internal attacks.</t>
+      <t>The DHCP/RA option to discover DoH templates from DHCP or RA options
+	  (should the WG pursue that approach pending feedback) takes precedence
+	  over DEER since it may use unencrypted DNS to a public resolver, which
+	  is susceptible to both internal and external attacks whereas DHCP/RA is 
+	  only vulnerable to internal attacks.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
@@ -1365,8 +1379,8 @@ Legend:
       <?rfc include='reference.I-D.ietf-v6ops-rfc7084-bis' ?>
 
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
-
-      <?rfc include='reference.I-D.pp-add-resinfo'?>
+	  
+	  <?rfc include='reference.I-D.pauly-add-deer'?>
 
       <?rfc include='reference.RFC.6731'?>
 
