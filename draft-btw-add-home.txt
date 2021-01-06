@@ -993,11 +993,11 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    The client will use DEER [I-D.pauly-add-deer] to discover the DoH
    templates supported by the DNS server at the Locator address.  In
    addition to the checks included in DEER, clients should verify the
-   ADN matches the hostname in the DEER-provided templates.  The IP
-   address of the DEER-discovered resolver may differ from the Locator
-   field value so long as the domain name matches the ADN.  This will
-   allow ISPs to have local forwarders send clients to off-network but
-   ISP-owned resolvers whose IP address may not be known in advance.
+   ADN is valid for the certificate provided by the DoH resolver.  The
+   IP address of the DEER-discovered resolver may differ from the
+   Locator field value so long as the domain name matches the ADN.  This
+   will allow home networks to refer clients to resolvers known by name
+   even if the current IP address of that resolver is not known.
 
    Alternatively, dedicated DHCP/RA options may be defined to convey an
    URI template to avoid additional network traffic to bootstrap DoH
@@ -1214,9 +1214,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    The DHCP/RA option to discover DoH templates from DHCP or RA options
    (should the WG pursue that approach pending feedback) takes
-   precedence over DEER since it uses unencrypted DNS to an external DNS
-   resolver, which is susceptible to both internal and external attacks
-   whereas DHCP/RA is only vulnerable to internal attacks.
+   precedence over DEER since DEER uses unencrypted DNS to an external
+   DNS resolver, which is susceptible to both internal and external
+   attacks whereas DHCP/RA is only vulnerable to internal attacks.
 
 9.  Security Considerations
 
