@@ -1116,9 +1116,9 @@ Legend:
 
       <t>The DHCP/RA option to discover DoH templates from DHCP or RA options
 	  (should the WG pursue that approach pending feedback) takes precedence
-	  over DEER since it may use unencrypted DNS to a public resolver, which
-	  is susceptible to both internal and external attacks whereas DHCP/RA is 
-	  only vulnerable to internal attacks.</t>
+	  over DEER since it uses unencrypted DNS to an external DNS resolver,
+	  which is susceptible to both internal and external attacks whereas
+	  DHCP/RA is only vulnerable to internal attacks.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
