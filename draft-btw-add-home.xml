@@ -919,11 +919,10 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 	  discover the DoH templates supported by 
 	  the DNS server at the Locator address. In addition to the checks included
 	  in DEER, clients should verify the ADN is valid for the certificate
-	  provided by the DoH resolver. The IP address of the DEER-discovered
-	  resolver may differ from the Locator field value so long as the domain
-	  name matches the ADN. This will allow home networks to refer clients to
-	  resolvers known by name even if the current IP address of that resolver
-	  is not known.</t>
+	  provided by the DoH resolver. However, the IP address of the
+	  DEER-discovered resolver may differ from the Locator field value. This
+	  will allow home networks to refer clients to resolvers known by name even
+	  if the current IP address of that resolver is not known.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template to avoid additional network traffic to bootstrap DoH
