@@ -901,9 +901,11 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
       client may contact that DoH resolver to retrieve the list of supported DoH
       services using DEER <xref target="I-D.pauly-add-deer"></xref>. This will
-	  allow the client to discover the resolver's supported DoH templates (or DoH
-	  resolvers that the discovered resolver designates) using DNS SVCB queries
-	  <xref target="I-D.schwartz-svcb-dns"></xref>.</t>
+	  allow the client to discover the resolver's supported DoH templates or DoH
+	  resolvers that the discovered resolver designates using DNS SVCB queries
+	  <xref target="I-D.schwartz-svcb-dns"></xref>. The designated DoH resolvers
+	  and DoH resolver discovered using DHCP/RA may be hosted on the same or
+	  distinct IP addresses.</t>
 
       <t>Let's suppose that a host has discovered an encrypted DNS server that
       is DoH-capable. The host has also discovered the following
@@ -921,8 +923,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 	  in DEER, clients should verify the ADN is valid for the certificate
 	  provided by the DoH resolver. However, the IP address of the
 	  DEER-discovered resolver may differ from the Locator field value. This
-	  will allow home networks to refer clients to resolvers known by name even
-	  if the current IP address of that resolver is not known.</t>
+	  will allow the ISP to offer different DoH services to the endpoints
+	  attached to home networks.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template to avoid additional network traffic to bootstrap DoH
@@ -1111,7 +1113,10 @@ Legend:
       and to retrieve the list of supported DoH services using the SVCB
       RRtype <xref target="I-D.schwartz-svcb-dns"></xref> without verifying the
 	  hostname of discovered templates with the ADN. Other guidance in DEER
-	  relating to resolver verification must be followed in this case.</t>
+	  relating to resolver verification must be followed in this case. This
+	  will prevent an unencrypted resolver on a local address from referring
+	  to an encrypted resolver at a different address without an out-of-band
+	  configuration in the client beyond the scope of this document or DEER.</t>
 
       <t>The DHCP/RA option to discover DoH templates from DHCP or RA options
 	  (should the WG pursue that approach pending feedback) takes precedence
