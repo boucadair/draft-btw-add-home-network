@@ -995,11 +995,11 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    The client will use DEER [I-D.pauly-add-deer] to discover the DoH
    templates supported by the DNS server at the Locator (2001:db8:1::1).
    In addition to the checks included in DEER, clients should verify the
-   ADN is valid for the certificate provided by the DoH resolver.
-   However, the IP address of the DEER-discovered resolver may differ
-   from the Locator field value.  This will allow the ISP to offer
-   different DoH services to the endpoints attached to home networks.
-
+   ADN (doh.example.com) is valid for the certificate provided by the
+   DoH resolver.  However, the IP address of the DEER-discovered
+   resolver may differ from the Locator field value.  This will allow
+   the ISP to offer different DoH services to the endpoints attached to
+   home networks.
 
 
 
@@ -1011,8 +1011,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
    Alternatively, dedicated DHCP/RA options may be defined to convey an
-   URI template to avoid additional network traffic to bootstrap DoH
-   configuration.  An example of such option is depicted in Figure 16.
+   URI template in order to avoid additional network traffic to
+   bootstrap DoH configuration.  An example of the format of such an
+   option is depicted in Figure 16.
 
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1036,7 +1037,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       to follow.
 
    How a DoH client makes use of the configured DoH services is out of
-   scope of this document.
+   the scope of this document.
 
 6.  Make Use of Discovered Encrypted DNS Server
 
@@ -1056,8 +1057,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    o  Similarly, if the ADN conveyed in DHCP/RA (Section 4) is
       preconfigured in the OS or browser as a verified resolver, the DNS
-      client auto-upgrades to establish an encrypted a DoH/DoT/DoQ
-      session with the ADN.
+
 
 
 
@@ -1065,6 +1065,9 @@ Boucadair, et al.         Expires July 17, 2021                [Page 19]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+      client auto-upgrades to establish an encrypted a DoH/DoT/DoQ
+      session with the ADN.
 
       In such case, the DNS client matches the domain name in the
       Encrypted DNS DHCP/RA option with the 'DNS-ID' identifier type
@@ -1111,9 +1114,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    forwarder (Section 7.1.2) to internal hosts using DHCP/RA
    (Section 4).
 
-   Let's suppose that "*.example.net" is preconfigured as a verified
-   resolved in the browser or OS.  If the encrypted DNS client discovers
-   a local forwarder "cpe1-internal.example.net", the encrypted DNS
 
 
 
@@ -1122,6 +1122,9 @@ Boucadair, et al.         Expires July 17, 2021                [Page 20]
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
+   Let's suppose that "*.example.net" is preconfigured as a verified
+   resolved in the browser or OS.  If the encrypted DNS client discovers
+   a local forwarder "cpe1-internal.example.net", the encrypted DNS
    client will auto-upgrade because the preconfigured ADN would match
    subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 17, the auto-upgrade to a rogue server advertising
@@ -1166,9 +1169,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       private encrypted DNS server only be accessible from within the
       home network.
 
-   o  The encrypted DNS forwarder will either be configured to use the
-      ISP's or a 3rd party encrypted DNS server.
-
 
 
 
@@ -1177,6 +1177,9 @@ Boucadair, et al.         Expires July 17, 2021                [Page 21]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+   o  The encrypted DNS forwarder will either be configured to use the
+      ISP's or a 3rd party encrypted DNS server.
 
    o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
       using DHCP/RA to internal hosts.
@@ -1222,9 +1225,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    Note that DHCP/RA options to discover DoH templates (should the WG
    pursue that approach pending feedback) takes precedence over DEER
    since DEER uses unencrypted DNS to an external DNS resolver, which is
-   susceptible to both internal and external attacks whereas DHCP/RA is
-   only vulnerable to internal attacks.
-
 
 
 
@@ -1233,6 +1233,9 @@ Boucadair, et al.         Expires July 17, 2021                [Page 22]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+   susceptible to both internal and external attacks whereas DHCP/RA is
+   only vulnerable to internal attacks.
 
 9.  Security Considerations
 
@@ -1278,9 +1281,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    be discarded by the encrypted DNS forwarder in the CPE.  This
    behavior adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4
    and IPv6.
-
-
-
 
 
 
@@ -1495,15 +1495,15 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               <https://openwrt.org/docs/guide-user/network/wifi/
               wireless.security.8021x>.
 
-   [DPP]      The Wi-Fi Alliance, "Device Provisioning Protocol
-              Specification", <https://www.wi-fi.org/file/device-
-              provisioning-protocol-specification>.
-
    [Dragonblood]
               The Unicode Consortium, "Dragonblood: Analyzing the
               Dragonfly Handshake of WPA3 and EAP-pwd",
               <https://papers.mathyvanhoef.com/dragonblood.pdf>.
 
+   [Evil-Twin]
+              The Unicode Consortium, "Evil twin (wireless networks)",
+              <https://en.wikipedia.org/wiki/
+              Evil_twin_(wireless_networks)>.
 
 
 
@@ -1513,11 +1513,6 @@ Boucadair, et al.         Expires July 17, 2021                [Page 27]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   [Evil-Twin]
-              The Unicode Consortium, "Evil twin (wireless networks)",
-              <https://en.wikipedia.org/wiki/
-              Evil_twin_(wireless_networks)>.
 
    [I-D.box-add-requirements]
               Box, C., Pauly, T., Wood, C., Reddy.K, T., and D. Migault,
@@ -1560,6 +1555,11 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    [ND]       , <http://www.iana.org/assignments/icmpv6-parameters/
               icmpv6-parameters.xhtml#icmpv6-parameters-5>.
 
+   [PSK]      Cisco, "Identity PSK Feature Deployment Guide",
+              <https://www.cisco.com/c/en/us/td/docs/wireless/
+              controller/technotes/8-5/
+              b_Identity_PSK_Feature_Deployment_Guide.html>.
+
 
 
 
@@ -1569,11 +1569,6 @@ Boucadair, et al.         Expires July 17, 2021                [Page 28]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   [PSK]      Cisco, "Identity PSK Feature Deployment Guide",
-              <https://www.cisco.com/c/en/us/td/docs/wireless/
-              controller/technotes/8-5/
-              b_Identity_PSK_Feature_Deployment_Guide.html>.
 
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
               Text on Security Considerations", BCP 72, RFC 3552,
@@ -1619,17 +1614,17 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               RFC 7513, DOI 10.17487/RFC7513, May 2015,
               <https://www.rfc-editor.org/info/rfc7513>.
 
+   [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
+              Protecting against Rogue DHCPv6 Servers", BCP 199,
+              RFC 7610, DOI 10.17487/RFC7610, August 2015,
+              <https://www.rfc-editor.org/info/rfc7610>.
+
 
 
 Boucadair, et al.         Expires July 17, 2021                [Page 29]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
-              Protecting against Rogue DHCPv6 Servers", BCP 199,
-              RFC 7610, DOI 10.17487/RFC7610, August 2015,
-              <https://www.rfc-editor.org/info/rfc7610>.
 
    [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
               and P. Hoffman, "Specification for DNS over Transport
@@ -1673,6 +1668,11 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
 
+   [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
+              December 2018, <https://www.broadband-
+              forum.org/technical/download/TR-069.pdf>.
+
+
 
 
 
@@ -1681,10 +1681,6 @@ Boucadair, et al.         Expires July 17, 2021                [Page 30]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
-              December 2018, <https://www.broadband-
-              forum.org/technical/download/TR-069.pdf>.
 
    [TS.24008]
               3GPP, "Mobile radio interface Layer 3 specification; Core
@@ -1729,6 +1725,10 @@ Authors' Addresses
    USA
 
    Email: tojens@microsoft.com
+
+
+
+
 
 
 

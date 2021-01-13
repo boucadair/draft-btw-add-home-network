@@ -920,15 +920,16 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <t>The client will use DEER <xref target="I-D.pauly-add-deer"></xref> to
       discover the DoH templates supported by the DNS server at the Locator
       (2001:db8:1::1). In addition to the checks included in DEER, clients
-      should verify the ADN is valid for the certificate provided by the DoH
-      resolver. However, the IP address of the DEER-discovered resolver may
-      differ from the Locator field value. This will allow the ISP to offer
-      different DoH services to the endpoints attached to home networks.</t>
+      should verify the ADN (doh.example.com) is valid for the certificate
+      provided by the DoH resolver. However, the IP address of the
+      DEER-discovered resolver may differ from the Locator field value. This
+      will allow the ISP to offer different DoH services to the endpoints
+      attached to home networks.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
-      URI template to avoid additional network traffic to bootstrap DoH
-      configuration. An example of such option is depicted in <xref
-      target="uri"></xref>.</t>
+      URI template in order to avoid additional network traffic to bootstrap
+      DoH configuration. An example of the format of such an option is
+      depicted in <xref target="uri"></xref>.</t>
 
       <figure anchor="uri" title="Example of a DHCPv6 URI Template Option">
         <artwork><![CDATA[    0                   1                   2                   3
@@ -951,8 +952,10 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       <t><list style="empty">
           <t>Note: More feedback form the WG is needed to decide which
           approach to follow.</t>
-        </list>How a DoH client makes use of the configured DoH services is
-      out of scope of this document.</t>
+        </list></t>
+
+      <t>How a DoH client makes use of the configured DoH services is out of
+      the scope of this document.</t>
     </section>
 
     <section anchor="auto" title="Make Use of Discovered Encrypted DNS Server">
@@ -1416,20 +1419,6 @@ Legend:
           </author>
 
           <date month="December" year="2018" />
-        </front>
-      </reference>
-
-      <reference anchor="DPP"
-                 target="https://www.wi-fi.org/file/device-provisioning-protocol-specification">
-        <front>
-          <title>Device Provisioning Protocol Specification</title>
-
-          <author fullname="The Wi-Fi Alliance" initials=""
-                  surname="The Wi-Fi Alliance">
-            <organization></organization>
-          </author>
-
-          <date />
         </front>
       </reference>
 
