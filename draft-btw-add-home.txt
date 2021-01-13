@@ -1033,8 +1033,8 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
             Figure 16: Example of a DHCPv6 URI Template Option
 
-      Note: More feedback form the WG is needed to decide which approach
-      to follow.
+      Note: More feedback from the WG is needed to decide which
+      approach(es) to follow.
 
    How a DoH client makes use of the configured DoH services is out of
    the scope of this document.
@@ -1294,7 +1294,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    If the DHCP responses or RAs are dropped by the attacker, the client
    can fallback to use a preconfigured encrypted DNS server.  However,
-   the use of policies to select servers is out of scope of this
+   the use of policies to select servers is out of the scope of this
    document.
 
    Note that deletion attack is not specific to DHCP/RA.

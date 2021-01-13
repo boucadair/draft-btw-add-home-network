@@ -950,8 +950,8 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       </figure>
 
       <t><list style="empty">
-          <t>Note: More feedback form the WG is needed to decide which
-          approach to follow.</t>
+          <t>Note: More feedback from the WG is needed to decide which
+          approach(es) to follow.</t>
         </list></t>
 
       <t>How a DoH client makes use of the configured DoH services is out of
@@ -1178,8 +1178,8 @@ Legend:
       <section title="Deletion Attacks">
         <t>If the DHCP responses or RAs are dropped by the attacker, the
         client can fallback to use a preconfigured encrypted DNS server.
-        However, the use of policies to select servers is out of scope of this
-        document.</t>
+        However, the use of policies to select servers is out of the scope of
+        this document.</t>
 
         <t>Note that deletion attack is not specific to DHCP/RA.</t>
       </section>
