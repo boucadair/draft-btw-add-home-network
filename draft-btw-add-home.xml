@@ -102,8 +102,8 @@
         <email>neil.cook@noware.co.uk</email>
       </address>
     </author>
-	
-	<author fullname="Tommy Jensen" initials="T." surname="Jensen">
+
+    <author fullname="Tommy Jensen" initials="T." surname="Jensen">
       <organization>Microsoft</organization>
 
       <address>
@@ -234,7 +234,7 @@ Legend:
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
       "OPTIONAL" in this document are to be interpreted as described in BCP 14
-      <xref target="RFC2119"></xref><xref target="RFC8174"></xref> when, and
+      <xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and
       only when, they appear in all capitals, as shown here.</t>
 
       <t>This document makes use of the terms defined in <xref
@@ -243,7 +243,7 @@ Legend:
 
       <t>Do53 refers to unencrypted DNS.</t>
 
-      <t>'Encrypted DNS' refers to a scheme where DNS exchanges are
+      <t>"Encrypted DNS" refers to a scheme where DNS exchanges are
       transported over an encrypted channel. Examples of encrypted DNS are
       DNS-over-TLS (DoT) <xref target="RFC7858"></xref>, DNS-over-HTTPS (DoH)
       <xref target="RFC8484"></xref>, or DNS-over-QUIC (DoQ) <xref
@@ -458,13 +458,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
       target="RA"></xref>).</t>
 
-      <t>As reported in Section 1.7.2 of <xref target="RFC6125"></xref>:<list
-          style="empty">
-          <t>"few certification authorities issue server certificates based on
-          IP addresses, but preliminary evidence indicates that such
-          certificates are a very small percentage (less than 1%) of issued
-          certificates".</t>
-        </list></t>
+      <t>As reported in Section 1.7.2 of <xref
+      target="RFC6125"></xref>:<figure>
+          <artwork><![CDATA[   |  Some certification authorities issue server certificates based on
+   |  IP addresses, but preliminary evidence indicates that such
+   |  certificates are a very small percentage (less than 1%) of issued
+   |  certificates.]]></artwork>
+        </figure></t>
 
       <t>In order to allow for PKIX-based authentication between a DNS client
       and an encrypted DNS server while accommodating the current best
@@ -651,7 +651,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             default port number is 853 for DoT and 443 for DoH.</t>
 
             <t>IPv6 Address(es): Indicates one or more IPv6 addresses to reach
-            the encrypted DNS server. </t>
+            the encrypted DNS server.</t>
           </list></t>
 
         <t>Multiple instances of OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) may
@@ -831,7 +831,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
         used to configure a port number and a list of IPv6 addresses of the
         encrypted DNS server. The format of this option is illustrated in
         <xref target="ra_add"></xref>. All of the addresses share the same
-        Lifetime value. Simialr to <xref target="RFC8106"></xref>, if it is
+        Lifetime value. Similar to <xref target="RFC8106"></xref>, if it is
         desirable to have different Lifetime values per IP address, multiple
         Encrypted DNS Address options may be used.</t>
 
@@ -885,7 +885,7 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
             is 853 for DoT and 443 for DoH.</t>
 
             <t>IPv6 Address(es) : One or more IPv6 addresses of the encrypted
-            DNS server. </t>
+            DNS server.</t>
           </list></t>
       </section>
     </section>
@@ -899,13 +899,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
       by a DoH server.</t>
 
       <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
-      client may contact that DoH resolver to retrieve the list of supported DoH
-      services using DEER <xref target="I-D.pauly-add-deer"></xref>. This will
-	  allow the client to discover the resolver's supported DoH templates or DoH
-	  resolvers that the discovered resolver designates using DNS SVCB queries
-	  <xref target="I-D.schwartz-svcb-dns"></xref>. The designated DoH resolvers
-	  and DoH resolver discovered using DHCP/RA may be hosted on the same or
-	  distinct IP addresses.</t>
+      client may contact that DoH resolver to retrieve the list of supported
+      DoH services using DEER <xref target="I-D.pauly-add-deer"></xref>. This
+      will allow the client to discover the resolver's supported DoH templates
+      or DoH resolvers that the discovered resolver designates using DNS SVCB
+      queries <xref target="I-D.schwartz-svcb-dns"></xref>. The designated DoH
+      resolvers and DoH resolver discovered using DHCP/RA may be hosted on the
+      same or distinct IP addresses.</t>
 
       <t>Let's suppose that a host has discovered an encrypted DNS server that
       is DoH-capable. The host has also discovered the following
@@ -918,18 +918,17 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
         </list></t>
 
       <t>The client will use DEER <xref target="I-D.pauly-add-deer"></xref> to
-	  discover the DoH templates supported by 
-	  the DNS server at the Locator address. In addition to the checks included
-	  in DEER, clients should verify the ADN is valid for the certificate
-	  provided by the DoH resolver. However, the IP address of the
-	  DEER-discovered resolver may differ from the Locator field value. This
-	  will allow the ISP to offer different DoH services to the endpoints
-	  attached to home networks.</t>
+      discover the DoH templates supported by the DNS server at the Locator
+      (2001:db8:1::1). In addition to the checks included in DEER, clients
+      should verify the ADN is valid for the certificate provided by the DoH
+      resolver. However, the IP address of the DEER-discovered resolver may
+      differ from the Locator field value. This will allow the ISP to offer
+      different DoH services to the endpoints attached to home networks.</t>
 
       <t>Alternatively, dedicated DHCP/RA options may be defined to convey an
       URI template to avoid additional network traffic to bootstrap DoH
-	  configuration. An example of such option is depicted in
-	  <xref target="uri"></xref>.</t>
+      configuration. An example of such option is depicted in <xref
+      target="uri"></xref>.</t>
 
       <figure anchor="uri" title="Example of a DHCPv6 URI Template Option">
         <artwork><![CDATA[    0                   1                   2                   3
@@ -1008,13 +1007,13 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
 
         <section title="Auto-Upgrade Based on Domains and their Subdomains">
           <t>If the ADN conveyed in DHCP/RA (<xref target="RI"></xref>) is
-          pre-configured in popular OSes or browsers as a verified resolver
-          and the auto-upgrade (<xref target="auto"></xref>) is allowed for
-          both the pre-configured ADN and its sub-domains, the encrypted DNS
-          client will learn the local encrypted DNS forwarder using DHCP/RA
-          and auto-upgrade because the pre-configured ADN would match the
+          preconfigured in popular OSes or browsers as a verified resolver and
+          the auto-upgrade (<xref target="auto"></xref>) is allowed for both
+          the preconfigured ADN and its sub-domains, the encrypted DNS client
+          will learn the local encrypted DNS forwarder using DHCP/RA and
+          auto-upgrade because the preconfigured ADN would match the
           subjectAltName value in the server certificate. For example, if the
-          pre-configured ADN is "*.example.com" and the discovered encrypted
+          preconfigured ADN is "*.example.com" and the discovered encrypted
           DNS forwarder is "cpe1.example.com", auto-upgrade will take
           place.</t>
 
@@ -1022,15 +1021,15 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           forwarder (<xref target="acme"></xref>) to internal hosts using
           DHCP/RA (<xref target="RI"></xref>).</t>
 
-          <t>Let's suppose that "*.example.net" is pre-configured as a
-          verified resolved in the browser or OS. If the encrypted DNS client
-          discovers a local forwarder "cpe1-internal.example.net", the
-          encrypted DNS client will auto-upgrade because the pre-configured
-          ADN would match subjectAltName value "cpe1-internal.example.net" of
-          type dNSName. As shown in <xref target="subdomainex"></xref>, the
-          auto-upgrade to a rogue server advertising "rs.example.org" will
-          fail because it does not match "*.example.net". <figure
-              align="center" anchor="subdomainex"
+          <t>Let's suppose that "*.example.net" is preconfigured as a verified
+          resolved in the browser or OS. If the encrypted DNS client discovers
+          a local forwarder "cpe1-internal.example.net", the encrypted DNS
+          client will auto-upgrade because the preconfigured ADN would match
+          subjectAltName value "cpe1-internal.example.net" of type dNSName. As
+          shown in <xref target="subdomainex"></xref>, the auto-upgrade to a
+          rogue server advertising "rs.example.org" will fail because it does
+          not match "*.example.net". <figure align="center"
+              anchor="subdomainex"
               title="A Simplified Example of Auto-upgrade based on Subdomains">
               <artwork><![CDATA[Encrypted DNS                              CPE
 capable client                             (@i) 
@@ -1107,22 +1106,22 @@ Legend:
       <t>Hosts serviced by legacy CPEs that can't be upgraded to support the
       options defined in <xref target="RI"></xref> won't be able to learn the
       encrypted DNS server hosted by the ISP, in particular. If the ADN is not
-      discovered using DHCP/RA, such hosts will have to fallback to use DEER 
-      as defined in <xref
-      target="I-D.pauly-add-deer"></xref> to discover the encrypted DNS server
-      and to retrieve the list of supported DoH services using the SVCB
-      RRtype <xref target="I-D.schwartz-svcb-dns"></xref> without verifying the
-	  hostname of discovered templates with the ADN. Other guidance in DEER
-	  relating to resolver verification must be followed in this case. This
-	  will prevent an unencrypted resolver on a local address from referring
-	  to an encrypted resolver at a different address without an out-of-band
-	  configuration in the client beyond the scope of this document or DEER.</t>
+      discovered using DHCP/RA, such hosts will have to fallback to use DEER
+      as defined in <xref target="I-D.pauly-add-deer"></xref> to discover the
+      encrypted DNS server and to retrieve the list of supported DoH services
+      using the SVCB RRtype <xref target="I-D.schwartz-svcb-dns"></xref>
+      without verifying the hostname of discovered templates with the ADN.
+      Other guidance in DEER relating to resolver verification must be
+      followed in this case. This will prevent an unencrypted resolver on a
+      local address from referring to an encrypted resolver at a different
+      address without an out-of-band configuration in the client beyond the
+      scope of this document or DEER.</t>
 
-      <t>The DHCP/RA option to discover DoH templates from DHCP or RA options
-	  (should the WG pursue that approach pending feedback) takes precedence
-	  over DEER since DEER uses unencrypted DNS to an external DNS resolver,
-	  which is susceptible to both internal and external attacks whereas
-	  DHCP/RA is only vulnerable to internal attacks.</t>
+      <t>Note that DHCP/RA options to discover DoH templates (should the WG
+      pursue that approach pending feedback) takes precedence over DEER since
+      DEER uses unencrypted DNS to an external DNS resolver, which is
+      susceptible to both internal and external attacks whereas DHCP/RA is
+      only vulnerable to internal attacks.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
@@ -1139,7 +1138,7 @@ Legend:
         from a CA, host an Encrypted DNS server and claim the best DNS privacy
         preservation policy. Also, an attacker can use a public IP address,
         get an 'IP address'-validated public certificate from a CA, host an
-        Encryptd DNS server and claim the best DNS privacy preservation
+        Encrypted DNS server and claim the best DNS privacy preservation
         policy.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
@@ -1175,7 +1174,7 @@ Legend:
 
       <section title="Deletion Attacks">
         <t>If the DHCP responses or RAs are dropped by the attacker, the
-        client can fallback to use a pre-configured encrypted DNS server.
+        client can fallback to use a preconfigured encrypted DNS server.
         However, the use of policies to select servers is out of scope of this
         document.</t>
 
@@ -1210,7 +1209,7 @@ Legend:
         <t>This leads to the need for provisioning unique credentials for
         different clients. Endpoints can be provisioned with unique
         credentials (username and password, typically) provided by the home
-        network administraor to mutually authenticate to the home WLAN Access
+        network administrator to mutually authenticate to the home WLAN Access
         Point (e.g., 802.1x Wireless User Authentication on OpenWRT <xref
         target="dot1x"></xref>, EAP-pwd <xref target="RFC8146"></xref>). Not
         all of endpoint devices (e.g., IoT devices) support 802.1x supplicant
@@ -1311,9 +1310,8 @@ Legend:
       <t>Many thanks to Christian Jacquenet and Michael Richardson for the
       review.</t>
 
-      <t>Thanks to Stephen Farrell, Martin Thomson, Vittorio Bertola,
-      Stephane Bortzmeyer, Ben Schwartz, and Iain Sharp for the
-      comments.</t>
+      <t>Thanks to Stephen Farrell, Martin Thomson, Vittorio Bertola, Stephane
+      Bortzmeyer, Ben Schwartz, and Iain Sharp for the comments.</t>
 
       <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
 
@@ -1384,10 +1382,10 @@ Legend:
       <?rfc include='reference.I-D.ietf-v6ops-rfc7084-bis' ?>
 
       <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
-	  
-	  <?rfc include='reference.I-D.pauly-add-deer'?>
-	  
-	  <?rfc include='reference.I-D.schwartz-svcb-dns'?>
+
+      <?rfc include='reference.I-D.pauly-add-deer'?>
+
+      <?rfc include='reference.I-D.schwartz-svcb-dns'?>
 
       <?rfc include='reference.RFC.6731'?>
 
