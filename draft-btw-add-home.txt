@@ -75,7 +75,7 @@ Table of Contents
    5.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . . . .   8
    6.  IPv6 RA Encrypted DNS Options . . . . . . . . . . . . . . . .  10
    7.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  13
-   8.  Make Use of Discovered Encrypted DNS Server . . . . . . . . .  14
+   8.  Make Use of Discovered Encrypted DNS Servers  . . . . . . . .  14
    9.  Hosting Encrypted DNS Forwarder in Local Networks . . . . . .  15
      9.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  15
        9.1.1.  DNS Forwarders  . . . . . . . . . . . . . . . . . . .  15
@@ -131,8 +131,8 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    Sample target deployment scenarios are discussed in Appendix A; both
    managed and unmanaged Customer Premises Equipment (CPEs) are covered.
    It is out of the scope of this document to provide an exhaustive
-   inventory of deployments where Encrypted DNS Options (Sections 45 and
-   6) can be used.
+   inventory of deployments where Encrypted DNS Options (Sections 4, 5,
+   and 6) can be used.
 
    Considerations related to hosting a DNS forwarder in a local network
    are described (Section 9).
@@ -213,10 +213,10 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    returned in the option to accommodate current deployments relying
    upon primary and backup servers.  Whether one IP address or more are
    returned in an option is deployment specific.  For example, a router
-   embedding a forwarder has to include one single IP address pointing
-   to one of its LAN-facing interfaces.  This address can be a private
-   IPv4 address, a link-local address, a Unique Local IPv6 unicast
-   Address (ULA), or a Global Unicast Address (GUA).
+   embedding a recursive server or forwarder has to include one single
+   IP address pointing to one of its LAN-facing interfaces.  This
+   address can be a private IPv4 address, a link-local address, a Unique
+   Local IPv6 unicast Address (ULA), or a Global Unicast Address (GUA).
 
 
 
@@ -759,7 +759,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    How a DoH client makes use of the configured DoH services is out of
    the scope of this document.
 
-8.  Make Use of Discovered Encrypted DNS Server
+8.  Make Use of Discovered Encrypted DNS Servers
 
    Even if the use of a discovered encrypted DNS server is beyond the
    discovery process and falls under encrypted server selection, the
