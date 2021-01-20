@@ -289,7 +289,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       | Enc DNS Flags |                                               |
       +---------------+                                               +
       |                                                               |
-      ~                  DNS Authentication Domain Name               ~
+      ~                   authentication-domain-name                  ~
       |                                                               |
       +---------------------------------------------------------------+
 
@@ -340,12 +340,13 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
       and DoT and the server supports both with the same ADN, then both
       T and H bits must be set.
-   o  Authentication Domain Name: A fully qualified domain name of the
+   o  authentication-domain-name: A fully qualified domain name of the
       encrypted DNS server.  This field is formatted as specified in
       Section 10 of [RFC8415].
 
    An example of the Authentication Domain Name encoding is shown in
-   Figure 3.  This example conveys the FQDN "doh1.example.com.".
+   Figure 3.  This example conveys the FQDN "doh1.example.com.", and the
+   resulting Option-length field is 18.
 
         +------+------+------+------+------+------+------+------+------+
         | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
@@ -353,7 +354,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
         |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
         +------+------+------+------+------+------+------+------+------+
 
-      Figure 3: An example of the authentication-domain-name Encoding
+    Figure 3: An Example of the DNS authentication-domain-name Encoding
 
    The DHCPv6 Encrypted DNS Address option is used to configure a list
    of IP addresses and a port number of the encrypted DNS server.  The
@@ -366,12 +367,12 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       | Enc DNS Flags |   Unassigned  |          Port Number          |
       +---------------+---------------+-------------------------------+
       |                                                               |
-      |                         IPv6 Address                          |
+      |                         ipv6-address                          |
       |                                                               |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
-      |                         IPv6 Address                          |
+      |                         ipv6-address                          |
       |                                                               |
       |                                                               |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -385,7 +386,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    o  Option-code: OPTION_V6_ENC_ADD (TBA2, see Section 12.1)
 
    o  Option-length: Length of the enclosed data in octets.
-
 
 
 
@@ -463,7 +463,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
             |                               |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             |                               |
-            ~  Authentication Domain Name   ~
+            ~  authentication-domain-name   ~
             |                               |
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -506,7 +506,7 @@ Boucadair, et al.         Expires July 24, 2021                 [Page 9]
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
-   o  Authentication Domain Name: The domain name of the encrypted DNS
+   o  authentication-domain-name: The domain name of the encrypted DNS
       server.  This field is formatted as specified in Section 10 of
       [RFC8415].  The format of this field is shown in Figure 7.
 
@@ -570,7 +570,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
        |                           Lifetime                            |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |                                                               |
-       :                   Authentication Domain Name                  :
+       :                   authentication-domain-name                  :
        |                                                               |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -600,7 +600,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
       A value of zero means that this Authentication Domain Name MUST no
       longer be used.
-   o  Authentication Domain Name: The domain name of the encrypted DNS
+   o  authentication Domain Name: The domain name of the encrypted DNS
       server.  This field is formatted as specified in Section 10 of
       [RFC8415].
 

@@ -291,7 +291,7 @@
    | Enc DNS Flags |                                               |
    +---------------+                                               +
    |                                                               |
-   ~                  DNS Authentication Domain Name               ~
+   ~                   authentication-domain-name                  ~
    |                                                               |
    +---------------------------------------------------------------+
 ]]></artwork>
@@ -338,17 +338,18 @@
           requested DoH and DoT and the server supports both with the same
           ADN, then both T and H bits must be set.</t>
 
-          <t>Authentication Domain Name: A fully qualified domain name of the
+          <t>authentication-domain-name: A fully qualified domain name of the
           encrypted DNS server. This field is formatted as specified in
           Section 10 of <xref target="RFC8415"></xref>.</t>
         </list></t>
 
       <t><?rfc subcompact="no" ?>An example of the Authentication Domain Name
       encoding is shown in <xref target="fqdn"></xref>. This example conveys
-      the FQDN "doh1.example.com.".</t>
+      the FQDN "doh1.example.com.", and the resulting Option-length field is
+      18.</t>
 
       <t><figure anchor="fqdn"
-          title="An example of the authentication-domain-name Encoding">
+          title="An Example of the DNS authentication-domain-name Encoding">
           <artwork><![CDATA[      +------+------+------+------+------+------+------+------+------+
       | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
       +------+------+------+------+------+------+------+------+------+
@@ -370,12 +371,12 @@
    | Enc DNS Flags |   Unassigned  |          Port Number          |
    +---------------+---------------+-------------------------------+
    |                                                               |
-   |                         IPv6 Address                          |
+   |                         ipv6-address                          |
    |                                                               |
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                                                               |
-   |                         IPv6 Address                          |
+   |                         ipv6-address                          |
    |                                                               |
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -454,7 +455,7 @@
          |                               |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |                               |
-         ~  Authentication Domain Name   ~
+         ~  authentication-domain-name   ~
          |                               |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
 
@@ -494,7 +495,7 @@
    This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.]]></artwork>
             </figure></t>
 
-          <t>Authentication Domain Name: The domain name of the encrypted DNS
+          <t>authentication-domain-name: The domain name of the encrypted DNS
           server. This field is formatted as specified in Section 10 of <xref
           target="RFC8415"></xref>. The format of this field is shown in <xref
           target="adn"></xref>.<figure align="center" anchor="adn"
@@ -545,7 +546,7 @@
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
-     :                   Authentication Domain Name                  :
+     :                   authentication-domain-name                  :
      |                                                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -577,7 +578,7 @@
           infinity. <vspace blankLines="1" />A value of zero means that this
           Authentication Domain Name MUST no longer be used.</t>
 
-          <t>Authentication Domain Name: The domain name of the encrypted DNS
+          <t>authentication Domain Name: The domain name of the encrypted DNS
           server. This field is formatted as specified in Section 10 of <xref
           target="RFC8415"></xref>.<vspace blankLines="1" />This field MUST be
           padded with zeros so that its size is a multiple of 8 octets.</t>
