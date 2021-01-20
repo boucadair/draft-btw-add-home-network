@@ -695,14 +695,14 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    DoH client to retrieve the list of supported templates by a DoH
    server.
 
-   Upon discovery of a DoH resolver (Section 3), the DoH client may
-   contact that DoH resolver to retrieve the list of supported DoH
-   services using DEER [I-D.pauly-add-deer].  This will allow the client
-   to discover the resolver's supported DoH templates or DoH resolvers
-   that the discovered resolver designates using DNS SVCB queries
-   [I-D.schwartz-svcb-dns].  The designated DoH resolvers and DoH
-   resolver discovered using DHCP/RA may be hosted on the same or
-   distinct IP addresses.
+   Upon discovery of a DoH resolver (Sections 4, 5, and 6), the DoH
+   client may contact that DoH resolver to retrieve the list of
+   supported DoH services using DEER [I-D.pauly-add-deer].  This will
+   allow the client to discover the resolver's supported DoH templates
+   or DoH resolvers that the discovered resolver designates using DNS
+   SVCB queries [I-D.schwartz-svcb-dns].  The designated DoH resolvers
+   and DoH resolver discovered using DHCP/RA may be hosted on the same
+   or distinct IP addresses.
 
    Let's suppose that a host has discovered an encrypted DNS server that
    is DoH-capable.  The host has also discovered the following
@@ -775,8 +775,8 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       confirming that the Do53 IP address and the encrypted DNS server
       are owned and operated by the same organisation.
 
-   o  Similarly, if the ADN conveyed in DHCP/RA (Section 3) is
-      preconfigured in the OS or browser as a verified resolver, the DNS
+   o  Similarly, if the ADN conveyed in DHCP/RA (Sections 4, 5, and 6)
+      is preconfigured in the OS or browser as a verified resolver, the
 
 
 
@@ -786,7 +786,7 @@ Boucadair, et al.         Expires July 24, 2021                [Page 14]
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
-      client auto-upgrades to establish an encrypted a DoH/DoT/DoQ
+      DNS client auto-upgrades to establish an encrypted a DoH/DoT/DoQ
       session with the ADN.
 
       In such case, the DNS client matches the domain name in the
@@ -820,19 +820,19 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 9.1.3.  Auto-Upgrade Based on Domains and their Subdomains
 
-   If the ADN conveyed in DHCP/RA (Section 3) is preconfigured in
-   popular OSes or browsers as a verified resolver and the auto-upgrade
-   (Section 8) is allowed for both the preconfigured ADN and its sub-
-   domains, the encrypted DNS client will learn the local encrypted DNS
-   forwarder using DHCP/RA and auto-upgrade because the preconfigured
-   ADN would match the subjectAltName value in the server certificate.
-   For example, if the preconfigured ADN is "*.example.com" and the
-   discovered encrypted DNS forwarder is "cpe1.example.com", auto-
-   upgrade will take place.
+   If the ADN conveyed in DHCP/RA (Sections 4, 5, and 6) is
+   preconfigured in popular OSes or browsers as a verified resolver and
+   the auto-upgrade (Section 8) is allowed for both the preconfigured
+   ADN and its sub-domains, the encrypted DNS client will learn the
+   local encrypted DNS forwarder using DHCP/RA and auto-upgrade because
+   the preconfigured ADN would match the subjectAltName value in the
+   server certificate.  For example, if the preconfigured ADN is
+   "*.example.com" and the discovered encrypted DNS forwarder is
+   "cpe1.example.com", auto-upgrade will take place.
 
    In this case, the CPE can communicate the ADN of the local DoH
-   forwarder (Section 9.1.2) to internal hosts using DHCP/RA
-   (Section 3).
+   forwarder (Section 9.1.2) to internal hosts using DHCP/RA (Sections
+   4, 5, and 6).
 
 
 
@@ -850,25 +850,25 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    shown in Figure 11, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail because it does not match "*.example.net".
 
-   Encrypted DNS                              CPE
-   capable client                             (@i)
-         |                                     |
-         |<=================DHCP===============|
-         | {ADN=cpe1-internal.example.net, @i} |
-         |                                     |
-         |                   Rogue Server      |
-         |                       (@rs)         |
-         |                         |           |
-         X<===========DHCP=========|           |
-         |{ADN=rs.example.org, @rs}|           |
-         |                         |           |
-         |                                     |
-         |<=================DoH===============>|
-         |                                     |
+              Encrypted DNS                              CPE
+              capable client                             (@i)
+                    |                                     |
+                    |<=================DHCP===============|
+                    | {ADN=cpe1-internal.example.net, @i} |
+                    |                                     |
+                    |                   Rogue Server      |
+                    |                       (@rs)         |
+                    |                         |           |
+                    X<===========DHCP=========|           |
+                    |{ADN=rs.example.org, @rs}|           |
+                    |                         |           |
+                    |                                     |
+                    |<=================DoH===============>|
+                    |                                     |
 
-   Legend:
-     * @i: internal IP address of the CPE
-     * @rs: IP address of a rogue server
+              Legend:
+                * @i: internal IP address of the CPE
+                * @rs: IP address of a rogue server
 
     Figure 11: A Simplified Example of Auto-upgrade based on Subdomains
 
@@ -929,9 +929,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 10.  Legacy CPEs
 
    Hosts serviced by legacy CPEs that can't be upgraded to support the
-   options defined in Section 3 won't be able to learn the encrypted DNS
-   server hosted by the ISP, in particular.  If the ADN is not
-   discovered using DHCP/RA, such hosts will have to fallback to use
+   options defined in Sections 4, 5, and 6 won't be able to learn the
+   encrypted DNS server hosted by the ISP, in particular.  If the ADN is
+   not discovered using DHCP/RA, such hosts will have to fallback to use
    DEER as defined in [I-D.pauly-add-deer] to discover the encrypted DNS
    server and to retrieve the list of supported DoH services using the
    SVCB RRtype [I-D.schwartz-svcb-dns] without verifying the hostname of
@@ -1516,7 +1516,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    The DNS client discovers whether the DNS server in the local network
    supports DoH/DoT/DoQ by using a dedicated field in the discovery
-   message: Encrypted DNS Types (Section 3).
+   message: Encrypted DNS Types (Sections 4, 5, and 6) .
 
              (a) Fixed Networks
 

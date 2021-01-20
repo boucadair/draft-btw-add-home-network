@@ -645,12 +645,14 @@
       mechanism for a DoH client to retrieve the list of supported templates
       by a DoH server.</t>
 
-      <t>Upon discovery of a DoH resolver (<xref target="RI"></xref>), the DoH
-      client may contact that DoH resolver to retrieve the list of supported
-      DoH services using DEER <xref target="I-D.pauly-add-deer"></xref>. This
-      will allow the client to discover the resolver's supported DoH templates
-      or DoH resolvers that the discovered resolver designates using DNS SVCB
-      queries <xref target="I-D.schwartz-svcb-dns"></xref>. The designated DoH
+      <t>Upon discovery of a DoH resolver (Sections <xref format="counter"
+      target="DHCPv6"></xref>, <xref format="counter" target="DHCP"></xref>,
+      and <xref format="counter" target="RA"></xref>), the DoH client may
+      contact that DoH resolver to retrieve the list of supported DoH services
+      using DEER <xref target="I-D.pauly-add-deer"></xref>. This will allow
+      the client to discover the resolver's supported DoH templates or DoH
+      resolvers that the discovered resolver designates using DNS SVCB queries
+      <xref target="I-D.schwartz-svcb-dns"></xref>. The designated DoH
       resolvers and DoH resolver discovered using DHCP/RA may be hosted on the
       same or distinct IP addresses.</t>
 
@@ -721,8 +723,10 @@
           address and the encrypted DNS server are owned and operated by the
           same organisation.</t>
 
-          <t>Similarly, if the ADN conveyed in DHCP/RA (<xref
-          target="RI"></xref>) is preconfigured in the OS or browser as a
+          <t>Similarly, if the ADN conveyed in DHCP/RA (Sections <xref
+          format="counter" target="DHCPv6"></xref>, <xref format="counter"
+          target="DHCP"></xref>, and <xref format="counter"
+          target="RA"></xref>) is preconfigured in the OS or browser as a
           verified resolver, the DNS client auto-upgrades to establish an
           encrypted a DoH/DoT/DoQ session with the ADN.<vspace
           blankLines="1" />In such case, the DNS client matches the domain
@@ -757,20 +761,24 @@
         </section>
 
         <section title="Auto-Upgrade Based on Domains and their Subdomains">
-          <t>If the ADN conveyed in DHCP/RA (<xref target="RI"></xref>) is
-          preconfigured in popular OSes or browsers as a verified resolver and
-          the auto-upgrade (<xref target="auto"></xref>) is allowed for both
-          the preconfigured ADN and its sub-domains, the encrypted DNS client
-          will learn the local encrypted DNS forwarder using DHCP/RA and
-          auto-upgrade because the preconfigured ADN would match the
-          subjectAltName value in the server certificate. For example, if the
-          preconfigured ADN is "*.example.com" and the discovered encrypted
-          DNS forwarder is "cpe1.example.com", auto-upgrade will take
-          place.</t>
+          <t>If the ADN conveyed in DHCP/RA (Sections <xref format="counter"
+          target="DHCPv6"></xref>, <xref format="counter"
+          target="DHCP"></xref>, and <xref format="counter"
+          target="RA"></xref>) is preconfigured in popular OSes or browsers as
+          a verified resolver and the auto-upgrade (<xref
+          target="auto"></xref>) is allowed for both the preconfigured ADN and
+          its sub-domains, the encrypted DNS client will learn the local
+          encrypted DNS forwarder using DHCP/RA and auto-upgrade because the
+          preconfigured ADN would match the subjectAltName value in the server
+          certificate. For example, if the preconfigured ADN is
+          "*.example.com" and the discovered encrypted DNS forwarder is
+          "cpe1.example.com", auto-upgrade will take place.</t>
 
           <t>In this case, the CPE can communicate the ADN of the local DoH
           forwarder (<xref target="acme"></xref>) to internal hosts using
-          DHCP/RA (<xref target="RI"></xref>).</t>
+          DHCP/RA (Sections <xref format="counter" target="DHCPv6"></xref>,
+          <xref format="counter" target="DHCP"></xref>, and <xref
+          format="counter" target="RA"></xref>).</t>
 
           <t>Let's suppose that "*.example.net" is preconfigured as a verified
           resolved in the browser or OS. If the encrypted DNS client discovers
@@ -782,7 +790,7 @@
           not match "*.example.net". <figure align="center"
               anchor="subdomainex"
               title="A Simplified Example of Auto-upgrade based on Subdomains">
-              <artwork><![CDATA[Encrypted DNS                              CPE
+              <artwork align="center"><![CDATA[Encrypted DNS                              CPE
 capable client                             (@i) 
       |                                     | 
       |<=================DHCP===============| 
@@ -855,18 +863,21 @@ Legend:
 
     <section title="Legacy CPEs">
       <t>Hosts serviced by legacy CPEs that can't be upgraded to support the
-      options defined in <xref target="RI"></xref> won't be able to learn the
-      encrypted DNS server hosted by the ISP, in particular. If the ADN is not
-      discovered using DHCP/RA, such hosts will have to fallback to use DEER
-      as defined in <xref target="I-D.pauly-add-deer"></xref> to discover the
-      encrypted DNS server and to retrieve the list of supported DoH services
-      using the SVCB RRtype <xref target="I-D.schwartz-svcb-dns"></xref>
-      without verifying the hostname of discovered templates with the ADN.
-      Other guidance in DEER relating to resolver verification must be
-      followed in this case. This will prevent an unencrypted resolver on a
-      local address from referring to an encrypted resolver at a different
-      address without an out-of-band configuration in the client beyond the
-      scope of this document or DEER.</t>
+      options defined in Sections <xref format="counter"
+      target="DHCPv6"></xref>, <xref format="counter" target="DHCP"></xref>,
+      and <xref format="counter" target="RA"></xref> won't be able to learn
+      the encrypted DNS server hosted by the ISP, in particular. If the ADN is
+      not discovered using DHCP/RA, such hosts will have to fallback to use
+      DEER as defined in <xref target="I-D.pauly-add-deer"></xref> to discover
+      the encrypted DNS server and to retrieve the list of supported DoH
+      services using the SVCB RRtype <xref
+      target="I-D.schwartz-svcb-dns"></xref> without verifying the hostname of
+      discovered templates with the ADN. Other guidance in DEER relating to
+      resolver verification must be followed in this case. This will prevent
+      an unencrypted resolver on a local address from referring to an
+      encrypted resolver at a different address without an out-of-band
+      configuration in the client beyond the scope of this document or
+      DEER.</t>
 
       <t>Note that DHCP/RA options to discover DoH templates (should the WG
       pursue that approach pending feedback) takes precedence over DEER since
@@ -1380,8 +1391,10 @@ Legend:
 
           <t>The DNS client discovers whether the DNS server in the local
           network supports DoH/DoT/DoQ by using a dedicated field in the
-          discovery message: Encrypted DNS Types (<xref
-          target="RI"></xref>).</t>
+          discovery message: Encrypted DNS Types (Sections <xref
+          format="counter" target="DHCPv6"></xref>, <xref format="counter"
+          target="DHCP"></xref>, and <xref format="counter"
+          target="RA"></xref>) .</t>
 
           <t><figure align="center" anchor="wan"
               title="Encrypted DNS in the WAN">
