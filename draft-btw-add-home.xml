@@ -269,6 +269,13 @@
       discuss DNS selection of multi-interface devices. The reader may refer
       to <xref target="RFC6731"></xref> for a discussion of issues and an
       example of DNS server selection for multi-interfaced devices.</t>
+
+      <t>DHCP/RA options to discover encrypted DNS servers (including, DoH
+      templates should the WG pursue that approach pending feedback) takes
+      precedence over DEER <xref target="I-D.pauly-add-deer"></xref> since
+      DEER uses unencrypted DNS to an external DNS resolver, which is
+      susceptible to both internal and external attacks whereas DHCP/RA is
+      only vulnerable to internal attacks.</t>
     </section>
 
     <section anchor="DHCPv6" title="DHCPv6 Encrypted DNS Options">
@@ -878,12 +885,6 @@ Legend:
       encrypted resolver at a different address without an out-of-band
       configuration in the client beyond the scope of this document or
       DEER.</t>
-
-      <t>Note that DHCP/RA options to discover DoH templates (should the WG
-      pursue that approach pending feedback) takes precedence over DEER since
-      DEER uses unencrypted DNS to an external DNS resolver, which is
-      susceptible to both internal and external attacks whereas DHCP/RA is
-      only vulnerable to internal attacks.</t>
     </section>
 
     <section anchor="Security" title="Security Considerations">

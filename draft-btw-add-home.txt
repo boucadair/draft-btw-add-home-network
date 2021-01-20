@@ -258,18 +258,18 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    The reader may refer to [RFC6731] for a discussion of issues and an
    example of DNS server selection for multi-interfaced devices.
 
+   DHCP/RA options to discover encrypted DNS servers (including, DoH
+   templates should the WG pursue that approach pending feedback) takes
+   precedence over DEER [I-D.pauly-add-deer] since DEER uses unencrypted
+   DNS to an external DNS resolver, which is susceptible to both
+   internal and external attacks whereas DHCP/RA is only vulnerable to
+   internal attacks.
+
 4.  DHCPv6 Encrypted DNS Options
 
    The DHCPv6 Encrypted DNS ADN option is used to configure an
    authentication domain name of the encrypted DNS server.  The format
    of this option is shown in Figure 1.
-
-
-
-
-
-
-
 
 
 
@@ -942,9 +942,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    configuration in the client beyond the scope of this document or
    DEER.
 
-   Note that DHCP/RA options to discover DoH templates (should the WG
-   pursue that approach pending feedback) takes precedence over DEER
-   since DEER uses unencrypted DNS to an external DNS resolver, which is
+
+
+
 
 
 
@@ -953,9 +953,6 @@ Boucadair, et al.         Expires July 24, 2021                [Page 17]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   susceptible to both internal and external attacks whereas DHCP/RA is
-   only vulnerable to internal attacks.
 
 11.  Security Considerations
 
@@ -1001,6 +998,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    MUST be discarded by the encrypted DNS forwarder in the CPE.  This
    behavior adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4
    and IPv6.
+
+
+
 
 
 
