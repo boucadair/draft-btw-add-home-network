@@ -134,7 +134,7 @@
       <t>This document focuses on the support of encrypted DNS such as
       DNS-over-HTTPS (DoH) <xref target="RFC8484"></xref>, DNS-over-TLS (DoT)
       <xref target="RFC7858"></xref>, or DNS-over-QUIC (DoQ) <xref
-      target="I-D.ietf-dprive-dnsoquic"></xref> in local networks. </t>
+      target="I-D.ietf-dprive-dnsoquic"></xref> in local networks.</t>
 
       <t>In particular, the document specifies how a local encrypted DNS
       server can be discovered and used by connected hosts by means of DHCP
@@ -143,7 +143,7 @@
       options. These options are designed to convey the following information:
       the DNS Authentication Domain Name (ADN), a list of IP addresses, and
       optionally a port number. The discovery of DoH URI Templates is
-      discussed in <xref target="URI"></xref>. </t>
+      discussed in <xref target="URI"></xref>.</t>
 
       <t>Sample target deployment scenarios are discussed in <xref
       target="depl"></xref>; both managed and unmanaged Customer Premises
@@ -151,7 +151,7 @@
       provide an exhaustive inventory of deployments where Encrypted DNS
       Options (Sections <xref format="counter" target="DHCPv6"></xref>, <xref
       format="counter" target="DHCP"></xref>, and <xref format="counter"
-      target="RA"></xref>) can be used. </t>
+      target="RA"></xref>) can be used.</t>
 
       <t>Considerations related to hosting a DNS forwarder in a local network
       are described (<xref target="forwarder"></xref>).</t>
@@ -165,10 +165,8 @@
       only when, they appear in all capitals, as shown here.</t>
 
       <t>This document makes use of the terms defined in <xref
-      target="RFC8499"></xref> and <xref
-      target="I-D.ietf-dnsop-terminology-ter"></xref>.</t>
-
-      <t>The following additional terms are used: <list style="hanging">
+      target="RFC8499"></xref>. Also, the following additional terms are used:
+      <list style="hanging">
           <t hangText="Do53:">refers to unencrypted DNS.</t>
 
           <t hangText="Encrypted DNS:">refers to a scheme where DNS exchanges
@@ -185,7 +183,7 @@
           an ISP.</t>
 
           <t hangText="DHCP:">refers to both DHCPv4 and DHCPv6.</t>
-        </list> </t>
+        </list></t>
     </section>
 
     <section anchor="RI" title="Overview and Rationale">
@@ -899,9 +897,9 @@ Legend:
         server. Note that such an attacker can launch other attacks as
         discussed in Section 22 of <xref target="RFC8415"></xref>. The
         attacker can get a domain name with a domain-validated public
-		certificate from a CA and host an Encrypted DNS server. Also, an
-		attacker can use a public IP address and get an 'IP address'-validated
-		public certificate from a CA to host an Encrypted DNS server.</t>
+        certificate from a CA and host an Encrypted DNS server. Also, an
+        attacker can use a public IP address and get an 'IP address'-validated
+        public certificate from a CA to host an Encrypted DNS server.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
@@ -1142,8 +1140,6 @@ Legend:
 
       <?rfc include='reference.I-D.ietf-v6ops-rfc7084-bis' ?>
 
-      <?rfc include='reference.I-D.ietf-dnsop-terminology-ter'?>
-
       <?rfc include='reference.I-D.pauly-add-deer'?>
 
       <?rfc include='reference.I-D.schwartz-svcb-dns'?>
@@ -1332,13 +1328,12 @@ Legend:
 
       <t>The communication between a customer's device (possibly via Customer
       Premises Equipment (CPE)) and an ISP-supplied DNS resolver takes place
-      by using cleartext DNS messages (Do53) <xref
-      target="I-D.ietf-dnsop-terminology-ter"></xref>. Some examples are
-      depicted in <xref target="do53"></xref>. In the case of cellular
-      networks, the cellular network will provide connectivity directly to a
-      host (e.g., smartphone, tablet) or via a CPE. Do53 mechanisms used
-      within the Local Area Network (LAN) are similar in both fixed and
-      cellular CPE-based broadband service offerings.</t>
+      by using cleartext DNS messages (Do53). Some examples are depicted in
+      <xref target="do53"></xref>. In the case of cellular networks, the
+      cellular network will provide connectivity directly to a host (e.g.,
+      smartphone, tablet) or via a CPE. Do53 mechanisms used within the Local
+      Area Network (LAN) are similar in both fixed and cellular CPE-based
+      broadband service offerings.</t>
 
       <t><figure align="center" anchor="do53"
           title="Sample Legacy Deployments">
