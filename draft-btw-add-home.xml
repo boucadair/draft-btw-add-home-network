@@ -277,12 +277,17 @@
     </section>
 
     <section anchor="DHCPv6" title="DHCPv6 Encrypted DNS Options">
-      <t>The DHCPv6 Encrypted DNS ADN option is used to configure an
-      authentication domain name of the encrypted DNS server. The format of
-      this option is shown in <xref target="ri_option"></xref>.</t>
+      <t>This section defines two DHCPv6 options: DHCPv6 Encrypted DNS ADN
+      option (<xref target="DHCPv6-ADN"></xref>) and DHCPv6 Encrypted DNS
+      Address option (<xref target="DHCPv6-ADD"></xref>).</t>
 
-      <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS ADN Option">
-          <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      <section anchor="DHCPv6-ADN" title="Encrypted DNS ADN Option">
+        <t>The DHCPv6 Encrypted DNS ADN option is used to configure an
+        authentication domain name of the encrypted DNS server. The format of
+        this option is shown in <xref target="ri_option"></xref>.</t>
+
+        <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS ADN Option">
+            <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |    OPTION_V6_ENC_ADN          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -293,76 +298,84 @@
    |                                                               |
    +---------------------------------------------------------------+
 ]]></artwork>
-        </figure></t>
+          </figure></t>
 
-      <t>The fields of the option shown in <xref target="ri_option"></xref>
-      are as follows:<?rfc subcompact="yes" ?></t>
+        <t>The fields of the option shown in <xref target="ri_option"></xref>
+        are as follows:<?rfc subcompact="yes" ?></t>
 
-      <t><list style="symbols">
-          <t>Option-code: OPTION_V6_ENC_ADN (TBA1, see <xref
-          target="iana6"></xref>)</t>
+        <t><list style="hanging">
+            <t hangText="Option-code:">OPTION_V6_ENC_ADN (TBA1, see <xref
+            target="iana6"></xref>)</t>
 
-          <t>Option-length: Length of the enclosed data in octets.</t>
+            <t hangText="Option-length:">Length of the enclosed data in
+            octets.</t>
 
-          <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
-          encrypted DNS server conveyed in this attribute. The format of this
-          8-bit field is shown in <xref target="types"></xref>. <figure
-              align="center" anchor="types" title="Encrypted DNS Types">
-              <artwork align="center"><![CDATA[+-+-+-+-+-+-+-+-+
+            <t hangText="Enc DNS Flags (Encrypted DNS Flags):">Indicates the
+            type(s) of the encrypted DNS server conveyed in this attribute.
+            The format of this 8-bit field is shown in <xref
+            target="types"></xref>. <figure align="center" anchor="types"
+                title="Encrypted DNS Flags Field">
+                <artwork align="center"><![CDATA[+-+-+-+-+-+-+-+-+
 |U|U|U|U|U|Q|H|T|
 +-+-+-+-+-+-+-+-+  ]]></artwork>
-            </figure><list style="empty">
-              <t>T: If set, this bit indicates that the server supports DoT
-              <xref target="RFC7858"></xref>.</t>
+              </figure><list style="hanging">
+                <t hangText="T:">If set, this bit indicates that the server
+                supports DoT <xref target="RFC7858"></xref>.</t>
 
-              <t>H: If set, this bit indicates that the server supports DoH
-              <xref target="RFC8484"></xref>.</t>
+                <t hangText="H:">If set, this bit indicates that the server
+                supports DoH <xref target="RFC8484"></xref>.</t>
 
-              <t>Q: If set, this bit indicates that the server supports DoQ
-              <xref target="I-D.ietf-dprive-dnsoquic"></xref>.</t>
+                <t hangText="Q:">If set, this bit indicates that the server
+                supports DoQ <xref
+                target="I-D.ietf-dprive-dnsoquic"></xref>.</t>
 
-              <t>U: Unassigned bits. These bits MUST be unset by the sender.
-              Associating a meaning with an unassigned bit can be done via
-              Standards Action <xref target="RFC8126"></xref>.</t>
-            </list>In a request, these bits are assigned to indicate the
-          requested encrypted DNS server type(s) by the client. In a response,
-          these bits are set as a function of the encrypted DNS supported by
-          the server and the requested encrypted DNS server type(s).<vspace
-          blankLines="1" />To keep the packet small, if more than one
-          encrypted DNS type (e.g., both DoH and DoT) are to be returned to a
-          requesting client and the same ADN is used for these types, the
-          corresponding bits must be set in the 'Encrypted DNS Types' field of
-          the same option instance in a response. For example, if the client
-          requested DoH and DoT and the server supports both with the same
-          ADN, then both T and H bits must be set.</t>
+                <t hangText="U:">Unassigned bits. These bits MUST be unset by
+                the sender. Associating a meaning with an unassigned bit can
+                be done via Standards Action <xref
+                target="RFC8126"></xref>.</t>
+              </list>In a request, these bits are assigned to indicate the
+            requested encrypted DNS server type(s) by the client. In a
+            response, these bits are set as a function of the encrypted DNS
+            supported by the server and the requested encrypted DNS server
+            type(s).<vspace blankLines="1" />To keep the packet small, if more
+            than one encrypted DNS type (e.g., both DoH and DoT) are to be
+            returned to a requesting client and the same ADN is used for these
+            types, the corresponding bits must be set in the 'Encrypted DNS
+            Types' field of the same option instance in a response. For
+            example, if the client requested DoH and DoT and the server
+            supports both with the same ADN, then both T and H bits must be
+            set.</t>
 
-          <t>authentication-domain-name: A fully qualified domain name of the
-          encrypted DNS server. This field is formatted as specified in
-          Section 10 of <xref target="RFC8415"></xref>.</t>
-        </list></t>
+            <t hangText="authentication-domain-name:">A fully qualified domain
+            name of the encrypted DNS server. This field is formatted as
+            specified in Section 10 of <xref target="RFC8415"></xref>.</t>
+          </list></t>
 
-      <t><?rfc subcompact="no" ?>An example of the Authentication Domain Name
-      encoding is shown in <xref target="fqdn"></xref>. This example conveys
-      the FQDN "doh1.example.com.", and the resulting Option-length field is
-      18.</t>
+        <t><?rfc subcompact="no" ?>An example of the Authentication Domain
+        Name encoding is shown in <xref target="fqdn"></xref>. This example
+        conveys the FQDN "doh1.example.com.", and the resulting Option-length
+        field is 18.</t>
 
-      <t><figure anchor="fqdn"
-          title="An Example of the DNS authentication-domain-name Encoding">
-          <artwork><![CDATA[      +------+------+------+------+------+------+------+------+------+
+        <t><figure anchor="fqdn"
+            title="An Example of the DNS authentication-domain-name Encoding">
+            <artwork><![CDATA[      +------+------+------+------+------+------+------+------+------+
       | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
       +------+------+------+------+------+------+------+------+------+
       |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
       +------+------+------+------+------+------+------+------+------+
 ]]></artwork>
-        </figure></t>
+          </figure></t>
+      </section>
 
-      <t>The DHCPv6 Encrypted DNS Address option is used to configure a list
-      of IP addresses and a port number of the encrypted DNS server. The
-      format of this option is shown in <xref target="dhcpv6_add"></xref>.</t>
+      <section anchor="DHCPv6-ADD" title="Encrypted DNS Address Option">
+        <t>The DHCPv6 Encrypted DNS Address option is used to configure a list
+        of IP addresses and a port number of the encrypted DNS server. The
+        format of this option is shown in <xref
+        target="dhcpv6_add"></xref>.</t>
 
-      <t><figure anchor="dhcpv6_add"
-          title="DHCPv6 Encrypted DNS Address Option">
-          <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+        <t><figure anchor="dhcpv6_add"
+            title="DHCPv6 Encrypted DNS Address Option">
+            <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |    OPTION_V6_ENC_ADD          |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -381,66 +394,77 @@
    |                              ...                              |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
-        </figure>The fields of the option shown in <xref
-      target="dhcpv6_add"></xref> are as follows:</t>
+          </figure>The fields of the option shown in <xref
+        target="dhcpv6_add"></xref> are as follows:</t>
 
-      <t><list style="symbols">
-          <t>Option-code: OPTION_V6_ENC_ADD (TBA2, see <xref
-          target="iana6"></xref>)</t>
+        <t><list style="hanging">
+            <t hangText="Option-code:">OPTION_V6_ENC_ADD (TBA2, see <xref
+            target="iana6"></xref>)</t>
 
-          <t>Option-length: Length of the enclosed data in octets.</t>
+            <t hangText="Option-length:">Length of the enclosed data in
+            octets.</t>
 
-          <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
-          encrypted DNS server conveyed in this attribute. The format of this
-          8-bit field is shown in <xref target="types"></xref>. In a request,
-          these bits are set to indicate the requested encrypted DNS server
-          type(s) by the client. In a response, these bits are set as a
-          function of the encrypted DNS supported by the server and the
-          requested encrypted DNS server type(s).</t>
+            <t hangText="Enc DNS Flags (Encrypted DNS Flags):">Indicates the
+            type(s) of the encrypted DNS server conveyed in this attribute.
+            The format of this 8-bit field is shown in <xref
+            target="types"></xref>. In a request, these bits are set to
+            indicate the requested encrypted DNS server type(s) by the client.
+            In a response, these bits are set as a function of the encrypted
+            DNS supported by the server and the requested encrypted DNS server
+            type(s).</t>
 
-          <t>Unassigned: These bits MUST be unset by the sender. Associating a
-          meaning with an unassigned bit can be done via Standards Action
-          <xref target="RFC8126"></xref>.</t>
+            <t hangText="Unassigned:">These bits MUST be unset by the sender.
+            Associating a meaning with an unassigned bit can be done via
+            Standards Action <xref target="RFC8126"></xref>.</t>
 
-          <t>Port Number: If not null, it indicates the port number to be used
-          for the encrypted DNS. If this field is to zero, this indicates that
-          default port numbers should be used. As a reminder, the default port
-          number is 853 for DoT and 443 for DoH.</t>
+            <t hangText="Port Number:">If not null, it indicates the port
+            number to be used for the encrypted DNS. If this field is set to
+            zero, this indicates that default port numbers should be used. As
+            a reminder, the default port number is 853 for DoT and 443 for
+            DoH.</t>
 
-          <t>IPv6 Address(es): Indicates one or more IPv6 addresses to reach
-          the encrypted DNS server. An address can be link-local, ULA, or
-          GUA.</t>
-        </list></t>
+            <t hangText="ipv6-address(es):">Indicates one or more IPv6
+            addresses to reach the encrypted DNS server. An address can be
+            link-local, ULA, or GUA.</t>
+          </list></t>
 
-      <t>Multiple instances of OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) may be
-      returned to a DHCPv6 client; each pointing to a distinct encrypted DNS
-      server type.</t>
+        <t>Multiple instances of OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) may
+        be returned to a DHCPv6 client; each pointing to a distinct encrypted
+        DNS server type.</t>
 
-      <t>To discover an encrypted DNS server, the DHCPv6 client includes
-      OPTION_V6_ENC_ADN and OPTION_V6_ENC_ADD in an Option Request Option
-      (ORO), as in Sections 18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7
-      of <xref target="RFC8415"></xref>. The DHCPv6 client sets the Encrypted
-      DNS Types field to the requested encrypted DNS server type(s).</t>
+        <t>If more than one encrypted DNS server types is supported on the
+        same IP address and default port numbers are used, one instance of
+        OPTION_V6_ENC_ADD option with the appropriate bits set in "Encr DNS
+        Types" field should be returned by the DHCP server.</t>
+      </section>
 
-      <t>If the DHCPv6 client requested more than one encrypted DNS server
-      type, the DHCP client MUST be prepared to receive multiple
-      OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) options; each option is to be
-      treated as a separate encrypted DNS server.</t>
+      <section title="DHCPv6 Client Behavior">
+        <t>To discover an encrypted DNS server, the DHCPv6 client MUST include
+        OPTION_V6_ENC_ADN and OPTION_V6_ENC_ADD in an Option Request Option
+        (ORO), as in Sections 18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7
+        of <xref target="RFC8415"></xref>. The DHCPv6 client sets the
+        Encrypted DNS Types field to the requested encrypted DNS server
+        type(s).</t>
 
-      <t>If more than one encrypted DNS server types is supported on the same
-      IP address and default port numbers are used, one instance of
-      OPTION_V6_ENC_ADD option with the appropriate bits set in "Encr DNS
-      Types" field should be returned by the DHCP server.</t>
+        <t>If the DHCPv6 client requested more than one encrypted DNS server
+        type, the DHCP client MUST be prepared to receive multiple
+        OPTION_V6_ENC_ADN (or OPTION_V6_ENC_ADD) options; each option is to be
+        treated as a separate encrypted DNS server.</t>
+
+        <t>The DHCPv6 client MUST silently discard multicast and host loopback
+        addresses conveyed in OPTION_V6_ENC_ADD.</t>
+      </section>
     </section>
 
     <section anchor="DHCP" title="DHCPv4 Encrypted DNS Option">
-      <t>The DHCPv4 Encrypted DNS option is used to configure an
-      authentication domain name, a list of IP addresses, and a port number of
-      the encrypted DNS server. The format of this option is illustrated in
-      <xref target="dhcpri_dns"></xref>.</t>
+      <section title="Encrypted DNS Option">
+        <t>The DHCPv4 Encrypted DNS option is used to configure an
+        authentication domain name, a list of IP addresses, and a port number
+        of the encrypted DNS server. The format of this option is illustrated
+        in <xref target="dhcpri_dns"></xref>.</t>
 
-      <t><figure anchor="dhcpri_dns" title="DHCPv4 Encrypted DNS Option">
-          <artwork><![CDATA[          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+        <t><figure anchor="dhcpri_dns" title="DHCPv4 Encrypted DNS Option">
+            <artwork><![CDATA[          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
          |     TBA3      |     Length    |
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -458,47 +482,50 @@
          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
 
 ]]></artwork>
-        </figure></t>
+          </figure></t>
 
-      <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
-      are as follows:<?rfc subcompact="yes" ?><list style="symbols">
-          <t>Code: OPTION_V4_ENC_DNS (TBA3, see <xref
-          target="iana4"></xref>).</t>
+        <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
+        are as follows:<?rfc subcompact="yes" ?><list style="hanging">
+            <t hangText="Code:">OPTION_V4_ENC_DNS (TBA3, see <xref
+            target="iana4"></xref>).</t>
 
-          <t>Length: Length of the enclosed data in octets.</t>
+            <t hangText="Length:">Length of the enclosed data in octets.</t>
 
-          <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
-          encrypted DNS server conveyed in this attribute. The format of this
-          field is shown in <xref target="types"></xref>.</t>
+            <t hangText="Enc DNS Flags (Encrypted DNS Flags):">Indicates the
+            type(s) of the encrypted DNS server conveyed in this attribute.
+            The format of this field is shown in <xref
+            target="types"></xref>.</t>
 
-          <t>Num Addresses: Indicates the number of included IPv4
-          addresses.</t>
+            <t hangText="Num Addresses:">Indicates the number of included IPv4
+            addresses.</t>
 
-          <t>Port Number: If not null, it indicates the port number to be used
-          for the encrypted DNS. A null value indicates that default port
-          numbers are used. As a reminder, the default port number is 853 for
-          DoT and 443 for DoH.</t>
+            <t hangText="Port Number:">If not null, it indicates the port
+            number to be used for the encrypted DNS. A null value indicates
+            that default port numbers are used. As a reminder, the default
+            port number is 853 for DoT and 443 for DoH.</t>
 
-          <t>IPv4 Addresses: Indicates one or more IPv4 addresses to reach the
-          encrypted DNS server. The format of this field is shown in <xref
-          target="v4"></xref>. Both private and public IPv4 addresses can be
-          included in this field.<figure align="center" anchor="v4"
-              title="Format of the IPv4 Addresses Field">
-              <artwork><![CDATA[         0     8     16    24    32    40    48
+            <t hangText="IPv4 Address(es):">Indicates one or more IPv4
+            addresses to reach the encrypted DNS server. The format of this
+            field is shown in <xref target="v4"></xref>. Both private and
+            public IPv4 addresses can be included in this field.<figure
+                align="center" anchor="v4"
+                title="Format of the IPv4 Addresses Field">
+                <artwork><![CDATA[         0     8     16    24    32    40    48
          +-----+-----+-----+-----+-----+-----+--
          |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 | ...
          +-----+-----+-----+-----+-----+-----+--
           IPv4 Address 1          IPv4 Address 2 ...
 
    This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.]]></artwork>
-            </figure></t>
+              </figure></t>
 
-          <t>authentication-domain-name: The domain name of the encrypted DNS
-          server. This field is formatted as specified in Section 10 of <xref
-          target="RFC8415"></xref>. The format of this field is shown in <xref
-          target="adn"></xref>.<figure align="center" anchor="adn"
-              title="Format of the Authentication Domain Name Field">
-              <artwork><![CDATA[
+            <t hangText="authentication-domain-name:">The domain name of the
+            encrypted DNS server. This field is formatted as specified in
+            Section 10 of <xref target="RFC8415"></xref>. The format of this
+            field is shown in <xref target="adn"></xref>.<figure
+                align="center" anchor="adn"
+                title="Format of the Authentication Domain Name Field">
+                <artwork><![CDATA[
          +-----+-----+-----+-----+-----+--
          |  s1 |  s2 |  s3 |  s4 | s5  |  ...
          +-----+-----+-----+-----+-----+--
@@ -506,37 +533,47 @@
 
    The values s1, s2, s3, etc. represent the domain name labels in the
    domain name encoding.]]></artwork>
-            </figure></t>
-        </list></t>
+              </figure></t>
+          </list></t>
 
-      <t><?rfc subcompact="no" ?>OPTION_V4_ENC_DNS is a
-      concatenation-requiring option. As such, the mechanism specified in
-      <xref target="RFC3396"></xref> MUST be used if OPTION_V4_ENC_DNS exceeds
-      the maximum DHCPv4 option size of 255 octets.</t>
+        <t><?rfc subcompact="no" ?>OPTION_V4_ENC_DNS is a
+        concatenation-requiring option. As such, the mechanism specified in
+        <xref target="RFC3396"></xref> MUST be used if OPTION_V4_ENC_DNS
+        exceeds the maximum DHCPv4 option size of 255 octets.</t>
+      </section>
 
-      <t>To discover an encrypted DNS server, the DHCPv4 client requests the
-      Encrypted DNS server by including OPTION_V4_ENC_DNS in a Parameter
-      Request List option <xref target="RFC2132"></xref>. The DHCPv4 client
-      sets the Encrypted DNS Types field to the requested encrypted DNS
-      server.</t>
+      <section title="DHCPv4 Client Behavior">
+        <t>To discover an encrypted DNS server, the DHCPv4 client requests the
+        Encrypted DNS server by including OPTION_V4_ENC_DNS in a Parameter
+        Request List option <xref target="RFC2132"></xref>. The DHCPv4 client
+        sets the Encrypted DNS Types field to the requested encrypted DNS
+        server.</t>
 
-      <t>If the DHCPv4 client requested more than one encrypted DNS server
-      type, the DHCPv4 client MUST be prepared to receive multiple DHCP
-      OPTION_V4_ENC_DNS options; each option is to be treated as a separate
-      encrypted DNS server.</t>
+        <t>If the DHCPv4 client requested more than one encrypted DNS server
+        type, the DHCPv4 client MUST be prepared to receive multiple DHCP
+        OPTION_V4_ENC_DNS options; each option is to be treated as a separate
+        encrypted DNS server.</t>
+
+        <t>The DHCPv4 client MUST silently discard multicast and host loopback
+        addresses conveyed in OPTION_V4_ENC_DNS.</t>
+      </section>
     </section>
 
     <section anchor="RA" title="IPv6 RA Encrypted DNS Options">
       <t>This section defines two Neighbor Discovery <xref
       target="RFC4861"></xref>: IPv6 Router Advertisement (RA) Encrypted DNS
-      ADN option and IPv6 RA Encrypted DNS Address option.</t>
+      ADN option (<xref target="RA-ADN"></xref>) and IPv6 RA Encrypted DNS
+      Address option (<xref target="RA-ADD"></xref>). These options are useful
+      in contexts similar to those discussed in Section 1.1 of <xref
+      target="RFC8106"></xref>.</t>
 
-      <t>The IPv6 RA Encrypted DNS ADN option is used to configure an
-      authentication domain name of the encrypted DNS server. The format of
-      this option is illustrated in <xref target="ra_dns"></xref>.</t>
+      <section anchor="RA-ADN" title="Encrypted DNS ADN Option">
+        <t>The IPv6 RA Encrypted DNS ADN option is used to configure an
+        authentication domain name of the encrypted DNS server. The format of
+        this option is illustrated in <xref target="ra_dns"></xref>.</t>
 
-      <t><figure anchor="ra_dns" title="RA Encrypted DNS ADN Option">
-          <artwork><![CDATA[      0                   1                   2                   3
+        <t><figure anchor="ra_dns" title="RA Encrypted DNS ADN Option">
+            <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |     TBA4      |     Length    | Enc DNS Flags |   Unassigned  |
@@ -549,49 +586,58 @@
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ]]></artwork>
-        </figure></t>
+          </figure></t>
 
-      <t>The fields of the option shown in <xref target="ra_dns"></xref> are
-      as follows:<?rfc subcompact="yes" ?><list style="symbols">
-          <t>Type: 8-bit identifier of the Encrypted DNS Option as assigned by
-          IANA (TBA4, see <xref target="iana7"></xref>).</t>
+        <t>The fields of the option shown in <xref target="ra_dns"></xref> are
+        as follows:<?rfc subcompact="yes" ?><list style="hanging">
+            <t hangText="Type:">8-bit identifier of the Encrypted DNS Option
+            as assigned by IANA (TBA4, see <xref target="iana7"></xref>).</t>
 
-          <t>Length: 8-bit unsigned integer. The length of the option
-          (including the Type and Length fields) is in units of 8 octets.</t>
+            <t hangText="Length:">8-bit unsigned integer. The length of the
+            option (including the Type and Length fields) is in units of 8
+            octets.</t>
 
-          <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
-          encrypted DNS server conveyed in this attribute. The format of this
-          field is shown in <xref target="types"></xref>.</t>
+            <t hangText="Enc DNS Flags (Encrypted DNS Flags):">Indicates the
+            type(s) of the encrypted DNS server conveyed in this attribute.
+            The format of this field is shown in <xref
+            target="types"></xref>.</t>
 
-          <t>Unassigned: This field is unused. It MUST be initialized to zero
-          by the sender and MUST be ignored by the receiver.</t>
+            <t hangText="Unassigned:">This field is unused. It MUST be
+            initialized to zero by the sender and MUST be ignored by the
+            receiver.</t>
 
-          <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
-          (relative to the time the packet is received) over which the
-          discovered Authentication Domain Name is valid. <vspace
-          blankLines="1" />The value of Lifetime SHOULD by default be at least
-          3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
-          interval as defined in <xref target="RFC4861"></xref>. <vspace
-          blankLines="1" />A value of all one bits (0xffffffff) represents
-          infinity. <vspace blankLines="1" />A value of zero means that this
-          Authentication Domain Name MUST no longer be used.</t>
+            <t hangText="Lifetime:">32-bit unsigned integer. The maximum time
+            in seconds (relative to the time the packet is received) over
+            which the discovered Authentication Domain Name is valid. <vspace
+            blankLines="1" />The value of Lifetime SHOULD by default be at
+            least 3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the
+            maximum RA interval as defined in <xref target="RFC4861"></xref>.
+            <vspace blankLines="1" />A value of all one bits (0xffffffff)
+            represents infinity. <vspace blankLines="1" />A value of zero
+            means that this Authentication Domain Name MUST no longer be
+            used.</t>
 
-          <t>authentication Domain Name: The domain name of the encrypted DNS
-          server. This field is formatted as specified in Section 10 of <xref
-          target="RFC8415"></xref>.<vspace blankLines="1" />This field MUST be
-          padded with zeros so that its size is a multiple of 8 octets.</t>
-        </list></t>
+            <t hangText="authentication Domain Name:">The domain name of the
+            encrypted DNS server. This field is formatted as specified in
+            Section 10 of <xref target="RFC8415"></xref>.<vspace
+            blankLines="1" />This field MUST be padded with zeros so that its
+            size is a multiple of 8 octets.</t>
+          </list></t>
 
-      <t><?rfc subcompact="no" ?>The IPv6 RA Encrypted DNS Address option is
-      used to configure a port number and a list of IPv6 addresses of the
-      encrypted DNS server. The format of this option is illustrated in <xref
-      target="ra_add"></xref>. All of the addresses share the same Lifetime
-      value. Similar to <xref target="RFC8106"></xref>, if it is desirable to
-      have different Lifetime values per IP address, multiple Encrypted DNS
-      Address options may be used.</t>
+        <t><?rfc subcompact="no" ?></t>
+      </section>
 
-      <t><figure anchor="ra_add" title="RA Encrypted DNS Address Option">
-          <artwork><![CDATA[      0                   1                   2                   3
+      <section anchor="RA-ADD" title="Encrypted DNS Address Option">
+        <t>The IPv6 RA Encrypted DNS Address option is used to configure a
+        port number and a list of IPv6 addresses of the encrypted DNS server.
+        The format of this option is illustrated in <xref
+        target="ra_add"></xref>. All of the addresses share the same Lifetime
+        value. Similar to <xref target="RFC8106"></xref>, if it is desirable
+        to have different Lifetime values per IP address, multiple Encrypted
+        DNS Address options may be used.</t>
+
+        <t><figure anchor="ra_add" title="RA Encrypted DNS Address Option">
+            <artwork><![CDATA[      0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |     TBA5      |     Length    |         Unassigned            |
@@ -606,41 +652,47 @@
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ]]></artwork>
-        </figure>The fields of the RA Encrypted DNS Address option shown in
-      <xref target="ra_add"></xref> are as follows:</t>
+          </figure>The fields of the RA Encrypted DNS Address option shown in
+        <xref target="ra_add"></xref> are as follows:</t>
 
-      <t><list style="symbols">
-          <t>Type: 8-bit identifier of the Encrypted DNS Address Option as
-          assigned by IANA (TBA5, see <xref target="iana7"></xref>).</t>
+        <t><list style="hanging">
+            <t hangText="Type:">8-bit identifier of the Encrypted DNS Address
+            Option as assigned by IANA (TBA5, see <xref
+            target="iana7"></xref>).</t>
 
-          <t>Length: 8-bit unsigned integer. The length of the option
-          (including the Type and Length fields) is in units of 8 octets.</t>
+            <t hangText="Length:">8-bit unsigned integer. The length of the
+            option (including the Type and Length fields) is in units of 8
+            octets.</t>
 
-          <t>Unassigned: This field is unused. It MUST be initialized to zero
-          by the sender and MUST be ignored by the receiver.</t>
+            <t hangText="Unassigned:">This field is unused. It MUST be
+            initialized to zero by the sender and MUST be ignored by the
+            receiver.</t>
 
-          <t>Lifetime: 32-bit unsigned integer. The maximum time in seconds
-          (relative to the time the packet is received) over which the
-          discovered encrypted DNS IPv6 addresses are valid. <vspace
-          blankLines="1" />The value of Lifetime SHOULD by default be at least
-          3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
-          interval as defined in <xref target="RFC4861"></xref>. <vspace
-          blankLines="1" />A value of all one bits (0xffffffff) represents
-          infinity. <vspace blankLines="1" />A value of zero means that these
-          IPv6 addresses MUST no longer be used.</t>
+            <t hangText="Lifetime:">32-bit unsigned integer. The maximum time
+            in seconds (relative to the time the packet is received) over
+            which the discovered encrypted DNS IPv6 addresses are valid.
+            <vspace blankLines="1" />The value of Lifetime SHOULD by default
+            be at least 3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the
+            maximum RA interval as defined in <xref target="RFC4861"></xref>.
+            <vspace blankLines="1" />A value of all one bits (0xffffffff)
+            represents infinity. <vspace blankLines="1" />A value of zero
+            means that these IPv6 addresses MUST no longer be used.</t>
 
-          <t>Enc DNS Flags (Encrypted DNS Flags): Indicates the type(s) of the
-          encrypted DNS server conveyed in this attribute. The format of this
-          field is shown in <xref target="types"></xref>.</t>
+            <t hangText="Enc DNS Flags (Encrypted DNS Flags):">Indicates the
+            type(s) of the encrypted DNS server conveyed in this attribute.
+            The format of this field is shown in <xref
+            target="types"></xref>.</t>
 
-          <t>Port Number: If not null, it indicates the port number to be used
-          for the encrypted DNS. A null value indicates that default port
-          numbers must be used. As a reminder, the default port number is 853
-          for DoT and 443 for DoH.</t>
+            <t hangText="Port Number:">If not null, it indicates the port
+            number to be used for the encrypted DNS. A null value indicates
+            that default port numbers must be used. As a reminder, the default
+            port number is 853 for DoT and 443 for DoH.</t>
 
-          <t>IPv6 Address(es) : One or more IPv6 addresses of the encrypted
-          DNS server. An address can be link-local, ULA, or GUA.</t>
-        </list></t>
+            <t hangText="IPv6 Address(es):">One or more IPv6 addresses of the
+            encrypted DNS server. An address can be link-local, ULA, or
+            GUA.</t>
+          </list></t>
+      </section>
     </section>
 
     <section anchor="URI" title="DoH URI Templates">
@@ -686,8 +738,9 @@
       DoH configuration. An example of the format of such an option is
       depicted in <xref target="uri"></xref>.</t>
 
-      <figure anchor="uri" title="Example of a DHCPv6 URI Template Option">
-        <artwork><![CDATA[    0                   1                   2                   3
+      <figure align="center" anchor="uri"
+              title="Example of a DHCPv6 URI Template Option">
+        <artwork align="center"><![CDATA[    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |   OPTION_V6_DOH_TEMPLATE      |         Option-length         |
@@ -711,35 +764,6 @@
 
       <t>How a DoH client makes use of the configured DoH services is out of
       the scope of this document.</t>
-    </section>
-
-    <section anchor="auto"
-             title="Make Use of Discovered Encrypted DNS Servers">
-      <t>Even if the use of a discovered encrypted DNS server is beyond the
-      discovery process and falls under encrypted server selection, the
-      following discusses typical conditions under which discovered encrypted
-      DNS server can be used.<list style="symbols">
-          <t>If the DNS server's IP address discovered by using DHCP/RA is
-          preconfigured in the OS or Browser as a verified resolver (e.g.,
-          part of an auto-upgrade program such as <xref
-          target="Auto-upgrade"></xref>), the DNS client auto-upgrades to use
-          the preconfigured encrypted DNS server tied to the discovered DNS
-          server IP address. In such a case the DNS client will perform
-          additional checks out of band, such as confirming that the Do53 IP
-          address and the encrypted DNS server are owned and operated by the
-          same organisation.</t>
-
-          <t>Similarly, if the ADN conveyed in DHCP/RA (Sections <xref
-          format="counter" target="DHCPv6"></xref>, <xref format="counter"
-          target="DHCP"></xref>, and <xref format="counter"
-          target="RA"></xref>) is preconfigured in the OS or browser as a
-          verified resolver, the DNS client auto-upgrades to establish an
-          encrypted a DoH/DoT/DoQ session with the ADN.<vspace
-          blankLines="1" />In such case, the DNS client matches the domain
-          name in the Encrypted DNS DHCP/RA option with the 'DNS-ID'
-          identifier type within subjectAltName entry in the server
-          certificate conveyed in the TLS handshake.</t>
-        </list></t>
     </section>
 
     <section anchor="forwarder"
@@ -771,8 +795,8 @@
           target="DHCPv6"></xref>, <xref format="counter"
           target="DHCP"></xref>, and <xref format="counter"
           target="RA"></xref>) is preconfigured in popular OSes or browsers as
-          a verified resolver and the auto-upgrade (<xref
-          target="auto"></xref>) is allowed for both the preconfigured ADN and
+          a verified resolver and the auto-upgrade (e.g., <xref
+          target="Auto"></xref>) is allowed for both the preconfigured ADN and
           its sub-domains, the encrypted DNS client will learn the local
           encrypted DNS forwarder using DHCP/RA and auto-upgrade because the
           preconfigured ADN would match the subjectAltName value in the server
@@ -1021,7 +1045,7 @@ Legend:
         <t></t>
       </section>
 
-      <section anchor="iana4" title="DHCP Option">
+      <section anchor="iana4" title="DHCPv4 Option">
         <t>IANA is requested to assign the following new DHCP Option Code in
         the registry maintained in <xref target="BOOTP"></xref>.</t>
 
@@ -1562,6 +1586,35 @@ Host--(  Network#A  CPE----CPE---(   ISP   )--- DNS Server
           related to hosting a forwarder in the Internal CPE.</t>
         </section>
       </section>
+    </section>
+
+    <section anchor="Auto"
+             title="Make Use of Discovered Encrypted DNS Servers">
+      <t>Even if the use of a discovered encrypted DNS server is beyond the
+      discovery process and falls under encrypted server selection, the
+      following discusses typical conditions under which discovered encrypted
+      DNS server can be used. <list style="symbols">
+          <t>If the DNS server's IP address discovered by using DHCP/RA is
+          preconfigured in the OS or Browser as a verified resolver (e.g.,
+          part of an auto-upgrade program such as <xref
+          target="Auto-upgrade"></xref>), the DNS client auto-upgrades to use
+          the preconfigured encrypted DNS server tied to the discovered DNS
+          server IP address. In such a case the DNS client will perform
+          additional checks out of band, such as confirming that the Do53 IP
+          address and the encrypted DNS server are owned and operated by the
+          same organisation.</t>
+
+          <t>Similarly, if the ADN conveyed in DHCP/RA (Sections <xref
+          format="counter" target="DHCPv6"></xref>, <xref format="counter"
+          target="DHCP"></xref>, and <xref format="counter"
+          target="RA"></xref>) is preconfigured in the OS or browser as a
+          verified resolver, the DNS client auto-upgrades to establish an
+          encrypted a DoH/DoT/DoQ session with the ADN.<vspace
+          blankLines="1" />In such case, the DNS client matches the domain
+          name in the Encrypted DNS DHCP/RA option with the 'DNS-ID'
+          identifier type within subjectAltName entry in the server
+          certificate conveyed in the TLS handshake.</t>
+        </list></t>
     </section>
   </back>
 </rfc>
