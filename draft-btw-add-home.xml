@@ -121,11 +121,12 @@
     <workgroup>ADD</workgroup>
 
     <abstract>
-      <t>The document specifies new DHCP and Router Advertisement Options to
-      discover encrypted DNS servers (e.g., DoH, DoT, DoQ). Particularly, it
-      allows to learn an Authentication Domain Name together with a list of IP
-      addresses and optionally a port number to reach such encrypted DNS
-      servers.</t>
+      <t>The document specifies new DHCP and IPv6 Router Advertisement options
+      to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-TLS,
+      DNS-over-QUIC). Particularly, it allows to learn an authentication
+      domain name together with a list of IP addresses and a port number to
+      reach such encrypted DNS servers. The discovery of DNS-over-HTTPS URI
+      Templates is also discussed.</t>
     </abstract>
   </front>
 
@@ -154,7 +155,7 @@
       target="RA"></xref>) can be used.</t>
 
       <t>Considerations related to hosting a DNS forwarder in a local network
-      are described (<xref target="forwarder"></xref>).</t>
+      are described in <xref target="forwarder"></xref>.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -165,8 +166,8 @@
       only when, they appear in all capitals, as shown here.</t>
 
       <t>This document makes use of the terms defined in <xref
-      target="RFC8499"></xref>. Also, the following additional terms are used:
-      <list style="hanging">
+      target="RFC8499"></xref>. The following additional terms are used: <list
+          style="hanging">
           <t hangText="Do53:">refers to unencrypted DNS.</t>
 
           <t hangText="Encrypted DNS:">refers to a scheme where DNS exchanges
@@ -268,8 +269,8 @@
       to <xref target="RFC6731"></xref> for a discussion of issues and an
       example of DNS server selection for multi-interfaced devices.</t>
 
-      <t>DHCP/RA options to discover encrypted DNS servers (including, DoH
-      templates should the WG pursue that approach pending feedback) takes
+      <t>DHCP/RA options to discover encrypted DNS servers (including, DoH URI
+      Templates should the WG pursue that approach pending feedback) takes
       precedence over DEER <xref target="I-D.pauly-add-deer"></xref> since
       DEER uses unencrypted DNS to an external DNS resolver, which is
       susceptible to both internal and external attacks whereas DHCP/RA is
@@ -287,21 +288,21 @@
         this option is shown in <xref target="ri_option"></xref>.</t>
 
         <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS ADN Option">
-            <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |    OPTION_V6_ENC_ADN          |         Option-length         |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Enc DNS Flags |                                               |
-   +---------------+                                               +
-   |                                                               |
-   ~                   authentication-domain-name                  ~
-   |                                                               |
-   +---------------------------------------------------------------+
+            <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|    OPTION_V6_ENC_ADN          |         Option-length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Enc DNS Flags |                                               |
++---------------+                                               +
+|                                                               |
+~                   authentication-domain-name                  ~
+|                                                               |
++---------------------------------------------------------------+
 ]]></artwork>
           </figure></t>
 
         <t>The fields of the option shown in <xref target="ri_option"></xref>
-        are as follows:<?rfc subcompact="yes" ?></t>
+        are as follows:</t>
 
         <t><list style="hanging">
             <t hangText="Option-code:">OPTION_V6_ENC_ADN (TBA1, see <xref
@@ -348,21 +349,20 @@
 
             <t hangText="authentication-domain-name:">A fully qualified domain
             name of the encrypted DNS server. This field is formatted as
-            specified in Section 10 of <xref target="RFC8415"></xref>.</t>
+            specified in Section 10 of <xref target="RFC8415"></xref>.<vspace
+            blankLines="1" />An example of the authentication-domain-name
+            encoding is shown in <xref target="fqdn"></xref>. This example
+            conveys the FQDN "doh1.example.com.", and the resulting
+            Option-length field is 18.</t>
           </list></t>
-
-        <t><?rfc subcompact="no" ?>An example of the Authentication Domain
-        Name encoding is shown in <xref target="fqdn"></xref>. This example
-        conveys the FQDN "doh1.example.com.", and the resulting Option-length
-        field is 18.</t>
 
         <t><figure anchor="fqdn"
             title="An Example of the DNS authentication-domain-name Encoding">
-            <artwork><![CDATA[      +------+------+------+------+------+------+------+------+------+
-      | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
-      +------+------+------+------+------+------+------+------+------+
-      |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
-      +------+------+------+------+------+------+------+------+------+
+            <artwork align="center"><![CDATA[+------+------+------+------+------+------+------+------+------+
+| 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
++------+------+------+------+------+------+------+------+------+
+|   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
++------+------+------+------+------+------+------+------+------+
 ]]></artwork>
           </figure></t>
       </section>
@@ -375,24 +375,24 @@
 
         <t><figure anchor="dhcpv6_add"
             title="DHCPv6 Encrypted DNS Address Option">
-            <artwork><![CDATA[    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |    OPTION_V6_ENC_ADD          |         Option-length         |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Enc DNS Flags |   Unassigned  |          Port Number          |
-   +---------------+---------------+-------------------------------+
-   |                                                               |
-   |                         ipv6-address                          |
-   |                                                               |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
-   |                         ipv6-address                          |
-   |                                                               |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              ...                              |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|    OPTION_V6_ENC_ADD          |         Option-length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Enc DNS Flags |   Unassigned  |          Port Number          |
++---------------+---------------+-------------------------------+
+|                                                               |
+|                         ipv6-address                          |
+|                                                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                         ipv6-address                          |
+|                                                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                              ...                              |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure>The fields of the option shown in <xref
         target="dhcpv6_add"></xref> are as follows:</t>
@@ -464,28 +464,27 @@
         in <xref target="dhcpri_dns"></xref>.</t>
 
         <t><figure anchor="dhcpri_dns" title="DHCPv4 Encrypted DNS Option">
-            <artwork><![CDATA[          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         |     TBA3      |     Length    |
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         | Enc DNS Flags | Num Addresses |
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         |           Port Number         |
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         |                               |
-         ~         IPv4 Address(es)      ~
-         |                               |
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-         |                               |
-         ~  authentication-domain-name   ~
-         |                               |
-         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
-
+            <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     TBA3      |     Length    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Enc DNS Flags | Num Addresses |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Port Number         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                               |
+~         IPv4 Address(es)      ~
+|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                               |
+~  authentication-domain-name   ~
+|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure></t>
 
         <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
-        are as follows:<?rfc subcompact="yes" ?><list style="hanging">
+        are as follows:<list style="hanging">
             <t hangText="Code:">OPTION_V4_ENC_DNS (TBA3, see <xref
             target="iana4"></xref>).</t>
 
@@ -505,41 +504,39 @@
             port number is 853 for DoT and 443 for DoH.</t>
 
             <t hangText="IPv4 Address(es):">Indicates one or more IPv4
-            addresses to reach the encrypted DNS server. The format of this
-            field is shown in <xref target="v4"></xref>. Both private and
-            public IPv4 addresses can be included in this field.<figure
+            addresses to reach the encrypted DNS server. Both private and
+            public IPv4 addresses can be included in this field. The format of
+            this field is shown in <xref target="v4"></xref>. This format
+            assumes that an IPv4 address is encoded as a1.a2.a3.a4.<figure
                 align="center" anchor="v4"
                 title="Format of the IPv4 Addresses Field">
-                <artwork><![CDATA[         0     8     16    24    32    40    48
-         +-----+-----+-----+-----+-----+-----+--
-         |  a1 |  a2 |  a3 |  a4 |  a1 |  a2 | ...
-         +-----+-----+-----+-----+-----+-----+--
-          IPv4 Address 1          IPv4 Address 2 ...
-
-   This format assumes that an IPv4 address is encoded as a1.a2.a3.a4.]]></artwork>
+                <artwork align="center"><![CDATA[0     8     16    24    32    40    48
++-----+-----+-----+-----+-----+-----+--
+|  a1 |  a2 |  a3 |  a4 |  a1 |  a2 | ...
++-----+-----+-----+-----+-----+-----+--
+  IPv4 Address 1          IPv4 Address 2 ...  ]]></artwork>
               </figure></t>
 
             <t hangText="authentication-domain-name:">The domain name of the
             encrypted DNS server. This field is formatted as specified in
             Section 10 of <xref target="RFC8415"></xref>. The format of this
-            field is shown in <xref target="adn"></xref>.<figure
-                align="center" anchor="adn"
+            field is shown in <xref target="adn"></xref>. The values s1, s2,
+            s3, etc. represent the domain name labels in the domain name
+            encoding.<figure align="center" anchor="adn"
                 title="Format of the Authentication Domain Name Field">
-                <artwork><![CDATA[
-         +-----+-----+-----+-----+-----+--
-         |  s1 |  s2 |  s3 |  s4 | s5  |  ...
-         +-----+-----+-----+-----+-----+--
-          Authentication Domain Name 
-
-   The values s1, s2, s3, etc. represent the domain name labels in the
-   domain name encoding.]]></artwork>
+                <artwork align="center"><![CDATA[
++-----+-----+-----+-----+-----+--
+|  s1 |  s2 |  s3 |  s4 | s5  |  ...
++-----+-----+-----+-----+-----+--
+  authentication-domain-name 
+]]></artwork>
               </figure></t>
           </list></t>
 
-        <t><?rfc subcompact="no" ?>OPTION_V4_ENC_DNS is a
-        concatenation-requiring option. As such, the mechanism specified in
-        <xref target="RFC3396"></xref> MUST be used if OPTION_V4_ENC_DNS
-        exceeds the maximum DHCPv4 option size of 255 octets.</t>
+        <t>OPTION_V4_ENC_DNS is a concatenation-requiring option. As such, the
+        mechanism specified in <xref target="RFC3396"></xref> MUST be used if
+        OPTION_V4_ENC_DNS exceeds the maximum DHCPv4 option size of 255
+        octets.</t>
       </section>
 
       <section title="DHCPv4 Client Behavior">
@@ -573,23 +570,22 @@
         this option is illustrated in <xref target="ra_dns"></xref>.</t>
 
         <t><figure anchor="ra_dns" title="RA Encrypted DNS ADN Option">
-            <artwork><![CDATA[      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA4      |     Length    | Enc DNS Flags |   Unassigned  |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                           Lifetime                            |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                                                               |
-     :                   authentication-domain-name                  :
-     |                                                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
+            <artwork align="center"><![CDATA[ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     TBA4      |     Length    | Enc DNS Flags |   Unassigned  |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Lifetime                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+~                   authentication-domain-name                  ~
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure></t>
 
         <t>The fields of the option shown in <xref target="ra_dns"></xref> are
-        as follows:<?rfc subcompact="yes" ?><list style="hanging">
+        as follows:<list style="hanging">
             <t hangText="Type:">8-bit identifier of the Encrypted DNS Option
             as assigned by IANA (TBA4, see <xref target="iana7"></xref>).</t>
 
@@ -624,7 +620,7 @@
             size is a multiple of 8 octets.</t>
           </list></t>
 
-        <t><?rfc subcompact="no" ?></t>
+        <t></t>
       </section>
 
       <section anchor="RA-ADD" title="Encrypted DNS Address Option">
@@ -637,19 +633,19 @@
         DNS Address options may be used.</t>
 
         <t><figure anchor="ra_add" title="RA Encrypted DNS Address Option">
-            <artwork><![CDATA[      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA5      |     Length    |         Unassigned            |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                           Lifetime                            |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     | Enc DNS Flags |  Unassigned   |           Port Number         |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                                                               |
-     :                         IPv6 Address(es)                      :
-     |                                                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            <artwork align="center"><![CDATA[ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     TBA5      |     Length    |         Unassigned            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Lifetime                            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Enc DNS Flags |  Unassigned   |           Port Number         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+~                         IPv6 Address(es)                      ~
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ]]></artwork>
           </figure>The fields of the RA Encrypted DNS Address option shown in
@@ -740,21 +736,21 @@
 
       <figure align="center" anchor="uri"
               title="Example of a DHCPv6 URI Template Option">
-        <artwork align="center"><![CDATA[    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   OPTION_V6_DOH_TEMPLATE      |         Option-length         |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
-   ~                         uri-template-data                     ~
-   |                             . . .                             |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        <artwork align="center"><![CDATA[ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   OPTION_V6_DOH_TEMPLATE      |         Option-length         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+~                         uri-template-data                     ~
+|                             . . .                             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-   Each instance of the uri-template-data is formatted as follows:
+Each instance of the uri-template-data is formatted as follows:
 
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...-+-+-+-+-+-+-+
-   |   uri-template-len            |          URI Template         |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...-+-+-+-+-+-+-+]]></artwork>
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...-+-+-+-+-+-+-+
+|   uri-template-len            |          URI Template         |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-...-+-+-+-+-+-+-+]]></artwork>
       </figure>
 
       <t><list style="empty">
@@ -1050,7 +1046,7 @@ Legend:
         the registry maintained in <xref target="BOOTP"></xref>.</t>
 
         <figure>
-          <artwork><![CDATA[+------+------------------+-------+----------------+----------------+
+          <artwork align="center"><![CDATA[+------+------------------+-------+----------------+----------------+
 | Tag  | Name             | Data  | Meaning        | Reference      |
 |      |                  | Length|                |                |
 +------+------------------+-------+----------------+----------------+
@@ -1122,8 +1118,6 @@ Legend:
 
       <?rfc include='reference.RFC.8174'?>
 
-      <?rfc include='reference.RFC.8310'?>
-
       <?rfc include='reference.RFC.4861'?>
 
       <?rfc include='reference.RFC.8415'?>
@@ -1139,6 +1133,8 @@ Legend:
 
     <references title="Informative References">
       <?rfc include='reference.RFC.6092'?>
+
+      <?rfc include='reference.RFC.8310'?>
 
       <?rfc include='reference.RFC.8499'?>
 
