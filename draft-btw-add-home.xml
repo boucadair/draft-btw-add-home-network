@@ -898,12 +898,10 @@ Legend:
         spoof the DHCP/RA response to provide the attacker's Encrypted DNS
         server. Note that such an attacker can launch other attacks as
         discussed in Section 22 of <xref target="RFC8415"></xref>. The
-        attacker can get a domain name, domain-validated public certificate
-        from a CA, host an Encrypted DNS server and claim the best DNS privacy
-        preservation policy. Also, an attacker can use a public IP address,
-        get an 'IP address'-validated public certificate from a CA, host an
-        Encrypted DNS server and claim the best DNS privacy preservation
-        policy.</t>
+        attacker can get a domain name with a domain-validated public
+		certificate from a CA and host an Encrypted DNS server. Also, an
+		attacker can use a public IP address and get an 'IP address'-validated
+		public certificate from a CA to host an Encrypted DNS server.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
