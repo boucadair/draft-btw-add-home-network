@@ -965,12 +965,11 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA response to
    provide the attacker's Encrypted DNS server.  Note that such an
    attacker can launch other attacks as discussed in Section 22 of
-   [RFC8415].  The attacker can get a domain name, domain-validated
-   public certificate from a CA, host an Encrypted DNS server and claim
-   the best DNS privacy preservation policy.  Also, an attacker can use
-   a public IP address, get an 'IP address'-validated public certificate
-   from a CA, host an Encrypted DNS server and claim the best DNS
-   privacy preservation policy.
+   [RFC8415].  The attacker can get a domain name with a domain-
+   validated public certificate from a CA and host an Encrypted DNS
+   server.  Also, an attacker can use a public IP address and get an 'IP
+   address'-validated public certificate from a CA to host an Encrypted
+   DNS server.
 
    Attacks of spoofed or modified DHCP responses and RA messages by
    attackers within the local network may be mitigated by making use of
@@ -998,6 +997,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    MUST be discarded by the encrypted DNS forwarder in the CPE.  This
    behavior adheres to REQ#8 in [RFC6092]; it MUST apply for both IPv4
    and IPv6.
+
 
 
 
