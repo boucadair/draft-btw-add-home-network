@@ -84,8 +84,8 @@ Table of Contents
      6.1.  Encrypted DNS ADN Option  . . . . . . . . . . . . . . . .  12
      6.2.  Encrypted DNS Address Option  . . . . . . . . . . . . . .  13
    7.  DoH URI Templates . . . . . . . . . . . . . . . . . . . . . .  14
-   8.  Hosting Encrypted DNS Forwarder in Local Networks . . . . . .  15
-     8.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  15
+   8.  Hosting Encrypted DNS Forwarder in Local Networks . . . . . .  16
+     8.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  16
        8.1.1.  DNS Forwarders  . . . . . . . . . . . . . . . . . . .  16
        8.1.2.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  16
        8.1.3.  Auto-Upgrade Based on Domains and their Subdomains  .  16
@@ -99,7 +99,7 @@ Table of Contents
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  20
      11.1.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  20
      11.2.  DHCPv4 Option  . . . . . . . . . . . . . . . . . . . . .  20
-     11.3.  RA Options . . . . . . . . . . . . . . . . . . . . . . .  21
+     11.3.  Neighbor Discovery Options . . . . . . . . . . . . . . .  21
    12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
    13. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  21
    14. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
@@ -700,8 +700,16 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
      | Enc DNS Flags |  Unassigned   |           Port Number         |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                                                               |
-     ~                         IPv6 Address(es)                      ~
+     |                         ipv6-address                          |
      |                                                               |
+     |                                                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                                                               |
+     |                         ipv6-address                          |
+     |                                                               |
+     |                                                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                              ...                              |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
@@ -713,6 +721,15 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    Type:  8-bit identifier of the Encrypted DNS Address Option as
       assigned by IANA (TBA5, see Section 11.3).
 
+
+
+
+
+Boucadair, et al.         Expires July 25, 2021                [Page 13]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
    Length:  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) is in units of 8 octets.
 
@@ -722,13 +739,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    Lifetime:  32-bit unsigned integer.  The maximum time in seconds
       (relative to the time the packet is received) over which the
       discovered encrypted DNS IPv6 addresses are valid.
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 13]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
       The value of Lifetime SHOULD by default be at least 3 *
       MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
@@ -748,7 +758,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       numbers must be used.  As a reminder, the default port number is
       853 for DoT and 443 for DoH.
 
-   IPv6 Address(es):  One or more IPv6 addresses of the encrypted DNS
+   ipv6-address(es):  One or more IPv6 addresses of the encrypted DNS
       server.  An address can be link-local, ULA, or GUA.
 
 7.  DoH URI Templates
@@ -769,6 +779,13 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    and DoH resolver discovered using DHCP/RA may be hosted on the same
    or distinct IP addresses.
 
+
+
+Boucadair, et al.         Expires July 25, 2021                [Page 14]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
    Let's suppose that a host has discovered an encrypted DNS server that
    is DoH-capable.  The host has also discovered the following
    information:
@@ -776,15 +793,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    o  ADN: doh.example.com
 
    o  Locator: 2001:db8:1::1
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 14]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
    The client will use DEER [I-D.pauly-add-deer] to discover the DoH
    templates supported by the DNS server at the Locator (2001:db8:1::1).
@@ -824,14 +832,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    How a DoH client makes use of the configured DoH services is out of
    the scope of this document.
 
-8.  Hosting Encrypted DNS Forwarder in Local Networks
-
-8.1.  Managed CPEs
-
-   The following mechanisms can be used to host an encrypted DNS
-   forwarder in a managed CPE (Appendix A.1).
-
-
 
 
 
@@ -841,6 +841,13 @@ Boucadair, et al.         Expires July 25, 2021                [Page 15]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+8.  Hosting Encrypted DNS Forwarder in Local Networks
+
+8.1.  Managed CPEs
+
+   The following mechanisms can be used to host an encrypted DNS
+   forwarder in a managed CPE (Appendix A.1).
 
 8.1.1.  DNS Forwarders
 
@@ -882,13 +889,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 11, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail because it does not match "*.example.net".
-
-
-
-
-
-
-
 
 
 
@@ -1130,7 +1130,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    |      |                  |       | Server         |                |
    +------+------------------+-------+----------------+----------------+
 
-11.3.  RA Options
+11.3.  Neighbor Discovery Options
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
    Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
@@ -1239,11 +1239,13 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               for Chrome", <docs.google.com/document/
               d/128i2YTV2C7T6Gr3I-81zlQ-_Lprnsp24qzy_20Z1Psw/edit>.
 
-   [BOOTP]    , <https://www.iana.org/assignments/bootp-dhcp-parameters/
+   [BOOTP]    "BOOTP Vendor Extensions and DHCP Options",
+              <https://www.iana.org/assignments/bootp-dhcp-parameters/
               bootp-dhcp-parameters.xhtml#options>.
 
-   [DHCPV6]   , <https://www.iana.org/assignments/dhcpv6-parameters/
-              dhcpv6-parameters.xhtml#dhcpv6-parameters-2>.
+   [DHCPV6]   "DHCPv6 Option Codes", <https://www.iana.org/assignments/
+              dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-
+              parameters-2>.
 
    [dot1x]    Cisco, "Basic 802.1x Wireless User Authentication",
               <https://openwrt.org/docs/guide-user/network/wifi/
@@ -1258,11 +1260,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               The Unicode Consortium, "Evil twin (wireless networks)",
               <https://en.wikipedia.org/wiki/
               Evil_twin_(wireless_networks)>.
-
-   [I-D.box-add-requirements]
-              Box, C., Pauly, T., Wood, C., Reddy.K, T., and D. Migault,
-              "Requirements for Adaptive DNS Discovery", draft-box-add-
-              requirements-01 (work in progress), November 2020.
 
    [I-D.ietf-dprive-dnsoquic]
               Huitema, C., Mankin, A., and S. Dickinson, "Specification
@@ -1279,7 +1276,10 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Jensen, "Discovery of Equivalent Encrypted Resolvers",
               draft-pauly-add-deer-00 (work in progress), November 2020.
 
-
+   [I-D.pusateri-dhc-dns-driu]
+              Pusateri, T. and W. Toorop, "DHCPv6 Options for private
+              DNS Discovery", draft-pusateri-dhc-dns-driu-00 (work in
+              progress), July 2018.
 
 
 
@@ -1290,11 +1290,6 @@ Boucadair, et al.         Expires July 25, 2021                [Page 23]
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
-   [I-D.pusateri-dhc-dns-driu]
-              Pusateri, T. and W. Toorop, "DHCPv6 Options for private
-              DNS Discovery", draft-pusateri-dhc-dns-driu-00 (work in
-              progress), July 2018.
-
    [I-D.schwartz-svcb-dns]
               Schwartz, B., "Service Binding Mapping for DNS Servers",
               draft-schwartz-svcb-dns-01 (work in progress), August
@@ -1303,7 +1298,8 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
               2017, <https://www.krackattacks.com/>.
 
-   [ND]       , <http://www.iana.org/assignments/icmpv6-parameters/
+   [ND]       "IPv6 Neighbor Discovery Option Formats",
+              <http://www.iana.org/assignments/icmpv6-parameters/
               icmpv6-parameters.xhtml#icmpv6-parameters-5>.
 
    [PSK]      Cisco, "Identity PSK Feature Deployment Guide",
@@ -1341,6 +1337,10 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
+
+
+
+
 Boucadair, et al.         Expires July 25, 2021                [Page 24]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
@@ -1350,12 +1350,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Advertisement Guard (RA-Guard)", RFC 7113,
               DOI 10.17487/RFC7113, February 2014,
               <https://www.rfc-editor.org/info/rfc7113>.
-
-   [RFC7250]  Wouters, P., Ed., Tschofenig, H., Ed., Gilmore, J.,
-              Weiler, S., and T. Kivinen, "Using Raw Public Keys in
-              Transport Layer Security (TLS) and Datagram Transport
-              Layer Security (DTLS)", RFC 7250, DOI 10.17487/RFC7250,
-              June 2014, <https://www.rfc-editor.org/info/rfc7250>.
 
    [RFC7513]  Bi, J., Wu, J., Yao, G., and F. Baker, "Source Address
               Validation Improvement (SAVI) Solution for DHCP",
@@ -1372,19 +1366,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
-   [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
-              Configuration on the Basis of Network Topology", RFC 7969,
-              DOI 10.17487/RFC7969, October 2016,
-              <https://www.rfc-editor.org/info/rfc7969>.
-
    [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
               to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
               <https://www.rfc-editor.org/info/rfc8146>.
-
-   [RFC8305]  Schinazi, D. and T. Pauly, "Happy Eyeballs Version 2:
-              Better Connectivity Using Concurrency", RFC 8305,
-              DOI 10.17487/RFC8305, December 2017,
-              <https://www.rfc-editor.org/info/rfc8305>.
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -1394,18 +1378,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 25]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
-
-   [RFC8489]  Petit-Huguenin, M., Salgueiro, G., Rosenberg, J., Wing,
-              D., Mahy, R., and P. Matthews, "Session Traversal
-              Utilities for NAT (STUN)", RFC 8489, DOI 10.17487/RFC8489,
-              February 2020, <https://www.rfc-editor.org/info/rfc8489>.
 
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
@@ -1420,6 +1392,15 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Kasten, "Automatic Certificate Management Environment
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
+
+
+
+
+
+Boucadair, et al.         Expires July 25, 2021                [Page 25]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
 
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
@@ -1450,6 +1431,25 @@ Appendix A.  Sample Target Deployment Scenarios
    place by using cleartext DNS messages (Do53).  Some examples are
    depicted in Figure 13.  In the case of cellular networks, the
    cellular network will provide connectivity directly to a host (e.g.,
+   smartphone, tablet) or via a CPE.  Do53 mechanisms used within the
+   Local Area Network (LAN) are similar in both fixed and cellular CPE-
+   based broadband service offerings.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1457,10 +1457,6 @@ Boucadair, et al.         Expires July 25, 2021                [Page 26]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   smartphone, tablet) or via a CPE.  Do53 mechanisms used within the
-   Local Area Network (LAN) are similar in both fixed and cellular CPE-
-   based broadband service offerings.
 
              (a) Fixed Networks
                                               ,--,--,--.
@@ -1507,15 +1503,16 @@ A.1.1.  Direct DNS
    server's ADN to managed CPEs if an encrypted DNS is supported by a
    local network similar to what is depicted in Figure 14.
 
+   For example, DoH-capable (or DoT) clients establish the DoH (or DoT)
+   session with the discovered DoH (or DoT) server.
+
+
 
 
 Boucadair, et al.         Expires July 25, 2021                [Page 27]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
-
-   For example, DoH-capable (or DoT) clients establish the DoH (or DoT)
-   session with the discovered DoH (or DoT) server.
 
    The DNS client discovers whether the DNS server in the local network
    supports DoH/DoT/DoQ by using a dedicated field in the discovery
@@ -1558,6 +1555,9 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    context, direct encrypted DNS sessions will be established between a
    host serviced by a CPE and an ISP-supplied encrypted DNS server (see
    the example depicted in Figure 15 for a DoH/DoT-capable host).
+
+
+
 
 
 

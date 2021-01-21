@@ -643,8 +643,16 @@
 | Enc DNS Flags |  Unassigned   |           Port Number         |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                                                               |
-~                         IPv6 Address(es)                      ~
+|                         ipv6-address                          |
 |                                                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                         ipv6-address                          |
+|                                                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                              ...                              |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ]]></artwork>
@@ -684,7 +692,7 @@
             that default port numbers must be used. As a reminder, the default
             port number is 853 for DoT and 443 for DoH.</t>
 
-            <t hangText="IPv6 Address(es):">One or more IPv6 addresses of the
+            <t hangText="ipv6-address(es):">One or more IPv6 addresses of the
             encrypted DNS server. An address can be link-local, ULA, or
             GUA.</t>
           </list></t>
@@ -1056,7 +1064,7 @@ Legend:
         </figure>
       </section>
 
-      <section anchor="iana7" title="RA Options">
+      <section anchor="iana7" title="Neighbor Discovery Options">
         <t>IANA is requested to assign the following new IPv6 Neighbor
         Discovery Option type in the "IPv6 Neighbor Discovery Option Formats"
         sub-registry under the "Internet Control Message Protocol version 6
@@ -1146,8 +1154,6 @@ Legend:
 
       <?rfc include='reference.RFC.8555'?>
 
-      <?rfc include='reference.RFC.7250'?>
-
       <?rfc include='reference.RFC.7610'?>
 
       <?rfc include='reference.RFC.7113'?>
@@ -1170,15 +1176,7 @@ Legend:
 
       <?rfc include='reference.RFC.7513'?>
 
-      <?rfc include='reference.RFC.7969'?>
-
-      <?rfc include='reference.RFC.8489'?>
-
       <?rfc include='reference.RFC.8146'?>
-
-      <?rfc include='reference.RFC.8305'?>
-
-      <?rfc include='reference.I-D.box-add-requirements'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
@@ -1291,7 +1289,7 @@ Legend:
       <reference anchor="DHCPV6"
                  target="https://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-parameters-2">
         <front>
-          <title></title>
+          <title>DHCPv6 Option Codes</title>
 
           <author>
             <organization></organization>
@@ -1304,7 +1302,7 @@ Legend:
       <reference anchor="ND"
                  target="http://www.iana.org/assignments/icmpv6-parameters/    icmpv6-parameters.xhtml#icmpv6-parameters-5">
         <front>
-          <title></title>
+          <title>IPv6 Neighbor Discovery Option Formats</title>
 
           <author>
             <organization></organization>
@@ -1317,7 +1315,7 @@ Legend:
       <reference anchor="BOOTP"
                  target="https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml#options">
         <front>
-          <title></title>
+          <title>BOOTP Vendor Extensions and DHCP Options</title>
 
           <author>
             <organization></organization>
