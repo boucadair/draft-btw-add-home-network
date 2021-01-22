@@ -332,8 +332,7 @@
 
                 <t hangText="U:">Unassigned bits. These bits MUST be unset by
                 the sender. Associating a meaning with an unassigned bit can
-                be done via Standards Action <xref
-                target="RFC8126"></xref>.</t>
+                be done as per <xref target="flags-IANA"></xref>.</t>
               </list>In a request, these bits are assigned to indicate the
             requested encrypted DNS server type(s) by the client. In a
             response, these bits are set as a function of the encrypted DNS
@@ -1014,6 +1013,97 @@ Legend:
 
     <section anchor="IANA" title="IANA Considerations">
       <t></t>
+
+      <section anchor="flags-IANA" title="Encrypted DNS Flag Bits">
+        <t><figure>
+            <artwork><![CDATA[                                          1 2 3 4 5 6 7 8
+                                         +-+-+-+-+-+-+-+-+
+Encrypted DNS Types is a set of 8 flags: |U|U|U|U|U|Q|H|T|
+                                         +-+-+-+-+-+-+-+-+]]></artwork>
+          </figure>where flag bits in positions 1-5 are for future assignment
+        as additional flag bits.</t>
+
+        <t>This document requests IANA to create a new registry called
+        "Encrypted DNS Types". The initial values of the registry are as
+        follows:</t>
+
+        <texttable>
+          <ttcol align="center">Bit Position</ttcol>
+
+          <ttcol align="center">Label</ttcol>
+
+          <ttcol>Description</ttcol>
+
+          <ttcol align="center">Reference</ttcol>
+
+          <c>1</c>
+
+          <c>U</c>
+
+          <c>Unassigned</c>
+
+          <c></c>
+
+          <c>2</c>
+
+          <c>U</c>
+
+          <c>Unassigned</c>
+
+          <c></c>
+
+          <c>3</c>
+
+          <c>U</c>
+
+          <c>Unassigned</c>
+
+          <c></c>
+
+          <c>4</c>
+
+          <c>U</c>
+
+          <c>Unassigned</c>
+
+          <c></c>
+
+          <c>5</c>
+
+          <c>U</c>
+
+          <c>Unassigned</c>
+
+          <c></c>
+
+          <c>6</c>
+
+          <c>Q</c>
+
+          <c>DNS-over-QUIC (DoQ)</c>
+
+          <c>[ThisDocument]</c>
+
+          <c>7</c>
+
+          <c>H</c>
+
+          <c>DNS-over-HTTP (DoH)</c>
+
+          <c>[ThisDocument]</c>
+
+          <c>8</c>
+
+          <c>T</c>
+
+          <c>DNS-over-TLS (DoT)</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+
+        <t>New flag bits are assigned via Standards Action <xref
+        target="RFC8126"></xref>.</t>
+      </section>
 
       <section anchor="iana6" title="DHCPv6 Options">
         <t>IANA is requested to assign the following new DHCPv6 Option Code in

@@ -5,14 +5,14 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: July 25, 2021                                            McAfee
+Expires: July 26, 2021                                            McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                        January 21, 2021
+                                                        January 22, 2021
 
 
    DHCP and Router Advertisement Options for Encrypted DNS Discovery
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 25, 2021.
+   This Internet-Draft will expire on July 26, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 1]
+Boucadair, et al.         Expires July 26, 2021                 [Page 1]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -97,25 +97,26 @@ Table of Contents
      10.3.  Passive Attacks  . . . . . . . . . . . . . . . . . . . .  19
      10.4.  Wireless Security - Authentication Attacks . . . . . . .  20
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  20
-     11.1.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  20
-     11.2.  DHCPv4 Option  . . . . . . . . . . . . . . . . . . . . .  21
-     11.3.  Neighbor Discovery Options . . . . . . . . . . . . . . .  21
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
-   13. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  21
+     11.1.  Encrypted DNS Flag Bits  . . . . . . . . . . . . . . . .  20
+     11.2.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  21
+     11.3.  DHCPv4 Option  . . . . . . . . . . . . . . . . . . . . .  21
+     11.4.  Neighbor Discovery Options . . . . . . . . . . . . . . .  21
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  22
+   13. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  22
    14. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
      14.1.  Normative References . . . . . . . . . . . . . . . . . .  22
-     14.2.  Informative References . . . . . . . . . . . . . . . . .  22
-   Appendix A.  Sample Target Deployment Scenarios . . . . . . . . .  26
+     14.2.  Informative References . . . . . . . . . . . . . . . . .  23
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 2]
+Boucadair, et al.         Expires July 26, 2021                 [Page 2]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
+   Appendix A.  Sample Target Deployment Scenarios . . . . . . . . .  26
      A.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  27
-       A.1.1.  Direct DNS  . . . . . . . . . . . . . . . . . . . . .  27
+       A.1.1.  Direct DNS  . . . . . . . . . . . . . . . . . . . . .  28
        A.1.2.  Proxied DNS . . . . . . . . . . . . . . . . . . . . .  29
      A.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  30
        A.2.1.  ISP-facing Unmanaged CPEs . . . . . . . . . . . . . .  30
@@ -164,8 +165,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-
-Boucadair, et al.         Expires July 25, 2021                 [Page 3]
+Boucadair, et al.         Expires July 26, 2021                 [Page 3]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -221,7 +221,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 4]
+Boucadair, et al.         Expires July 26, 2021                 [Page 4]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -277,7 +277,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 5]
+Boucadair, et al.         Expires July 26, 2021                 [Page 5]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -309,7 +309,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    The fields of the option shown in Figure 1 are as follows:
 
-   Option-code:  OPTION_V6_ENC_ADN (TBA1, see Section 11.1)
+   Option-code:  OPTION_V6_ENC_ADN (TBA1, see Section 11.2)
 
    Option-length:  Length of the enclosed data in octets.
 
@@ -333,7 +333,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 6]
+Boucadair, et al.         Expires July 26, 2021                 [Page 6]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -342,8 +342,8 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
          [I-D.ietf-dprive-dnsoquic].
 
       U: Unassigned bits.  These bits MUST be unset by the sender.
-         Associating a meaning with an unassigned bit can be done via
-         Standards Action [RFC8126].
+         Associating a meaning with an unassigned bit can be done as per
+         Section 11.1.
 
       In a request, these bits are assigned to indicate the requested
       encrypted DNS server type(s) by the client.  In a response, these
@@ -389,7 +389,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 7]
+Boucadair, et al.         Expires July 26, 2021                 [Page 7]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -417,7 +417,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    The fields of the option shown in Figure 4 are as follows:
 
-   Option-code:  OPTION_V6_ENC_ADD (TBA2, see Section 11.1)
+   Option-code:  OPTION_V6_ENC_ADD (TBA2, see Section 11.2)
 
    Option-length:  Length of the enclosed data in octets.
 
@@ -445,7 +445,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 8]
+Boucadair, et al.         Expires July 26, 2021                 [Page 8]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -501,7 +501,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                 [Page 9]
+Boucadair, et al.         Expires July 26, 2021                 [Page 9]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -527,7 +527,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    The fields of the option shown in Figure 5 are as follows:
 
-   Code:  OPTION_V4_ENC_DNS (TBA3, see Section 11.2).
+   Code:  OPTION_V4_ENC_DNS (TBA3, see Section 11.3).
 
    Length:  Length of the enclosed data in octets.
 
@@ -557,7 +557,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 10]
+Boucadair, et al.         Expires July 26, 2021                [Page 10]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -613,7 +613,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 11]
+Boucadair, et al.         Expires July 26, 2021                [Page 11]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -641,7 +641,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    The fields of the option shown in Figure 8 are as follows:
 
    Type:  8-bit identifier of the Encrypted DNS Option as assigned by
-      IANA (TBA4, see Section 11.3).
+      IANA (TBA4, see Section 11.4).
 
    Length:  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) is in units of 8 octets.
@@ -669,7 +669,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 12]
+Boucadair, et al.         Expires July 26, 2021                [Page 12]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -719,13 +719,13 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    are as follows:
 
    Type:  8-bit identifier of the Encrypted DNS Address Option as
-      assigned by IANA (TBA5, see Section 11.3).
+      assigned by IANA (TBA5, see Section 11.4).
 
 
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 13]
+Boucadair, et al.         Expires July 26, 2021                [Page 13]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -781,7 +781,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 14]
+Boucadair, et al.         Expires July 26, 2021                [Page 14]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -837,7 +837,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 15]
+Boucadair, et al.         Expires July 26, 2021                [Page 15]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -893,7 +893,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 16]
+Boucadair, et al.         Expires July 26, 2021                [Page 16]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -949,7 +949,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 17]
+Boucadair, et al.         Expires July 26, 2021                [Page 17]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 18]
+Boucadair, et al.         Expires July 26, 2021                [Page 18]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 19]
+Boucadair, et al.         Expires July 26, 2021                [Page 19]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -1098,7 +1098,46 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 11.  IANA Considerations
 
-11.1.  DHCPv6 Options
+11.1.  Encrypted DNS Flag Bits
+
+                                             1 2 3 4 5 6 7 8
+                                            +-+-+-+-+-+-+-+-+
+   Encrypted DNS Types is a set of 8 flags: |U|U|U|U|U|Q|H|T|
+                                            +-+-+-+-+-+-+-+-+
+
+   where flag bits in positions 1-5 are for future assignment as
+   additional flag bits.
+
+   This document requests IANA to create a new registry called
+   "Encrypted DNS Types".  The initial values of the registry are as
+   follows:
+
+
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 20]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
+      +--------------+-------+---------------------+----------------+
+      | Bit Position | Label | Description         |   Reference    |
+      +--------------+-------+---------------------+----------------+
+      |      1       |   U   | Unassigned          |                |
+      |      2       |   U   | Unassigned          |                |
+      |      3       |   U   | Unassigned          |                |
+      |      4       |   U   | Unassigned          |                |
+      |      5       |   U   | Unassigned          |                |
+      |      6       |   Q   | DNS-over-QUIC (DoQ) | [ThisDocument] |
+      |      7       |   H   | DNS-over-HTTP (DoH) | [ThisDocument] |
+      |      8       |   T   | DNS-over-TLS (DoT)  | [ThisDocument] |
+      +--------------+-------+---------------------+----------------+
+
+   New flag bits are assigned via Standards Action [RFC8126].
+
+11.2.  DHCPv6 Options
 
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in [DHCPV6].
@@ -1111,18 +1150,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    | TBA2  | OPTION_V6_ENC_ADD | Yes     | No         | [ThisDocument] |
    +-------+-------------------+---------+------------+----------------+
 
-
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 20]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
-
-11.2.  DHCPv4 Option
+11.3.  DHCPv4 Option
 
    IANA is requested to assign the following new DHCP Option Code in the
    registry maintained in [BOOTP].
@@ -1135,12 +1163,20 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    |      |                  |       | Server         |                |
    +------+------------------+-------+----------------+----------------+
 
-11.3.  Neighbor Discovery Options
+11.4.  Neighbor Discovery Options
 
    IANA is requested to assign the following new IPv6 Neighbor Discovery
    Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
    registry under the "Internet Control Message Protocol version 6
    (ICMPv6) Parameters" registry maintained in [ND].
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 21]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
 
        +------+----------------------------------+----------------+
        | Type | Description                      | Reference      |
@@ -1171,13 +1207,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
       Email: n.leymann@telekom.de
 
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 21]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
-
 14.  References
 
 14.1.  Normative References
@@ -1195,6 +1224,15 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Dynamic Host Configuration Protocol (DHCPv4)", RFC 3396,
               DOI 10.17487/RFC3396, November 2002,
               <https://www.rfc-editor.org/info/rfc3396>.
+
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 22]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
 
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
@@ -1223,17 +1261,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 14.2.  Informative References
 
-
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 22]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
-
    [Auto-upgrade]
               The Unicode Consortium, "DoH providers: criteria, process
               for Chrome", <docs.google.com/document/
@@ -1255,6 +1282,13 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               The Unicode Consortium, "Dragonblood: Analyzing the
               Dragonfly Handshake of WPA3 and EAP-pwd",
               <https://papers.mathyvanhoef.com/dragonblood.pdf>.
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 23]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
 
    [Evil-Twin]
               The Unicode Consortium, "Evil twin (wireless networks)",
@@ -1281,15 +1315,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               DNS Discovery", draft-pusateri-dhc-dns-driu-00 (work in
               progress), July 2018.
 
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 23]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
-
    [I-D.schwartz-svcb-dns]
               Schwartz, B., "Service Binding Mapping for DNS Servers",
               draft-schwartz-svcb-dns-01 (work in progress), August
@@ -1311,6 +1336,15 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Text on Security Considerations", BCP 72, RFC 3552,
               DOI 10.17487/RFC3552, July 2003,
               <https://www.rfc-editor.org/info/rfc3552>.
+
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 24]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
 
    [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
               Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
@@ -1334,17 +1368,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Recursive DNS Server Selection for Multi-Interfaced
               Nodes", RFC 6731, DOI 10.17487/RFC6731, December 2012,
               <https://www.rfc-editor.org/info/rfc6731>.
-
-
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 24]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
    [RFC7113]  Gont, F., "Implementation Advice for IPv6 Router
               Advertisement Guard (RA-Guard)", RFC 7113,
@@ -1370,6 +1393,15 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
               <https://www.rfc-editor.org/info/rfc8146>.
 
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 25]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
               DOI 10.17487/RFC8310, March 2018,
@@ -1392,15 +1424,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
               Kasten, "Automatic Certificate Management Environment
               (ACME)", RFC 8555, DOI 10.17487/RFC8555, March 2019,
               <https://www.rfc-editor.org/info/rfc8555>.
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 25]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
@@ -1426,6 +1449,15 @@ Appendix A.  Sample Target Deployment Scenarios
    o  IPv6 Router Advertisement [RFC4861][RFC8106] (Type 25 (Recursive
       DNS Server Option)).
 
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 26]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
    The communication between a customer's device (possibly via Customer
    Premises Equipment (CPE)) and an ISP-supplied DNS resolver takes
    place by using cleartext DNS messages (Do53).  Some examples are
@@ -1434,29 +1466,6 @@ Appendix A.  Sample Target Deployment Scenarios
    smartphone, tablet) or via a CPE.  Do53 mechanisms used within the
    Local Area Network (LAN) are similar in both fixed and cellular CPE-
    based broadband service offerings.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 26]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
              (a) Fixed Networks
                                               ,--,--,--.
@@ -1495,6 +1504,16 @@ A.1.  Managed CPEs
 
    This section focuses on CPEs that are managed by ISPs.
 
+
+
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 27]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
 A.1.1.  Direct DNS
 
    ISPs have developed an expertise in managing service-specific
@@ -1505,14 +1524,6 @@ A.1.1.  Direct DNS
 
    For example, DoH-capable (or DoT) clients establish the DoH (or DoT)
    session with the discovered DoH (or DoT) server.
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 27]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
    The DNS client discovers whether the DNS server in the local network
    supports DoH/DoT/DoQ by using a dedicated field in the discovery
@@ -1551,24 +1562,18 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    Figure 14 shows the scenario where the CPE relays the list of
    encrypted DNS servers it learns for the network by using mechanisms
+
+
+
+Boucadair, et al.         Expires July 26, 2021                [Page 28]
+
+Internet-Draft       Encrypted DNS in Home Networks         January 2021
+
+
    like DHCP or a specific Router Advertisement message.  In such
    context, direct encrypted DNS sessions will be established between a
    host serviced by a CPE and an ISP-supplied encrypted DNS server (see
    the example depicted in Figure 15 for a DoH/DoT-capable host).
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 28]
-
-Internet-Draft       Encrypted DNS in Home Networks         January 2021
-
 
                          ,--,--,--.             ,--,--,--.
                       ,-'          `-.       ,-'   ISP    `-.
@@ -1616,12 +1621,7 @@ A.1.2.  Proxied DNS
 
 
 
-
-
-
-
-
-Boucadair, et al.         Expires July 25, 2021                [Page 29]
+Boucadair, et al.         Expires July 26, 2021                [Page 29]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -1677,7 +1677,7 @@ A.2.2.  Internal Unmanaged CPEs
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 30]
+Boucadair, et al.         Expires July 26, 2021                [Page 30]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -1733,7 +1733,7 @@ Appendix B.  Make Use of Discovered Encrypted DNS Servers
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 31]
+Boucadair, et al.         Expires July 26, 2021                [Page 31]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
@@ -1789,4 +1789,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.         Expires July 25, 2021                [Page 32]
+Boucadair, et al.         Expires July 26, 2021                [Page 32]
