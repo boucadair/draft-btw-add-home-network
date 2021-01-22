@@ -772,9 +772,14 @@ Each instance of the uri-template-data is formatted as follows:
 
     <section anchor="forwarder"
              title="Hosting Encrypted DNS Forwarder in Local Networks">
+      <t>This section discusses some deployment considerations (not
+      recommendations) to host an encrypted DNS forwarder within a local
+      network.</t>
+
       <section anchor="forwarder_m" title="Managed CPEs">
-        <t>The following mechanisms can be used to host an encrypted DNS
-        forwarder in a managed CPE (<xref target="mcpe"></xref>).</t>
+        <t>The section discusses mechanisms that can be used to host an
+        encrypted DNS forwarder in a managed CPE (<xref
+        target="mcpe"></xref>).</t>
 
         <section title="DNS Forwarders">
           <t>The managed CPE should support a configuration parameter to
@@ -799,7 +804,7 @@ Each instance of the uri-template-data is formatted as follows:
           target="DHCPv6"></xref>, <xref format="counter"
           target="DHCP"></xref>, and <xref format="counter"
           target="RA"></xref>) is preconfigured in popular OSes or browsers as
-          a verified resolver and the auto-upgrade (e.g., <xref
+          a verified resolver and the auto-upgrade (<xref
           target="Auto"></xref>) is allowed for both the preconfigured ADN and
           its sub-domains, the encrypted DNS client will learn the local
           encrypted DNS forwarder using DHCP/RA and auto-upgrade because the
@@ -895,7 +900,7 @@ Legend:
       </section>
     </section>
 
-    <section title="Legacy CPEs">
+    <section anchor="legacy" title="Legacy CPEs">
       <t>Hosts serviced by legacy CPEs that can't be upgraded to support the
       options defined in Sections <xref format="counter"
       target="DHCPv6"></xref>, <xref format="counter" target="DHCP"></xref>,

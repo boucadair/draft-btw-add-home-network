@@ -98,7 +98,7 @@ Table of Contents
      10.4.  Wireless Security - Authentication Attacks . . . . . . .  20
    11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  20
      11.1.  DHCPv6 Options . . . . . . . . . . . . . . . . . . . . .  20
-     11.2.  DHCPv4 Option  . . . . . . . . . . . . . . . . . . . . .  20
+     11.2.  DHCPv4 Option  . . . . . . . . . . . . . . . . . . . . .  21
      11.3.  Neighbor Discovery Options . . . . . . . . . . . . . . .  21
    12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
    13. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  21
@@ -844,10 +844,14 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 8.  Hosting Encrypted DNS Forwarder in Local Networks
 
+   This section discusses some deployment considerations (not
+   recommendations) to host an encrypted DNS forwarder within a local
+   network.
+
 8.1.  Managed CPEs
 
-   The following mechanisms can be used to host an encrypted DNS
-   forwarder in a managed CPE (Appendix A.1).
+   The section discusses mechanisms that can be used to host an
+   encrypted DNS forwarder in a managed CPE (Appendix A.1).
 
 8.1.1.  DNS Forwarders
 
@@ -870,12 +874,12 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    If the ADN conveyed in DHCP/RA (Sections 4, 5, and 6) is
    preconfigured in popular OSes or browsers as a verified resolver and
-   the auto-upgrade (e.g., Appendix B) is allowed for both the
-   preconfigured ADN and its sub-domains, the encrypted DNS client will
-   learn the local encrypted DNS forwarder using DHCP/RA and auto-
-   upgrade because the preconfigured ADN would match the subjectAltName
-   value in the server certificate.  For example, if the preconfigured
-   ADN is "*.example.com" and the discovered encrypted DNS forwarder is
+   the auto-upgrade (Appendix B) is allowed for both the preconfigured
+   ADN and its sub-domains, the encrypted DNS client will learn the
+   local encrypted DNS forwarder using DHCP/RA and auto-upgrade because
+   the preconfigured ADN would match the subjectAltName value in the
+   server certificate.  For example, if the preconfigured ADN is
+   "*.example.com" and the discovered encrypted DNS forwarder is
    "cpe1.example.com", auto-upgrade will take place.
 
    In this case, the CPE can communicate the ADN of the local DoH
@@ -886,10 +890,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    resolved in the browser or OS.  If the encrypted DNS client discovers
    a local forwarder "cpe1-internal.example.net", the encrypted DNS
    client will auto-upgrade because the preconfigured ADN would match
-   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
-   shown in Figure 11, the auto-upgrade to a rogue server advertising
-   "rs.example.org" will fail because it does not match "*.example.net".
-
 
 
 
@@ -897,6 +897,10 @@ Boucadair, et al.         Expires July 25, 2021                [Page 16]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
+   shown in Figure 11, the auto-upgrade to a rogue server advertising
+   "rs.example.org" will fail because it does not match "*.example.net".
 
               Encrypted DNS                              CPE
               capable client                             (@i)
@@ -943,10 +947,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
       using DHCP/RA to internal hosts.
 
-   Figure 12 illustrates an example of an unmanaged CPE hosting a
-   forwarder which connects to a 3rd party encrypted DNS server.  In
-   this example, the DNS information received from the managed CPE (and
-
 
 
 Boucadair, et al.         Expires July 25, 2021                [Page 17]
@@ -954,6 +954,9 @@ Boucadair, et al.         Expires July 25, 2021                [Page 17]
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
+   Figure 12 illustrates an example of an unmanaged CPE hosting a
+   forwarder which connects to a 3rd party encrypted DNS server.  In
+   this example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
    forwarder.
 
@@ -999,9 +1002,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    such as compromised devices within the local network.  An active
    attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA response to
    provide the attacker's Encrypted DNS server.  Note that such an
-   attacker can launch other attacks as discussed in Section 22 of
-   [RFC8415].  The attacker can get a domain name with a domain-
-   validated public certificate from a CA and host an Encrypted DNS
 
 
 
@@ -1010,6 +1010,9 @@ Boucadair, et al.         Expires July 25, 2021                [Page 18]
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
 
+   attacker can launch other attacks as discussed in Section 22 of
+   [RFC8415].  The attacker can get a domain name with a domain-
+   validated public certificate from a CA and host an Encrypted DNS
    server.  Also, an attacker can use a public IP address and get an 'IP
    address'-validated public certificate from a CA to host an Encrypted
    DNS server.
@@ -1054,9 +1057,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
    A passive attacker (Section 3.2 of [RFC3552]) can identify a host is
    using DHCP/RA to discover an encrypted DNS server and can infer that
-   host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
-   However, a passive attacker cannot spoof or modify DHCP/RA messages.
-
 
 
 
@@ -1065,6 +1065,9 @@ Boucadair, et al.         Expires July 25, 2021                [Page 19]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+   host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
+   However, a passive attacker cannot spoof or modify DHCP/RA messages.
 
 10.4.  Wireless Security - Authentication Attacks
 
@@ -1108,10 +1111,7 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
    | TBA2  | OPTION_V6_ENC_ADD | Yes     | No         | [ThisDocument] |
    +-------+-------------------+---------+------------+----------------+
 
-11.2.  DHCPv4 Option
 
-   IANA is requested to assign the following new DHCP Option Code in the
-   registry maintained in [BOOTP].
 
 
 
@@ -1121,6 +1121,11 @@ Boucadair, et al.         Expires July 25, 2021                [Page 20]
 
 Internet-Draft       Encrypted DNS in Home Networks         January 2021
 
+
+11.2.  DHCPv4 Option
+
+   IANA is requested to assign the following new DHCP Option Code in the
+   registry maintained in [BOOTP].
 
    +------+------------------+-------+----------------+----------------+
    | Tag  | Name             | Data  | Meaning        | Reference      |
@@ -1165,11 +1170,6 @@ Internet-Draft       Encrypted DNS in Home Networks         January 2021
       Germany
 
       Email: n.leymann@telekom.de
-
-
-
-
-
 
 
 
