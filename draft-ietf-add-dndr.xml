@@ -34,7 +34,7 @@
 <rfc category="std" docName="draft-ietf-add-dndr-latest" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-Designated Resolvers">DHCP and Router
-    Advertisement Options for Discovery of Network-Designated Resolvers
+    Advertisement Options for the Discovery of Network-Designated Resolvers
     (DNDR)</title>
 
     <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">

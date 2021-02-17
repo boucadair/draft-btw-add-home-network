@@ -15,7 +15,7 @@ Expires: August 21, 2021                                          McAfee
                                                        February 17, 2021
 
 
-    DHCP and Router Advertisement Options for Discovery of Network-
+  DHCP and Router Advertisement Options for the Discovery of Network-
                       Designated Resolvers (DNDR)
                        draft-ietf-add-dndr-latest
 
