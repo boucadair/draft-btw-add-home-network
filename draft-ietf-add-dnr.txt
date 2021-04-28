@@ -357,13 +357,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    ipv6-address(es):  Indicates one or more IPv6 addresses to reach the
       encrypted DNS server.  An address can be link-local, ULA, or GUA.
 
-   Service Parameters (SvcParams):  Specifies a set of service paramter
+   Service Parameters (SvcParams):  Specifies a set of service parameter
       that are encoded following the rules in Section 2.1 of
       [I-D.ietf-dnsop-svcb-https].  Service parameters may include, for
       example, a list of Application Layer Protocol Negotiation (ALPN)
       protocol identifiers or alternate port numbers.
 
-      If no port service paramter is included, this indicates that
+      If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
       port number is 853 for DoT and 443 for DoH.
 
@@ -471,13 +471,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
                Figure 5: Format of the IPv4 Addresses Field
 
-   Service Paramters (SvcParams):  Specifies a set of service paramter
+   Service Paramters (SvcParams):  Specifies a set of service parameter
       that are encoded following the rules in Section 2.1 of
       [I-D.ietf-dnsop-svcb-https].  Service parameters may include, for
       example, a list of ALPN protocol identifiers or alternate port
       numbers.
 
-      If no port service paramter is included, this indicates that
+      If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
       port number is 853 for DoT and 443 for DoH.
 
@@ -585,13 +585,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    ipv6-address(es):  One or more IPv6 addresses of the encrypted DNS
       server.  An address can be link-local, ULA, or GUA.
 
-   Service Paramters (SvcParams):  Specifies a set of service paramter
+   Service Paramters (SvcParams):  Specifies a set of service parameter
       that are encoded following the rules in Section 2.1 of
       [I-D.ietf-dnsop-svcb-https].  Service parameters may include, for
       example, a list of Application Layer Protocol Negotiation (ALPN)
       protocol identifiers or alternate port numbers.
 
-      If no port service paramter is included, this indicates that
+      If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
       port number is 853 for DoT and 443 for DoH.
 

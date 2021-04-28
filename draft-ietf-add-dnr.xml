@@ -143,7 +143,7 @@
       IPv6 Router Advertisement (RA) <xref target="RFC4861"></xref> options.
       These options are designed to convey the following information: the DNS
       Authentication Domain Name (ADN), a list of IP addresses, and a set of
-      service parameters. </t>
+      service parameters.</t>
 
       <t>Sample target deployment scenarios are discussed in <xref
       target="depl"></xref>; both managed and unmanaged Customer Premises
@@ -212,7 +212,7 @@
       server. In the various scenarios sketched in <xref
       target="depl"></xref>, encrypted DNS servers may terminate on the same
       IP address or distinct IP addresses. Terminating encrypted DNS servers
-      on the same or distinct IP addresses is deployment specific. </t>
+      on the same or distinct IP addresses is deployment specific.</t>
 
       <t>In order to optimize the size of discovery messages when all servers
       terminate on the same IP address, early versions considered relying upon
@@ -301,7 +301,7 @@
         <t>The DHCPv6 Encrypted DNS option is used to configure an
         authentication domain name, a list of IPv6 addresses, and a set of
         service parameters of the encrypted DNS server. The format of this
-        option is shown in <xref target="ri_option"></xref>. </t>
+        option is shown in <xref target="ri_option"></xref>.</t>
 
         <t>A single option is used to convey both the ADN and IP addresses
         because otherwise means to correlate an IP address with an ADN will be
@@ -337,8 +337,8 @@
             <t hangText="ADN Length:">Length of the authentication-domain-name
             in octets.</t>
 
-            <t hangText="Num Addresses:">Number of enclosed IPv6 addresses.
-            </t>
+            <t hangText="Num Addresses:">Number of enclosed IPv6
+            addresses.</t>
 
             <t hangText="authentication-domain-name:">A fully qualified domain
             name of the encrypted DNS server. This field is formatted as
@@ -361,11 +361,11 @@
             link-local, ULA, or GUA.</t>
 
             <t hangText="Service Parameters (SvcParams):">Specifies a set of
-            service paramter that are encoded following the rules in Section
+            service parameter that are encoded following the rules in Section
             2.1 of <xref target="I-D.ietf-dnsop-svcb-https"></xref>. Service
             parameters may include, for example, a list of Application Layer
             Protocol Negotiation (ALPN) protocol identifiers or alternate port
-            numbers.<vspace blankLines="1" />If no port service paramter is
+            numbers.<vspace blankLines="1" />If no port service parameter is
             included, this indicates that default port numbers should be used.
             As a reminder, the default port number is 853 for DoT and 443 for
             DoH.<vspace blankLines="1" />The length of this field is
@@ -380,7 +380,7 @@
         <t>To discover an encrypted DNS server, the DHCPv6 client MUST include
         OPTION_V6_DNR in an Option Request Option (ORO), as in Sections
         18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
-        target="RFC8415"></xref>. </t>
+        target="RFC8415"></xref>.</t>
 
         <t>The DHCP client MUST be prepared to receive multiple OPTION_V6_DNR
         options; each option is to be treated as a separate encrypted DNS
@@ -465,11 +465,11 @@
               </figure></t>
 
             <t hangText="Service Paramters (SvcParams):">Specifies a set of
-            service paramter that are encoded following the rules in Section
+            service parameter that are encoded following the rules in Section
             2.1 of <xref target="I-D.ietf-dnsop-svcb-https"></xref>. Service
             parameters may include, for example, a list of ALPN protocol
             identifiers or alternate port numbers.<vspace blankLines="1" />If
-            no port service paramter is included, this indicates that default
+            no port service parameter is included, this indicates that default
             port numbers should be used. As a reminder, the default port
             number is 853 for DoT and 443 for DoH.<vspace blankLines="1" />The
             length of this field is (Option-length - ADN Length - 4*(Num
@@ -488,7 +488,7 @@
       <section title="DHCPv4 Client Behavior">
         <t>To discover an encrypted DNS server, the DHCPv4 client requests the
         Encrypted DNS server by including OPTION_V4_DNR in a Parameter Request
-        List option <xref target="RFC2132"></xref>. </t>
+        List option <xref target="RFC2132"></xref>.</t>
 
         <t>The DHCPv4 client MUST be prepared to receive multiple DHCP
         OPTION_V4_DNR options; each option is to be treated as a separate
@@ -508,7 +508,7 @@
       <t>All of the addresses share the same Lifetime value. Similar to <xref
       target="RFC8106"></xref>, if it is desirable to have different Lifetime
       values per IP address, multiple Encrypted DNS options may be used.
-      Likewise, if </t>
+      Likewise, if</t>
 
       <section anchor="RA-ADN" title="Option Format">
         <t>The IPv6 RA Encrypted DNS ADN option is used to configure an
@@ -563,11 +563,11 @@
             GUA.</t>
 
             <t hangText="Service Paramters (SvcParams):">Specifies a set of
-            service paramter that are encoded following the rules in Section
+            service parameter that are encoded following the rules in Section
             2.1 of <xref target="I-D.ietf-dnsop-svcb-https"></xref>. Service
             parameters may include, for example, a list of Application Layer
             Protocol Negotiation (ALPN) protocol identifiers or alternate port
-            numbers.<vspace blankLines="1" />If no port service paramter is
+            numbers.<vspace blankLines="1" />If no port service parameter is
             included, this indicates that default port numbers should be used.
             As a reminder, the default port number is 853 for DoT and 443 for
             DoH.<vspace blankLines="1" />The length of this field is (Length -
