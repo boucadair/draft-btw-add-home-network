@@ -37,7 +37,8 @@
     Advertisement Options for the Discovery of Network-designated Resolvers
     (DNR)</title>
 
-    <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
+    <author fullname="Mohamed Boucadair" initials="M." role="editor"
+            surname="Boucadair">
       <organization>Orange</organization>
 
       <address>
@@ -55,7 +56,8 @@
       </address>
     </author>
 
-    <author fullname="Tirumaleswar Reddy" initials="T." surname="Reddy">
+    <author fullname="Tirumaleswar Reddy" initials="T." role="editor"
+            surname="Reddy">
       <organization abbrev="McAfee">McAfee, Inc.</organization>
 
       <address>
@@ -215,8 +217,8 @@
       on the same or distinct IP addresses is deployment specific.</t>
 
       <t>In order to optimize the size of discovery messages when all servers
-      terminate on the same IP address, early versions considered relying upon
-      the discovery mechanisms specified in <xref
+      terminate on the same IP address, early versions of this document
+      considered relying upon the discovery mechanisms specified in <xref
       target="RFC2132"></xref><xref target="RFC3646"></xref><xref
       target="RFC8106"></xref> to retrieve a list of IP addresses to reach
       their DNS servers. Nevertheless, this approach requires a client that
@@ -250,8 +252,7 @@
       protocols and service parameters that may be defined in the future. For
       example, "dohpath" service parameter (Section 5.1 of <xref
       target="I-D.schwartz-svcb-dns"></xref>) is used to supply a relative URI
-      Template. How a DoH client makes use of the configured DoH services is
-      out of the scope of this document.</t>
+      Template. </t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
@@ -260,6 +261,10 @@
       default DNS configuration of their CPEs (e.g., supplied by their ISP) to
       configure their favorite DNS servers. This document permits such
       deployments.</t>
+
+      <t>If the encrypted DNS is discovered by a host using both RA and DHCP,
+      the rules discussed in Section 5.3.1 of <xref target="RFC8106"></xref>
+      MUST be followed.</t>
 
       <t>DHCP/RA options to discover encrypted DNS servers (including, DoH URI
       Templates) takes precedence over DDR <xref
@@ -284,10 +289,6 @@
       discuss DNS selection of multi-interface devices. The reader may refer
       to <xref target="RFC6731"></xref> for a discussion of issues and an
       example of DNS server selection for multi-interfaced devices.</t>
-
-      <t>If the encrypted DNS is discovered by a host using both RA and DHCP,
-      the rules discussed in Section 5.3.1 of <xref target="RFC8106"></xref>
-      MUST be followed.</t>
     </section>
 
     <section anchor="DHCPv6" title="DHCPv6 Encrypted DNS Option">
@@ -578,9 +579,9 @@
 
       <section title="IPv6 Host Behavior">
         <t>The procedure for DNS configuration is the same as it is with any
-        other ND option <xref target="RFC4861"></xref>. In addition, the host
-        follows the procedure described in Section 5.3.1 of <xref
-        target="RFC8106"></xref>.</t>
+        other Neighbor Discovery option <xref target="RFC4861"></xref>. In
+        addition, the host follows the procedure described in Section 5.3.1 of
+        <xref target="RFC8106"></xref>.</t>
 
         <t>The host MUST silently discard multicast and host loopback
         addresses conveyed in the Encrypted DNS options. </t>
@@ -589,9 +590,8 @@
 
     <section anchor="forwarder"
              title="Hosting Encrypted DNS Forwarder in Local Networks">
-      <t>This section discusses some deployment considerations (not
-      recommendations) to host an encrypted DNS forwarder within a local
-      network.</t>
+      <t>This section discusses some deployment considerations to host an
+      encrypted DNS forwarder within a local network.</t>
 
       <section anchor="forwarder_m" title="Managed CPEs">
         <t>The section discusses mechanisms that can be used to host an

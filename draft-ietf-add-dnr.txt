@@ -2,9 +2,9 @@
 
 
 
-ADD                                                         M. Boucadair
+ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
-Intended status: Standards Track                                T. Reddy
+Intended status: Standards Track                           T. Reddy, Ed.
 Expires: October 31, 2021                                         McAfee
                                                                  D. Wing
                                                                   Citrix
@@ -204,8 +204,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    IP addresses is deployment specific.
 
    In order to optimize the size of discovery messages when all servers
-   terminate on the same IP address, early versions considered relying
-   upon the discovery mechanisms specified in
+   terminate on the same IP address, early versions of this document
+   considered relying upon the discovery mechanisms specified in
    [RFC2132][RFC3646][RFC8106] to retrieve a list of IP addresses to
    reach their DNS servers.  Nevertheless, this approach requires a
    client that supports more than one encrypted DNS to probe that list
@@ -245,9 +245,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    IANA registry and thus to accommodate new Encrypted DNS protocols and
    service parameters that may be defined in the future.  For example,
    "dohpath" service parameter (Section 5.1 of [I-D.schwartz-svcb-dns])
-   is used to supply a relative URI Template.  How a DoH client makes
-   use of the configured DoH services is out of the scope of this
-   document.
+   is used to supply a relative URI Template.
 
    Some ISPs rely upon external resolvers (e.g., outsourced service or
    public resolvers); these ISPs provide their customers with the IP
@@ -256,6 +254,9 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    can modify the default DNS configuration of their CPEs (e.g.,
    supplied by their ISP) to configure their favorite DNS servers.  This
    document permits such deployments.
+
+   If the encrypted DNS is discovered by a host using both RA and DHCP,
+   the rules discussed in Section 5.3.1 of [RFC8106] MUST be followed.
 
    DHCP/RA options to discover encrypted DNS servers (including, DoH URI
    Templates) takes precedence over DDR [I-D.ietf-add-ddr] since DDR
@@ -276,7 +277,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-
 Boucadair, et al.       Expires October 31, 2021                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
@@ -288,9 +288,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    specification to discuss DNS selection of multi-interface devices.
    The reader may refer to [RFC6731] for a discussion of issues and an
    example of DNS server selection for multi-interfaced devices.
-
-   If the encrypted DNS is discovered by a host using both RA and DHCP,
-   the rules discussed in Section 5.3.1 of [RFC8106] MUST be followed.
 
 4.  DHCPv6 Encrypted DNS Option
 
@@ -330,6 +327,9 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    ADN Length:  Length of the authentication-domain-name in octets.
 
    Num Addresses:  Number of enclosed IPv6 addresses.
+
+
+
 
 
 
@@ -601,8 +601,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 6.2.  IPv6 Host Behavior
 
    The procedure for DNS configuration is the same as it is with any
-   other ND option [RFC4861].  In addition, the host follows the
-   procedure described in Section 5.3.1 of [RFC8106].
+   other Neighbor Discovery option [RFC4861].  In addition, the host
+   follows the procedure described in Section 5.3.1 of [RFC8106].
 
    The host MUST silently discard multicast and host loopback addresses
    conveyed in the Encrypted DNS options.
@@ -620,9 +620,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 7.  Hosting Encrypted DNS Forwarder in Local Networks
 
-   This section discusses some deployment considerations (not
-   recommendations) to host an encrypted DNS forwarder within a local
-   network.
+   This section discusses some deployment considerations to host an
+   encrypted DNS forwarder within a local network.
 
 7.1.  Managed CPEs
 
@@ -666,6 +665,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    resolved in the browser or OS.  If the encrypted DNS client discovers
    a local forwarder "cpe1-internal.example.net", the encrypted DNS
    client will auto-upgrade because the preconfigured ADN would match
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
 
 
 
@@ -674,7 +674,6 @@ Boucadair, et al.       Expires October 31, 2021               [Page 12]
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
-   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 7, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail because it does not match "*.example.net".
 
@@ -722,6 +721,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
    o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
       using DHCP/RA to internal hosts.
+
 
 
 
@@ -1524,7 +1524,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 Authors' Addresses
 
-   Mohamed Boucadair
+   Mohamed Boucadair (editor)
    Orange
    Rennes  35000
    France
@@ -1532,7 +1532,7 @@ Authors' Addresses
    Email: mohamed.boucadair@orange.com
 
 
-   Tirumaleswar Reddy
+   Tirumaleswar Reddy (editor)
    McAfee, Inc.
    Embassy Golf Link Business Park
    Bangalore, Karnataka  560071
