@@ -187,8 +187,8 @@
     </section>
 
     <section anchor="RI" title="Overview">
-      <t>This document describes how a DNS client can discover a local
-      encrypted DNS server(s) using DHCP (Sections <xref format="counter"
+      <t>This document describes how a DNS client can discover local encrypted
+      DNS servers using DHCP (Sections <xref format="counter"
       target="DHCPv6"></xref> and <xref format="counter"
       target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
       target="RA"></xref>).</t>
@@ -238,24 +238,20 @@
       server option, these addresses are ordered in the preference for use by
       the client.</t>
 
-      <t>Because distinct Encrypted DNS schemes may be provisioned by a
-      network (e.g., DoT, DoH, and DoQ) and that some of these schemes may
+      <t>Because distinct Encrypted DNS protocols may be provisioned by a
+      network (e.g., DoT, DoH, and DoQ) and that some of these protocols may
       make use of customized port numbers instead of default ones, the
       Encrypted DNS server options are designed to return a set of service
       parameters (SvcParams). These parameters are encoded following the same
       rules for encoding SvcParams in Section 2.1 of <xref
       target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach may
       increase the size of the options but it has the merit to rely upon an
-      existing IANA registry and thus to accommodate new Encrypted DNS schemes
-      and service parameters that may be defined in the future.</t>
-
-      <t>DoH servers may support more than one URI Template <xref
-      target="RFC8484"></xref>. Also, if the resolver hosts several DoH
-      services (e.g., no-filtering, blocking adult content, blocking malware),
-      these services can be discovered as templates. "dohpath" service
-      parameter (Section 5.1 of <xref target="I-D.schwartz-svcb-dns"></xref>)
-      is used to supply a relative URI Template. How a DoH client makes use of
-      the configured DoH services is out of the scope of this document.</t>
+      existing IANA registry and thus to accommodate new Encrypted DNS
+      protocols and service parameters that may be defined in the future. For
+      example, "dohpath" service parameter (Section 5.1 of <xref
+      target="I-D.schwartz-svcb-dns"></xref>) is used to supply a relative URI
+      Template. How a DoH client makes use of the configured DoH services is
+      out of the scope of this document.</t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
       public resolvers); these ISPs provide their customers with the IP
@@ -269,11 +265,11 @@
       Templates) takes precedence over DDR <xref
       target="I-D.ietf-add-ddr"></xref> since DDR uses unencrypted DNS to an
       external DNS resolver, which is susceptible to both internal and
-      external attacks whereas DHCP/RA is only vulnerable to internal
-      attacks.</t>
+      external attacks whereas DHCP/RA is typically protected using the
+      mechanisms discussed in <xref target="spoof"></xref>. </t>
 
       <t>If the local DNS client supports one of the discovered Encrypted DNS
-      schemes identified by Application Layer Protocol Negotiation (ALPN)
+      protocols identified by Application Layer Protocol Negotiation (ALPN)
       protocol identifiers, the DNS client establishes an encrypted DNS
       session with the discovered DNS IP address(es) and port number, and uses
       the mechanism discussed in Section 8 of <xref target="RFC8310"></xref>
@@ -305,8 +301,8 @@
 
         <t>A single option is used to convey both the ADN and IP addresses
         because otherwise means to correlate an IP address with an ADN will be
-        required if many ALPNs are supported and each of them uses a dedicated
-        ADN and/or IP address.</t>
+        required if, for example, more than one ADN is supported by the
+        network. </t>
 
         <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS Option">
             <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -373,7 +369,8 @@
           </list></t>
 
         <t>Multiple instances of OPTION_V6_DNR may be returned to a DHCPv6
-        client; each pointing to a distinct encrypted DNS server.</t>
+        client; each pointing to a distinct encrypted DNS server. These
+        instances are ordered in the preference for use by the client.</t>
       </section>
 
       <section title="DHCPv6 Client Behavior">
@@ -482,7 +479,8 @@
         octets.</t>
 
         <t>Multiple instances of OPTION_V4_DNR may be returned to a DHCPv4
-        client; each pointing to a distinct encrypted DNS server.</t>
+        client; each pointing to a distinct encrypted DNS server. These
+        instances are ordered in the preference for use by the client.</t>
       </section>
 
       <section title="DHCPv4 Client Behavior">
@@ -500,20 +498,18 @@
     </section>
 
     <section anchor="RA" title="IPv6 RA Encrypted DNS Option">
-      <t>This section defines a new Neighbor Discovery <xref
-      target="RFC4861"></xref>: IPv6 Router Advertisement (RA) Encrypted DNS
-      option. This option is useful in contexts similar to those discussed in
-      Section 1.1 of <xref target="RFC8106"></xref>.</t>
-
-      <t>All of the addresses share the same Lifetime value. Similar to <xref
-      target="RFC8106"></xref>, if it is desirable to have different Lifetime
-      values per IP address, multiple Encrypted DNS options may be used.
-      Likewise, if</t>
+      <t></t>
 
       <section anchor="RA-ADN" title="Option Format">
-        <t>The IPv6 RA Encrypted DNS ADN option is used to configure an
-        authentication domain name of the encrypted DNS server. The format of
-        this option is illustrated in <xref target="ra_dns"></xref>.</t>
+        <t>This section defines a new Neighbor Discovery <xref
+        target="RFC4861"></xref>: IPv6 Router Advertisement (RA) Encrypted DNS
+        option. This option is useful in contexts similar to those discussed
+        in Section 1.1 of <xref target="RFC8106"></xref>.</t>
+
+        <t>The IPv6 RA Encrypted DNS option is used to configure an
+        authentication domain name, a list of IPv6 addresses, and a set of
+        service parameters of the encrypted DNS server. The format of this
+        option is illustrated in <xref target="ra_dns"></xref>.</t>
 
         <t><figure anchor="ra_dns" title="RA Encrypted DNS Option">
             <artwork align="center"><![CDATA[ 0                   1                   2                   3
@@ -559,8 +555,11 @@
             size is a multiple of 8 octets.</t>
 
             <t hangText="ipv6-address(es):">One or more IPv6 addresses of the
-            encrypted DNS server. An address can be link-local, ULA, or
-            GUA.</t>
+            encrypted DNS server. An address can be link-local, ULA, or GUA.
+            <vspace blankLines="1" />All of the addresses share the same
+            Lifetime value. Similar to <xref target="RFC8106"></xref>, if it
+            is desirable to have different Lifetime values per IP address,
+            multiple Encrypted DNS options may be used. </t>
 
             <t hangText="Service Paramters (SvcParams):">Specifies a set of
             service parameter that are encoded following the rules in Section
@@ -575,6 +574,16 @@
           </list></t>
 
         <t></t>
+      </section>
+
+      <section title="IPv6 Host Behavior">
+        <t>The procedure for DNS configuration is the same as it is with any
+        other ND option <xref target="RFC4861"></xref>. In addition, the host
+        follows the procedure described in Section 5.3.1 of <xref
+        target="RFC8106"></xref>.</t>
+
+        <t>The host MUST silently discard multicast and host loopback
+        addresses conveyed in the Encrypted DNS options. </t>
       </section>
     </section>
 
@@ -728,7 +737,7 @@ Legend:
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <section title="Spoofing Attacks">
+      <section anchor="spoof" title="Spoofing Attacks">
         <t>DHCP/RA messages are not encrypted or protected against
         modification within the LAN. Unless mitigated (described below), the
         content of DHCP and RA messages can be spoofed or modified by active

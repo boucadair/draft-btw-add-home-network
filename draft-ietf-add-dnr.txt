@@ -5,14 +5,14 @@
 ADD                                                         M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: October 30, 2021                                         McAfee
+Expires: October 31, 2021                                         McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                          April 28, 2021
+                                                          April 29, 2021
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 30, 2021.
+   This Internet-Draft will expire on October 31, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 1]
+Boucadair, et al.       Expires October 31, 2021                [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -81,8 +81,9 @@ Table of Contents
      5.2.  DHCPv4 Client Behavior  . . . . . . . . . . . . . . . . .   9
    6.  IPv6 RA Encrypted DNS Option  . . . . . . . . . . . . . . . .  10
      6.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .  10
-   7.  Hosting Encrypted DNS Forwarder in Local Networks . . . . . .  11
-     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  11
+     6.2.  IPv6 Host Behavior  . . . . . . . . . . . . . . . . . . .  11
+   7.  Hosting Encrypted DNS Forwarder in Local Networks . . . . . .  12
+     7.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  12
        7.1.1.  DNS Forwarders  . . . . . . . . . . . . . . . . . . .  12
        7.1.2.  ACME  . . . . . . . . . . . . . . . . . . . . . . . .  12
        7.1.3.  Auto-Upgrade Based on Domains and their Subdomains  .  12
@@ -105,15 +106,15 @@ Table of Contents
    Appendix A.  Sample Target Deployment Scenarios . . . . . . . . .  22
      A.1.  Managed CPEs  . . . . . . . . . . . . . . . . . . . . . .  23
        A.1.1.  Direct DNS  . . . . . . . . . . . . . . . . . . . . .  23
-       A.1.2.  Proxied DNS . . . . . . . . . . . . . . . . . . . . .  25
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 2]
+Boucadair, et al.       Expires October 31, 2021                [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
+       A.1.2.  Proxied DNS . . . . . . . . . . . . . . . . . . . . .  25
      A.2.  Unmanaged CPEs  . . . . . . . . . . . . . . . . . . . . .  26
        A.2.1.  ISP-facing Unmanaged CPEs . . . . . . . . . . . . . .  26
        A.2.2.  Internal Unmanaged CPEs . . . . . . . . . . . . . . .  26
@@ -160,15 +161,17 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
       are DNS-over-TLS (DoT) [RFC7858], DNS-over-HTTPS (DoH) [RFC8484],
       or DNS-over-QUIC (DoQ) [I-D.ietf-dprive-dnsoquic].
 
-   Managed CPE:  refers to a CPE that is managed by an Internet Service
-      Providers (ISP).
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 3]
+
+Boucadair, et al.       Expires October 31, 2021                [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
+
+   Managed CPE:  refers to a CPE that is managed by an Internet Service
+      Providers (ISP).
 
    Unmanaged CPE:  refers to a CPE that is not managed by an ISP.
 
@@ -176,9 +179,9 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 3.  Overview
 
-   This document describes how a DNS client can discover a local
-   encrypted DNS server(s) using DHCP (Sections 4 and 5) and Neighbor
-   Discovery protocol (Section 6).
+   This document describes how a DNS client can discover local encrypted
+   DNS servers using DHCP (Sections 4 and 5) and Neighbor Discovery
+   protocol (Section 6).
 
    As reported in Section 1.7.2 of [RFC6125]:
 
@@ -215,39 +218,36 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    upon primary and backup servers.  Whether one IP address or more are
    returned in an option is deployment specific.  For example, a router
    embedding a recursive server or forwarder has to include one single
-   IP address pointing to one of its LAN-facing interfaces.  This
-   address can be a private IPv4 address, a link-local address, a Unique
-   Local IPv6 unicast Address (ULA), or a Global Unicast Address (GUA).
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 4]
+Boucadair, et al.       Expires October 31, 2021                [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
+
+   IP address pointing to one of its LAN-facing interfaces.  This
+   address can be a private IPv4 address, a link-local address, a Unique
+   Local IPv6 unicast Address (ULA), or a Global Unicast Address (GUA).
 
    If more than one IP address are to be returned in an Encrypted DNS
    server option, these addresses are ordered in the preference for use
    by the client.
 
-   Because distinct Encrypted DNS schemes may be provisioned by a
-   network (e.g., DoT, DoH, and DoQ) and that some of these schemes may
-   make use of customized port numbers instead of default ones, the
+   Because distinct Encrypted DNS protocols may be provisioned by a
+   network (e.g., DoT, DoH, and DoQ) and that some of these protocols
+   may make use of customized port numbers instead of default ones, the
    Encrypted DNS server options are designed to return a set of service
    parameters (SvcParams).  These parameters are encoded following the
    same rules for encoding SvcParams in Section 2.1 of
    [I-D.ietf-dnsop-svcb-https].  This encoding approach may increase the
    size of the options but it has the merit to rely upon an existing
-   IANA registry and thus to accommodate new Encrypted DNS schemes and
-   service parameters that may be defined in the future.
-
-   DoH servers may support more than one URI Template [RFC8484].  Also,
-   if the resolver hosts several DoH services (e.g., no-filtering,
-   blocking adult content, blocking malware), these services can be
-   discovered as templates. "dohpath" service parameter (Section 5.1 of
-   [I-D.schwartz-svcb-dns]) is used to supply a relative URI Template.
-   How a DoH client makes use of the configured DoH services is out of
-   the scope of this document.
+   IANA registry and thus to accommodate new Encrypted DNS protocols and
+   service parameters that may be defined in the future.  For example,
+   "dohpath" service parameter (Section 5.1 of [I-D.schwartz-svcb-dns])
+   is used to supply a relative URI Template.  How a DoH client makes
+   use of the configured DoH services is out of the scope of this
+   document.
 
    Some ISPs rely upon external resolvers (e.g., outsourced service or
    public resolvers); these ISPs provide their customers with the IP
@@ -261,10 +261,10 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    Templates) takes precedence over DDR [I-D.ietf-add-ddr] since DDR
    uses unencrypted DNS to an external DNS resolver, which is
    susceptible to both internal and external attacks whereas DHCP/RA is
-   only vulnerable to internal attacks.
+   typically protected using the mechanisms discussed in Section 9.1.
 
    If the local DNS client supports one of the discovered Encrypted DNS
-   schemes identified by Application Layer Protocol Negotiation (ALPN)
+   protocols identified by Application Layer Protocol Negotiation (ALPN)
    protocol identifiers, the DNS client establishes an encrypted DNS
    session with the discovered DNS IP address(es) and port number, and
    uses the mechanism discussed in Section 8 of [RFC8310] to
@@ -277,7 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 5]
+Boucadair, et al.       Expires October 31, 2021                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -303,8 +303,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
    A single option is used to convey both the ADN and IP addresses
    because otherwise means to correlate an IP address with an ADN will
-   be required if many ALPNs are supported and each of them uses a
-   dedicated ADN and/or IP address.
+   be required if, for example, more than one ADN is supported by the
+   network.
 
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -333,7 +333,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 6]
+Boucadair, et al.       Expires October 31, 2021                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -371,7 +371,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
       Addresses)).
 
    Multiple instances of OPTION_V6_DNR may be returned to a DHCPv6
-   client; each pointing to a distinct encrypted DNS server.
+   client; each pointing to a distinct encrypted DNS server.  These
+   instances are ordered in the preference for use by the client.
 
 4.2.  DHCPv6 Client Behavior
 
@@ -388,8 +389,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-
-Boucadair, et al.       Expires October 30, 2021                [Page 7]
+Boucadair, et al.       Expires October 31, 2021                [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -445,7 +445,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021                [Page 8]
+Boucadair, et al.       Expires October 31, 2021                [Page 8]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -489,7 +489,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    exceeds the maximum DHCPv4 option size of 255 octets.
 
    Multiple instances of OPTION_V4_DNR may be returned to a DHCPv4
-   client; each pointing to a distinct encrypted DNS server.
+   client; each pointing to a distinct encrypted DNS server.  These
+   instances are ordered in the preference for use by the client.
 
 5.2.  DHCPv4 Client Behavior
 
@@ -500,8 +501,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-
-Boucadair, et al.       Expires October 30, 2021                [Page 9]
+Boucadair, et al.       Expires October 31, 2021                [Page 9]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -515,19 +515,16 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 6.  IPv6 RA Encrypted DNS Option
 
+6.1.  Option Format
+
    This section defines a new Neighbor Discovery [RFC4861]: IPv6 Router
    Advertisement (RA) Encrypted DNS option.  This option is useful in
    contexts similar to those discussed in Section 1.1 of [RFC8106].
 
-   All of the addresses share the same Lifetime value.  Similar to
-   [RFC8106], if it is desirable to have different Lifetime values per
-   IP address, multiple Encrypted DNS options may be used.  Likewise, if
-
-6.1.  Option Format
-
-   The IPv6 RA Encrypted DNS ADN option is used to configure an
-   authentication domain name of the encrypted DNS server.  The format
-   of this option is illustrated in Figure 6.
+   The IPv6 RA Encrypted DNS option is used to configure an
+   authentication domain name, a list of IPv6 addresses, and a set of
+   service parameters of the encrypted DNS server.  The format of this
+   option is illustrated in Figure 6.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -553,18 +550,17 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    Length:  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) is in units of 8 octets.
 
-
-
-
-
-Boucadair, et al.       Expires October 30, 2021               [Page 10]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
    Lifetime:  32-bit unsigned integer.  The maximum time in seconds
       (relative to the time the packet is received) over which the
       discovered Authentication Domain Name is valid.
+
+
+
+
+Boucadair, et al.       Expires October 31, 2021               [Page 10]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
       The value of Lifetime SHOULD by default be at least 3 *
       MaxRtrAdvInterval, where MaxRtrAdvInterval is the maximum RA
@@ -585,6 +581,10 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    ipv6-address(es):  One or more IPv6 addresses of the encrypted DNS
       server.  An address can be link-local, ULA, or GUA.
 
+      All of the addresses share the same Lifetime value.  Similar to
+      [RFC8106], if it is desirable to have different Lifetime values
+      per IP address, multiple Encrypted DNS options may be used.
+
    Service Paramters (SvcParams):  Specifies a set of service parameter
       that are encoded following the rules in Section 2.1 of
       [I-D.ietf-dnsop-svcb-https].  Service parameters may include, for
@@ -598,6 +598,26 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
       The length of this field is (Length - ADN Length - 16*(Num
       Addresses)).
 
+6.2.  IPv6 Host Behavior
+
+   The procedure for DNS configuration is the same as it is with any
+   other ND option [RFC4861].  In addition, the host follows the
+   procedure described in Section 5.3.1 of [RFC8106].
+
+   The host MUST silently discard multicast and host loopback addresses
+   conveyed in the Encrypted DNS options.
+
+
+
+
+
+
+
+Boucadair, et al.       Expires October 31, 2021               [Page 11]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
+
 7.  Hosting Encrypted DNS Forwarder in Local Networks
 
    This section discusses some deployment considerations (not
@@ -608,15 +628,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
    The section discusses mechanisms that can be used to host an
    encrypted DNS forwarder in a managed CPE (Appendix A.1).
-
-
-
-
-
-Boucadair, et al.       Expires October 30, 2021               [Page 11]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
 
 7.1.1.  DNS Forwarders
 
@@ -655,24 +666,17 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    resolved in the browser or OS.  If the encrypted DNS client discovers
    a local forwarder "cpe1-internal.example.net", the encrypted DNS
    client will auto-upgrade because the preconfigured ADN would match
-   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
-   shown in Figure 7, the auto-upgrade to a rogue server advertising
-   "rs.example.org" will fail because it does not match "*.example.net".
 
 
 
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires October 30, 2021               [Page 12]
+Boucadair, et al.       Expires October 31, 2021               [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
+
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
+   shown in Figure 7, the auto-upgrade to a rogue server advertising
+   "rs.example.org" will fail because it does not match "*.example.net".
 
               Encrypted DNS                              CPE
               capable client                             (@i)
@@ -719,17 +723,16 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
       using DHCP/RA to internal hosts.
 
-   Figure 8 illustrates an example of an unmanaged CPE hosting a
-   forwarder which connects to a 3rd party encrypted DNS server.  In
-   this example, the DNS information received from the managed CPE (and
 
 
-
-Boucadair, et al.       Expires October 30, 2021               [Page 13]
+Boucadair, et al.       Expires October 31, 2021               [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
+   Figure 8 illustrates an example of an unmanaged CPE hosting a
+   forwarder which connects to a 3rd party encrypted DNS server.  In
+   this example, the DNS information received from the managed CPE (and
    therefore from the ISP) is ignored by the Internal CPE hosting the
    forwarder.
 
@@ -775,17 +778,17 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA response to
    provide the attacker's Encrypted DNS server.  Note that such an
    attacker can launch other attacks as discussed in Section 22 of
-   [RFC8415].  The attacker can get a domain name with a domain-
-   validated public certificate from a CA and host an Encrypted DNS
-   server.  Also, an attacker can use a public IP address and get an 'IP
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 14]
+Boucadair, et al.       Expires October 31, 2021               [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
+   [RFC8415].  The attacker can get a domain name with a domain-
+   validated public certificate from a CA and host an Encrypted DNS
+   server.  Also, an attacker can use a public IP address and get an 'IP
    address'-validated public certificate from a CA to host an Encrypted
    DNS server.
 
@@ -834,10 +837,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-
-
-
-Boucadair, et al.       Expires October 30, 2021               [Page 15]
+Boucadair, et al.       Expires October 31, 2021               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -893,7 +893,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 16]
+Boucadair, et al.       Expires October 31, 2021               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -949,7 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 17]
+Boucadair, et al.       Expires October 31, 2021               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 18]
+Boucadair, et al.       Expires October 31, 2021               [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 19]
+Boucadair, et al.       Expires October 31, 2021               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 20]
+Boucadair, et al.       Expires October 31, 2021               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1173,7 +1173,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 21]
+Boucadair, et al.       Expires October 31, 2021               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1229,7 +1229,7 @@ Appendix A.  Sample Target Deployment Scenarios
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 22]
+Boucadair, et al.       Expires October 31, 2021               [Page 22]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1285,7 +1285,7 @@ A.1.1.  Direct DNS
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 23]
+Boucadair, et al.       Expires October 31, 2021               [Page 23]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1341,7 +1341,7 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 24]
+Boucadair, et al.       Expires October 31, 2021               [Page 24]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1397,7 +1397,7 @@ A.1.2.  Proxied DNS
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 25]
+Boucadair, et al.       Expires October 31, 2021               [Page 25]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1453,7 +1453,7 @@ A.2.2.  Internal Unmanaged CPEs
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 26]
+Boucadair, et al.       Expires October 31, 2021               [Page 26]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1509,7 +1509,7 @@ Appendix B.  Make Use of Discovered Encrypted DNS Servers
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 27]
+Boucadair, et al.       Expires October 31, 2021               [Page 27]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
@@ -1565,4 +1565,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires October 30, 2021               [Page 28]
+Boucadair, et al.       Expires October 31, 2021               [Page 28]
