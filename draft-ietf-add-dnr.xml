@@ -355,7 +355,23 @@
 
             <t hangText="ipv6-address(es):">Indicates one or more IPv6
             addresses to reach the encrypted DNS server. An address can be
-            link-local, ULA, or GUA.</t>
+            link-local, ULA, or GUA. The format of this field is shown in
+            <xref target="v6add"></xref>.<figure anchor="v6add"
+                title="Format of the IPv6 Addresses Field">
+                <artwork><![CDATA[+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                         ipv6-address                          |
+|                                                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                         ipv6-address                          |
+|                                                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                              ...                              |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+]]></artwork>
+              </figure></t>
 
             <t hangText="Service Parameters (SvcParams):">Specifies a set of
             service parameter that are encoded following the rules in Section
@@ -560,7 +576,9 @@
             <vspace blankLines="1" />All of the addresses share the same
             Lifetime value. Similar to <xref target="RFC8106"></xref>, if it
             is desirable to have different Lifetime values per IP address,
-            multiple Encrypted DNS options may be used. </t>
+            multiple Encrypted DNS options may be used.<vspace
+            blankLines="1" />The format of this field is shown in <xref
+            target="v6add"></xref>.</t>
 
             <t hangText="Service Paramters (SvcParams):">Specifies a set of
             service parameter that are encoded following the rules in Section
