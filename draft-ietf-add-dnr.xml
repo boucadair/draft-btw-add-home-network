@@ -297,13 +297,11 @@
       <section anchor="DHCPv6-ADN" title="Option Format">
         <t>The DHCPv6 Encrypted DNS option configures an
         authentication domain name, a list of IPv6 addresses, and a set of
-        service parameters of the encrypted DNS server. The format of this
-        option is shown in <xref target="ri_option"></xref>.</t>
-
-        <t>A single option conveys both the ADN and IP addresses
+        service parameters of the encrypted DNS server. A single option is used to convey both the ADN and IP addresses
         because otherwise means to correlate an IP address with an ADN will be
         required if, for example, more than one ADN is supported by the
-        network. </t>
+        network. The format of this
+        option is shown in <xref target="ri_option"></xref>.
 
         <t><figure anchor="ri_option" title="DHCPv6 Encrypted DNS Option">
             <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -359,11 +357,6 @@
             <xref target="v6add"></xref>.<figure anchor="v6add"
                 title="Format of the IPv6 Addresses Field">
                 <artwork><![CDATA[+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                                                               |
-|                         ipv6-address                          |
-|                                                               |
-|                                                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                                                               |
 |                         ipv6-address                          |
 |                                                               |
