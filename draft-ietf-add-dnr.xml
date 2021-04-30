@@ -251,7 +251,7 @@
       existing IANA registry and thus to accommodate new Encrypted DNS
       protocols and service parameters that may be defined in the future. For
       example, "dohpath" service parameter (Section 5.1 of <xref
-      target="I-D.schwartz-svcb-dns"></xref>) is used to supply a relative URI
+      target="I-D.schwartz-svcb-dns"></xref>) supplies a relative URI
       Template. </t>
 
       <t>Some ISPs rely upon external resolvers (e.g., outsourced service or
@@ -295,12 +295,12 @@
       <t></t>
 
       <section anchor="DHCPv6-ADN" title="Option Format">
-        <t>The DHCPv6 Encrypted DNS option is used to configure an
+        <t>The DHCPv6 Encrypted DNS option configures an
         authentication domain name, a list of IPv6 addresses, and a set of
         service parameters of the encrypted DNS server. The format of this
         option is shown in <xref target="ri_option"></xref>.</t>
 
-        <t>A single option is used to convey both the ADN and IP addresses
+        <t>A single option conveys both the ADN and IP addresses
         because otherwise means to correlate an IP address with an ADN will be
         required if, for example, more than one ADN is supported by the
         network. </t>
@@ -407,7 +407,7 @@
 
     <section anchor="DHCP" title="DHCPv4 Encrypted DNS Option">
       <section title="Option Format">
-        <t>The DHCPv4 Encrypted DNS option is used to configure an
+        <t>The DHCPv4 Encrypted DNS option configures an
         authentication domain name, a list of IPv4 addresses, and a port
         number of the encrypted DNS server. The format of this option is
         illustrated in <xref target="dhcpri_dns"></xref>.</t>
@@ -523,7 +523,7 @@
         option. This option is useful in contexts similar to those discussed
         in Section 1.1 of <xref target="RFC8106"></xref>.</t>
 
-        <t>The IPv6 RA Encrypted DNS option is used to configure an
+        <t>The IPv6 RA Encrypted DNS option configures an
         authentication domain name, a list of IPv6 addresses, and a set of
         service parameters of the encrypted DNS server. The format of this
         option is illustrated in <xref target="ra_dns"></xref>.</t>
