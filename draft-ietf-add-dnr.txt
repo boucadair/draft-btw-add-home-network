@@ -93,7 +93,7 @@ Table of Contents
      9.1.  Spoofing Attacks  . . . . . . . . . . . . . . . . . . . .  15
      9.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  16
      9.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  16
-     9.4.  Wireless Security - Authentication Attacks  . . . . . . .  17
+     9.4.  Wireless Security - Authentication Attacks  . . . . . . .  16
    10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
      10.1.  DHCPv6 Option  . . . . . . . . . . . . . . . . . . . . .  17
      10.2.  DHCPv4 Option  . . . . . . . . . . . . . . . . . . . . .  17
@@ -811,14 +811,10 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    options defined in Sections 4, 5, and 6 won't be able to learn the
    encrypted DNS server hosted by the ISP, in particular.  If the ADN is
    not discovered using DHCP/RA, such hosts will have to fallback to use
-   DDR as defined in [I-D.ietf-add-ddr] to discover the encrypted DNS
-   server and to retrieve the list of supported DoH services using the
-   SVCB RRtype [I-D.schwartz-svcb-dns] without verifying the hostname of
-   discovered templates with the ADN.  Other guidance in DDR relating to
-   resolver verification must be followed in this case.  This will
-   prevent an unencrypted resolver on a local address from referring to
-   an encrypted resolver at a different address without an out-of-band
-   configuration in the client beyond the scope of this document or DDR.
+   discovery using the resolver IP address as defined in Section 4 of
+   [I-D.ietf-add-ddr] to discover the designated resolvers.  The
+   guidance in Sections 4.1 and 4.2 of [I-D.ietf-add-ddr] related to the
+   designated resolver verification has to be followed in such case.
 
 9.  Security Considerations
 
@@ -834,6 +830,10 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    [RFC8415].  The attacker can get a domain name with a domain-
    validated public certificate from a CA and host an Encrypted DNS
    server.  Also, an attacker can use a public IP address and get an 'IP
+   address'-validated public certificate from a CA to host an Encrypted
+   DNS server.
+
+
 
 
 
@@ -841,9 +841,6 @@ Boucadair, et al.       Expires November 1, 2021               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
-
-   address'-validated public certificate from a CA to host an Encrypted
-   DNS server.
 
    Attacks of spoofed or modified DHCP responses and RA messages by
    attackers within the local network may be mitigated by making use of
@@ -888,8 +885,11 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
    However, a passive attacker cannot spoof or modify DHCP/RA messages.
 
+9.4.  Wireless Security - Authentication Attacks
 
-
+   Wireless LAN (WLAN) as frequently deployed in local networks (e.g.,
+   home networks) is vulnerable to various attacks (e.g., [Evil-Twin],
+   [Krack], [Dragonblood]).  Because of these attacks, only
 
 
 
@@ -898,11 +898,6 @@ Boucadair, et al.       Expires November 1, 2021               [Page 16]
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 
-9.4.  Wireless Security - Authentication Attacks
-
-   Wireless LAN (WLAN) as frequently deployed in local networks (e.g.,
-   home networks) is vulnerable to various attacks (e.g., [Evil-Twin],
-   [Krack], [Dragonblood]).  Because of these attacks, only
    cryptographically authenticated communications are trusted on WLANs.
    This means information provided by such networks via DHCP, DHCPv6, or
    RA (e.g., NTP server, DNS server, default domain) are untrusted
@@ -944,16 +939,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    IANA is requested to assign the following new DHCP Option Code in the
    registry maintained in [BOOTP].
 
-
-
-
-
-
-Boucadair, et al.       Expires November 1, 2021               [Page 17]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
    +------+------------------+-------+----------------+----------------+
    | Tag  | Name             | Data  | Meaning        | Reference      |
    |      |                  | Length|                |                |
@@ -961,6 +946,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    | TBA2 | OPTION_V4_DNR    | N     | Encrypted DNS  | [ThisDocument] |
    |      |                  |       | Server         |                |
    +------+------------------+-------+----------------+----------------+
+
+
+
+Boucadair, et al.       Expires November 1, 2021               [Page 17]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
 10.3.  Neighbor Discovery Option
 
@@ -993,23 +985,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
 12.  Contributing Authors
 
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires November 1, 2021               [Page 18]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
       Nicolai Leymann
       Deutsche Telekom
       Germany
@@ -1023,6 +998,17 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
       China
 
       EMail: yan@cnnic.cn
+
+
+
+
+
+
+
+Boucadair, et al.       Expires November 1, 2021               [Page 18]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
 13.  References
 
@@ -1058,14 +1044,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               RFC 8106, DOI 10.17487/RFC8106, March 2017,
               <https://www.rfc-editor.org/info/rfc8106>.
 
-
-
-
-Boucadair, et al.       Expires November 1, 2021               [Page 19]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
@@ -1080,6 +1058,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               "Dynamic Host Configuration Protocol for IPv6 (DHCPv6)",
               RFC 8415, DOI 10.17487/RFC8415, November 2018,
               <https://www.rfc-editor.org/info/rfc8415>.
+
+
+
+Boucadair, et al.       Expires November 1, 2021               [Page 19]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
 13.2.  Informative References
 
@@ -1115,13 +1100,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               Jensen, "Discovery of Designated Resolvers", draft-ietf-
               add-ddr-00 (work in progress), February 2021.
 
-
-
-Boucadair, et al.       Expires November 1, 2021               [Page 20]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
    [I-D.ietf-dprive-dnsoquic]
               Huitema, C., Mankin, A., and S. Dickinson, "Specification
               of DNS over Dedicated QUIC Connections", draft-ietf-
@@ -1136,6 +1114,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               Pusateri, T. and W. Toorop, "DHCPv6 Options for private
               DNS Discovery", draft-pusateri-dhc-dns-driu-00 (work in
               progress), July 2018.
+
+
+
+Boucadair, et al.       Expires November 1, 2021               [Page 20]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
    [I-D.schwartz-svcb-dns]
               Schwartz, B., "Service Binding Mapping for DNS Servers",
@@ -1169,15 +1154,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               DOI 10.17487/RFC6092, January 2011,
               <https://www.rfc-editor.org/info/rfc6092>.
 
-
-
-
-
-Boucadair, et al.       Expires November 1, 2021               [Page 21]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
               within Internet Public Key Infrastructure Using X.509
@@ -1194,6 +1170,13 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               Advertisement Guard (RA-Guard)", RFC 7113,
               DOI 10.17487/RFC7113, February 2014,
               <https://www.rfc-editor.org/info/rfc7113>.
+
+
+
+Boucadair, et al.       Expires November 1, 2021               [Page 21]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
    [RFC7513]  Bi, J., Wu, J., Yao, G., and F. Baker, "Source Address
               Validation Improvement (SAVI) Solution for DHCP",
@@ -1227,13 +1210,6 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
               January 2019, <https://www.rfc-editor.org/info/rfc8499>.
 
-
-
-Boucadair, et al.       Expires November 1, 2021               [Page 22]
-
-Internet-Draft  Discovery of Network-designated Resolvers     April 2021
-
-
    [RFC8520]  Lear, E., Droms, R., and D. Romascanu, "Manufacturer Usage
               Description Specification", RFC 8520,
               DOI 10.17487/RFC8520, March 2019,
@@ -1247,6 +1223,16 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
    [TR-069]   The Broadband Forum, "CPE WAN Management Protocol",
               December 2018, <https://www.broadband-
               forum.org/technical/download/TR-069.pdf>.
+
+
+
+
+
+
+Boucadair, et al.       Expires November 1, 2021               [Page 22]
+
+Internet-Draft  Discovery of Network-designated Resolvers     April 2021
+
 
    [TS.24008]
               3GPP, "Mobile radio interface Layer 3 specification; Core
@@ -1276,6 +1262,20 @@ Appendix A.  Sample Target Deployment Scenarios
    smartphone, tablet) or via a CPE.  Do53 mechanisms used within the
    Local Area Network (LAN) are similar in both fixed and cellular CPE-
    based broadband service offerings.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

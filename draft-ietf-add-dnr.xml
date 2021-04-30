@@ -755,16 +755,11 @@ Legend:
       and <xref format="counter" target="RA"></xref> won't be able to learn
       the encrypted DNS server hosted by the ISP, in particular. If the ADN is
       not discovered using DHCP/RA, such hosts will have to fallback to use
-      DDR as defined in <xref target="I-D.ietf-add-ddr"></xref> to discover
-      the encrypted DNS server and to retrieve the list of supported DoH
-      services using the SVCB RRtype <xref
-      target="I-D.schwartz-svcb-dns"></xref> without verifying the hostname of
-      discovered templates with the ADN. Other guidance in DDR relating to
-      resolver verification must be followed in this case. This will prevent
-      an unencrypted resolver on a local address from referring to an
-      encrypted resolver at a different address without an out-of-band
-      configuration in the client beyond the scope of this document or
-      DDR.</t>
+      discovery using the resolver IP address as defined in Section 4 of <xref
+      target="I-D.ietf-add-ddr"></xref> to discover the designated resolvers.
+      The guidance in Sections 4.1 and 4.2 of <xref
+      target="I-D.ietf-add-ddr"></xref> related to the designated resolver
+      verification has to be followed in such case. </t>
     </section>
 
     <section anchor="Security" title="Security Considerations">
