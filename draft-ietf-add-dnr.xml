@@ -539,20 +539,18 @@
             <artwork align="center"><![CDATA[ 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|     TBA3      |     Length    |          Unassigned           |
+|     TBA3      |     Length    |         ADN Length            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           Lifetime                            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|         ADN Length            |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
 ~                   authentication-domain-name                  ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |     Addresses Length          |                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
 ~                        ipv6-address(es)                       ~
 |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                               |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+|                               |     SvcParams Length          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~                 Service Parameters (SvcParams)                ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
@@ -604,6 +602,9 @@
             be used.<vspace blankLines="1" />The format of this field is shown
             in <xref target="v6add"></xref>.</t>
 
+            <t hangText="SvcParams Length:">Length of the Service Parameters
+            field in octets.</t>
+
             <t
             hangText="Service Paramters (SvcParams) (variable length):">Specifies
             a set of service parameter that are encoded following the rules in
@@ -612,10 +613,12 @@
             protocol identifiers or alternate port numbers.<vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used. As a reminder,
-            the default port number is 853 for DoT and 443 for DoH.<vspace
-            blankLines="1" />The length of this field is ('Option-length' -
-            'ADN Length' - 'Addresses Length').</t>
+            the default port number is 853 for DoT and 443 for DoH.</t>
           </list></t>
+
+        <t>The option MUST be padded with zeros so that the full enclosed data
+        is a multiple of 8 octets (Section 4.6 of <xref
+        target="RFC4861"></xref>).</t>
       </section>
 
       <section title="IPv6 Host Behavior">

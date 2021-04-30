@@ -591,24 +591,24 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA3      |     Length    |          Unassigned           |
+     |     TBA3      |     Length    |         ADN Length            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |         ADN Length            |                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
      ~                   authentication-domain-name                  ~
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |     Addresses Length          |                               |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
      ~                        ipv6-address(es)                       ~
      |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                               |                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+     |                               |     SvcParams Length          |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      ~                 Service Parameters (SvcParams)                ~
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                      Figure 7: RA Encrypted DNS Option
+
+   The fields of the option shown in Figure 7 are as follows:
 
 
 
@@ -617,8 +617,6 @@ Boucadair, et al.       Expires November 1, 2021               [Page 11]
 
 Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
-
-   The fields of the option shown in Figure 7 are as follows:
 
    Type:  8-bit identifier of the Encrypted DNS Option as assigned by
       IANA (TBA3, see Section 10.3).
@@ -664,6 +662,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
 
       The format of this field is shown in Figure 3.
 
+   SvcParams Length:  Length of the Service Parameters field in octets.
+
    Service Paramters (SvcParams) (variable length):  Specifies a set of
       service parameter that are encoded following the rules in
 
@@ -682,8 +682,8 @@ Internet-Draft  Discovery of Network-designated Resolvers     April 2021
       default port numbers should be used.  As a reminder, the default
       port number is 853 for DoT and 443 for DoH.
 
-      The length of this field is ('Option-length' - 'ADN Length' -
-      'Addresses Length').
+   The option MUST be padded with zeros so that the full enclosed data
+   is a multiple of 8 octets (Section 4.6 of [RFC4861]).
 
 6.2.  IPv6 Host Behavior
 
