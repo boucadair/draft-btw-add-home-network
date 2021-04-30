@@ -191,8 +191,6 @@
     <section anchor="RI" title="Overview">
       <t></t>
 
-      <t></t>
-
       <section title="Configuration Data">
         <t>This document describes how a DNS client can discover local
         encrypted DNS servers using DHCP (Sections <xref format="counter"
@@ -268,7 +266,7 @@
         such deployments.</t>
       </section>
 
-      <section title="Handling Configuration Conflicts">
+      <section title="Handling Configuration Data Conflicts">
         <t>If the encrypted DNS is discovered by a host using both RA and
         DHCP, the rules discussed in Section 5.3.1 of <xref
         target="RFC8106"></xref> MUST be followed.</t>
@@ -293,7 +291,7 @@
         of <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
       </section>
 
-      <section title="Multihoming  Considerations">
+      <section title="Multihoming Considerations">
         <t>Devices may be connected to multiple networks; each providing their
         own DNS configuration using the discovery mechanisms specified in this
         document. Nevertheless, it is out of the scope of this specification
@@ -429,7 +427,7 @@
 +-+-+-+-+-+-+-+-+               |
 ~  authentication-domain-name   ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-| Num Addresses |               |
+|  Addr Length  |               |
 +-+-+-+-+-+-+-+-+               +
 ~        IPv4 Address(es)       ~
 |               +-+-+-+-+-+-+-+-+
@@ -469,8 +467,8 @@
 ]]></artwork>
               </figure></t>
 
-            <t hangText="Num Addresses:">Indicates the number of included IPv4
-            addresses.</t>
+            <t hangText="Num Addr Length:">Indicates the length of included
+            IPv4 addresses in octets.</t>
 
             <t hangText="IPv4 Address(es) (variable length):">Indicates one or
             more IPv4 addresses to reach the encrypted DNS server. Both
