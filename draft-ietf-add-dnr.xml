@@ -184,7 +184,7 @@
           target="RA"></xref>.</t>
 
           <t hangText="Managed CPE:">refers to a CPE that is managed by an
-          Internet Service Providers (ISP).</t>
+          Internet Service Provider (ISP).</t>
 
           <t hangText="Unmanaged CPE:">refers to a CPE that is not managed by
           an ISP.</t>
@@ -198,12 +198,12 @@
       DNS servers using DHCP (Sections <xref format="counter"
       target="DHCPv6"></xref> and <xref format="counter"
       target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
-      target="RA"></xref>): Encrypted DNS options. </t>
+      target="RA"></xref>): Encrypted DNS options.</t>
 
       <t>These options configure an authentication domain name, a list of IPv6
       addresses, and a set of service parameters of the encrypted DNS server.
       More information about the design of these options is provided in the
-      following subsections. </t>
+      following subsections.</t>
 
       <section title="Configuration Data for Encrypted DNS">
         <t>In order to allow for PKIX-based authentication between a DNS
@@ -211,8 +211,8 @@
         designed to include an authentication domain name. This ADN is
         presented as a reference identifier for DNS authentication purposes.
         This design accommodates the current best practices for issuing
-        certificates as per Section 1.7.2 of <xref target="RFC6125"></xref>:
-        </t>
+        certificates as per Section 1.7.2 of <xref
+        target="RFC6125"></xref>:</t>
 
         <t><figure>
             <artwork><![CDATA[   |  Some certification authorities issue server certificates based on
@@ -270,7 +270,7 @@
         <t>A single option is used to convey both the ADN and IP addresses
         because otherwise means to correlate an IP address with an ADN will be
         required if, for example, more than one ADN is supported by the
-        network. </t>
+        network.</t>
       </section>
 
       <section title="Handling Configuration Data Conflicts">
@@ -718,7 +718,7 @@ Legend:
             blankLines="1" />Alternatively, a security service provider can
             assign a unique FQDN to the CPE. The encrypted DNS forwarder will
             act like a private encrypted DNS server only be accessible from
-            within the the local network.</t>
+            within the local network.</t>
 
             <t>The encrypted DNS forwarder will either be configured to use
             the ISP's or a 3rd party encrypted DNS server.</t>
@@ -774,7 +774,7 @@ Legend:
 
         <t><list style="symbols">
             <t>DHCPv6-Shield described in <xref target="RFC7610"></xref>, the
-            CPEs discards DHCP response messages received from any local
+            CPE discards DHCP response messages received from any local
             endpoint.</t>
 
             <t>RA-Guard described in <xref target="RFC7113"></xref>, the CPE
@@ -826,7 +826,7 @@ Legend:
         domain) provided by such networks via DHCP, DHCPv6, or RA are
         untrusted because DHCP and RA messages are not authenticated.</t>
 
-        <t>If the pre-shared-key is the same for all clients that connect to
+        <t>If the pre-shared key is the same for all clients that connect to
         the same WLAN, the shared key will be available to all nodes,
         including attackers. As such, it is possible to mount an active
         on-path attack. Man-in-the-middle attacks are possible within local
@@ -1163,9 +1163,9 @@ Legend:
     </references>
 
     <section anchor="depl" title="Sample Target Deployment Scenarios">
-      <t>Internet Service Providers (ISPs) traditionally provide DNS resolvers
-      to their customers. To that aim, ISPs deploy the following mechanisms to
-      advertise a list of DNS Recursive DNS server(s) to their customers:</t>
+      <t>ISPs traditionally provide DNS resolvers to their customers. To that
+      aim, ISPs deploy the following mechanisms to advertise a list of DNS
+      Recursive DNS server(s) to their customers:</t>
 
       <t><list style="symbols">
           <t>Protocol Configuration Options in cellular networks <xref
