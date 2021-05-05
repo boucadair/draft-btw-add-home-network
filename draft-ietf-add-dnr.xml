@@ -386,7 +386,9 @@
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
             include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers.<vspace blankLines="1" />If no port service
+            alternate port numbers. The service parameters MUST NOT include
+            "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+            included IP addresses. <vspace blankLines="1" />If no port service
             parameter is included, this indicates that default port numbers
             should be used. As a reminder, the default port number is 853 for
             DoT and 443 for DoH.<vspace blankLines="1" />The length of this
@@ -490,7 +492,9 @@
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
             include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers.<vspace blankLines="1" />If no port service
+            alternate port numbers. The service parameters MUST NOT include
+            "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+            included IP addresses.<vspace blankLines="1" />If no port service
             parameter is included, this indicates that default port numbers
             should be used. <vspace blankLines="1" />The length of this field
             is ('Option-length' - 2 - 'ADN Length' - 'Addr Length').</t>
@@ -604,7 +608,9 @@
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
             include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers.<vspace blankLines="1" />If no port service
+            alternate port numbers. The service parameters MUST NOT include
+            "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+            included IP addresses.<vspace blankLines="1" />If no port service
             parameter is included, this indicates that default port numbers
             should be used.</t>
           </list></t>

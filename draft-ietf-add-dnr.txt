@@ -5,14 +5,14 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: November 5, 2021                                         McAfee
+Expires: November 6, 2021                                         McAfee
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                             May 4, 2021
+                                                             May 5, 2021
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 5, 2021.
+   This Internet-Draft will expire on November 6, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 1]
+Boucadair, et al.       Expires November 6, 2021                [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 2]
+Boucadair, et al.       Expires November 6, 2021                [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -165,7 +165,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 3]
+Boucadair, et al.       Expires November 6, 2021                [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -221,7 +221,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 4]
+Boucadair, et al.       Expires November 6, 2021                [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -277,7 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 5]
+Boucadair, et al.       Expires November 6, 2021                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -333,7 +333,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 6]
+Boucadair, et al.       Expires November 6, 2021                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -385,17 +385,18 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
    Service Parameters (SvcParams) (variable length):  Specifies a set of
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
+      may include, for example, a list of ALPN protocol identifiers or
 
 
 
-
-Boucadair, et al.       Expires November 5, 2021                [Page 7]
+Boucadair, et al.       Expires November 6, 2021                [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
-      may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.
+      alternate port numbers.  The service parameters MUST NOT include
+      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+      included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
@@ -444,8 +445,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-
-Boucadair, et al.       Expires November 5, 2021                [Page 8]
+Boucadair, et al.       Expires November 6, 2021                [Page 8]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -501,7 +501,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021                [Page 9]
+Boucadair, et al.       Expires November 6, 2021                [Page 9]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -521,7 +521,9 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.
+      alternate port numbers.  The service parameters MUST NOT include
+      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+      included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -555,9 +557,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-
-
-Boucadair, et al.       Expires November 5, 2021               [Page 10]
+Boucadair, et al.       Expires November 6, 2021               [Page 10]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -613,7 +613,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 11]
+Boucadair, et al.       Expires November 6, 2021               [Page 11]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -649,7 +649,9 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.
+      alternate port numbers.  The service parameters MUST NOT include
+      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+      included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -663,16 +665,17 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
    other Neighbor Discovery option [RFC4861].  In addition, the host
    follows the procedure described in Section 5.3.1 of [RFC8106].
 
-   The host MUST silently discard multicast and host loopback addresses
-   conveyed in the Encrypted DNS options.
 
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 12]
+Boucadair, et al.       Expires November 6, 2021               [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
+
+   The host MUST silently discard multicast and host loopback addresses
+   conveyed in the Encrypted DNS options.
 
 7.  Hosting Encrypted DNS Forwarder in Local Networks
 
@@ -719,17 +722,17 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
    Let's suppose that "*.example.net" is preconfigured as a verified
    resolved in the browser or OS.  If the encrypted DNS client discovers
-   a local forwarder "cpe1-internal.example.net", the encrypted DNS
-   client will auto-upgrade because the preconfigured ADN would match
-   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 13]
+Boucadair, et al.       Expires November 6, 2021               [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
+   a local forwarder "cpe1-internal.example.net", the encrypted DNS
+   client will auto-upgrade because the preconfigured ADN would match
+   subjectAltName value "cpe1-internal.example.net" of type dNSName.  As
    shown in Figure 8, the auto-upgrade to a rogue server advertising
    "rs.example.org" will fail because it does not match "*.example.net".
 
@@ -774,17 +777,17 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
    o  The encrypted DNS forwarder will either be configured to use the
       ISP's or a 3rd party encrypted DNS server.
 
-   o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
-      using DHCP/RA to internal hosts.
 
 
 
 
-
-Boucadair, et al.       Expires November 5, 2021               [Page 14]
+Boucadair, et al.       Expires November 6, 2021               [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
+
+   o  The unmanaged CPE will advertise the encrypted DNS forwarder ADN
+      using DHCP/RA to internal hosts.
 
    Figure 9 illustrates an example of an unmanaged CPE hosting a
    forwarder which connects to a 3rd party encrypted DNS server.  In
@@ -832,15 +835,15 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
    o  DHCPv6-Shield described in [RFC7610], the CPE discards DHCP
       response messages received from any local endpoint.
 
-   o  RA-Guard described in [RFC7113], the CPE discards RAs messages
-      received from any local endpoint.
 
 
-
-Boucadair, et al.       Expires November 5, 2021               [Page 15]
+Boucadair, et al.       Expires November 6, 2021               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
+
+   o  RA-Guard described in [RFC7113], the CPE discards RAs messages
+      received from any local endpoint.
 
    o  Source Address Validation Improvement (SAVI) solution for DHCP
       described in [RFC7513], the CPE filters packets with forged source
@@ -887,16 +890,17 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
    If the pre-shared key is the same for all clients that connect to the
    same WLAN, the shared key will be available to all nodes, including
-   attackers.  As such, it is possible to mount an active on-path
-   attack.  Man-in-the-middle attacks are possible within local networks
-   because such WLAN authentication lacks peer entity authentication.
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 16]
+Boucadair, et al.       Expires November 6, 2021               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
+
+   attackers.  As such, it is possible to mount an active on-path
+   attack.  Man-in-the-middle attacks are possible within local networks
+   because such WLAN authentication lacks peer entity authentication.
 
    This leads to the need for provisioning unique credentials for
    different clients.  Endpoints can be provisioned with unique
@@ -945,11 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-
-
-
-
-Boucadair, et al.       Expires November 5, 2021               [Page 17]
+Boucadair, et al.       Expires November 6, 2021               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 18]
+Boucadair, et al.       Expires November 6, 2021               [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 19]
+Boucadair, et al.       Expires November 6, 2021               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1117,7 +1117,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 20]
+Boucadair, et al.       Expires November 6, 2021               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1173,7 +1173,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 21]
+Boucadair, et al.       Expires November 6, 2021               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1229,7 +1229,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 22]
+Boucadair, et al.       Expires November 6, 2021               [Page 22]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1285,7 +1285,7 @@ Appendix A.  Sample Target Deployment Scenarios
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 23]
+Boucadair, et al.       Expires November 6, 2021               [Page 23]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1341,7 +1341,7 @@ A.1.1.  Direct DNS
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 24]
+Boucadair, et al.       Expires November 6, 2021               [Page 24]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1397,7 +1397,7 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 25]
+Boucadair, et al.       Expires November 6, 2021               [Page 25]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1453,7 +1453,7 @@ A.1.2.  Proxied DNS
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 26]
+Boucadair, et al.       Expires November 6, 2021               [Page 26]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1509,7 +1509,7 @@ A.2.2.  Internal Unmanaged CPEs
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 27]
+Boucadair, et al.       Expires November 6, 2021               [Page 27]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1565,7 +1565,7 @@ Appendix B.  Make Use of Discovered Encrypted DNS Servers
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 28]
+Boucadair, et al.       Expires November 6, 2021               [Page 28]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1621,7 +1621,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 29]
+Boucadair, et al.       Expires November 6, 2021               [Page 29]
 
 Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
@@ -1677,4 +1677,4 @@ Internet-Draft  Discovery of Network-designated Resolvers       May 2021
 
 
 
-Boucadair, et al.       Expires November 5, 2021               [Page 30]
+Boucadair, et al.       Expires November 6, 2021               [Page 30]
