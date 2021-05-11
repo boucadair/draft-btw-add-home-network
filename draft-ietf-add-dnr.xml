@@ -638,9 +638,7 @@
         server. Note that such an attacker can launch other attacks as
         discussed in Section 22 of <xref target="RFC8415"></xref>. The
         attacker can get a domain name with a domain-validated public
-        certificate from a CA and host an Encrypted DNS server. Also, an
-        attacker can use a public IP address and get an 'IP address'-validated
-        public certificate from a CA to host an Encrypted DNS server.</t>
+        certificate from a CA and host an Encrypted DNS server.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
@@ -658,6 +656,12 @@
             described in <xref target="RFC7513"></xref>, the CPE filters
             packets with forged source IP addresses.</t>
           </list></t>
+
+        <t>The above mechanisms would ensure that the endpoint receives the
+        correct configuration information of the encrypted DNS servers
+        selected by the DHCP server (or RA sender), but cannot provide any
+        information about the DHCP server or the entity hosting the DHCP
+        server (or RA sender) .</t>
 
         <t>Encrypted DNS sessions with rogue servers that spoof the IP address
         of a DNS server will fail because the DNS client will fail to
