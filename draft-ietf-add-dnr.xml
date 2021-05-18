@@ -148,10 +148,12 @@
       service parameters.</t>
 
       <t>Sample target deployment scenarios are discussed in Section 3 of
-      [I-D.boucadair-deployment-considerations]; both managed and unmanaged
-      Customer Premises Equipment (CPEs) are covered. Also, considerations
-      related to hosting a DNS forwarder in a local network are described in
-      Section 4 of [I-D.boucadair-deployment-considerations].</t>
+      <xref target="I-D.boucadair-add-deployment-considerations"></xref>.
+      These scenarios involve Customer Premises Equipment (CPEs) that may or
+      may not be managed by an Internet Service Provider (ISP). Also,
+      considerations related to hosting a DNS forwarder in a local network are
+      described in Section 4 of <xref
+      target="I-D.boucadair-add-deployment-considerations"></xref>.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -177,12 +179,6 @@
           in Sections <xref format="counter" target="DHCPv6"></xref>, <xref
           format="counter" target="DHCP"></xref>, and <xref format="counter"
           target="RA"></xref>.</t>
-
-          <t hangText="Managed CPE:">refers to a CPE that is managed by an
-          Internet Service Provider (ISP).</t>
-
-          <t hangText="Unmanaged CPE:">refers to a CPE that is not managed by
-          an ISP.</t>
 
           <t hangText="DHCP:">refers to both DHCPv4 and DHCPv6.</t>
         </list></t>
@@ -218,11 +214,11 @@
 
         <t>To avoid adding a dependency on another server to resolve the ADN,
         the Encrypted DNS options return the IP address(es) to locate the
-        encrypted DNS server. In the various scenarios sketched in
-        [I-D.boucadair-deployment-considerations], encrypted DNS servers may
-        terminate on the same IP address or distinct IP addresses. Terminating
-        encrypted DNS servers on the same or distinct IP addresses is
-        deployment specific.</t>
+        encrypted DNS server. In the various scenarios sketched in <xref
+        target="I-D.boucadair-add-deployment-considerations"></xref>,
+        encrypted DNS servers may terminate on the same IP address or distinct
+        IP addresses. Terminating encrypted DNS servers on the same or
+        distinct IP addresses is deployment specific.</t>
 
         <t>In order to optimize the size of discovery messages when all
         servers terminate on the same IP address, early versions of this
@@ -886,19 +882,7 @@
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
-      <reference anchor="TS.24008"
-                 target="http://www.3gpp.org/DynaReport/24008.htm">
-        <front>
-          <title>Mobile radio interface Layer 3 specification; Core network
-          protocols; Stage 3 (Release 16)</title>
-
-          <author fullname="" surname="">
-            <organization>3GPP</organization>
-          </author>
-
-          <date day="0" month="December" year="2019" />
-        </front>
-      </reference>
+      <?rfc include='reference.I-D.boucadair-add-deployment-considerations'?>
 
       <reference anchor="Evil-Twin"
                  target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">
