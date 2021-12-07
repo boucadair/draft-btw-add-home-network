@@ -400,7 +400,7 @@
 
         <t>The DHCP client MUST be prepared to receive multiple OPTION_V6_DNR
         options; each option is to be treated as a separate encrypted DNS
-        server. The instances SHOULD be orderd following their service
+        server. The instances SHOULD be processed following their service
         priority (i.e., smaller service priority indicates a high
         preference).</t>
 
@@ -514,9 +514,9 @@
 
         <t>The DHCPv4 client MUST be prepared to receive multiple DHCP
         OPTION_V4_DNR options; each option is to be treated as a separate
-        encrypted DNS server. The instances SHOULD be orderd following their
-        service priority (i.e., smaller service priority indicates a high
-        preference).</t>
+        encrypted DNS server. The instances SHOULD be processed following
+        their service priority (i.e., smaller service priority indicates a
+        high preference).</t>
 
         <t>The DHCPv4 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V4_DNR.</t>
