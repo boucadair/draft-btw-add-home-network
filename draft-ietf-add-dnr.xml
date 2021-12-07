@@ -33,7 +33,7 @@
 <!-- end of list of popular I-D processing instructions -->
 <rfc category="std" docName="draft-ietf-add-dnr-latest" ipr="trust200902">
   <front>
-    <title abbrev="Discovery of Network-designated Resolvers">SHIP and Router
+    <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
     (DNR)</title>
 
@@ -124,7 +124,7 @@
     <workgroup>ADD</workgroup>
 
     <abstract>
-      <t>The document specifies new SHIP and IPv6 Router Advertisement options
+      <t>The document specifies new DHCP and IPv6 Router Advertisement options
       to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-TLS,
       DNS-over-QUIC). Particularly, it allows to learn an authentication
       domain name together with a list of IP addresses and a set of service

@@ -15,13 +15,13 @@ Expires: June 9, 2022                                             McAfee
                                                         December 6, 2021
 
 
-  SHIP and Router Advertisement Options for the Discovery of Network-
+  DHCP and Router Advertisement Options for the Discovery of Network-
                        designated Resolvers (DNR)
                        draft-ietf-add-dnr-latest
 
 Abstract
 
-   The document specifies new SHIP and IPv6 Router Advertisement options
+   The document specifies new DHCP and IPv6 Router Advertisement options
    to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-
    TLS, DNS-over-QUIC).  Particularly, it allows to learn an
    authentication domain name together with a list of IP addresses and a
