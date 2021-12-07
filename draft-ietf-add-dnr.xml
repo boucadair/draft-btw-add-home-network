@@ -33,7 +33,7 @@
 <!-- end of list of popular I-D processing instructions -->
 <rfc category="std" docName="draft-ietf-add-dnr-latest" ipr="trust200902">
   <front>
-    <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
+    <title abbrev="Discovery of Network-designated Resolvers">SHIP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
     (DNR)</title>
 
@@ -124,7 +124,7 @@
     <workgroup>ADD</workgroup>
 
     <abstract>
-      <t>The document specifies new DHCP and IPv6 Router Advertisement options
+      <t>The document specifies new SHIP and IPv6 Router Advertisement options
       to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-TLS,
       DNS-over-QUIC). Particularly, it allows to learn an authentication
       domain name together with a list of IP addresses and a set of service
@@ -140,20 +140,18 @@
       target="I-D.ietf-dprive-dnsoquic"></xref> in local networks.</t>
 
       <t>In particular, the document specifies how a local encrypted DNS
-      server can be discovered by connected hosts by means of DHCP <xref
+      server can be discovered by connected hosts by means of DHCPv4 <xref
       target="RFC2132"></xref>, DHCPv6 <xref target="RFC8415"></xref>, and
       IPv6 Router Advertisement (RA) <xref target="RFC4861"></xref> options.
       These options are designed to convey the following information: the DNS
       Authentication Domain Name (ADN), a list of IP addresses, and a set of
       service parameters.</t>
 
-      <t>Sample target deployment scenarios are discussed in Section 3 of
-      <xref target="I-D.boucadair-add-deployment-considerations"></xref>.
-      These scenarios involve Customer Premises Equipment (CPEs) that may or
-      may not be managed by an Internet Service Provider (ISP). Also,
-      considerations related to hosting a DNS forwarder in a local network are
-      described in Section 4 of <xref
-      target="I-D.boucadair-add-deployment-considerations"></xref>.</t>
+      <t>The options defined in this document can be deployed in a variety of
+      deployments (e.g., local networks with Customer Premises Equipment
+      (CPEs) that may or may not be managed by an Internet Service Provider
+      (ISP), local networks with or without DNS forwarders). It is out of the
+      scope of this document to provide an inventory of such deployments.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -170,10 +168,7 @@
 
           <t hangText="Encrypted DNS:">refers to a scheme where DNS exchanges
           are transported over an encrypted channel. Examples of encrypted DNS
-          are DNS-over-TLS (DoT) <xref target="RFC7858"></xref>,
-          DNS-over-HTTPS (DoH) <xref target="RFC8484"></xref>, or
-          DNS-over-QUIC (DoQ) <xref
-          target="I-D.ietf-dprive-dnsoquic"></xref>.</t>
+          are DoT, DoH, or DoQ.</t>
 
           <t hangText="Encrypted DNS options:">refers to the options defined
           in Sections <xref format="counter" target="DHCPv6"></xref>, <xref
@@ -214,38 +209,38 @@
 
         <t>To avoid adding a dependency on another server to resolve the ADN,
         the Encrypted DNS options return the IP address(es) to locate the
-        encrypted DNS server. In the various scenarios sketched in <xref
-        target="I-D.boucadair-add-deployment-considerations"></xref>,
-        encrypted DNS servers may terminate on the same IP address or distinct
-        IP addresses. Terminating encrypted DNS servers on the same or
-        distinct IP addresses is deployment specific.</t>
+        encrypted DNS server. These encrypted DNS servers may be hosted on the
+        same or distinct IP addresses. Such a decision is deployment
+        specific.</t>
 
-        <t>In order to optimize the size of discovery messages when all
+        <t>In order to optimize the size of discovery messages when all DNS
         servers terminate on the same IP address, early versions of this
         document considered relying upon the discovery mechanisms specified in
         <xref target="RFC2132"></xref><xref target="RFC3646"></xref><xref
         target="RFC8106"></xref> to retrieve a list of IP addresses to reach
         their DNS servers. Nevertheless, this approach requires a client that
-        supports more than one encrypted DNS to probe that list of IP
-        addresses. To avoid such probing, the options defined in the following
-        sections associate an IP address with an encrypted DNS type. No
-        probing is required in such a design.</t>
+        supports more than one encrypted DNS protocol (e.g., DoH and DoT) to
+        probe that list of IP addresses. To avoid such a probing, the options
+        defined in Sections <xref format="counter" target="DHCPv6"></xref>,
+        <xref format="counter" target="DHCP"></xref>, and <xref
+        format="counter" target="RA"></xref> associate an IP address with an
+        encrypted DNS protocol. No probing is required in such a design.</t>
 
         <t>A list of IP addresses to reach an encrypted DNS server may be
-        returned in the Encrypted DNS options to accommodate current
-        deployments relying upon primary and backup servers. Whether one IP
-        address or more are returned in an Encrypted DNS option is deployment
-        specific. For example, a router embedding a recursive server or
+        returned in an Encrypted DNS option to accommodate current deployments
+        relying upon primary and backup servers. Whether one or more IP
+        addresses are returned in an Encrypted DNS option is deployment
+        specific. For example, a router embedding a recursive server or a
         forwarder has to include one single IP address pointing to one of its
-        LAN-facing interfaces. This address can be a private IPv4 address, a
-        link-local address, a Unique Local IPv6 unicast Address (ULA), or a
+        LAN-facing interfaces. This IP address can be a private IPv4 address,
+        a link-local address, a Unique Local IPv6 unicast Address (ULA), or a
         Global Unicast Address (GUA).</t>
 
         <t>If more than one IP address are to be returned in an Encrypted DNS
         option, these addresses are ordered in the preference for use by the
         client.</t>
 
-        <t>Because distinct Encrypted DNS protocols may be provisioned by a
+        <t>Because distinct encrypted DNS protocols may be provisioned by a
         network (e.g., DoT, DoH, and DoQ) and that some of these protocols may
         make use of customized port numbers instead of default ones, the
         Encrypted DNS options are designed to return a set of service
@@ -253,10 +248,10 @@
         encoding SvcParams in Section 2.1 of <xref
         target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach may
         increase the size of the options but it has the merit to rely upon an
-        existing IANA registry and thus to accommodate new Encrypted DNS
+        existing IANA registry and, thus, to accommodate new encrypted DNS
         protocols and service parameters that may be defined in the future.
         For example, "dohpath" service parameter (Section 5.1 of <xref
-        target="I-D.schwartz-svcb-dns"></xref>) supplies a relative DoH URI
+        target="I-D.ietf-add-svcb-dns"></xref>) supplies a relative DoH URI
         Template.</t>
 
         <t>A single option is used to convey both the ADN and IP addresses
@@ -313,8 +308,8 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |       OPTION_V6_DNR           |         Option-length         |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|         ADN Length            |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+|       Service Priority        |         ADN Length            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~                   authentication-domain-name                  ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |         Addr Length           |                               |
@@ -325,6 +320,7 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
 ~                 Service Parameters (SvcParams)                ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 ]]></artwork>
           </figure>The fields of the option shown in <xref
         target="dhcpv6-format"></xref> are as follows:<list style="hanging">
@@ -333,6 +329,11 @@
 
             <t hangText="Option-length:">Length of the enclosed data in
             octets.</t>
+
+            <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
+            instance compared to other instances. This field is encoded
+            following the rules specified in Section 2.4.1 of <xref
+            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             field in octets.</t>
@@ -383,13 +384,12 @@
             included IP addresses. <vspace blankLines="1" />If no port service
             parameter is included, this indicates that default port numbers
             should be used. As a reminder, the default port number is 853 for
-            DoT and 443 for DoH.<vspace blankLines="1" />The length of this
-            field is ('Option-length' - 4 - 'ADN Length' - 'Addr Length').</t>
+            DoT, 443 for DoH, and 853 for DoQ.<vspace blankLines="1" />The
+            length of this field is ('Option-length' - 6 - 'ADN Length' -
+            'Addr Length').</t>
           </list></t>
 
-        <t>Multiple instances of OPTION_V6_DNR may be returned to a DHCPv6
-        client; each pointing to a distinct encrypted DNS server. These
-        instances are ordered in the preference for use by the client.</t>
+        <t></t>
       </section>
 
       <section title="DHCPv6 Client Behavior">
@@ -400,7 +400,9 @@
 
         <t>The DHCP client MUST be prepared to receive multiple OPTION_V6_DNR
         options; each option is to be treated as a separate encrypted DNS
-        server.</t>
+        server. The instances SHOULD be orderd following their service
+        priority (i.e., smaller service priority indicates a high
+        preference).</t>
 
         <t>The DHCPv6 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V6_DNR.</t>
@@ -417,8 +419,10 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |     TBA2      |     Length    |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|       Service Priority        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |   ADN Length  |               |
-+-+-+-+-+-+-+-+-+               |
++-+-+-+-+-+-+-+-+               +
 ~  authentication-domain-name   ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |  Addr Length  |               |
@@ -440,6 +444,11 @@
 
             <t hangText="Length:">Indicates the length of the enclosed data in
             octets.</t>
+
+            <t hangText="Service Priority:">The priority of this OPTION_V4_DNR
+            instance compared to other instances. This field is encoded
+            following the rules specified in Section 2.4.1 of <xref
+            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Indicates the length of the
             authentication-domain-name in octets.</t>
@@ -489,17 +498,13 @@
             included IP addresses.<vspace blankLines="1" />If no port service
             parameter is included, this indicates that default port numbers
             should be used. <vspace blankLines="1" />The length of this field
-            is ('Option-length' - 2 - 'ADN Length' - 'Addr Length').</t>
+            is ('Option-length' - 4 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
         <t>OPTION_V4_DNR is a concatenation-requiring option. As such, the
         mechanism specified in <xref target="RFC3396"></xref> MUST be used if
         OPTION_V4_DNR exceeds the maximum DHCPv4 option size of 255
         octets.</t>
-
-        <t>Multiple instances of OPTION_V4_DNR may be returned to a DHCPv4
-        client; each pointing to a distinct encrypted DNS server. These
-        instances are ordered in the preference for use by the client.</t>
       </section>
 
       <section title="DHCPv4 Client Behavior">
@@ -509,7 +514,9 @@
 
         <t>The DHCPv4 client MUST be prepared to receive multiple DHCP
         OPTION_V4_DNR options; each option is to be treated as a separate
-        encrypted DNS server.</t>
+        encrypted DNS server. The instances SHOULD be orderd following their
+        service priority (i.e., smaller service priority indicates a high
+        preference).</t>
 
         <t>The DHCPv4 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V4_DNR.</t>
@@ -610,6 +617,10 @@
         <t>The option MUST be padded with zeros so that the full enclosed data
         is a multiple of 8 octets (Section 4.6 of <xref
         target="RFC4861"></xref>).</t>
+
+        <t>Multiple Encrypted DNS options may be returned to an IPv6 host.
+        These options are ordered in the preference for use by the IPv6
+        host.</t>
       </section>
 
       <section title="IPv6 Host Behavior">
@@ -870,7 +881,7 @@
 
       <?rfc include='reference.I-D.ietf-add-ddr'?>
 
-      <?rfc include='reference.I-D.schwartz-svcb-dns'?>
+      <?rfc include='reference.I-D.ietf-add-svcb-dns'?>
 
       <?rfc include='reference.RFC.6731'?>
 
@@ -881,8 +892,6 @@
       <?rfc include='reference.RFC.8146'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
-
-      <?rfc include='reference.I-D.boucadair-add-deployment-considerations'?>
 
       <reference anchor="Evil-Twin"
                  target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">
