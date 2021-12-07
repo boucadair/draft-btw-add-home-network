@@ -402,7 +402,7 @@
         the OPTION_V6_DNR option; each option is to be treated as a separate
         encrypted DNS server. These instances SHOULD be processed following
         their service priority (i.e., smaller service priority indicates a
-        high preference).</t>
+        higher preference).</t>
 
         <t>The DHCPv6 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V6_DNR.</t>
@@ -516,7 +516,7 @@
         the OPTION_V4_DNR option; each option is to be treated as a separate
         encrypted DNS server. These instances SHOULD be processed following
         their service priority (i.e., smaller service priority indicates a
-        high preference).</t>
+        higher preference).</t>
 
         <t>The DHCPv4 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V4_DNR.</t>
