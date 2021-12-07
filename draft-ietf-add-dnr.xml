@@ -398,11 +398,11 @@
         18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
         target="RFC8415"></xref>.</t>
 
-        <t>The DHCP client MUST be prepared to receive multiple OPTION_V6_DNR
-        options; each option is to be treated as a separate encrypted DNS
-        server. The instances SHOULD be processed following their service
-        priority (i.e., smaller service priority indicates a high
-        preference).</t>
+        <t>The DHCP client MUST be prepared to receive multiple instances of
+        the OPTION_V6_DNR option; each option is to be treated as a separate
+        encrypted DNS server. These instances SHOULD be processed following
+        their service priority (i.e., smaller service priority indicates a
+        high preference).</t>
 
         <t>The DHCPv6 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V6_DNR.</t>
@@ -512,9 +512,9 @@
         Encrypted DNS server by including OPTION_V4_DNR in a Parameter Request
         List option <xref target="RFC2132"></xref>.</t>
 
-        <t>The DHCPv4 client MUST be prepared to receive multiple DHCP
-        OPTION_V4_DNR options; each option is to be treated as a separate
-        encrypted DNS server. The instances SHOULD be processed following
+        <t>The DHCPv4 client MUST be prepared to receive multiple instances of
+        the OPTION_V4_DNR option; each option is to be treated as a separate
+        encrypted DNS server. These instances SHOULD be processed following
         their service priority (i.e., smaller service priority indicates a
         high preference).</t>
 
