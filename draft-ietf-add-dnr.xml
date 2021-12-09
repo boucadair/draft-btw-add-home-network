@@ -258,6 +258,11 @@
         because otherwise means to correlate an IP address with an ADN will be
         required if, for example, more than one ADN is supported by the
         network.</t>
+
+        <t>The DHCP options defined in Sections <xref format="counter"
+        target="DHCPv6"></xref> and <xref format="counter"
+        target="DHCP"></xref> follow the option ordering guidelines in Section
+        17 of <xref target="RFC7227"></xref>. </t>
       </section>
 
       <section title="Handling Configuration Data Conflicts">
@@ -619,8 +624,8 @@
         target="RFC4861"></xref>).</t>
 
         <t>Multiple Encrypted DNS options may be returned to an IPv6 host.
-        These options are ordered in the preference for use by the IPv6
-        host.</t>
+        Similar to <xref target="RFC8106"></xref>, these options are ordered
+        in the preference for use by the IPv6 host. </t>
       </section>
 
       <section title="IPv6 Host Behavior">
@@ -890,6 +895,8 @@
       <?rfc include='reference.RFC.7513'?>
 
       <?rfc include='reference.RFC.8146'?>
+
+      <?rfc include='reference.RFC.7227'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
