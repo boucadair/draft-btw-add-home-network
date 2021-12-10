@@ -5,19 +5,19 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 12 June 2022                                             McAfee
+Expires: 13 June 2022                                             Akamai
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                         9 December 2021
+                                                        10 December 2021
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
                        designated Resolvers (DNR)
-                       draft-ietf-add-dnr-latest
+                         draft-ietf-add-dnr-04
 
 Abstract
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 June 2022.
+   This Internet-Draft will expire on 13 June 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.         Expires 12 June 2022                  [Page 1]
+Boucadair, et al.         Expires 13 June 2022                  [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.         Expires 12 June 2022                  [Page 2]
+Boucadair, et al.         Expires 13 June 2022                  [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -165,7 +165,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                  [Page 3]
+Boucadair, et al.         Expires 13 June 2022                  [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -221,7 +221,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                  [Page 4]
+Boucadair, et al.         Expires 13 June 2022                  [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -277,7 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                  [Page 5]
+Boucadair, et al.         Expires 13 June 2022                  [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -302,16 +302,14 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |       OPTION_V6_DNR           |         Option-length         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |       Service Priority        |         ADN Length            |
+   |       Service Priority        |         Addr Length           |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   ~                      ipv6-address(es)                         ~
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          ADN Length           |                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
    ~                   authentication-domain-name                  ~
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |         Addr Length           |                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
-   ~                        ipv6-address(es)                       ~
-   |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                               |                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
    ~                 Service Parameters (SvcParams)                ~
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -327,41 +325,22 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
-   ADN Length:  Length of the authentication-domain-name field in
-      octets.
-
-
-
-
-Boucadair, et al.         Expires 12 June 2022                  [Page 6]
-
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
-
-
-   authentication-domain-name (variable length):  A fully qualified
-      domain name of the encrypted DNS server.  This field is formatted
-      as specified in Section 10 of [RFC8415].
-
-      An example of the authentication-domain-name encoding is shown in
-      Figure 2.  This example conveys the FQDN "doh1.example.com.", and
-      the resulting Option-length field is 18.
-
-       +------+------+------+------+------+------+------+------+------+
-       | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
-       +------+------+------+------+------+------+------+------+------+
-       |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
-       +------+------+------+------+------+------+------+------+------+
-
-          Figure 2: An Example of the DNS authentication-domain-name
-                                   Encoding
-
    Addr Length:  Length of enclosed IPv6 addresses in octets.  It MUST
       be a multiple of 16.
 
    ipv6-address(es) (variable length):  Indicates one or more IPv6
+
+
+
+
+Boucadair, et al.         Expires 13 June 2022                  [Page 6]
+
+Internet-Draft  Discovery of Network-designated Resolver   December 2021
+
+
       addresses to reach the encrypted DNS server.  An address can be
       link-local, ULA, or GUA.  The format of this field is shown in
-      Figure 3.
+      Figure 2.
 
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
@@ -372,7 +351,27 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
       |                              ...                              |
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                 Figure 3: Format of the IPv6 Addresses Field
+                 Figure 2: Format of the IPv6 Addresses Field
+
+   ADN Length:  Length of the authentication-domain-name field in
+      octets.
+
+   authentication-domain-name (variable length):  A fully qualified
+      domain name of the encrypted DNS server.  This field is formatted
+      as specified in Section 10 of [RFC8415].
+
+      An example of the authentication-domain-name encoding is shown in
+      Figure 3.  This example conveys the FQDN "doh1.example.com.", and
+      the resulting Option-length field is 18.
+
+       +------+------+------+------+------+------+------+------+------+
+       | 0x04 |   d  |   o  |   h  |  1   | 0x07 |   e  |   x  |   a  |
+       +------+------+------+------+------+------+------+------+------+
+       |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
+       +------+------+------+------+------+------+------+------+------+
+
+          Figure 3: An Example of the DNS authentication-domain-name
+                                   Encoding
 
    Service Parameters (SvcParams) (variable length):  Specifies a set of
       service parameters that are encoded following the rules in
@@ -389,7 +388,8 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                  [Page 7]
+
+Boucadair, et al.         Expires 13 June 2022                  [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -426,33 +426,29 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                      |       Service Priority        |
                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                     |  Addr Length  |               |
+                     +-+-+-+-+-+-+-+-+               +
+                     ~        IPv4 Address(es)       ~
+                     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
                      |   ADN Length  |               |
                      +-+-+-+-+-+-+-+-+               +
                      ~  authentication-domain-name   ~
                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                     |  Addr Length  |               |
-                     +-+-+-+-+-+-+-+-+               +
-                     ~        IPv4 Address(es)       ~
-                     |               +-+-+-+-+-+-+-+-+
-                     |               |               |
-                     +-+-+-+-+-+-+-+-+               |
                      ~Service Parameters (SvcParams) ~
-                     |                               |
                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 4: DHCPv4 Encrypted DNS Option
 
-
-
-
-Boucadair, et al.         Expires 12 June 2022                  [Page 8]
-
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
-
-
    The fields of the option shown in Figure 4 are as follows:
 
    Code:  OPTION_V4_DNR (TBA2, see Section 8.2).
+
+
+
+Boucadair, et al.         Expires 13 June 2022                  [Page 8]
+
+Internet-Draft  Discovery of Network-designated Resolver   December 2021
+
 
    Length:  Indicates the length of the enclosed data in octets.
 
@@ -460,29 +456,13 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
-   ADN Length:  Indicates the length of the authentication-domain-name
-      in octets.
-
-   authentication-domain-name (variable length):  Includes the
-      authentication domain name of the encrypted DNS server.  This
-      field is formatted as specified in Section 10 of [RFC8415].  The
-      format of this field is shown in Figure 5.  The values s1, s2, s3,
-      etc. represent the domain name labels in the domain name encoding.
-
-                     +-----+-----+-----+-----+-----+--
-                     |  s1 |  s2 |  s3 |  s4 | s5  |  ...
-                     +-----+-----+-----+-----+-----+--
-                       authentication-domain-name
-
-           Figure 5: Format of the Authentication Domain Name Field
-
    Addr Length:  Indicates the length of included IPv4 addresses in
       octets.  It MUST be a multiple of 4.
 
    IPv4 Address(es) (variable length):  Indicates one or more IPv4
       addresses to reach the encrypted DNS server.  Both private and
       public IPv4 addresses can be included in this field.  The format
-      of this field is shown in Figure 6.  This format assumes that an
+      of this field is shown in Figure 5.  This format assumes that an
       IPv4 address is encoded as a1.a2.a3.a4.
 
                  0     8     16    24    32    40    48
@@ -491,27 +471,40 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
                  +-----+-----+-----+-----+-----+-----+--
                    IPv4 Address 1          IPv4 Address 2 ...
 
-                 Figure 6: Format of the IPv4 Addresses Field
+                 Figure 5: Format of the IPv4 Addresses Field
+
+   ADN Length:  Indicates the length of the authentication-domain-name
+      in octets.
+
+   authentication-domain-name (variable length):  Includes the
+      authentication domain name of the encrypted DNS server.  This
+      field is formatted as specified in Section 10 of [RFC8415].  The
+      format of this field is shown in Figure 6.  The values s1, s2, s3,
+      etc. represent the domain name labels in the domain name encoding.
+
+                     +-----+-----+-----+-----+-----+--
+                     |  s1 |  s2 |  s3 |  s4 | s5  |  ...
+                     +-----+-----+-----+-----+-----+--
+                       authentication-domain-name
+
+           Figure 6: Format of the Authentication Domain Name Field
 
    Service Paramters (SvcParams) (variable length):  Specifies a set of
-
-
-
-
-
-
-
-Boucadair, et al.         Expires 12 June 2022                  [Page 9]
-
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
-
-
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
       alternate port numbers.  The service parameters MUST NOT include
       "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
       included IP addresses.
+
+
+
+
+
+Boucadair, et al.         Expires 13 June 2022                  [Page 9]
+
+Internet-Draft  Discovery of Network-designated Resolver   December 2021
+
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -557,7 +550,14 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 10]
+
+
+
+
+
+
+
+Boucadair, et al.         Expires 13 June 2022                 [Page 10]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -565,18 +565,18 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |     TBA3      |     Length    |         ADN Length            |
+     |     TBA3      |     Length    |         Addr Length           |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                           Lifetime                            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     ~                        ipv6-address(es)                       ~
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |          ADN Length           |                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
      ~                   authentication-domain-name                  ~
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |         Addr Length           |                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
-     ~                        ipv6-address(es)                       ~
-     |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                               |     SvcParams Length          |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |     SvcParams Length          |                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               +
      ~                 Service Parameters (SvcParams)                ~
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -589,6 +589,10 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
    Length:  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) is in units of 8 octets.
+
+   Addr Length:  16-bit unsigned integer.  This field indicates the
+      length of enclosed IPv6 addresses in octets.  It MUST be a
+      multiple of 16.
 
    Lifetime:  32-bit unsigned integer.  The maximum time in seconds
       (relative to the time the packet is received) over which the
@@ -603,34 +607,29 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
       A value of zero means that this Authentication Domain Name MUST no
       longer be used.
 
+   ipv6-address(es) (variable length):  One or more IPv6 addresses of
+      the encrypted DNS server.  An address can be link-local, ULA, or
+      GUA.
+
+
+
+Boucadair, et al.         Expires 13 June 2022                 [Page 11]
+
+Internet-Draft  Discovery of Network-designated Resolver   December 2021
+
+
+      All of the addresses share the same Lifetime value.  Similar to
+      [RFC8106], if it is desirable to have different Lifetime values
+      per IP address, multiple Encrypted DNS options may be used.
+
+      The format of this field is shown in Figure 2.
+
    ADN Length:  16-bit unsigned integer.  This field indicates the
       length of the authentication-domain-name field in octets.
 
    authentication-domain-name (variable length):  The domain name of the
       encrypted DNS server.  This field is formatted as specified in
       Section 10 of [RFC8415].
-
-
-
-
-Boucadair, et al.         Expires 12 June 2022                 [Page 11]
-
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
-
-
-   Addr Length:  16-bit unsigned integer.  This field indicates the
-      length of enclosed IPv6 addresses in octets.  It MUST be a
-      multiple of 16.
-
-   ipv6-address(es) (variable length):  One or more IPv6 addresses of
-      the encrypted DNS server.  An address can be link-local, ULA, or
-      GUA.
-
-      All of the addresses share the same Lifetime value.  Similar to
-      [RFC8106], if it is desirable to have different Lifetime values
-      per IP address, multiple Encrypted DNS options may be used.
-
-      The format of this field is shown in Figure 3.
 
    SvcParams Length:  16-bit unsigned integer.  This field indicates the
       length of the Service Parameters field in octets.
@@ -669,7 +668,8 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 12]
+
+Boucadair, et al.         Expires 13 June 2022                 [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -725,7 +725,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 13]
+Boucadair, et al.         Expires 13 June 2022                 [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -781,7 +781,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 14]
+Boucadair, et al.         Expires 13 June 2022                 [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -837,7 +837,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 15]
+Boucadair, et al.         Expires 13 June 2022                 [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -893,7 +893,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 16]
+Boucadair, et al.         Expires 13 June 2022                 [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -949,7 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 17]
+Boucadair, et al.         Expires 13 June 2022                 [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 18]
+Boucadair, et al.         Expires 13 June 2022                 [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -1061,7 +1061,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 19]
+Boucadair, et al.         Expires 13 June 2022                 [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -1090,13 +1090,13 @@ Authors' Addresses
 
 
    Tirumaleswar Reddy (editor)
-   McAfee, Inc.
+   Akamai
    Embassy Golf Link Business Park
    Bangalore 560071
    Karnataka
    India
 
-   Email: TirumaleswarReddy_Konda@McAfee.com
+   Email: kondtir@gmail.com
 
 
    Dan Wing
@@ -1117,7 +1117,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 20]
+Boucadair, et al.         Expires 13 June 2022                 [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
@@ -1173,4 +1173,4 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 12 June 2022                 [Page 21]
+Boucadair, et al.         Expires 13 June 2022                 [Page 21]
