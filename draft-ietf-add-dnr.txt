@@ -5,14 +5,14 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 13 June 2022                                             Akamai
+Expires: 11 September 2022                                        Akamai
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                        10 December 2021
+                                                           10 March 2022
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
@@ -42,20 +42,20 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 June 2022.
+   This Internet-Draft will expire on 11 September 2022.
 
 Copyright Notice
 
-   Copyright (c) 2021 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 1]
+Boucadair, et al.       Expires 11 September 2022               [Page 1]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 2]
+Boucadair, et al.       Expires 11 September 2022               [Page 2]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    In particular, the document specifies how a local encrypted DNS
@@ -165,9 +165,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 3]
+Boucadair, et al.       Expires 11 September 2022               [Page 3]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 3.1.  Configuration Data for Encrypted DNS
@@ -221,9 +221,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 4]
+Boucadair, et al.       Expires 11 September 2022               [Page 4]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    Encrypted DNS options are designed to return a set of service
@@ -251,9 +251,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
    DHCP/RA options to discover encrypted DNS servers (including, DoH URI
    Templates) takes precedence over DDR [I-D.ietf-add-ddr] since DDR
-   uses unencrypted DNS to an external DNS resolver, which is
-   susceptible to both internal and external attacks whereas DHCP/RA is
-   typically protected using the mechanisms discussed in Section 7.1.
+   uses Do53 to an external DNS resolver, which is susceptible to both
+   internal and external attacks whereas DHCP/RA is typically protected
+   using the mechanisms discussed in Section 7.1.
 
 3.3.  Connection Establishment
 
@@ -277,9 +277,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 5]
+Boucadair, et al.       Expires 11 September 2022               [Page 5]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 3.4.  Multihoming Considerations
@@ -324,6 +324,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
    Service Priority:  The priority of this OPTION_V6_DNR instance
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
+      It MUST NOT be set to 0.
 
    Addr Length:  Length of enclosed IPv6 addresses in octets.  It MUST
       be a multiple of 16.
@@ -332,10 +333,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-
-Boucadair, et al.         Expires 13 June 2022                  [Page 6]
+Boucadair, et al.       Expires 11 September 2022               [Page 6]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
       addresses to reach the encrypted DNS server.  An address can be
@@ -389,9 +389,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 7]
+Boucadair, et al.       Expires 11 September 2022               [Page 7]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
       The length of this field is ('Option-length' - 6 - 'ADN Length' -
@@ -445,9 +445,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                  [Page 8]
+Boucadair, et al.       Expires 11 September 2022               [Page 8]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    Length:  Indicates the length of the enclosed data in octets.
@@ -455,6 +455,7 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
    Service Priority:  The priority of this OPTION_V4_DNR instance
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
+      It MUST NOT be set to 0.
 
    Addr Length:  Indicates the length of included IPv4 addresses in
       octets.  It MUST be a multiple of 4.
@@ -500,10 +501,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-
-Boucadair, et al.         Expires 13 June 2022                  [Page 9]
+Boucadair, et al.       Expires 11 September 2022               [Page 9]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
       If no port service parameter is included, this indicates that
@@ -557,9 +557,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 10]
+Boucadair, et al.       Expires 11 September 2022              [Page 10]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
       0                   1                   2                   3
@@ -613,9 +613,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 11]
+Boucadair, et al.       Expires 11 September 2022              [Page 11]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
       All of the addresses share the same Lifetime value.  Similar to
@@ -669,9 +669,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 12]
+Boucadair, et al.       Expires 11 September 2022              [Page 12]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 7.1.  Spoofing Attacks
@@ -691,15 +691,16 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
    attackers within the local network may be mitigated by making use of
    the following mechanisms:
 
-   *  DHCPv6-Shield described in [RFC7610], the CPE discards DHCP
-      response messages received from any local endpoint.
+   *  DHCPv6-Shield described in [RFC7610], the router (e.g., a border
+      router, a CPE) discards DHCP response messages received from any
+      local endpoint.
 
-   *  RA-Guard described in [RFC7113], the CPE discards RAs messages
+   *  RA-Guard described in [RFC7113], the router discards RAs messages
       received from any local endpoint.
 
    *  Source Address Validation Improvement (SAVI) solution for DHCP
-      described in [RFC7513], the CPE filters packets with forged source
-      IP addresses.
+      described in [RFC7513], the router filters packets with forged
+      source IP addresses.
 
    The above mechanisms would ensure that the endpoint receives the
    correct configuration information of the encrypted DNS servers
@@ -724,10 +725,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-
-Boucadair, et al.         Expires 13 June 2022                 [Page 13]
+Boucadair, et al.       Expires 11 September 2022              [Page 13]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 7.2.  Deletion Attacks
@@ -781,9 +781,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 14]
+Boucadair, et al.       Expires 11 September 2022              [Page 14]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 8.1.  DHCPv6 Option
@@ -837,13 +837,13 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 15]
+Boucadair, et al.       Expires 11 September 2022              [Page 15]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    Thanks to Stephen Farrell, Martin Thomson, Vittorio Bertola, Stephane
-   Bortzmeyer, Ben Schwartz, and Iain Sharp for the comments.
+   Bortzmeyer, Ben Schwartz, Iain Sharp, and Chris Box for the comments.
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection.
 
@@ -893,9 +893,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 16]
+Boucadair, et al.       Expires 11 September 2022              [Page 16]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    [RFC3396]  Lemon, T. and S. Cheshire, "Encoding Long Options in the
@@ -949,30 +949,30 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 17]
+Boucadair, et al.       Expires 11 September 2022              [Page 17]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    [I-D.ietf-add-ddr]
               Pauly, T., Kinnear, E., Wood, C. A., McManus, P., and T.
               Jensen, "Discovery of Designated Resolvers", Work in
-              Progress, Internet-Draft, draft-ietf-add-ddr-04, 15
-              November 2021, <https://www.ietf.org/archive/id/draft-
-              ietf-add-ddr-04.txt>.
+              Progress, Internet-Draft, draft-ietf-add-ddr-05, 31
+              January 2022, <https://www.ietf.org/archive/id/draft-ietf-
+              add-ddr-05.txt>.
 
    [I-D.ietf-add-svcb-dns]
               Schwartz, B., "Service Binding Mapping for DNS Servers",
               Work in Progress, Internet-Draft, draft-ietf-add-svcb-dns-
-              01, 21 October 2021, <https://www.ietf.org/archive/id/
-              draft-ietf-add-svcb-dns-01.txt>.
+              02, 1 February 2022, <https://www.ietf.org/archive/id/
+              draft-ietf-add-svcb-dns-02.txt>.
 
    [I-D.ietf-dprive-dnsoquic]
               Huitema, C., Dickinson, S., and A. Mankin, "DNS over
               Dedicated QUIC Connections", Work in Progress, Internet-
-              Draft, draft-ietf-dprive-dnsoquic-07, 1 December 2021,
+              Draft, draft-ietf-dprive-dnsoquic-10, 28 February 2022,
               <https://www.ietf.org/archive/id/draft-ietf-dprive-
-              dnsoquic-07.txt>.
+              dnsoquic-10.txt>.
 
    [I-D.pusateri-dhc-dns-driu]
               Pusateri, T. and W. Toorop, "DHCPv6 Options for private
@@ -1005,9 +1005,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 18]
+Boucadair, et al.       Expires 11 September 2022              [Page 18]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
@@ -1061,9 +1061,9 @@ Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
 
-Boucadair, et al.         Expires 13 June 2022                 [Page 19]
+Boucadair, et al.       Expires 11 September 2022              [Page 19]
 
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
@@ -1085,7 +1085,6 @@ Authors' Addresses
    Orange
    35000 Rennes
    France
-
    Email: mohamed.boucadair@orange.com
 
 
@@ -1095,82 +1094,27 @@ Authors' Addresses
    Bangalore 560071
    Karnataka
    India
-
    Email: kondtir@gmail.com
 
 
    Dan Wing
    Citrix Systems, Inc.
    United States of America
-
    Email: dwing-ietf@fuggles.com
 
 
    Neil Cook
    Open-Xchange
    United Kingdom
-
    Email: neil.cook@noware.co.uk
-
-
-
-
-
-
-Boucadair, et al.         Expires 13 June 2022                 [Page 20]
-
-Internet-Draft  Discovery of Network-designated Resolver   December 2021
 
 
    Tommy Jensen
    Microsoft
    United States of America
-
    Email: tojens@microsoft.com
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.         Expires 13 June 2022                 [Page 21]
+Boucadair, et al.       Expires 11 September 2022              [Page 20]

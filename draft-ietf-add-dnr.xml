@@ -272,10 +272,10 @@
 
         <t>DHCP/RA options to discover encrypted DNS servers (including, DoH
         URI Templates) takes precedence over DDR <xref
-        target="I-D.ietf-add-ddr"></xref> since DDR uses unencrypted DNS to an
-        external DNS resolver, which is susceptible to both internal and
-        external attacks whereas DHCP/RA is typically protected using the
-        mechanisms discussed in <xref target="spoof"></xref>.</t>
+        target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to an external
+        DNS resolver, which is susceptible to both internal and external
+        attacks whereas DHCP/RA is typically protected using the mechanisms
+        discussed in <xref target="spoof"></xref>.</t>
       </section>
 
       <section title="Connection Establishment">
@@ -336,7 +336,8 @@
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This field is encoded
             following the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            target="I-D.ietf-dnsop-svcb-https"></xref>. It MUST NOT be set to
+            0.</t>
 
             <t hangText="Addr Length:">Length of enclosed IPv6 addresses in
             octets. It MUST be a multiple of 16.</t>
@@ -448,7 +449,8 @@
             <t hangText="Service Priority:">The priority of this OPTION_V4_DNR
             instance compared to other instances. This field is encoded
             following the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            target="I-D.ietf-dnsop-svcb-https"></xref>. It MUST NOT be set to
+            0.</t>
 
             <t hangText="Addr Length:">Indicates the length of included IPv4
             addresses in octets. It MUST be a multiple of 4.</t>
@@ -653,14 +655,14 @@
 
         <t><list style="symbols">
             <t>DHCPv6-Shield described in <xref target="RFC7610"></xref>, the
-            CPE discards DHCP response messages received from any local
-            endpoint.</t>
+            router (e.g., a border router, a CPE) discards DHCP response
+            messages received from any local endpoint.</t>
 
-            <t>RA-Guard described in <xref target="RFC7113"></xref>, the CPE
-            discards RAs messages received from any local endpoint.</t>
+            <t>RA-Guard described in <xref target="RFC7113"></xref>, the
+            router discards RAs messages received from any local endpoint.</t>
 
             <t>Source Address Validation Improvement (SAVI) solution for DHCP
-            described in <xref target="RFC7513"></xref>, the CPE filters
+            described in <xref target="RFC7513"></xref>, the router filters
             packets with forged source IP addresses.</t>
           </list></t>
 
@@ -807,7 +809,8 @@
       review.</t>
 
       <t>Thanks to Stephen Farrell, Martin Thomson, Vittorio Bertola, Stephane
-      Bortzmeyer, Ben Schwartz, and Iain Sharp for the comments.</t>
+      Bortzmeyer, Ben Schwartz, Iain Sharp, and Chris Box for the
+      comments.</t>
 
       <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
 
