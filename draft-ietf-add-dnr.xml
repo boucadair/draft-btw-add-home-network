@@ -263,6 +263,14 @@
         target="DHCPv6"></xref> and <xref format="counter"
         target="DHCP"></xref> follow the option ordering guidelines in Section
         17 of <xref target="RFC7227"></xref>.</t>
+
+        <t>AliasMode (Section 2.4.2 of <xref
+        target="I-D.ietf-dnsop-svcb-https"></xref>) is not supported because
+        such a mode will trigger additional Do53 queries while the data can be
+        supplied directly by DHCP servers. The reader may refer to <xref
+        target="RFC7969"></xref> for an overview of advanced capabilities that
+        are supported by DHCP servers to populate configuration data (e.g.,
+        issue DNS queries). </t>
       </section>
 
       <section title="Handling Configuration Data Conflicts">
@@ -336,8 +344,9 @@
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This field is encoded
             following the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>. It MUST NOT be set to
-            0.</t>
+            target="I-D.ietf-dnsop-svcb-https"></xref>. AliasMode (Section
+            2.4.2 of <xref target="I-D.ietf-dnsop-svcb-https"></xref>) is not
+            supported. As such, this field MUST NOT be set to 0.</t>
 
             <t hangText="Addr Length:">Length of enclosed IPv6 addresses in
             octets. It MUST be a multiple of 16.</t>
@@ -895,6 +904,8 @@
       <?rfc include='reference.RFC.8146'?>
 
       <?rfc include='reference.RFC.7227'?>
+
+      <?rfc include='reference.RFC.7969'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 

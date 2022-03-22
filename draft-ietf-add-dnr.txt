@@ -5,14 +5,14 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 11 September 2022                                        Akamai
+Expires: 23 September 2022                                        Akamai
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                           10 March 2022
+                                                           22 March 2022
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 September 2022.
+   This Internet-Draft will expire on 23 September 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 1]
+Boucadair, et al.       Expires 23 September 2022               [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 2]
+Boucadair, et al.       Expires 23 September 2022               [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -165,7 +165,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 3]
+Boucadair, et al.       Expires 23 September 2022               [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -221,7 +221,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 4]
+Boucadair, et al.       Expires 23 September 2022               [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -243,6 +243,13 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
    The DHCP options defined in Sections 4 and 5 follow the option
    ordering guidelines in Section 17 of [RFC7227].
+
+   AliasMode (Section 2.4.2 of [I-D.ietf-dnsop-svcb-https]) is not
+   supported because such a mode will trigger additional Do53 queries
+   while the data can be supplied directly by DHCP servers.  The reader
+   may refer to [RFC7969] for an overview of advanced capabilities that
+   are supported by DHCP servers to populate configuration data (e.g.,
+   issue DNS queries).
 
 3.2.  Handling Configuration Data Conflicts
 
@@ -270,14 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-
-
-
-
-
-
-
-Boucadair, et al.       Expires 11 September 2022               [Page 5]
+Boucadair, et al.       Expires 23 September 2022               [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -324,20 +324,21 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
    Service Priority:  The priority of this OPTION_V6_DNR instance
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
-      It MUST NOT be set to 0.
+      AliasMode (Section 2.4.2 of [I-D.ietf-dnsop-svcb-https]) is not
+      supported.  As such, this field MUST NOT be set to 0.
 
    Addr Length:  Length of enclosed IPv6 addresses in octets.  It MUST
       be a multiple of 16.
 
-   ipv6-address(es) (variable length):  Indicates one or more IPv6
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 6]
+Boucadair, et al.       Expires 23 September 2022               [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
+   ipv6-address(es) (variable length):  Indicates one or more IPv6
       addresses to reach the encrypted DNS server.  An address can be
       link-local, ULA, or GUA.  The format of this field is shown in
       Figure 2.
@@ -388,8 +389,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-
-Boucadair, et al.       Expires 11 September 2022               [Page 7]
+Boucadair, et al.       Expires 23 September 2022               [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -445,7 +445,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 8]
+Boucadair, et al.       Expires 23 September 2022               [Page 8]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -501,7 +501,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022               [Page 9]
+Boucadair, et al.       Expires 23 September 2022               [Page 9]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -557,7 +557,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 10]
+Boucadair, et al.       Expires 23 September 2022              [Page 10]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -613,7 +613,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 11]
+Boucadair, et al.       Expires 23 September 2022              [Page 11]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -669,7 +669,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 12]
+Boucadair, et al.       Expires 23 September 2022              [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -725,7 +725,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 13]
+Boucadair, et al.       Expires 23 September 2022              [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -781,7 +781,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 14]
+Boucadair, et al.       Expires 23 September 2022              [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -837,7 +837,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 15]
+Boucadair, et al.       Expires 23 September 2022              [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -893,7 +893,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 16]
+Boucadair, et al.       Expires 23 September 2022              [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -949,7 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 17]
+Boucadair, et al.       Expires 23 September 2022              [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -970,9 +970,9 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
    [I-D.ietf-dprive-dnsoquic]
               Huitema, C., Dickinson, S., and A. Mankin, "DNS over
               Dedicated QUIC Connections", Work in Progress, Internet-
-              Draft, draft-ietf-dprive-dnsoquic-10, 28 February 2022,
+              Draft, draft-ietf-dprive-dnsoquic-11, 21 March 2022,
               <https://www.ietf.org/archive/id/draft-ietf-dprive-
-              dnsoquic-10.txt>.
+              dnsoquic-11.txt>.
 
    [I-D.pusateri-dhc-dns-driu]
               Pusateri, T. and W. Toorop, "DHCPv6 Options for private
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 18]
+Boucadair, et al.       Expires 23 September 2022              [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
@@ -1053,18 +1053,22 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
-   [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
-              to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
-              <https://www.rfc-editor.org/info/rfc8146>.
+   [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
+              Configuration on the Basis of Network Topology", RFC 7969,
+              DOI 10.17487/RFC7969, October 2016,
+              <https://www.rfc-editor.org/info/rfc7969>.
 
 
 
 
-
-Boucadair, et al.       Expires 11 September 2022              [Page 19]
+Boucadair, et al.       Expires 23 September 2022              [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2022
 
+
+   [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
+              to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
+              <https://www.rfc-editor.org/info/rfc8146>.
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -1109,6 +1113,15 @@ Authors' Addresses
    Email: neil.cook@noware.co.uk
 
 
+
+
+
+
+Boucadair, et al.       Expires 23 September 2022              [Page 20]
+
+Internet-Draft  Discovery of Network-designated Resolver      March 2022
+
+
    Tommy Jensen
    Microsoft
    United States of America
@@ -1117,4 +1130,47 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires 11 September 2022              [Page 20]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.       Expires 23 September 2022              [Page 21]
