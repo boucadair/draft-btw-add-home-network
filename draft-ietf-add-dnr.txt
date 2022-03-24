@@ -261,11 +261,11 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2022
    overview of advanced capabilities that are supported by DHCP servers
    to populate configuration data (e.g., issue DNS queries).
 
-   In contexts where putting additional complexity on requesting hosts,
-   AliasMode (Section 2.4.2 of [I-D.ietf-dnsop-svcb-https]) can be
-   considered.  However, this mode will rigger additional Do53 queries
-   and would be, thus, susceptible to both internal and external
-   attacks.
+   In contexts where putting additional complexity on requesting hosts
+   is acceptable, AliasMode (Section 2.4.2 of
+   [I-D.ietf-dnsop-svcb-https]) can be considered.  However, this mode
+   will rigger additional Do53 queries and would be susceptible to both
+   internal and external attacks.
 
    Other mechanisms may be considered in other contexts (e.g., secure
    discovery) for the provisioning of encrypted DNS servers.  It is
