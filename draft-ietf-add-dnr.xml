@@ -31,7 +31,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-04" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-06" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -137,7 +137,7 @@
       <t>This document focuses on the support of encrypted DNS such as
       DNS-over-HTTPS (DoH) <xref target="RFC8484"></xref>, DNS-over-TLS (DoT)
       <xref target="RFC7858"></xref>, or DNS-over-QUIC (DoQ) <xref
-      target="I-D.ietf-dprive-dnsoquic"></xref> in local networks.</t>
+      target="I-D.ietf-dprive-dnsoquic"></xref> in local networks. </t>
 
       <t>In particular, the document specifies how a local encrypted DNS
       server can be discovered by connected hosts by means of DHCPv4 <xref
@@ -145,7 +145,8 @@
       IPv6 Router Advertisement (RA) <xref target="RFC4861"></xref> options.
       These options are designed to convey the following information: the DNS
       Authentication Domain Name (ADN), a list of IP addresses, and a set of
-      service parameters.</t>
+      service parameters. This procedure is called Discovery of
+      Network-designated Resolvers (DNR).</t>
 
       <t>The options defined in this document can be deployed in a variety of
       deployments (e.g., local networks with Customer Premises Equipment
@@ -191,7 +192,7 @@
       More information about the design of these options is provided in the
       following subsections.</t>
 
-      <section title="Configuration Data for Encrypted DNS">
+      <section anchor="rationale" title="Configuration Data for Encrypted DNS">
         <t>In order to allow for PKIX-based authentication between a DNS
         client and an encrypted DNS server, the Encrypted DNS options are
         designed to include an authentication domain name. This ADN is
@@ -249,10 +250,24 @@
         target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach may
         increase the size of the options but it has the merit to rely upon an
         existing IANA registry and, thus, to accommodate new encrypted DNS
-        protocols and service parameters that may be defined in the future.
-        For example, "dohpath" service parameter (Section 5.1 of <xref
-        target="I-D.ietf-add-svcb-dns"></xref>) supplies a relative DoH URI
-        Template.</t>
+        protocols and service parameters that may be defined in the future. At
+        least the following service parameters SHOULD be supported by an
+        implementation:<list style="hanging">
+            <t hangText="alpn:">Used to indicate the set of supported
+            protocols (Section 7.1 of <xref
+            target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+
+            <t hangText="port:">Used to indicate the target port number for
+            the encrypted DNS connection (Section 7.2 of <xref
+            target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+
+            <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
+            (Section 7.3 of <xref
+            target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+
+            <t hangText="dohpath:">Used to supply a relative DoH URI Template
+            (Section 5.1 of <xref target="I-D.ietf-add-svcb-dns"></xref>).</t>
+          </list></t>
 
         <t>A single option is used to convey both the ADN and IP addresses
         because otherwise means to correlate an IP address with an ADN will be
@@ -264,13 +279,35 @@
         target="DHCP"></xref> follow the option ordering guidelines in Section
         17 of <xref target="RFC7227"></xref>.</t>
 
-        <t>AliasMode (Section 2.4.2 of <xref
-        target="I-D.ietf-dnsop-svcb-https"></xref>) is not supported because
-        such a mode will trigger additional Do53 queries while the data can be
-        supplied directly by DHCP servers. The reader may refer to <xref
-        target="RFC7969"></xref> for an overview of advanced capabilities that
-        are supported by DHCP servers to populate configuration data (e.g.,
-        issue DNS queries). </t>
+        <t>ServiceMode (Section 2.4.3 of <xref
+        target="I-D.ietf-dnsop-svcb-https"></xref>) SHOULD be used because the
+        options are self-contained and do not require any additional DNS
+        queries. The reader may refer to <xref target="RFC7969"></xref> for an
+        overview of advanced capabilities that are supported by DHCP servers
+        to populate configuration data (e.g., issue DNS queries). </t>
+
+        <t>In contexts where putting additional complexity on requesting
+        hosts, AliasMode (Section 2.4.2 of <xref
+        target="I-D.ietf-dnsop-svcb-https"></xref>) can be considered.
+        However, this mode will rigger additional Do53 queries and would be,
+        thus, susceptible to both internal and external attacks. </t>
+
+        <t>Other mechanisms may be considered in other contexts (e.g., secure
+        discovery) for the provisioning of encrypted DNS servers. It is
+        RECOMMENDED that at least the following DNR information is made
+        available to a requesting host:</t>
+
+        <t><list style="symbols">
+            <t>A service priority whenever the discovery mechanism does not
+            rely on implicit ordering if multiple instances of the encrypted
+            DNS are used.</t>
+
+            <t>A list of IP addresses to locate the encrypted DNS server</t>
+
+            <t>An Authentication domain name for authentication purposes</t>
+
+            <t>A list of service parameters</t>
+          </list></t>
       </section>
 
       <section title="Handling Configuration Data Conflicts">
@@ -344,9 +381,7 @@
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This field is encoded
             following the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>. AliasMode (Section
-            2.4.2 of <xref target="I-D.ietf-dnsop-svcb-https"></xref>) is not
-            supported. As such, this field MUST NOT be set to 0.</t>
+            target="I-D.ietf-dnsop-svcb-https"></xref>. </t>
 
             <t hangText="Addr Length:">Length of enclosed IPv6 addresses in
             octets. It MUST be a multiple of 16.</t>
@@ -458,8 +493,7 @@
             <t hangText="Service Priority:">The priority of this OPTION_V4_DNR
             instance compared to other instances. This field is encoded
             following the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>. It MUST NOT be set to
-            0.</t>
+            target="I-D.ietf-dnsop-svcb-https"></xref>. </t>
 
             <t hangText="Addr Length:">Indicates the length of included IPv4
             addresses in octets. It MUST be a multiple of 4.</t>
