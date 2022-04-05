@@ -361,16 +361,16 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    Option-code:  OPTION_V6_DNR (TBA1, see Section 8.1)
 
-   Option-length:  Length of the enclosed data in octets.
+   Option-length:  Length of the enclosed data in octets.  The option
+      length is ('ADN Length' + 4) when only an ADN in included in the
+      option.
 
    Service Priority:  The priority of this OPTION_V6_DNR instance
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
    ADN Length:  Length of the authentication-domain-name field in
-      octets.  This field MUST be set to "Option-length - 4" when only
-      an ADN is included in the option.  It MUST be set to a value that
-      is smaller than "Option-length - 4" for ServiceMode.
+      octets.
 
    authentication-domain-name (variable length):  A fully qualified
       domain name of the encrypted DNS server.  This field is formatted
@@ -492,11 +492,11 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    Code:  OPTION_V4_DNR (TBA2, see Section 8.2).
 
-   Length:  Indicates the length of the enclosed data in octets.
+   Length:  Indicates the length of the enclosed data in octets.  The
+      option length is ('ADN Length' + 3) when only an ADN in included
+      in the option.
 
    Service Priority:  The priority of this OPTION_V4_DNR instance
-      compared to other instances.  This field is encoded following the
-      rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
 
 
@@ -506,10 +506,11 @@ Boucadair, et al.        Expires 7 October 2022                 [Page 9]
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
+      compared to other instances.  This field is encoded following the
+      rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
+
    ADN Length:  Indicates the length of the authentication-domain-name
-      in octets.  This field MUST be set to "Option-length - 3" when
-      only an ADN is included in the option.  It MUST be set to a value
-      that is smaller than "Option-length - 3" for ServiceMode.
+      in octets.
 
    authentication-domain-name (variable length):  Includes the
       authentication domain name of the encrypted DNS server.  This
@@ -552,8 +553,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       If no port service parameter is included, this indicates that
       default port numbers should be used.
 
-      The length of this field is ('Option-length' - 4 - 'ADN Length' -
-      'Addr Length').
+
 
 
 
@@ -561,6 +561,9 @@ Boucadair, et al.        Expires 7 October 2022                [Page 10]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
+
+      The length of this field is ('Option-length' - 4 - 'ADN Length' -
+      'Addr Length').
 
    OPTION_V4_DNR is a concatenation-requiring option.  As such, the
    mechanism specified in [RFC3396] MUST be used if OPTION_V4_DNR
@@ -592,9 +595,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    The format of the IPv6 RA Encrypted DNS option is illustrated in
    Figure 7.
-
-
-
 
 
 
@@ -674,10 +674,7 @@ Boucadair, et al.        Expires 7 October 2022                [Page 12]
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
-      length of the authentication-domain-name field in octets.  This
-      field MUST be set to "8 * Length - 6" when only an ADN is included
-      in the option.  It MUST be set to a value that is smaller than "8
-      * Length - 6" for ServiceMode.
+      length of the authentication-domain-name field in octets.
 
    authentication-domain-name (variable length):  The domain name of the
       encrypted DNS server.  This field is formatted as specified in
@@ -722,6 +719,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    The host MUST silently discard multicast and host loopback addresses
    conveyed in the Encrypted DNS options.
+
+
+
 
 
 

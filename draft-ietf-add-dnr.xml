@@ -375,7 +375,8 @@
             target="iana6"></xref>)</t>
 
             <t hangText="Option-length:">Length of the enclosed data in
-            octets.</t>
+            octets. The option length is ('ADN Length' + 4) when only an ADN
+            in included in the option.</t>
 
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This field is encoded
@@ -383,10 +384,7 @@
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
-            field in octets. This field MUST be set to "Option-length - 4"
-            when only an ADN is included in the option. It MUST be set to a
-            value that is smaller than "Option-length - 4" for
-            ServiceMode.</t>
+            field in octets. </t>
 
             <t hangText="authentication-domain-name (variable length):">A
             fully qualified domain name of the encrypted DNS server. This
@@ -493,7 +491,8 @@
             target="iana4"></xref>).</t>
 
             <t hangText="Length:">Indicates the length of the enclosed data in
-            octets.</t>
+            octets. The option length is ('ADN Length' + 3) when only an ADN
+            in included in the option.</t>
 
             <t hangText="Service Priority:">The priority of this OPTION_V4_DNR
             instance compared to other instances. This field is encoded
@@ -501,10 +500,7 @@
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Indicates the length of the
-            authentication-domain-name in octets. This field MUST be set to
-            "Option-length - 3" when only an ADN is included in the option. It
-            MUST be set to a value that is smaller than "Option-length - 3"
-            for ServiceMode.</t>
+            authentication-domain-name in octets. </t>
 
             <t
             hangText="authentication-domain-name (variable length):">Includes
@@ -638,9 +634,7 @@
 
             <t hangText="ADN Length:">16-bit unsigned integer. This field
             indicates the length of the authentication-domain-name field in
-            octets. This field MUST be set to "8 * Length - 6" when only an
-            ADN is included in the option. It MUST be set to a value that is
-            smaller than "8 * Length - 6" for ServiceMode.</t>
+            octets. </t>
 
             <t hangText="authentication-domain-name (variable length):">The
             domain name of the encrypted DNS server. This field is formatted
