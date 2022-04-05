@@ -262,9 +262,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    to populate configuration data (e.g., issue DNS queries).
 
    In contexts where putting additional complexity on requesting hosts
-   is acceptable, AliasMode (Section 2.4.2 of
-   [I-D.ietf-dnsop-svcb-https]) can be considered.  However, this mode
-   may be subject to active attacks, which can be mitigated by DNSSEC.
+   is acceptable, returning an ADN only can be considered.  However,
+   this mode may be subject to active attacks, which can be mitigated by
+   DNSSEC.
 
    Other mechanisms may be considered in other contexts (e.g., secure
    discovery) for the provisioning of encrypted DNS servers.  It is
@@ -368,9 +368,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
    ADN Length:  Length of the authentication-domain-name field in
-      octets.  This field MUST be set to "Option-length - 4" for
-      AliasMode.  It MUST be set to a value that is smaller than
-      "Option-length - 4" for ServiceMode.
+      octets.  This field MUST be set to "Option-length - 4" when only
+      an ADN is included in the option.  It MUST be set to a value that
+      is smaller than "Option-length - 4" for ServiceMode.
 
    authentication-domain-name (variable length):  A fully qualified
       domain name of the encrypted DNS server.  This field is formatted
@@ -507,9 +507,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
    ADN Length:  Indicates the length of the authentication-domain-name
-      in octets.  This field MUST be set to "Option-length - 3" for
-      AliasMode.  It MUST be set to a value that is smaller than
-      "Option-length - 3" for ServiceMode.
+      in octets.  This field MUST be set to "Option-length - 3" when
+      only an ADN is included in the option.  It MUST be set to a value
+      that is smaller than "Option-length - 3" for ServiceMode.
 
    authentication-domain-name (variable length):  Includes the
       authentication domain name of the encrypted DNS server.  This
@@ -675,9 +675,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
       length of the authentication-domain-name field in octets.  This
-      field MUST be set to "8 * Length - 6" for AliasMode.  It MUST be
-      set to a value that is smaller than "8 * Length - 6" for
-      ServiceMode.
+      field MUST be set to "8 * Length - 6" when only an ADN is included
+      in the option.  It MUST be set to a value that is smaller than "8
+      * Length - 6" for ServiceMode.
 
    authentication-domain-name (variable length):  The domain name of the
       encrypted DNS server.  This field is formatted as specified in

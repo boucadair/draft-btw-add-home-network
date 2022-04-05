@@ -287,10 +287,9 @@
         to populate configuration data (e.g., issue DNS queries).</t>
 
         <t>In contexts where putting additional complexity on requesting hosts
-        is acceptable, AliasMode (Section 2.4.2 of <xref
-        target="I-D.ietf-dnsop-svcb-https"></xref>) can be considered.
-        However, this mode may be subject to active attacks, which can be
-        mitigated by DNSSEC.</t>
+        is acceptable, returning an ADN only can be considered. However, this
+        mode may be subject to active attacks, which can be mitigated by
+        DNSSEC.</t>
 
         <t>Other mechanisms may be considered in other contexts (e.g., secure
         discovery) for the provisioning of encrypted DNS servers. It is
@@ -384,9 +383,10 @@
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
-            field in octets. This field MUST be set to "Option-length - 4" for
-            AliasMode. It MUST be set to a value that is smaller than
-            "Option-length - 4" for ServiceMode.</t>
+            field in octets. This field MUST be set to "Option-length - 4"
+            when only an ADN is included in the option. It MUST be set to a
+            value that is smaller than "Option-length - 4" for
+            ServiceMode.</t>
 
             <t hangText="authentication-domain-name (variable length):">A
             fully qualified domain name of the encrypted DNS server. This
@@ -502,8 +502,9 @@
 
             <t hangText="ADN Length:">Indicates the length of the
             authentication-domain-name in octets. This field MUST be set to
-            "Option-length - 3" for AliasMode. It MUST be set to a value that
-            is smaller than "Option-length - 3" for ServiceMode.</t>
+            "Option-length - 3" when only an ADN is included in the option. It
+            MUST be set to a value that is smaller than "Option-length - 3"
+            for ServiceMode.</t>
 
             <t
             hangText="authentication-domain-name (variable length):">Includes
@@ -637,9 +638,9 @@
 
             <t hangText="ADN Length:">16-bit unsigned integer. This field
             indicates the length of the authentication-domain-name field in
-            octets. This field MUST be set to "8 * Length - 6" for AliasMode.
-            It MUST be set to a value that is smaller than "8 * Length - 6"
-            for ServiceMode.</t>
+            octets. This field MUST be set to "8 * Length - 6" when only an
+            ADN is included in the option. It MUST be set to a value that is
+            smaller than "8 * Length - 6" for ServiceMode.</t>
 
             <t hangText="authentication-domain-name (variable length):">The
             domain name of the encrypted DNS server. This field is formatted
