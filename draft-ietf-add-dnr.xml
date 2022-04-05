@@ -681,13 +681,13 @@
         addition, the host follows the procedure described in Section 5.3.1 of
         <xref target="RFC8106"></xref>. </t>
 
-        <t>The host MUST silently discard multicast and host loopback
-        addresses conveyed in the Encrypted DNS options.</t>
-
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
         in RAs. These instances SHOULD be processed following their service
         priority (i.e., smaller service priority indicates a higher
         preference). </t>
+
+        <t>The host MUST silently discard multicast and host loopback
+        addresses conveyed in the Encrypted DNS options.</t>
       </section>
     </section>
 
