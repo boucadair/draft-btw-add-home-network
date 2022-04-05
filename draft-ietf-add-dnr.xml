@@ -288,9 +288,9 @@
 
         <t>In contexts where putting additional complexity on requesting hosts
         is acceptable, AliasMode (Section 2.4.2 of <xref
-        target="I-D.ietf-dnsop-svcb-https"></xref>) can be considered. That
-        is, only an ADN is supplied in a DNR option. However, this mode may be
-        subject to active attacks, which can be mitigated by DNSSEC.</t>
+        target="I-D.ietf-dnsop-svcb-https"></xref>) can be considered.
+        However, this mode may be subject to active attacks, which can be
+        mitigated by DNSSEC.</t>
 
         <t>Other mechanisms may be considered in other contexts (e.g., secure
         discovery) for the provisioning of encrypted DNS servers. It is
