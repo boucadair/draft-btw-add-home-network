@@ -301,9 +301,9 @@
             rely on implicit ordering if multiple instances of the encrypted
             DNS are used.</t>
 
-            <t>A list of IP addresses to locate the encrypted DNS server.</t>
-
             <t>An Authentication domain name for authentication purposes.</t>
+
+            <t>A list of IP addresses to locate the encrypted DNS server.</t>
 
             <t>A list of service parameters.</t>
           </list></t>
@@ -614,7 +614,7 @@
 
             <t hangText="Length:">8-bit unsigned integer. The length of the
             option (including the Type and Length fields) is in units of 8
-            octets.</t>
+            octets. </t>
 
             <t hangText="Service Priority:">The priority of this Encrypted DNS
             option instance compared to other instances. This field is encoded

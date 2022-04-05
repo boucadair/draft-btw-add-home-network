@@ -282,9 +282,9 @@ Boucadair, et al.        Expires 7 October 2022                 [Page 5]
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
-   *  A list of IP addresses to locate the encrypted DNS server.
-
    *  An Authentication domain name for authentication purposes.
+
+   *  A list of IP addresses to locate the encrypted DNS server.
 
    *  A list of service parameters.
 
