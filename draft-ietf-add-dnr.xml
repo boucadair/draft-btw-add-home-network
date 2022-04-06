@@ -181,6 +181,9 @@
           style="hanging">
           <t hangText="Do53:">refers to unencrypted DNS.</t>
 
+          <t hangText="DNR:">refers to the Discovery of Network-designated
+          Resolvers procedure.</t>
+
           <t hangText="Encrypted DNS:">refers to a scheme where DNS exchanges
           are transported over an encrypted channel. Examples of encrypted DNS
           are DoT, DoH, or DoQ.</t>
@@ -266,7 +269,7 @@
         existing IANA registry and, thus, to accommodate new encrypted DNS
         protocols and service parameters that may be defined in the future. At
         least the following service parameters are RECOMMENDED to be supported
-        by an implementation:</t>
+        by a DNR implementation:</t>
 
         <t><list style="hanging">
             <t hangText="alpn:">Used to indicate the set of supported
@@ -293,7 +296,9 @@
         <t>The DHCP options defined in Sections <xref format="counter"
         target="DHCPv6"></xref> and <xref format="counter"
         target="DHCP"></xref> follow the option ordering guidelines in Section
-        17 of <xref target="RFC7227"></xref>.</t>
+        17 of <xref target="RFC7227"></xref>. Likewise, the RA option adheres
+        to the recommendations in Section 9 of <xref
+        target="RFC4861"></xref>.</t>
 
         <t>ServiceMode (Section 2.4.3 of <xref
         target="I-D.ietf-dnsop-svcb-https"></xref>) SHOULD be used because the
@@ -317,11 +322,11 @@
             rely on implicit ordering if multiple instances of the encrypted
             DNS are used.</t>
 
-            <t>An Authentication domain name for authentication purposes.</t>
+            <t>An authentication domain name.</t>
 
             <t>A list of IP addresses to locate the encrypted DNS server.</t>
 
-            <t>A list of service parameters.</t>
+            <t>A set of service parameters. </t>
           </list></t>
       </section>
 
@@ -380,11 +385,14 @@
 |         Addr Length           |                               |  |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
 ~                        ipv6-address(es)                       ~  |
-|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ opt. 
+|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ opt 
 |                               |                               |  |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
 ~                 Service Parameters (SvcParams)                ~  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---]]></artwork>
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+
+Legend:
+ opt: optional]]></artwork>
           </figure>The fields of the option shown in <xref
         target="dhcpv6-format"></xref> are as follows:<list style="hanging">
             <t hangText="Option-code:">OPTION_V6_DNR (TBA1, see <xref
@@ -492,12 +500,13 @@
 |  Addr Length  |               |    | 
 +-+-+-+-+-+-+-+-+               |    | 
 ~        IPv4 Address(es)       ~    |
-|               +-+-+-+-+-+-+-+-+ optional
+|               +-+-+-+-+-+-+-+-+ Optional
 |               |               |    |
 +-+-+-+-+-+-+-+-+               |    |
 ~Service Parameters (SvcParams) ~    |
 |                               |    |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
+
 ]]></artwork>
           </figure></t>
 
@@ -620,6 +629,9 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  |
 ~                 Service Parameters (SvcParams)                ~  |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+
+Legend:
+ opt: optional
 ]]></artwork>
           </figure></t>
 
@@ -883,7 +895,8 @@
       Bortzmeyer, Ben Schwartz, Iain Sharp, and Chris Box for the
       comments.</t>
 
-      <t>Thanks to Mark Nottingham for the feedback on HTTP redirection.</t>
+      <t>Thanks to Mark Nottingham for the feedback on HTTP redirection that
+      was discussion in previous versions of this specification.</t>
 
       <t>The use of DHCP to retrieve an authentication domain name was
       discussed in Section 7.3.1 of <xref target="RFC8310"></xref> and <xref
