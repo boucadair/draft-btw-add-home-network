@@ -123,6 +123,20 @@
 
     <workgroup>ADD</workgroup>
 
+    <keyword>DNS</keyword>
+
+    <keyword>service resolution</keyword>
+
+    <keyword>encryption</keyword>
+
+    <keyword>service discovery</keyword>
+
+    <keyword>service provider</keyword>
+
+    <keyword>network provider</keyword>
+
+    <keyword>automation</keyword>
+
     <abstract>
       <t>The document specifies new DHCP and IPv6 Router Advertisement options
       to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-TLS,
@@ -251,8 +265,10 @@
         increase the size of the options but it has the merit to rely upon an
         existing IANA registry and, thus, to accommodate new encrypted DNS
         protocols and service parameters that may be defined in the future. At
-        least the following service parameters SHOULD be supported by an
-        implementation:<list style="hanging">
+        least the following service parameters are RECOMMENDED to be supported
+        by an implementation:</t>
+
+        <t><list style="hanging">
             <t hangText="alpn:">Used to indicate the set of supported
             protocols (Section 7.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
@@ -384,7 +400,7 @@
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
-            field in octets. </t>
+            field in octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">A
             fully qualified domain name of the encrypted DNS server. This
@@ -446,7 +462,7 @@
         18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
         target="RFC8415"></xref>.</t>
 
-        <t>The DHCP client MUST be prepared to receive multiple instances of
+        <t>The DHCPv6 client MUST be prepared to receive multiple instances of
         the OPTION_V6_DNR option; each option is to be treated as a separate
         encrypted DNS server. These instances SHOULD be processed following
         their service priority (i.e., smaller service priority indicates a
@@ -500,7 +516,7 @@
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Indicates the length of the
-            authentication-domain-name in octets. </t>
+            authentication-domain-name in octets.</t>
 
             <t
             hangText="authentication-domain-name (variable length):">Includes
@@ -614,7 +630,7 @@
 
             <t hangText="Length:">8-bit unsigned integer. The length of the
             option (including the Type and Length fields) is in units of 8
-            octets. </t>
+            octets.</t>
 
             <t hangText="Service Priority:">The priority of this Encrypted DNS
             option instance compared to other instances. This field is encoded
@@ -634,7 +650,7 @@
 
             <t hangText="ADN Length:">16-bit unsigned integer. This field
             indicates the length of the authentication-domain-name field in
-            octets. </t>
+            octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">The
             domain name of the encrypted DNS server. This field is formatted
@@ -679,12 +695,12 @@
         <t>The procedure for DNS configuration is the same as it is with any
         other Neighbor Discovery option <xref target="RFC4861"></xref>. In
         addition, the host follows the procedure described in Section 5.3.1 of
-        <xref target="RFC8106"></xref>. </t>
+        <xref target="RFC8106"></xref>.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
         in RAs. These instances SHOULD be processed following their service
         priority (i.e., smaller service priority indicates a higher
-        preference). </t>
+        preference).</t>
 
         <t>The host MUST silently discard multicast and host loopback
         addresses conveyed in the Encrypted DNS options.</t>
