@@ -400,7 +400,7 @@ Legend:
 
             <t hangText="Option-length:">Length of the enclosed data in
             octets. The option length is ('ADN Length' + 4) when only an ADN
-            in included in the option.</t>
+            is included in the option.</t>
 
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This field is encoded
@@ -500,7 +500,7 @@ Legend:
 |  Addr Length  |               |    | 
 +-+-+-+-+-+-+-+-+               |    | 
 ~        IPv4 Address(es)       ~    |
-|               +-+-+-+-+-+-+-+-+ Optional
+|               +-+-+-+-+-+-+-+-+ optional
 |               |               |    |
 +-+-+-+-+-+-+-+-+               |    |
 ~Service Parameters (SvcParams) ~    |
@@ -517,7 +517,7 @@ Legend:
 
             <t hangText="Length:">Indicates the length of the enclosed data in
             octets. The option length is ('ADN Length' + 3) when only an ADN
-            in included in the option.</t>
+            is included in the option.</t>
 
             <t hangText="Service Priority:">The priority of this OPTION_V4_DNR
             instance compared to other instances. This field is encoded
@@ -707,7 +707,9 @@ Legend:
         <t>The procedure for DNS configuration is the same as it is with any
         other Neighbor Discovery option <xref target="RFC4861"></xref>. In
         addition, the host follows the procedure described in Section 5.3.1 of
-        <xref target="RFC8106"></xref>.</t>
+        <xref target="RFC8106"></xref> with the formatting requirements in
+        <xref target="RA-ADN"></xref> substituted for the length
+        validation.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
         in RAs. These instances SHOULD be processed following their service
@@ -896,7 +898,7 @@ Legend:
       comments.</t>
 
       <t>Thanks to Mark Nottingham for the feedback on HTTP redirection that
-      was discussion in previous versions of this specification.</t>
+      was discussed in previous versions of this specification.</t>
 
       <t>The use of DHCP to retrieve an authentication domain name was
       discussed in Section 7.3.1 of <xref target="RFC8310"></xref> and <xref
