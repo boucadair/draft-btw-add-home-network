@@ -309,9 +309,10 @@
         issue DNS queries).</t>
 
         <t>In contexts where putting additional complexity on requesting hosts
-        is acceptable, returning an ADN only can be considered. However, this
-        mode may be subject to active attacks, which can be mitigated by
-        DNSSEC.</t>
+        is acceptable, returning an ADN only can be considered. The supplied
+        ADN will be processed by a host following the procedure in Section 5
+        of<xref target="I-D.ietf-add-ddr"></xref>. Note that this mode may be
+        subject to active attacks, which can be mitigated by DNSSEC.</t>
 
         <t>Other mechanisms may be considered in other contexts (e.g., secure
         discovery) for the provisioning of encrypted DNS servers. It is

@@ -283,9 +283,10 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
    In contexts where putting additional complexity on requesting hosts
-   is acceptable, returning an ADN only can be considered.  However,
-   this mode may be subject to active attacks, which can be mitigated by
-   DNSSEC.
+   is acceptable, returning an ADN only can be considered.  The supplied
+   ADN will be processed by a host following the procedure in Section 5
+   of[I-D.ietf-add-ddr].  Note that this mode may be subject to active
+   attacks, which can be mitigated by DNSSEC.
 
    Other mechanisms may be considered in other contexts (e.g., secure
    discovery) for the provisioning of encrypted DNS servers.  It is
@@ -324,7 +325,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    domain name conveyed in the Encrypted DNS options.  ALPN-related
    considerations can be found in Section 6.1 of
    [I-D.ietf-dnsop-svcb-https].
-
 
 
 
