@@ -75,16 +75,16 @@ Table of Contents
      3.1.  Configuration Data for Encrypted DNS  . . . . . . . . . .   4
      3.2.  Handling Configuration Data Conflicts . . . . . . . . . .   6
      3.3.  Connection Establishment  . . . . . . . . . . . . . . . .   6
-     3.4.  Multihoming Considerations  . . . . . . . . . . . . . . .   6
+     3.4.  Multihoming Considerations  . . . . . . . . . . . . . . .   7
    4.  DHCPv6 Encrypted DNS Option . . . . . . . . . . . . . . . . .   7
      4.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .   7
      4.2.  DHCPv6 Client Behavior  . . . . . . . . . . . . . . . . .   9
    5.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . . . .   9
      5.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .   9
      5.2.  DHCPv4 Client Behavior  . . . . . . . . . . . . . . . . .  11
-   6.  IPv6 RA Encrypted DNS Option  . . . . . . . . . . . . . . . .  11
-     6.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .  11
-     6.2.  IPv6 Host Behavior  . . . . . . . . . . . . . . . . . . .  13
+   6.  IPv6 RA Encrypted DNS Option  . . . . . . . . . . . . . . . .  12
+     6.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .  12
+     6.2.  IPv6 Host Behavior  . . . . . . . . . . . . . . . . . . .  14
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
      7.1.  Spoofing Attacks  . . . . . . . . . . . . . . . . . . . .  14
      7.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  15
@@ -93,11 +93,11 @@ Table of Contents
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
      8.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  16
      8.2.  DHCPv4 Option . . . . . . . . . . . . . . . . . . . . . .  16
-     8.3.  Neighbor Discovery Option . . . . . . . . . . . . . . . .  16
+     8.3.  Neighbor Discovery Option . . . . . . . . . . . . . . . .  17
    9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
    10. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  17
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  18
      11.2.  Informative References . . . . . . . . . . . . . . . . .  18
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
@@ -261,18 +261,18 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    The DHCP options defined in Sections 4 and 5 follow the option
    ordering guidelines in Section 17 of [RFC7227].  Likewise, the RA
-   option adheres to the recommendations in Section 9 of [RFC4861].
+   option (Section 6) adheres to the recommendations in Section 9 of
+   [RFC4861].
 
    ServiceMode (Section 2.4.3 of [I-D.ietf-dnsop-svcb-https]) SHOULD be
-   used because the options are self-contained and do not require any
-   additional DNS queries.  The reader may refer to [RFC7969] for an
-   overview of advanced capabilities that are supported by DHCP servers
-   to populate configuration data (e.g., issue DNS queries).
+   used because the Encrypted DNS options are self-contained and do not
+   require any additional DNS queries.  The reader may refer to
+   [RFC7969] for an overview of advanced capabilities that are supported
+   by DHCP servers to populate configuration data (e.g., issue DNS
+   queries).
 
-   In contexts where putting additional complexity on requesting hosts
-   is acceptable, returning an ADN only can be considered.  However,
-   this mode may be subject to active attacks, which can be mitigated by
-   DNSSEC.
+
+
 
 
 
@@ -281,6 +281,11 @@ Boucadair, et al.        Expires 8 October 2022                 [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
+
+   In contexts where putting additional complexity on requesting hosts
+   is acceptable, returning an ADN only can be considered.  However,
+   this mode may be subject to active attacks, which can be mitigated by
+   DNSSEC.
 
    Other mechanisms may be considered in other contexts (e.g., secure
    discovery) for the provisioning of encrypted DNS servers.  It is
@@ -320,14 +325,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    considerations can be found in Section 6.1 of
    [I-D.ietf-dnsop-svcb-https].
 
-3.4.  Multihoming Considerations
 
-   Devices may be connected to multiple networks; each providing their
-   own DNS configuration using the discovery mechanisms specified in
-   this document.  Nevertheless, it is out of the scope of this
-   specification to discuss DNS selection of multi-interface devices.
-   The reader may refer to [RFC6731] for a discussion of issues and an
-   example of DNS server selection for multi-interfaced devices.
+
+
 
 
 
@@ -337,6 +337,15 @@ Boucadair, et al.        Expires 8 October 2022                 [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
+
+3.4.  Multihoming Considerations
+
+   Devices may be connected to multiple networks; each providing their
+   own DNS configuration using the discovery mechanisms specified in
+   this document.  Nevertheless, it is out of the scope of this
+   specification to discuss DNS selection of multi-interface devices.
+   The reader may refer to [RFC6731] for a discussion of issues and an
+   example of DNS server selection for multi-interfaced devices.
 
 4.  DHCPv6 Encrypted DNS Option
 
@@ -376,6 +385,15 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       option.
 
    Service Priority:  The priority of this OPTION_V6_DNR instance
+
+
+
+
+Boucadair, et al.        Expires 8 October 2022                 [Page 7]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
@@ -385,14 +403,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    authentication-domain-name (variable length):  A fully qualified
       domain name of the encrypted DNS server.  This field is formatted
       as specified in Section 10 of [RFC8415].
-
-
-
-
-Boucadair, et al.        Expires 8 October 2022                 [Page 7]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
 
       An example of the authentication-domain-name encoding is shown in
       Figure 2.  This example conveys the FQDN "doh1.example.com.", and
@@ -427,6 +437,19 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
                  Figure 3: Format of the IPv6 Addresses Field
 
    Service Parameters (SvcParams) (variable length):  Specifies a set of
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires 8 October 2022                 [Page 8]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
@@ -440,14 +463,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
       The length of this field is ('Option-length' - 6 - 'ADN Length' -
       'Addr Length').
-
-
-
-
-
-Boucadair, et al.        Expires 8 October 2022                 [Page 8]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
 4.2.  DHCPv6 Client Behavior
@@ -471,6 +486,25 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    The format of the DHCPv4 Encrypted DNS option is illustrated in
    Figure 4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires 8 October 2022                 [Page 9]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
 
                  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
                 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -498,14 +532,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    Code:  OPTION_V4_DNR (TBA2, see Section 8.2).
 
-
-
-
-Boucadair, et al.        Expires 8 October 2022                 [Page 9]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
-
    Length:  Indicates the length of the enclosed data in octets.  The
       option length is ('ADN Length' + 3) when only an ADN is included
       in the option.
@@ -527,6 +553,14 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
                      |  s1 |  s2 |  s3 |  s4 | s5  |  ...
                      +-----+-----+-----+-----+-----+--
                        authentication-domain-name
+
+
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 10]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
 
            Figure 5: Format of the Authentication Domain Name Field
 
@@ -555,13 +589,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
       included IP addresses.
 
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 10]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
-
       If no port service parameter is included, this indicates that
       default port numbers should be used.
 
@@ -584,6 +611,13 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    their service priority (i.e., smaller service priority indicates a
    higher preference).
 
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 11]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
    The DHCPv4 client MUST silently discard multicast and host loopback
    addresses conveyed in OPTION_V4_DNR.
 
@@ -598,25 +632,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    The format of the IPv6 RA Encrypted DNS option is illustrated in
    Figure 7.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 11]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
 
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -651,6 +666,14 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    Length:  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) is in units of 8 octets.
 
+
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 12]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
    Service Priority:  The priority of this Encrypted DNS option instance
       compared to other instances.  This field is encoded following the
       rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
@@ -664,15 +687,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       interval as defined in [RFC4861].
 
       A value of all one bits (0xffffffff) represents infinity.
-
-
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 12]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
 
       A value of zero means that this Authentication Domain Name MUST no
       longer be used.
@@ -709,6 +723,13 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
       included IP addresses.
 
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 13]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
       If no port service parameter is included, this indicates that
       default port numbers should be used.
 
@@ -722,13 +743,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    follows the procedure described in Section 5.3.1 of [RFC8106] with
    the formatting requirements in Section 6.1 substituted for the length
    validation.
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 13]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
 
    The host MUST be prepared to receive multiple Encrypted DNS options
    in RAs.  These instances SHOULD be processed following their service
@@ -764,6 +778,14 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    *  RA-Guard described in [RFC7113], the router discards RAs messages
       received from any local endpoint.
 
+
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 14]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
    *  Source Address Validation Improvement (SAVI) solution for DHCP
       described in [RFC7513], the router filters packets with forged
       source IP addresses.
@@ -778,14 +800,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    of a DNS server will fail because the DNS client will fail to
    authenticate that rogue server based upon PKIX authentication
    [RFC6125], particularly the authentication domain name in the
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 14]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
-
    Encrypted DNS Option.  DNS clients that ignore authentication
    failures and accept spoofed certificates will be subject to attacks
    (e.g., redirect to malicious servers, intercept sensitive data).
@@ -821,6 +835,13 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    domain) provided by such networks via DHCP, DHCPv6, or RA are
    untrusted because DHCP and RA messages are not authenticated.
 
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 15]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
    If the pre-shared key is the same for all clients that connect to the
    same WLAN, the shared key will be available to all nodes, including
    attackers.  As such, it is possible to mount an active on-path
@@ -834,14 +855,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    Access Point (e.g., 802.1x Wireless User Authentication on OpenWRT
    [dot1x], EAP-pwd [RFC8146]).  Not all endpoint devices (e.g., IoT
    devices) support 802.1x supplicant and need an alternate mechanism to
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 15]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
-
    connect to the local network.  To address this limitation, unique
    pre-shared keys can be created for each such device and WPA-PSK is
    used (e.g., [PSK]).
@@ -877,19 +890,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    |      |                  |       | Server         |                |
    +------+------------------+-------+----------------+----------------+
 
-8.3.  Neighbor Discovery Option
-
-   IANA is requested to assign the following new IPv6 Neighbor Discovery
-   Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
-   registry under the "Internet Control Message Protocol version 6
-   (ICMPv6) Parameters" registry maintained in [ND].
-
-
-
-
-
-
-
 
 
 
@@ -897,6 +897,13 @@ Boucadair, et al.        Expires 8 October 2022                [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
+
+8.3.  Neighbor Discovery Option
+
+   IANA is requested to assign the following new IPv6 Neighbor Discovery
+   Option type in the "IPv6 Neighbor Discovery Option Formats" sub-
+   registry under the "Internet Control Message Protocol version 6
+   (ICMPv6) Parameters" registry maintained in [ND].
 
            +======+==========================+================+
            | Type | Description              | Reference      |
@@ -939,13 +946,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
       EMail: yan@cnnic.cn
 
-11.  References
-
-11.1.  Normative References
-
-   [I-D.ietf-dnsop-svcb-https]
-              Schwartz, B., Bishop, M., and E. Nygren, "Service binding
-              and parameter specification via the DNS (DNS SVCB and
 
 
 
@@ -954,6 +954,13 @@ Boucadair, et al.        Expires 8 October 2022                [Page 17]
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
+11.  References
+
+11.1.  Normative References
+
+   [I-D.ietf-dnsop-svcb-https]
+              Schwartz, B., Bishop, M., and E. Nygren, "Service binding
+              and parameter specification via the DNS (DNS SVCB and
               HTTPS RRs)", Work in Progress, Internet-Draft, draft-ietf-
               dnsop-svcb-https-08, 12 October 2021,
               <https://www.ietf.org/archive/id/draft-ietf-dnsop-svcb-
@@ -995,13 +1002,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 11.2.  Informative References
 
-   [BOOTP]    "BOOTP Vendor Extensions and DHCP Options",
-              <https://www.iana.org/assignments/bootp-dhcp-parameters/
-              bootp-dhcp-parameters.xhtml#options>.
-
-   [DHCPV6]   "DHCPv6 Option Codes", <https://www.iana.org/assignments/
-              dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-
-              parameters-2>.
 
 
 
@@ -1009,6 +1009,14 @@ Boucadair, et al.        Expires 8 October 2022                [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
+
+   [BOOTP]    "BOOTP Vendor Extensions and DHCP Options",
+              <https://www.iana.org/assignments/bootp-dhcp-parameters/
+              bootp-dhcp-parameters.xhtml#options>.
+
+   [DHCPV6]   "DHCPv6 Option Codes", <https://www.iana.org/assignments/
+              dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-
+              parameters-2>.
 
    [dot1x]    Cisco, "Basic 802.1x Wireless User Authentication",
               <https://openwrt.org/docs/guide-user/network/wifi/
@@ -1051,20 +1059,19 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
               <https://www.ietf.org/archive/id/draft-pusateri-dhc-dns-
               driu-00.txt>.
 
-   [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
-              2017, <https://www.krackattacks.com/>.
-
-   [ND]       "IPv6 Neighbor Discovery Option Formats",
-              <http://www.iana.org/assignments/icmpv6-parameters/
-              icmpv6-parameters.xhtml#icmpv6-parameters-5>.
-
-
 
 
 Boucadair, et al.        Expires 8 October 2022                [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
+
+   [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
+              2017, <https://www.krackattacks.com/>.
+
+   [ND]       "IPv6 Neighbor Discovery Option Formats",
+              <http://www.iana.org/assignments/icmpv6-parameters/
+              icmpv6-parameters.xhtml#icmpv6-parameters-5>.
 
    [PSK]      Cisco, "Identity PSK Feature Deployment Guide",
               <https://www.cisco.com/c/en/us/td/docs/wireless/
@@ -1104,6 +1111,17 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
               DOI 10.17487/RFC7113, February 2014,
               <https://www.rfc-editor.org/info/rfc7113>.
 
+
+
+
+
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 20]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
    [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
               S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
               BCP 187, RFC 7227, DOI 10.17487/RFC7227, May 2014,
@@ -1113,14 +1131,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
               Validation Improvement (SAVI) Solution for DHCP",
               RFC 7513, DOI 10.17487/RFC7513, May 2015,
               <https://www.rfc-editor.org/info/rfc7513>.
-
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 20]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
-
 
    [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
               Protecting against Rogue DHCPv6 Servers", BCP 199,
@@ -1160,6 +1170,14 @@ Authors' Addresses
    Orange
    35000 Rennes
    France
+
+
+
+Boucadair, et al.        Expires 8 October 2022                [Page 21]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2022
+
+
    Email: mohamed.boucadair@orange.com
 
 
@@ -1170,12 +1188,6 @@ Authors' Addresses
    Karnataka
    India
    Email: kondtir@gmail.com
-
-
-
-Boucadair, et al.        Expires 8 October 2022                [Page 21]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
    Dan Wing
@@ -1194,18 +1206,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    Microsoft
    United States of America
    Email: tojens@microsoft.com
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -296,16 +296,17 @@
         <t>The DHCP options defined in Sections <xref format="counter"
         target="DHCPv6"></xref> and <xref format="counter"
         target="DHCP"></xref> follow the option ordering guidelines in Section
-        17 of <xref target="RFC7227"></xref>. Likewise, the RA option adheres
-        to the recommendations in Section 9 of <xref
-        target="RFC4861"></xref>.</t>
+        17 of <xref target="RFC7227"></xref>. Likewise, the RA option (<xref
+        format="default" target="RA"></xref>) adheres to the recommendations
+        in Section 9 of <xref target="RFC4861"></xref>.</t>
 
         <t>ServiceMode (Section 2.4.3 of <xref
         target="I-D.ietf-dnsop-svcb-https"></xref>) SHOULD be used because the
-        options are self-contained and do not require any additional DNS
-        queries. The reader may refer to <xref target="RFC7969"></xref> for an
-        overview of advanced capabilities that are supported by DHCP servers
-        to populate configuration data (e.g., issue DNS queries).</t>
+        Encrypted DNS options are self-contained and do not require any
+        additional DNS queries. The reader may refer to <xref
+        target="RFC7969"></xref> for an overview of advanced capabilities that
+        are supported by DHCP servers to populate configuration data (e.g.,
+        issue DNS queries).</t>
 
         <t>In contexts where putting additional complexity on requesting hosts
         is acceptable, returning an ADN only can be considered. However, this
