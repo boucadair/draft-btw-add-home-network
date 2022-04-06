@@ -565,7 +565,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
            Figure 5: Format of the Authentication Domain Name Field
 
    Addr Length:  Indicates the length of included IPv4 addresses in
-      octets.  It MUST be a multiple of 4.
+      octets.  It MUST be a multiple of 4 for ServiceMode.
 
    IPv4 Address(es) (variable length):  Indicates one or more IPv4
       addresses to reach the encrypted DNS server.  Both private and
@@ -696,7 +696,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
    Addr Length:  16-bit unsigned integer.  This field indicates the
       length of enclosed IPv6 addresses in octets.  It MUST be a
-      multiple of 16.
+      multiple of 16 for ServiceMode.
 
    ipv6-address(es) (variable length):  One or more IPv6 addresses of
       the encrypted DNS server.  An address can be link-local, ULA, or

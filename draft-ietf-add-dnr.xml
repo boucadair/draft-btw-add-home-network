@@ -543,7 +543,8 @@
               </figure></t>
 
             <t hangText="Addr Length:">Indicates the length of included IPv4
-            addresses in octets. It MUST be a multiple of 4.</t>
+            addresses in octets. It MUST be a multiple of 4 for
+            ServiceMode.</t>
 
             <t hangText="IPv4 Address(es) (variable length):">Indicates one or
             more IPv4 addresses to reach the encrypted DNS server. Both
@@ -665,7 +666,7 @@
 
             <t hangText="Addr Length:">16-bit unsigned integer. This field
             indicates the length of enclosed IPv6 addresses in octets. It MUST
-            be a multiple of 16.</t>
+            be a multiple of 16 for ServiceMode.</t>
 
             <t hangText="ipv6-address(es) (variable length):">One or more IPv6
             addresses of the encrypted DNS server. An address can be
