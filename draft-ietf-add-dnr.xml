@@ -311,7 +311,7 @@
         <t>In contexts where putting additional complexity on requesting hosts
         is acceptable, returning an ADN only can be considered. The supplied
         ADN will be processed by a host following the procedure in Section 5
-        of<xref target="I-D.ietf-add-ddr"></xref>. Note that this mode may be
+        of <xref target="I-D.ietf-add-ddr"></xref>. Note that this mode may be
         subject to active attacks, which can be mitigated by DNSSEC.</t>
 
         <t>Other mechanisms may be considered in other contexts (e.g., secure
@@ -328,7 +328,7 @@
 
             <t>A list of IP addresses to locate the encrypted DNS server.</t>
 
-            <t>A set of service parameters. </t>
+            <t>A set of service parameters.</t>
           </list></t>
       </section>
 
@@ -383,18 +383,15 @@
 |       Service Priority        |         ADN Length            |  
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~                   authentication-domain-name                  ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-|         Addr Length           |                               |  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
-~                        ipv6-address(es)                       ~  |
-|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ opt 
-|                               |                               |  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
-~                 Service Parameters (SvcParams)                ~  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-
-Legend:
- opt: optional]]></artwork>
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Addr Length           |                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               | 
+~                        ipv6-address(es)                       ~ 
+|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
+|                               |                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+~                 Service Parameters (SvcParams)                ~
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+]]></artwork>
           </figure>The fields of the option shown in <xref
         target="dhcpv6-format"></xref> are as follows:<list style="hanging">
             <t hangText="Option-code:">OPTION_V6_DNR (TBA1, see <xref
@@ -498,17 +495,16 @@ Legend:
 |   ADN Length  |               |
 +-+-+-+-+-+-+-+-+               |
 ~  authentication-domain-name   ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
-|  Addr Length  |               |    | 
-+-+-+-+-+-+-+-+-+               |    | 
-~        IPv4 Address(es)       ~    |
-|               +-+-+-+-+-+-+-+-+ optional
-|               |               |    |
-+-+-+-+-+-+-+-+-+               |    |
-~Service Parameters (SvcParams) ~    |
-|                               |    |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
-
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Addr Length  |               |
++-+-+-+-+-+-+-+-+               |
+~        IPv4 Address(es)       ~
+|               +-+-+-+-+-+-+-+-+
+|               |               |
++-+-+-+-+-+-+-+-+               |
+~Service Parameters (SvcParams) ~
+|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure></t>
 
@@ -622,18 +618,15 @@ Legend:
 |          ADN Length           |                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
 ~                   authentication-domain-name                  ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-|         Addr Length           |                               |  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
-~                        ipv6-address(es)                       ~  |
-|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ opt. 
-|                               |     SvcParams Length          |  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  |
-~                 Service Parameters (SvcParams)                ~  |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-
-Legend:
- opt: optional
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Addr Length           |                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+~                        ipv6-address(es)                       ~
+|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                               |     SvcParams Length          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+~                 Service Parameters (SvcParams)                ~
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
           </figure></t>
 

@@ -285,7 +285,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    In contexts where putting additional complexity on requesting hosts
    is acceptable, returning an ADN only can be considered.  The supplied
    ADN will be processed by a host following the procedure in Section 5
-   of[I-D.ietf-add-ddr].  Note that this mode may be subject to active
+   of [I-D.ietf-add-ddr].  Note that this mode may be subject to active
    attacks, which can be mitigated by DNSSEC.
 
    Other mechanisms may be considered in other contexts (e.g., secure
@@ -361,18 +361,15 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    |       Service Priority        |         ADN Length            |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    ~                   authentication-domain-name                  ~
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-   |         Addr Length           |                               |  |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
-   ~                        ipv6-address(es)                       ~  |
-   |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ opt
-   |                               |                               |  |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
-   ~                 Service Parameters (SvcParams)                ~  |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-
-   Legend:
-    opt: optional
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |         Addr Length           |                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+   ~                        ipv6-address(es)                       ~
+   |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                               |                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+   ~                 Service Parameters (SvcParams)                ~
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 1: DHCPv6 Encrypted DNS Option
 
@@ -385,7 +382,10 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       option.
 
    Service Priority:  The priority of this OPTION_V6_DNR instance
+      compared to other instances.  This field is encoded following the
+      rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
+   ADN Length:  Length of the authentication-domain-name field in
 
 
 
@@ -394,10 +394,6 @@ Boucadair, et al.        Expires 8 October 2022                 [Page 7]
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
-      compared to other instances.  This field is encoded following the
-      rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
-
-   ADN Length:  Length of the authentication-domain-name field in
       octets.
 
    authentication-domain-name (variable length):  A fully qualified
@@ -437,8 +433,12 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
                  Figure 3: Format of the IPv6 Addresses Field
 
    Service Parameters (SvcParams) (variable length):  Specifies a set of
-
-
+      service parameters that are encoded following the rules in
+      Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
+      may include, for example, a list of ALPN protocol identifiers or
+      alternate port numbers.  The service parameters MUST NOT include
+      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
+      included IP addresses.
 
 
 
@@ -449,13 +449,6 @@ Boucadair, et al.        Expires 8 October 2022                 [Page 8]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
-
-      service parameters that are encoded following the rules in
-      Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
-      may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
@@ -501,30 +494,37 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
 
+
+
+
+
+
+
+
 Boucadair, et al.        Expires 8 October 2022                 [Page 9]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
 
-                 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                |     TBA2      |     Length    |
-                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                |       Service Priority        |
-                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                |   ADN Length  |               |
-                +-+-+-+-+-+-+-+-+               |
-                ~  authentication-domain-name   ~
-                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
-                |  Addr Length  |               |    |
-                +-+-+-+-+-+-+-+-+               |    |
-                ~        IPv4 Address(es)       ~    |
-                |               +-+-+-+-+-+-+-+-+ optional
-                |               |               |    |
-                +-+-+-+-+-+-+-+-+               |    |
-                ~Service Parameters (SvcParams) ~    |
-                |                               |    |
-                +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
+                      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                     |     TBA2      |     Length    |
+                     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                     |       Service Priority        |
+                     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                     |   ADN Length  |               |
+                     +-+-+-+-+-+-+-+-+               |
+                     ~  authentication-domain-name   ~
+                     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                     |  Addr Length  |               |
+                     +-+-+-+-+-+-+-+-+               |
+                     ~        IPv4 Address(es)       ~
+                     |               +-+-+-+-+-+-+-+-+
+                     |               |               |
+                     +-+-+-+-+-+-+-+-+               |
+                     ~Service Parameters (SvcParams) ~
+                     |                               |
+                     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 4: DHCPv4 Encrypted DNS Option
 
@@ -633,30 +633,27 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    The format of the IPv6 RA Encrypted DNS option is illustrated in
    Figure 7.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |     TBA3      |     Length    |        Service Priority       |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                           Lifetime                            |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |          ADN Length           |                               |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
-  ~                   authentication-domain-name                  ~
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
-  |         Addr Length           |                               |  |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  |
-  ~                        ipv6-address(es)                       ~  |
-  |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ opt.
-  |                               |     SvcParams Length          |  |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  |
-  ~                 Service Parameters (SvcParams)                ~  |
-  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ---
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |     TBA3      |     Length    |        Service Priority       |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                           Lifetime                            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |          ADN Length           |                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+     ~                   authentication-domain-name                  ~
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |         Addr Length           |                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
+     ~                        ipv6-address(es)                       ~
+     |                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                               |     SvcParams Length          |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     ~                 Service Parameters (SvcParams)                ~
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-  Legend:
-   opt: optional
-
-                    Figure 7: RA Encrypted DNS Option
+                     Figure 7: RA Encrypted DNS Option
 
    The fields of the option shown in Figure 7 are as follows:
 
@@ -666,6 +663,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    Length:  8-bit unsigned integer.  The length of the option (including
       the Type and Length fields) is in units of 8 octets.
 
+   Service Priority:  The priority of this Encrypted DNS option instance
+      compared to other instances.  This field is encoded following the
+      rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
 
 
@@ -673,10 +673,6 @@ Boucadair, et al.        Expires 8 October 2022                [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
-
-   Service Priority:  The priority of this Encrypted DNS option instance
-      compared to other instances.  This field is encoded following the
-      rules specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
 
    Lifetime:  32-bit unsigned integer.  The maximum time in seconds
       (relative to the time the packet is received) over which the
@@ -723,15 +719,16 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
       "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
       included IP addresses.
 
+      If no port service parameter is included, this indicates that
+      default port numbers should be used.
+
+
 
 
 Boucadair, et al.        Expires 8 October 2022                [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
-
-      If no port service parameter is included, this indicates that
-      default port numbers should be used.
 
    The option MUST be padded with zeros so that the full enclosed data
    is a multiple of 8 octets (Section 4.6 of [RFC4861]).
@@ -778,6 +775,9 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    *  RA-Guard described in [RFC7113], the router discards RAs messages
       received from any local endpoint.
 
+   *  Source Address Validation Improvement (SAVI) solution for DHCP
+      described in [RFC7513], the router filters packets with forged
+      source IP addresses.
 
 
 
@@ -785,10 +785,6 @@ Boucadair, et al.        Expires 8 October 2022                [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2022
 
-
-   *  Source Address Validation Improvement (SAVI) solution for DHCP
-      described in [RFC7513], the router filters packets with forged
-      source IP addresses.
 
    The above mechanisms would ensure that the endpoint receives the
    correct configuration information of the encrypted DNS servers
@@ -834,6 +830,10 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2022
    This means that an information (e.g., NTP server, DNS server, default
    domain) provided by such networks via DHCP, DHCPv6, or RA are
    untrusted because DHCP and RA messages are not authenticated.
+
+
+
+
 
 
 
