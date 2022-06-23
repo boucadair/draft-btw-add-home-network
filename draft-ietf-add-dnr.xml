@@ -31,7 +31,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-08" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-09" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -166,7 +166,11 @@
       deployments (e.g., local networks with Customer Premises Equipment
       (CPEs) that may or may not be managed by an Internet Service Provider
       (ISP), local networks with or without DNS forwarders). It is out of the
-      scope of this document to provide an inventory of such deployments.</t>
+      scope of this document to provide an inventory of such deployments.
+      Likewise, the document does not make any assumption whether unicast or
+      anycast (<xref target="RFC3258"></xref>) IP addresses are used to reach
+      DNS servers. The discovery of both address types is supported in
+      DNR.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -250,9 +254,9 @@
         addresses are returned in an Encrypted DNS option is deployment
         specific. For example, a router embedding a recursive server or a
         forwarder has to include one single IP address pointing to one of its
-        LAN-facing interfaces. This IP address can be a private IPv4 address,
-        a link-local address, a Unique Local IPv6 unicast Address (ULA), or a
-        Global Unicast Address (GUA).</t>
+        LAN-facing interfaces. Typically, this IP address can be a private
+        IPv4 address, a link-local address, a Unique Local IPv6 unicast
+        Address (ULA), or a Global Unicast Address (GUA).</t>
 
         <t>If multiple IP addresses are to be returned in an Encrypted DNS
         option, these addresses are ordered in the preference for use by the
@@ -977,6 +981,8 @@
       <?rfc include='reference.RFC.7227'?>
 
       <?rfc include='reference.RFC.7969'?>
+
+      <?rfc include='reference.RFC.3258'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
