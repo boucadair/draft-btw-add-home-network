@@ -31,7 +31,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-06" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-08" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -140,9 +140,9 @@
     <abstract>
       <t>The document specifies new DHCP and IPv6 Router Advertisement options
       to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-TLS,
-      DNS-over-QUIC). Particularly, it allows to learn an authentication
-      domain name together with a list of IP addresses and a set of service
-      parameters to reach such encrypted DNS servers.</t>
+      DNS-over-QUIC). Particularly, it allows a host to learn an
+      authentication domain name together with a list of IP addresses and a
+      set of service parameters to reach such encrypted DNS servers.</t>
     </abstract>
   </front>
 
@@ -151,7 +151,7 @@
       <t>This document focuses on the support of encrypted DNS such as
       DNS-over-HTTPS (DoH) <xref target="RFC8484"></xref>, DNS-over-TLS (DoT)
       <xref target="RFC7858"></xref>, or DNS-over-QUIC (DoQ) <xref
-      target="I-D.ietf-dprive-dnsoquic"></xref> in local networks.</t>
+      target="RFC9250"></xref> in local networks.</t>
 
       <t>In particular, the document specifies how a local encrypted DNS
       server can be discovered by connected hosts by means of DHCPv4 <xref
@@ -254,7 +254,7 @@
         a link-local address, a Unique Local IPv6 unicast Address (ULA), or a
         Global Unicast Address (GUA).</t>
 
-        <t>If more than one IP address are to be returned in an Encrypted DNS
+        <t>If multiple IP addresses are to be returned in an Encrypted DNS
         option, these addresses are ordered in the preference for use by the
         client.</t>
 
@@ -265,8 +265,8 @@
         parameters. These parameters are encoded following the same rules for
         encoding SvcParams in Section 2.1 of <xref
         target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach may
-        increase the size of the options but it has the merit to rely upon an
-        existing IANA registry and, thus, to accommodate new encrypted DNS
+        increase the size of the options but it has the merit relying upon an
+        existing IANA registry and, thus, accommodating new encrypted DNS
         protocols and service parameters that may be defined in the future. At
         least the following service parameters are RECOMMENDED to be supported
         by a DNR implementation:</t>
@@ -289,9 +289,9 @@
           </list></t>
 
         <t>A single option is used to convey both the ADN and IP addresses
-        because otherwise means to correlate an IP address with an ADN will be
-        required if, for example, more than one ADN is supported by the
-        network.</t>
+        because otherwise means to correlate an IP address conveyed in an
+        option with an ADN conveyed in another option will be required if, for
+        example, more than one ADN is supported by the network.</t>
 
         <t>The DHCP options defined in Sections <xref format="counter"
         target="DHCPv6"></xref> and <xref format="counter"
@@ -338,11 +338,11 @@
         target="RFC8106"></xref> MUST be followed.</t>
 
         <t>DHCP/RA options to discover encrypted DNS servers (including, DoH
-        URI Templates) takes precedence over DDR <xref
-        target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to an external
-        DNS resolver, which is susceptible to both internal and external
-        attacks whereas DHCP/RA is typically protected using the mechanisms
-        discussed in <xref target="spoof"></xref>.</t>
+        URI Templates) takes precedence over Discovery of Designated Resolvers
+        (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to
+        an external DNS resolver, which is susceptible to both internal and
+        external attacks whereas DHCP/RA is typically protected using the
+        mechanisms discussed in <xref target="spoof"></xref>.</t>
       </section>
 
       <section title="Connection Establishment">
@@ -529,18 +529,8 @@
             hangText="authentication-domain-name (variable length):">Includes
             the authentication domain name of the encrypted DNS server. This
             field is formatted as specified in Section 10 of <xref
-            target="RFC8415"></xref>. The format of this field is shown in
-            <xref target="adn"></xref>. The values s1, s2, s3, etc. represent
-            the domain name labels in the domain name encoding.<figure
-                align="center" anchor="adn"
-                title="Format of the Authentication Domain Name Field">
-                <artwork align="center"><![CDATA[
-+-----+-----+-----+-----+-----+--
-|  s1 |  s2 |  s3 |  s4 | s5  |  ...
-+-----+-----+-----+-----+-----+--
-  authentication-domain-name 
-]]></artwork>
-              </figure></t>
+            target="RFC8415"></xref>. An example of the ADN is provided in
+            <xref target="fqdn"></xref>.</t>
 
             <t hangText="Addr Length:">Indicates the length of included IPv4
             addresses in octets. It MUST be a multiple of 4 for
@@ -790,15 +780,15 @@
         target="Evil-Twin"></xref>, <xref target="Krack"></xref>, <xref
         target="Dragonblood"></xref>). Because of these attacks, only
         cryptographically authenticated communications are trusted on WLANs.
-        This means that an information (e.g., NTP server, DNS server, default
-        domain) provided by such networks via DHCP, DHCPv6, or RA are
+        This means that an information (e.g., NTP server, DNS server, domain
+        search list) provided by such networks via DHCP, DHCPv6, or RA are
         untrusted because DHCP and RA messages are not authenticated.</t>
 
-        <t>If the pre-shared key is the same for all clients that connect to
-        the same WLAN, the shared key will be available to all nodes,
-        including attackers. As such, it is possible to mount an active
-        on-path attack. Man-in-the-middle attacks are possible within local
-        networks because such WLAN authentication lacks peer entity
+        <t>If the pre-shared key (PSK) is the same for all clients that
+        connect to the same WLAN (e.g., WPA-PSK), the shared key will be
+        available to all nodes, including attackers. As such, it is possible
+        to mount an active on-path attack. On-path attacks are possible within
+        local networks because such a WLAN authentication lacks peer entity
         authentication.</t>
 
         <t>This leads to the need for provisioning unique credentials for
@@ -810,8 +800,8 @@
         Not all endpoint devices (e.g., IoT devices) support 802.1x supplicant
         and need an alternate mechanism to connect to the local network. To
         address this limitation, unique pre-shared keys can be created for
-        each such device and WPA-PSK is used (e.g., <xref
-        target="PSK"></xref>).</t>
+        each such devices and WPA-PSK is used (e.g., <xref
+        target="IPSK"></xref>).</t>
       </section>
     </section>
 
@@ -878,7 +868,7 @@
 
           <c>TBA3</c>
 
-          <c>DNS Encrypted DNS Option</c>
+          <c>Encrypted DNS Option</c>
 
           <c>[ThisDocument]</c>
         </texttable>
@@ -901,6 +891,9 @@
       target="I-D.pusateri-dhc-dns-driu"></xref>.</t>
 
       <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
+
+      <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
+      the AD review. </t>
     </section>
 
     <section title="Contributing Authors">
@@ -941,6 +934,8 @@
       <?rfc include='reference.RFC.3396'?>
 
       <?rfc include='reference.I-D.ietf-dnsop-svcb-https'?>
+
+      <?rfc include='reference.I-D.ietf-add-svcb-dns'?>
     </references>
 
     <references title="Informative References">
@@ -962,11 +957,9 @@
 
       <?rfc include='reference.RFC.8484'?>
 
-      <?rfc include='reference.I-D.ietf-dprive-dnsoquic'?>
+      <?rfc include='reference.RFC.9250'?>
 
       <?rfc include='reference.I-D.ietf-add-ddr'?>
-
-      <?rfc include='reference.I-D.ietf-add-svcb-dns'?>
 
       <?rfc include='reference.RFC.6731'?>
 
@@ -1021,7 +1014,7 @@
         </front>
       </reference>
 
-      <reference anchor="PSK"
+      <reference anchor="IPSK"
                  target="https://www.cisco.com/c/en/us/td/docs/wireless/controller/technotes/8-5/b_Identity_PSK_Feature_Deployment_Guide.html">
         <front>
           <title>Identity PSK Feature Deployment Guide</title>
