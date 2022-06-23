@@ -115,12 +115,13 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
    In particular, the document specifies how a local encrypted DNS
-   server can be discovered by connected hosts by means of DHCPv4
-   [RFC2132], DHCPv6 [RFC8415], and IPv6 Router Advertisement (RA)
-   [RFC4861] options.  These options are designed to convey the
-   following information: the DNS Authentication Domain Name (ADN), a
-   list of IP addresses, and a set of service parameters.  This
-   procedure is called Discovery of Network-designated Resolvers (DNR).
+   server (e.g., local recursive server, local forwarder) can be
+   discovered by connected hosts by means of DHCPv4 [RFC2132], DHCPv6
+   [RFC8415], and IPv6 Router Advertisement (RA) [RFC4861] options.
+   These options are designed to convey the following information: the
+   DNS Authentication Domain Name (ADN), a list of IP addresses, and a
+   set of service parameters.  This procedure is called Discovery of
+   Network-designated Resolvers (DNR).
 
    The options defined in this document can be deployed in a variety of
    deployments (e.g., local networks with Customer Premises Equipment
@@ -159,7 +160,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    This document describes how a DNS client can discover local encrypted
    DNS servers using DHCP (Sections 4 and 5) and Neighbor Discovery
    protocol (Section 6): Encrypted DNS options.
-
 
 
 
@@ -546,7 +546,7 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    authentication-domain-name (variable length):  Includes the
       authentication domain name of the encrypted DNS server.  This
       field is formatted as specified in Section 10 of [RFC8415].  An
-      example of the ADN is provided in Figure 2.
+      example is provided in Figure 2.
 
    Addr Length:  Indicates the length of included IPv4 addresses in
       octets.  It MUST be a multiple of 4 for ServiceMode.
@@ -596,7 +596,7 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 5.2.  DHCPv4 Client Behavior
 
    To discover an encrypted DNS server, the DHCPv4 client requests the
-   Encrypted DNS server by including OPTION_V4_DNR in a Parameter
+   encrypted DNS server by including OPTION_V4_DNR in a Parameter
    Request List option [RFC2132].
 
    The DHCPv4 client MUST be prepared to receive multiple instances of
@@ -758,10 +758,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    DHCP and RA messages can be spoofed or modified by active attackers,
    such as compromised devices within the local network.  An active
    attacker (Section 3.3 of [RFC3552]) can spoof the DHCP/RA response to
-   provide the attacker's Encrypted DNS server.  Note that such an
+   provide the attacker's encrypted DNS server.  Note that such an
    attacker can launch other attacks as discussed in Section 22 of
    [RFC8415].  The attacker can get a domain name with a domain-
-   validated public certificate from a CA and host an Encrypted DNS
+   validated public certificate from a CA and host an encrypted DNS
    server.
 
    Attacks of spoofed or modified DHCP responses and RA messages by
@@ -857,6 +857,11 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    pre-shared keys can be created for each such devices and WPA-PSK is
    used (e.g., [IPSK]).
 
+   Note that filtering communications between devices at the Access
+   Point (AP) may prevent some of the aforementioned attacks.  However,
+   such filtering may have negative implications on legitimate
+   communications between devices that are serviced by the same AP.
+
 8.  IANA Considerations
 
 
@@ -880,13 +885,8 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    IANA is requested to assign the following new DHCP Option Code in the
    registry maintained in [BOOTP].
 
-   +------+------------------+-------+----------------+----------------+
-   | Tag  | Name             | Data  | Meaning        | Reference      |
-   |      |                  | Length|                |                |
-   +------+------------------+-------+----------------+----------------+
-   | TBA2 | OPTION_V4_DNR    | N     | Encrypted DNS  | [ThisDocument] |
-   |      |                  |       | Server         |                |
-   +------+------------------+-------+----------------+----------------+
+
+
 
 
 
@@ -897,6 +897,14 @@ Boucadair, et al.       Expires 25 December 2022               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   +------+------------------+-------+----------------+----------------+
+   | Tag  | Name             | Data  | Meaning        | Reference      |
+   |      |                  | Length|                |                |
+   +------+------------------+-------+----------------+----------------+
+   | TBA2 | OPTION_V4_DNR    | N     | Encrypted DNS  | [ThisDocument] |
+   |      |                  |       | Server         |                |
+   +------+------------------+-------+----------------+----------------+
 
 8.3.  Neighbor Discovery Option
 
@@ -934,14 +942,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    the AD review.
 
 10.  Contributing Authors
-
-
-
-
-
-
-
-
 
 
 

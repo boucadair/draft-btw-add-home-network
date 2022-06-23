@@ -154,13 +154,13 @@
       target="RFC9250"></xref> in local networks.</t>
 
       <t>In particular, the document specifies how a local encrypted DNS
-      server can be discovered by connected hosts by means of DHCPv4 <xref
-      target="RFC2132"></xref>, DHCPv6 <xref target="RFC8415"></xref>, and
-      IPv6 Router Advertisement (RA) <xref target="RFC4861"></xref> options.
-      These options are designed to convey the following information: the DNS
-      Authentication Domain Name (ADN), a list of IP addresses, and a set of
-      service parameters. This procedure is called Discovery of
-      Network-designated Resolvers (DNR).</t>
+      server (e.g., local recursive server, local forwarder) can be discovered
+      by connected hosts by means of DHCPv4 <xref target="RFC2132"></xref>,
+      DHCPv6 <xref target="RFC8415"></xref>, and IPv6 Router Advertisement
+      (RA) <xref target="RFC4861"></xref> options. These options are designed
+      to convey the following information: the DNS Authentication Domain Name
+      (ADN), a list of IP addresses, and a set of service parameters. This
+      procedure is called Discovery of Network-designated Resolvers (DNR).</t>
 
       <t>The options defined in this document can be deployed in a variety of
       deployments (e.g., local networks with Customer Premises Equipment
@@ -529,8 +529,8 @@
             hangText="authentication-domain-name (variable length):">Includes
             the authentication domain name of the encrypted DNS server. This
             field is formatted as specified in Section 10 of <xref
-            target="RFC8415"></xref>. An example of the ADN is provided in
-            <xref target="fqdn"></xref>.</t>
+            target="RFC8415"></xref>. An example is provided in <xref
+            target="fqdn"></xref>.</t>
 
             <t hangText="Addr Length:">Indicates the length of included IPv4
             addresses in octets. It MUST be a multiple of 4 for
@@ -572,7 +572,7 @@
 
       <section title="DHCPv4 Client Behavior">
         <t>To discover an encrypted DNS server, the DHCPv4 client requests the
-        Encrypted DNS server by including OPTION_V4_DNR in a Parameter Request
+        encrypted DNS server by including OPTION_V4_DNR in a Parameter Request
         List option <xref target="RFC2132"></xref>.</t>
 
         <t>The DHCPv4 client MUST be prepared to receive multiple instances of
@@ -714,11 +714,11 @@
         content of DHCP and RA messages can be spoofed or modified by active
         attackers, such as compromised devices within the local network. An
         active attacker (Section 3.3 of <xref target="RFC3552"></xref>) can
-        spoof the DHCP/RA response to provide the attacker's Encrypted DNS
+        spoof the DHCP/RA response to provide the attacker's encrypted DNS
         server. Note that such an attacker can launch other attacks as
         discussed in Section 22 of <xref target="RFC8415"></xref>. The
         attacker can get a domain name with a domain-validated public
-        certificate from a CA and host an Encrypted DNS server.</t>
+        certificate from a CA and host an encrypted DNS server.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
@@ -802,6 +802,11 @@
         address this limitation, unique pre-shared keys can be created for
         each such devices and WPA-PSK is used (e.g., <xref
         target="IPSK"></xref>).</t>
+
+        <t>Note that filtering communications between devices at the Access
+        Point (AP) may prevent some of the aforementioned attacks. However,
+        such filtering may have negative implications on legitimate
+        communications between devices that are serviced by the same AP.</t>
       </section>
     </section>
 
