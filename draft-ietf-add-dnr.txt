@@ -748,9 +748,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
    The procedure for DNS configuration is the same as it is with any
    other Neighbor Discovery option [RFC4861].  In addition, the host
-   follows the procedure described in Section 5.3.1 of [RFC8106] with
-   the formatting requirements in Section 6.1 substituted for the length
-   validation.
+   follows the same procedure described in Section 5.3.1 of [RFC8106]
+   for processing received Encrypted DNS options with the formatting
+   requirements in Section 6.1 substituted for the length validation.
 
    The host MUST be prepared to receive multiple Encrypted DNS options
    in RAs.  These instances SHOULD be processed following their service
@@ -862,13 +862,13 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    This leads to the need for provisioning unique credentials for
    different clients.  Endpoints can be provisioned with unique
    credentials (username and password, typically) provided by the local
-   network administrator to mutually authenticate to the local WLAN AAP
-   (e.g., 802.1x Wireless User Authentication on OpenWRT [dot1x], EAP-
-   pwd [RFC8146]).  Not all endpoint devices (e.g., IoT devices) support
-   802.1x supplicant and need an alternate mechanism to connect to the
-   local network.  To address this limitation, unique pre-shared keys
-   can be created for each such devices and WPA-PSK is used (e.g.,
-   [IPSK]).
+   network administrator to mutually authenticate to the local WLAN
+   Access Point (e.g., 802.1x Wireless User Authentication on OpenWRT
+   [dot1x], EAP-pwd [RFC8146]).  Not all endpoint devices (e.g., IoT
+   devices) support 802.1x supplicant and need an alternate mechanism to
+   connect to the local network.  To address this limitation, unique
+   pre-shared keys can be created for each such devices and WPA-PSK is
+   used (e.g., [IPSK]).
 
    Note that filtering communications between devices at the Access
    Point (AP) may prevent some of the aforementioned attacks.  However,
