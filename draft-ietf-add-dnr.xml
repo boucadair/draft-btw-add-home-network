@@ -139,10 +139,10 @@
 
     <abstract>
       <t>The document specifies new DHCP and IPv6 Router Advertisement options
-      to discover encrypted DNS servers (e.g., DNS-over-HTTPS, DNS-over-TLS,
+      to discover encrypted DNS resolvers (e.g., DNS-over-HTTPS, DNS-over-TLS,
       DNS-over-QUIC). Particularly, it allows a host to learn an
       authentication domain name together with a list of IP addresses and a
-      set of service parameters to reach such encrypted DNS servers.</t>
+      set of service parameters to reach such encrypted DNS resolvers.</t>
     </abstract>
   </front>
 
@@ -154,23 +154,19 @@
       target="RFC9250"></xref> in local networks.</t>
 
       <t>In particular, the document specifies how a local encrypted DNS
-      server (e.g., local recursive server, local forwarder) can be discovered
-      by connected hosts by means of DHCPv4 <xref target="RFC2132"></xref>,
-      DHCPv6 <xref target="RFC8415"></xref>, and IPv6 Router Advertisement
-      (RA) <xref target="RFC4861"></xref> options. These options are designed
-      to convey the following information: the DNS Authentication Domain Name
-      (ADN), a list of IP addresses, and a set of service parameters. This
-      procedure is called Discovery of Network-designated Resolvers (DNR).</t>
+      resolver can be discovered by connected hosts by means of DHCPv4 <xref
+      target="RFC2132"></xref>, DHCPv6 <xref target="RFC8415"></xref>, and
+      IPv6 Router Advertisement (RA) <xref target="RFC4861"></xref> options.
+      These options are designed to convey the following information: the DNS
+      Authentication Domain Name (ADN), a list of IP addresses, and a set of
+      service parameters. This procedure is called Discovery of
+      Network-designated Resolvers (DNR).</t>
 
       <t>The options defined in this document can be deployed in a variety of
       deployments (e.g., local networks with Customer Premises Equipment
       (CPEs) that may or may not be managed by an Internet Service Provider
       (ISP), local networks with or without DNS forwarders). It is out of the
-      scope of this document to provide an inventory of such deployments.
-      Likewise, the document does not make any assumption whether unicast or
-      anycast (<xref target="RFC3258"></xref>) IP addresses are used to reach
-      DNS servers. The discovery of both address types is supported in
-      DNR.</t>
+      scope of this document to provide an inventory of such deployments.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -203,137 +199,165 @@
 
     <section anchor="RI" title="Overview">
       <t>This document describes how a DNS client can discover local encrypted
-      DNS servers using DHCP (Sections <xref format="counter"
+      DNS resolvers using DHCP (Sections <xref format="counter"
       target="DHCPv6"></xref> and <xref format="counter"
       target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
       target="RA"></xref>): Encrypted DNS options.</t>
 
       <t>These options configure an authentication domain name, a list of IPv6
-      addresses, and a set of service parameters of the encrypted DNS server.
-      More information about the design of these options is provided in the
-      following subsections.</t>
+      addresses, and a set of service parameters of the encrypted DNS
+      resolver. More information about the design of these options is provided
+      in the following subsections.</t>
 
       <section anchor="rationale" title="Configuration Data for Encrypted DNS">
-        <t>In order to allow for PKIX-based authentication between a DNS
-        client and an encrypted DNS server, the Encrypted DNS options are
-        designed to include an authentication domain name. This ADN is
-        presented as a reference identifier for DNS authentication purposes.
-        This design accommodates the current best practices for issuing
-        certificates as per Section 1.7.2 of <xref
-        target="RFC6125"></xref>:</t>
+        <t></t>
 
-        <t><figure>
-            <artwork><![CDATA[   |  Some certification authorities issue server certificates based on
+        <section title="ADN as the Reference Identifier for DNS Authentication">
+          <t>In order to allow for PKIX-based authentication between a DNS
+          client and an encrypted DNS resolver, the Encrypted DNS options are
+          designed to include an authentication domain name. This ADN is
+          presented as a reference identifier for DNS authentication purposes.
+          This design accommodates the current best practices for issuing
+          certificates as per Section 1.7.2 of <xref
+          target="RFC6125"></xref>:</t>
+
+          <t><figure>
+              <artwork><![CDATA[   |  Some certification authorities issue server certificates based on
    |  IP addresses, but preliminary evidence indicates that such
    |  certificates are a very small percentage (less than 1%) of issued
    |  certificates.]]></artwork>
-          </figure></t>
+            </figure></t>
+        </section>
 
-        <t>To avoid adding a dependency on another server to resolve the ADN,
-        the Encrypted DNS options return the IP address(es) to locate the
-        encrypted DNS server. These encrypted DNS servers may be hosted on the
-        same or distinct IP addresses. Such a decision is deployment
-        specific.</t>
+        <section title="Avoiding Dependency on External Resolvers">
+          <t>To avoid adding a dependency on another server to resolve the
+          ADN, the Encrypted DNS options return the IP address(es) to locate
+          the encrypted DNS resolver. These encrypted DNS resolvers may be
+          hosted on the same or distinct IP addresses. Such a decision is
+          deployment specific.</t>
 
-        <t>In order to optimize the size of discovery messages when all DNS
-        servers terminate on the same IP address, early versions of this
-        document considered relying upon the discovery mechanisms specified in
-        <xref target="RFC2132"></xref><xref target="RFC3646"></xref><xref
-        target="RFC8106"></xref> to retrieve a list of IP addresses to reach
-        their DNS servers. Nevertheless, this approach requires a client that
-        supports more than one encrypted DNS protocol (e.g., DoH and DoT) to
-        probe that list of IP addresses. To avoid such a probing, the options
-        defined in Sections <xref format="counter" target="DHCPv6"></xref>,
-        <xref format="counter" target="DHCP"></xref>, and <xref
-        format="counter" target="RA"></xref> associate an IP address with an
-        encrypted DNS protocol. No probing is required in such a design.</t>
+          <t>In order to optimize the size of discovery messages when all DNS
+          resolvers terminate on the same IP address, early versions of this
+          document considered relying upon the discovery mechanisms specified
+          in <xref target="RFC2132"></xref><xref target="RFC3646"></xref><xref
+          target="RFC8106"></xref> to retrieve a list of IP addresses to reach
+          their DNS resolvers. Nevertheless, this approach requires a client
+          that supports more than one encrypted DNS protocol (e.g., DoH and
+          DoT) to probe that list of IP addresses. To avoid such a probing,
+          the options defined in Sections <xref format="counter"
+          target="DHCPv6"></xref>, <xref format="counter"
+          target="DHCP"></xref>, and <xref format="counter"
+          target="RA"></xref> associate an IP address with an encrypted DNS
+          protocol. No probing is required in such a design.</t>
+        </section>
 
-        <t>A list of IP addresses to reach an encrypted DNS server may be
-        returned in an Encrypted DNS option to accommodate current deployments
-        relying upon primary and backup servers. Whether one or more IP
-        addresses are returned in an Encrypted DNS option is deployment
-        specific. For example, a router embedding a recursive server or a
-        forwarder has to include one single IP address pointing to one of its
-        LAN-facing interfaces. Typically, this IP address can be a private
-        IPv4 address, a link-local address, a Unique Local IPv6 unicast
-        Address (ULA), or a Global Unicast Address (GUA).</t>
+        <section title="Multiple IP Addresses">
+          <t>A list of IP addresses to reach an encrypted DNS resolver may be
+          returned in an Encrypted DNS option to accommodate current
+          deployments relying upon primary and backup resolvers. Also, DNR can
+          be used in contexts where other DNS redundancy schemes are used such
+          as the use of anycast <xref target="RFC4786"></xref>. Whether one or
+          more IP addresses are returned in an Encrypted DNS option is
+          deployment specific. For example, a router embedding a recursive
+          server or a forwarder has to include one single IP address pointing
+          to one of its LAN-facing interfaces. Typically, this IP address can
+          be a private IPv4 address, a link-local address, a Unique Local IPv6
+          unicast Address (ULA), or a Global Unicast Address (GUA). </t>
 
-        <t>If multiple IP addresses are to be returned in an Encrypted DNS
-        option, these addresses are ordered in the preference for use by the
-        client.</t>
+          <t>If multiple IP addresses are to be returned in an Encrypted DNS
+          option, these addresses are ordered in the preference for use by the
+          client.</t>
+        </section>
 
-        <t>Because distinct encrypted DNS protocols may be provisioned by a
-        network (e.g., DoT, DoH, and DoQ) and that some of these protocols may
-        make use of customized port numbers instead of default ones, the
-        Encrypted DNS options are designed to return a set of service
-        parameters. These parameters are encoded following the same rules for
-        encoding SvcParams in Section 2.1 of <xref
-        target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach may
-        increase the size of the options but it has the merit relying upon an
-        existing IANA registry and, thus, accommodating new encrypted DNS
-        protocols and service parameters that may be defined in the future. At
-        least the following service parameters are RECOMMENDED to be supported
-        by a DNR implementation:</t>
+        <section title="Why Not Separate Options for ADN and IP Addresses?">
+          <t>A single option is used to convey both the ADN and IP addresses
+          because otherwise means to correlate an IP address conveyed in an
+          option with an ADN conveyed in another option will be required if,
+          for example, more than one ADN is supported by the network.</t>
+        </section>
 
-        <t><list style="hanging">
-            <t hangText="alpn:">Used to indicate the set of supported
-            protocols (Section 7.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+        <section title="Encrypted DNS Options Ordering">
+          <t>The DHCP options defined in Sections <xref format="counter"
+          target="DHCPv6"></xref> and <xref format="counter"
+          target="DHCP"></xref> follow the option ordering guidelines in
+          Section 17 of <xref target="RFC7227"></xref>.</t>
 
-            <t hangText="port:">Used to indicate the target port number for
-            the encrypted DNS connection (Section 7.2 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+          <t>Likewise, the RA option (<xref format="default"
+          target="RA"></xref>) adheres to the recommendations in Section 9 of
+          <xref target="RFC4861"></xref>.</t>
+        </section>
 
-            <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
-            (Section 7.3 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+        <section title="Service Parameters">
+          <t>Because distinct encrypted DNS protocols may be provisioned by a
+          network (e.g., DoT, DoH, and DoQ) and that some of these protocols
+          may make use of customized port numbers instead of default ones, the
+          Encrypted DNS options are designed to return a set of service
+          parameters. These parameters are encoded following the same rules
+          for encoding SvcParams in Section 2.1 of <xref
+          target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach
+          may increase the size of the options but it has the merit relying
+          upon an existing IANA registry and, thus, accommodating new
+          encrypted DNS protocols and service parameters that may be defined
+          in the future. </t>
 
-            <t hangText="dohpath:">Used to supply a relative DoH URI Template
-            (Section 5.1 of <xref target="I-D.ietf-add-svcb-dns"></xref>).</t>
-          </list></t>
+          <t>At least the following service parameters are RECOMMENDED to be
+          supported by a DNR implementation:</t>
 
-        <t>A single option is used to convey both the ADN and IP addresses
-        because otherwise means to correlate an IP address conveyed in an
-        option with an ADN conveyed in another option will be required if, for
-        example, more than one ADN is supported by the network.</t>
+          <t><list style="hanging">
+              <t hangText="alpn:">Used to indicate the set of supported
+              protocols (Section 7.1 of <xref
+              target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
 
-        <t>The DHCP options defined in Sections <xref format="counter"
-        target="DHCPv6"></xref> and <xref format="counter"
-        target="DHCP"></xref> follow the option ordering guidelines in Section
-        17 of <xref target="RFC7227"></xref>. Likewise, the RA option (<xref
-        format="default" target="RA"></xref>) adheres to the recommendations
-        in Section 9 of <xref target="RFC4861"></xref>.</t>
+              <t hangText="port:">Used to indicate the target port number for
+              the encrypted DNS connection (Section 7.2 of <xref
+              target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
 
-        <t>ServiceMode (Section 2.4.3 of <xref
-        target="I-D.ietf-dnsop-svcb-https"></xref>) SHOULD be used because the
-        Encrypted DNS options are self-contained and do not require any
-        additional DNS queries. The reader may refer to <xref
-        target="RFC7969"></xref> for an overview of advanced capabilities that
-        are supported by DHCP servers to populate configuration data (e.g.,
-        issue DNS queries).</t>
+              <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
+              (Section 7.3 of <xref
+              target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
 
-        <t>In contexts where putting additional complexity on requesting hosts
-        is acceptable, returning an ADN only can be considered. The supplied
-        ADN will be processed by a host following the procedure in Section 5
-        of <xref target="I-D.ietf-add-ddr"></xref>. Note that this mode may be
-        subject to active attacks, which can be mitigated by DNSSEC.</t>
+              <t hangText="dohpath:">Used to supply a relative DoH URI
+              Template (Section 5.1 of <xref
+              target="I-D.ietf-add-svcb-dns"></xref>).</t>
+            </list></t>
+        </section>
 
-        <t>Other mechanisms may be considered in other contexts (e.g., secure
-        discovery) for the provisioning of encrypted DNS servers. It is
-        RECOMMENDED that at least the following DNR information is made
-        available to a requesting host:</t>
+        <section title="Service Mode vs ADN Only Mode">
+          <t>ServiceMode (Section 2.4.3 of <xref
+          target="I-D.ietf-dnsop-svcb-https"></xref>) SHOULD be used because
+          the Encrypted DNS options are self-contained and do not require any
+          additional DNS queries. The reader may refer to <xref
+          target="RFC7969"></xref> for an overview of advanced capabilities
+          that are supported by DHCP servers to populate configuration data
+          (e.g., issue DNS queries).</t>
 
-        <t><list style="symbols">
-            <t>A service priority whenever the discovery mechanism does not
-            rely on implicit ordering if multiple instances of the encrypted
-            DNS are used.</t>
+          <t>In contexts where putting additional complexity on requesting
+          hosts is acceptable, returning an ADN only can be considered. The
+          supplied ADN will be processed by a host following the procedure in
+          Section 5 of <xref target="I-D.ietf-add-ddr"></xref>. Note that this
+          mode may be subject to active attacks, which can be mitigated by
+          DNSSEC.</t>
+        </section>
 
-            <t>An authentication domain name.</t>
+        <section title="Recommended DNR Information ">
+          <t>Other mechanisms may be considered in other contexts (e.g.,
+          secure discovery) for the provisioning of encrypted DNS resolvers.
+          It is RECOMMENDED that at least the following DNR information is
+          made available to a requesting host:</t>
 
-            <t>A list of IP addresses to locate the encrypted DNS server.</t>
+          <t><list style="symbols">
+              <t>A service priority whenever the discovery mechanism does not
+              rely on implicit ordering if multiple instances of the encrypted
+              DNS are used.</t>
 
-            <t>A set of service parameters.</t>
-          </list></t>
+              <t>An authentication domain name.</t>
+
+              <t>A list of IP addresses to locate the encrypted DNS
+              resolver.</t>
+
+              <t>A set of service parameters.</t>
+            </list></t>
+        </section>
       </section>
 
       <section title="Handling Configuration Data Conflicts">
@@ -341,7 +365,7 @@
         DHCP, the rules discussed in Section 5.3.1 of <xref
         target="RFC8106"></xref> MUST be followed.</t>
 
-        <t>DHCP/RA options to discover encrypted DNS servers (including, DoH
+        <t>DHCP/RA options to discover encrypted DNS resolvers (including, DoH
         URI Templates) takes precedence over Discovery of Designated Resolvers
         (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to
         an external DNS resolver, which is susceptible to both internal and
@@ -353,9 +377,9 @@
         <t>If the local DNS client supports one of the discovered Encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
-        DNS session following the order of the discovered servers. The client
-        follows the mechanism discussed in Section 8 of <xref
-        target="RFC8310"></xref> to authenticate the DNS server certificate
+        DNS session following the order of the discovered resolvers. The
+        client follows the mechanism discussed in Section 8 of <xref
+        target="RFC8310"></xref> to authenticate the DNS resolver certificate
         using the authentication domain name conveyed in the Encrypted DNS
         options. ALPN-related considerations can be found in Section 6.1 of
         <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
@@ -367,7 +391,7 @@
         document. Nevertheless, it is out of the scope of this specification
         to discuss DNS selection of multi-interface devices. The reader may
         refer to <xref target="RFC6731"></xref> for a discussion of issues and
-        an example of DNS server selection for multi-interfaced devices.</t>
+        an example of DNS resolver selection for multi-interfaced devices.</t>
       </section>
     </section>
 
@@ -414,7 +438,7 @@
             field in octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">A
-            fully qualified domain name of the encrypted DNS server. This
+            fully qualified domain name of the encrypted DNS resolver. This
             field is formatted as specified in Section 10 of <xref
             target="RFC8415"></xref>.<vspace blankLines="1" />An example of
             the authentication-domain-name encoding is shown in <xref
@@ -434,9 +458,9 @@
             octets. It MUST be a multiple of 16 for ServiceMode.</t>
 
             <t hangText="ipv6-address(es) (variable length):">Indicates one or
-            more IPv6 addresses to reach the encrypted DNS server. An address
-            can be link-local, ULA, or GUA. The format of this field is shown
-            in <xref target="v6add"></xref>.<figure align="center"
+            more IPv6 addresses to reach the encrypted DNS resolver. An
+            address can be link-local, ULA, or GUA. The format of this field
+            is shown in <xref target="v6add"></xref>.<figure align="center"
                 anchor="v6add" title="Format of the IPv6 Addresses Field">
                 <artwork><![CDATA[+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                                                               |
@@ -468,14 +492,14 @@
       </section>
 
       <section title="DHCPv6 Client Behavior">
-        <t>To discover an encrypted DNS server, the DHCPv6 client MUST include
-        OPTION_V6_DNR in an Option Request Option (ORO), as in Sections
-        18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
+        <t>To discover an encrypted DNS resolver, the DHCPv6 client MUST
+        include OPTION_V6_DNR in an Option Request Option (ORO), as in
+        Sections 18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
         target="RFC8415"></xref>.</t>
 
         <t>The DHCPv6 client MUST be prepared to receive multiple instances of
         the OPTION_V6_DNR option; each option is to be treated as a separate
-        encrypted DNS server. These instances SHOULD be processed following
+        encrypted DNS resolver. These instances SHOULD be processed following
         their service priority (i.e., smaller service priority indicates a
         higher preference).</t>
 
@@ -531,7 +555,7 @@
 
             <t
             hangText="authentication-domain-name (variable length):">Includes
-            the authentication domain name of the encrypted DNS server. This
+            the authentication domain name of the encrypted DNS resolver. This
             field is formatted as specified in Section 10 of <xref
             target="RFC8415"></xref>. An example is provided in <xref
             target="fqdn"></xref>.</t>
@@ -541,7 +565,7 @@
             ServiceMode.</t>
 
             <t hangText="IPv4 Address(es) (variable length):">Indicates one or
-            more IPv4 addresses to reach the encrypted DNS server. Both
+            more IPv4 addresses to reach the encrypted DNS resolver. Both
             private and public IPv4 addresses can be included in this field.
             The format of this field is shown in <xref target="v4"></xref>.
             This format assumes that an IPv4 address is encoded as
@@ -575,13 +599,13 @@
       </section>
 
       <section title="DHCPv4 Client Behavior">
-        <t>To discover an encrypted DNS server, the DHCPv4 client requests the
-        encrypted DNS server by including OPTION_V4_DNR in a Parameter Request
-        List option <xref target="RFC2132"></xref>.</t>
+        <t>To discover an encrypted DNS resolver, the DHCPv4 client requests
+        the encrypted DNS resolver by including OPTION_V4_DNR in a Parameter
+        Request List option <xref target="RFC2132"></xref>.</t>
 
         <t>The DHCPv4 client MUST be prepared to receive multiple instances of
         the OPTION_V4_DNR option; each option is to be treated as a separate
-        encrypted DNS server. These instances SHOULD be processed following
+        encrypted DNS resolver. These instances SHOULD be processed following
         their service priority (i.e., smaller service priority indicates a
         higher preference).</t>
 
@@ -655,7 +679,7 @@
             octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">The
-            domain name of the encrypted DNS server. This field is formatted
+            domain name of the encrypted DNS resolver. This field is formatted
             as specified in Section 10 of <xref target="RFC8415"></xref>.</t>
 
             <t hangText="Addr Length:">16-bit unsigned integer. This field
@@ -663,7 +687,7 @@
             be a multiple of 16 for ServiceMode.</t>
 
             <t hangText="ipv6-address(es) (variable length):">One or more IPv6
-            addresses of the encrypted DNS server. An address can be
+            addresses of the encrypted DNS resolver. An address can be
             link-local, ULA, or GUA. <vspace blankLines="1" />All of the
             addresses share the same Lifetime value. Similar to <xref
             target="RFC8106"></xref>, if it is desirable to have different
@@ -719,10 +743,10 @@
         attackers, such as compromised devices within the local network. An
         active attacker (Section 3.3 of <xref target="RFC3552"></xref>) can
         spoof the DHCP/RA response to provide the attacker's encrypted DNS
-        server. Note that such an attacker can launch other attacks as
+        resolver. Note that such an attacker can launch other attacks as
         discussed in Section 22 of <xref target="RFC8415"></xref>. The
         attacker can get a domain name with a domain-validated public
-        certificate from a CA and host an encrypted DNS server.</t>
+        certificate from a CA and host an encrypted DNS resolver.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
@@ -742,18 +766,19 @@
           </list></t>
 
         <t>The above mechanisms would ensure that the endpoint receives the
-        correct configuration information of the encrypted DNS servers
+        correct configuration information of the encrypted DNS resolvers
         selected by the DHCP server (or RA sender), but cannot provide any
         information about the DHCP server or the entity hosting the DHCP
         server (or RA sender) .</t>
 
-        <t>Encrypted DNS sessions with rogue servers that spoof the IP address
-        of a DNS server will fail because the DNS client will fail to
-        authenticate that rogue server based upon PKIX authentication <xref
-        target="RFC6125"></xref>, particularly the authentication domain name
-        in the Encrypted DNS Option. DNS clients that ignore authentication
-        failures and accept spoofed certificates will be subject to attacks
-        (e.g., redirect to malicious servers, intercept sensitive data).</t>
+        <t>Encrypted DNS sessions with rogue resolvers that spoof the IP
+        address of a DNS resolver will fail because the DNS client will fail
+        to authenticate that rogue resolver based upon PKIX authentication
+        <xref target="RFC6125"></xref>, particularly the authentication domain
+        name in the Encrypted DNS Option. DNS clients that ignore
+        authentication failures and accept spoofed certificates will be
+        subject to attacks (e.g., redirect to malicious resolvers, intercept
+        sensitive data).</t>
 
         <t>Encrypted DNS connections received from outside the local network
         MUST be discarded by the encrypted DNS forwarder in the CPE. This
@@ -763,9 +788,9 @@
 
       <section title="Deletion Attacks">
         <t>If the DHCP responses or RAs are dropped by the attacker, the
-        client can fallback to use a preconfigured encrypted DNS server.
-        However, the use of policies to select servers is out of the scope of
-        this document.</t>
+        client can fallback to use a preconfigured encrypted DNS resolver.
+        However, the use of policies to select resolvers is out of the scope
+        of this document.</t>
 
         <t>Note that deletion attack is not specific to DHCP/RA.</t>
       </section>
@@ -773,7 +798,7 @@
       <section title="Passive Attacks">
         <t>A passive attacker (Section 3.2 of <xref target="RFC3552"></xref>)
         can identify a host is using DHCP/RA to discover an encrypted DNS
-        server and can infer that host is capable of using DoH/DoT/DoQ to
+        resolver and can infer that host is capable of using DoH/DoT/DoQ to
         encrypt DNS messages. However, a passive attacker cannot spoof or
         modify DHCP/RA messages.</t>
       </section>
@@ -784,7 +809,7 @@
         target="Evil-Twin"></xref>, <xref target="Krack"></xref>, <xref
         target="Dragonblood"></xref>). Because of these attacks, only
         cryptographically authenticated communications are trusted on WLANs.
-        This means that an information (e.g., NTP server, DNS server, domain
+        This means that an information (e.g., NTP server, DNS resolver, domain
         search list) provided by such networks via DHCP, DHCPv6, or RA are
         untrusted because DHCP and RA messages are not authenticated.</t>
 
@@ -795,22 +820,22 @@
         local networks because such a WLAN authentication lacks peer entity
         authentication.</t>
 
+        <t>Note that filtering communications between devices at the Access
+        Point (AP) may prevent some of the aforementioned attacks. However,
+        such filtering might have negative implications on legitimate
+        communications between devices that are serviced by the same AP.</t>
+
         <t>This leads to the need for provisioning unique credentials for
         different clients. Endpoints can be provisioned with unique
         credentials (username and password, typically) provided by the local
-        network administrator to mutually authenticate to the local WLAN
-        Access Point (e.g., 802.1x Wireless User Authentication on OpenWRT
-        <xref target="dot1x"></xref>, EAP-pwd <xref target="RFC8146"></xref>).
-        Not all endpoint devices (e.g., IoT devices) support 802.1x supplicant
-        and need an alternate mechanism to connect to the local network. To
+        network administrator to mutually authenticate to the local WLAN AAP
+        (e.g., 802.1x Wireless User Authentication on OpenWRT <xref
+        target="dot1x"></xref>, EAP-pwd <xref target="RFC8146"></xref>). Not
+        all endpoint devices (e.g., IoT devices) support 802.1x supplicant and
+        need an alternate mechanism to connect to the local network. To
         address this limitation, unique pre-shared keys can be created for
         each such devices and WPA-PSK is used (e.g., <xref
         target="IPSK"></xref>).</t>
-
-        <t>Note that filtering communications between devices at the Access
-        Point (AP) may prevent some of the aforementioned attacks. However,
-        such filtering may have negative implications on legitimate
-        communications between devices that are serviced by the same AP.</t>
       </section>
     </section>
 
@@ -902,7 +927,7 @@
       <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
 
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
-      the AD review. </t>
+      the AD review.</t>
     </section>
 
     <section title="Contributing Authors">
@@ -983,6 +1008,8 @@
       <?rfc include='reference.RFC.7969'?>
 
       <?rfc include='reference.RFC.3258'?>
+
+      <?rfc include='reference.RFC.4786'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
