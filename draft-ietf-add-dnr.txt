@@ -97,7 +97,7 @@ Table of Contents
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  14
      7.1.  Spoofing Attacks  . . . . . . . . . . . . . . . . . . . .  14
      7.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  15
-     7.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  15
+     7.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  16
      7.4.  Wireless Security - Authentication Attacks  . . . . . . .  16
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
      8.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  16
@@ -748,9 +748,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
    The procedure for DNS configuration is the same as it is with any
    other Neighbor Discovery option [RFC4861].  In addition, the host
-   follows the same procedure described in Section 5.3.1 of [RFC8106]
-   for processing received Encrypted DNS options with the formatting
-   requirements in Section 6.1 substituted for the length validation.
+   follows the same procedure as the one described in Section 5.3.1 of
+   [RFC8106] for processing received Encrypted DNS options with the
+   formatting requirements in Section 6.1 substituted for the length
+   validation.
 
    The host MUST be prepared to receive multiple Encrypted DNS options
    in RAs.  These instances SHOULD be processed following their service
@@ -775,9 +776,8 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    validated public certificate from a CA and host an encrypted DNS
    resolver.
 
-   Attacks of spoofed or modified DHCP responses and RA messages by
-   attackers within the local network may be mitigated by making use of
-   the following mechanisms:
+
+
 
 
 
@@ -785,6 +785,10 @@ Boucadair, et al.       Expires 26 December 2022               [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   Attacks of spoofed or modified DHCP responses and RA messages by
+   attackers within the local network may be mitigated by making use of
+   the following mechanisms:
 
    *  DHCPv6-Shield described in [RFC7610], the router (e.g., a border
       router, a CPE) discards DHCP response messages received from any
@@ -825,12 +829,8 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
    Note that deletion attack is not specific to DHCP/RA.
 
-7.3.  Passive Attacks
 
-   A passive attacker (Section 3.2 of [RFC3552]) can identify a host is
-   using DHCP/RA to discover an encrypted DNS resolver and can infer
-   that host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
-   However, a passive attacker cannot spoof or modify DHCP/RA messages.
+
 
 
 
@@ -841,6 +841,13 @@ Boucadair, et al.       Expires 26 December 2022               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+7.3.  Passive Attacks
+
+   A passive attacker (Section 3.2 of [RFC3552]) can identify a host is
+   using DHCP/RA to discover an encrypted DNS resolver and can infer
+   that host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
+   However, a passive attacker cannot spoof or modify DHCP/RA messages.
 
 7.4.  Wireless Security - Authentication Attacks
 
@@ -878,14 +885,7 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    IANA is requested to assign the following new DHCPv6 Option Code in
    the registry maintained in [DHCPV6].
 
-    +=======+===============+============+===========+================+
-    | Value | Description   | Client ORO | Singleton | Reference      |
-    |       |               |            | Option    |                |
-    +=======+===============+============+===========+================+
-    | TBA1  | OPTION_V6_DNR | Yes        | No        | [ThisDocument] |
-    +-------+---------------+------------+-----------+----------------+
 
-                                  Table 1
 
 
 
@@ -896,6 +896,16 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 Boucadair, et al.       Expires 26 December 2022               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
+
+
+    +=======+===============+============+===========+================+
+    | Value | Description   | Client ORO | Singleton | Reference      |
+    |       |               |            | Option    |                |
+    +=======+===============+============+===========+================+
+    | TBA1  | OPTION_V6_DNR | Yes        | No        | [ThisDocument] |
+    +-------+---------------+------------+-----------+----------------+
+
+                                  Table 1
 
 
 8.2.  DHCPv4 Option
@@ -937,6 +947,13 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    Thanks to Mark Nottingham for the feedback on HTTP redirection that
    was discussed in previous versions of this specification.
 
+
+
+Boucadair, et al.       Expires 26 December 2022               [Page 17]
+
+Internet-Draft  Discovery of Network-designated Resolver       June 2022
+
+
    The use of DHCP to retrieve an authentication domain name was
    discussed in Section 7.3.1 of [RFC8310] and
    [I-D.pusateri-dhc-dns-driu].
@@ -945,14 +962,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
    Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
    the AD review.
-
-
-
-
-Boucadair, et al.       Expires 26 December 2022               [Page 17]
-
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
-
 
 10.  Contributing Authors
 
@@ -993,6 +1002,14 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+Boucadair, et al.       Expires 26 December 2022               [Page 18]
+
+Internet-Draft  Discovery of Network-designated Resolver       June 2022
+
+
    [RFC2132]  Alexander, S. and R. Droms, "DHCP Options and BOOTP Vendor
               Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
               <https://www.rfc-editor.org/info/rfc2132>.
@@ -1001,14 +1018,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               Dynamic Host Configuration Protocol (DHCPv4)", RFC 3396,
               DOI 10.17487/RFC3396, November 2002,
               <https://www.rfc-editor.org/info/rfc3396>.
-
-
-
-
-Boucadair, et al.       Expires 26 December 2022               [Page 18]
-
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
-
 
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
@@ -1049,15 +1058,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               Dragonfly Handshake of WPA3 and EAP-pwd",
               <https://papers.mathyvanhoef.com/dragonblood.pdf>.
 
-   [Evil-Twin]
-              The Unicode Consortium, "Evil twin (wireless networks)",
-              <https://en.wikipedia.org/wiki/
-              Evil_twin_(wireless_networks)>.
-
-
-
-
-
 
 
 
@@ -1065,6 +1065,11 @@ Boucadair, et al.       Expires 26 December 2022               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   [Evil-Twin]
+              The Unicode Consortium, "Evil twin (wireless networks)",
+              <https://en.wikipedia.org/wiki/
+              Evil_twin_(wireless_networks)>.
 
    [I-D.ietf-add-ddr]
               Pauly, T., Kinnear, E., Wood, C. A., McManus, P., and T.
@@ -1106,11 +1111,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               Services", BCP 126, RFC 4786, DOI 10.17487/RFC4786,
               December 2006, <https://www.rfc-editor.org/info/rfc4786>.
 
-   [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
-              Capabilities in Customer Premises Equipment (CPE) for
-              Providing Residential IPv6 Internet Service", RFC 6092,
-              DOI 10.17487/RFC6092, January 2011,
-              <https://www.rfc-editor.org/info/rfc6092>.
 
 
 
@@ -1121,6 +1121,12 @@ Boucadair, et al.       Expires 26 December 2022               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
+              Capabilities in Customer Premises Equipment (CPE) for
+              Providing Residential IPv6 Internet Service", RFC 6092,
+              DOI 10.17487/RFC6092, January 2011,
+              <https://www.rfc-editor.org/info/rfc6092>.
 
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
@@ -1164,12 +1170,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               DOI 10.17487/RFC7969, October 2016,
               <https://www.rfc-editor.org/info/rfc7969>.
 
-   [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
-              to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
-              <https://www.rfc-editor.org/info/rfc8146>.
-
-
-
 
 
 
@@ -1177,6 +1177,10 @@ Boucadair, et al.       Expires 26 December 2022               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
+              to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
+              <https://www.rfc-editor.org/info/rfc8146>.
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -1220,10 +1224,6 @@ Authors' Addresses
    Email: dwing-ietf@fuggles.com
 
 
-   Neil Cook
-   Open-Xchange
-   United Kingdom
-   Email: neil.cook@noware.co.uk
 
 
 
@@ -1234,16 +1234,16 @@ Boucadair, et al.       Expires 26 December 2022               [Page 22]
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
+   Neil Cook
+   Open-Xchange
+   United Kingdom
+   Email: neil.cook@noware.co.uk
+
+
    Tommy Jensen
    Microsoft
    United States of America
    Email: tojens@microsoft.com
-
-
-
-
-
-
 
 
 

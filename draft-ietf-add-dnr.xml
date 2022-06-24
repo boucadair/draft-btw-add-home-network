@@ -725,10 +725,11 @@
       <section title="IPv6 Host Behavior">
         <t>The procedure for DNS configuration is the same as it is with any
         other Neighbor Discovery option <xref target="RFC4861"></xref>. In
-        addition, the host follows the same procedure described in Section
-        5.3.1 of <xref target="RFC8106"></xref> for processing received
-        Encrypted DNS options with the formatting requirements in <xref
-        target="RA-ADN"></xref> substituted for the length validation.</t>
+        addition, the host follows the same procedure as the one described in
+        Section 5.3.1 of <xref target="RFC8106"></xref> for processing
+        received Encrypted DNS options with the formatting requirements in
+        <xref target="RA-ADN"></xref> substituted for the length
+        validation.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
         in RAs. These instances SHOULD be processed following their service
