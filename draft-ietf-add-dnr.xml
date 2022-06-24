@@ -291,8 +291,8 @@
           encrypted DNS protocols and service parameters that may be defined
           in the future. </t>
 
-          <t>At least the following service parameters are RECOMMENDED to be
-          supported by a DNR implementation:</t>
+          <t>The following service parameters MUST be supported by a DNR
+          implementation:</t>
 
           <t><list style="hanging">
               <t hangText="alpn:">Used to indicate the set of supported
@@ -302,7 +302,10 @@
               <t hangText="port:">Used to indicate the target port number for
               the encrypted DNS connection (Section 7.2 of <xref
               target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+            </list></t>
 
+          <t>In addition, the following service parameters are RECOMMENDED to
+          be supported by a DNR implementation:<list style="hanging">
               <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
               (Section 7.3 of <xref
               target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
