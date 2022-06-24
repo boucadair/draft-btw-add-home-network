@@ -836,11 +836,6 @@
         address this limitation, unique pre-shared keys can be created for
         each such devices and WPA-PSK is used (e.g., <xref
         target="IPSK"></xref>).</t>
-
-        <t>Note that filtering communications between devices at the Access
-        Point (AP) may prevent some of the aforementioned attacks. However,
-        such filtering might have negative implications on legitimate
-        communications between devices that are serviced by the same AP.</t>
       </section>
     </section>
 
