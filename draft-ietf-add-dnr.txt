@@ -76,13 +76,13 @@ Table of Contents
        3.1.1.  ADN as the Reference Identifier for DNS
                Authentication  . . . . . . . . . . . . . . . . . . .   4
        3.1.2.  Avoiding Dependency on External Resolvers . . . . . .   4
-       3.1.3.  Multiple IP Addresses . . . . . . . . . . . . . . . .   5
+       3.1.3.  Single vs. Multiple IP Addresses  . . . . . . . . . .   5
        3.1.4.  Why Not Separate Options for ADN and IP Addresses?  .   5
-       3.1.5.  Encrypted DNS Options Ordering  . . . . . . . . . . .   5
-       3.1.6.  Service Parameters  . . . . . . . . . . . . . . . . .   5
-       3.1.7.  Service Mode vs ADN Only Mode . . . . . . . . . . . .   6
+       3.1.5.  Service Parameters  . . . . . . . . . . . . . . . . .   5
+       3.1.6.  Service Mode vs ADN Only Mode . . . . . . . . . . . .   6
+       3.1.7.  Encrypted DNS Options Ordering  . . . . . . . . . . .   6
        3.1.8.  Recommended DNR Information . . . . . . . . . . . . .   6
-     3.2.  Handling Configuration Data Conflicts . . . . . . . . . .   6
+     3.2.  Handling Configuration Data Conflicts . . . . . . . . . .   7
      3.3.  Connection Establishment  . . . . . . . . . . . . . . . .   7
      3.4.  Multihoming Considerations  . . . . . . . . . . . . . . .   7
    4.  DHCPv6 Encrypted DNS Option . . . . . . . . . . . . . . . . .   7
@@ -226,19 +226,20 @@ Boucadair, et al.       Expires 26 December 2022                [Page 4]
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
-3.1.3.  Multiple IP Addresses
+3.1.3.  Single vs. Multiple IP Addresses
 
    A list of IP addresses to reach an encrypted DNS resolver may be
    returned in an Encrypted DNS option to accommodate current
    deployments relying upon primary and backup resolvers.  Also, DNR can
-   be used in contexts where other DNS redundancy schemes are used such
-   as the use of anycast [RFC4786].  Whether one or more IP addresses
-   are returned in an Encrypted DNS option is deployment specific.  For
-   example, a router embedding a recursive server or a forwarder has to
-   include one single IP address pointing to one of its LAN-facing
-   interfaces.  Typically, this IP address can be a private IPv4
-   address, a link-local address, a Unique Local IPv6 unicast Address
-   (ULA), or a Global Unicast Address (GUA).
+   be used in contexts where other DNS redundancy schemes (e.g., anycast
+   as in BCP 126 [RFC4786]) are used.
+
+   Whether one or more IP addresses are returned in an Encrypted DNS
+   option is deployment specific.  For example, a router embedding a
+   recursive server or a forwarder has to include one single IP address
+   pointing to one of its LAN-facing interfaces.  Typically, this IP
+   address can be a private IPv4 address, a link-local address, a Unique
+   Local IPv6 unicast Address (ULA), or a Global Unicast Address (GUA).
 
    If multiple IP addresses are to be returned in an Encrypted DNS
    option, these addresses are ordered in the preference for use by the
@@ -251,15 +252,7 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    option with an ADN conveyed in another option will be required if,
    for example, more than one ADN is supported by the network.
 
-3.1.5.  Encrypted DNS Options Ordering
-
-   The DHCP options defined in Sections 4 and 5 follow the option
-   ordering guidelines in Section 17 of [RFC7227].
-
-   Likewise, the RA option (Section 6) adheres to the recommendations in
-   Section 9 of [RFC4861].
-
-3.1.6.  Service Parameters
+3.1.5.  Service Parameters
 
    Because distinct encrypted DNS protocols may be provisioned by a
    network (e.g., DoT, DoH, and DoQ) and that some of these protocols
@@ -275,6 +268,13 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    At least the following service parameters are RECOMMENDED to be
    supported by a DNR implementation:
 
+   alpn:  Used to indicate the set of supported protocols (Section 7.1
+      of [I-D.ietf-dnsop-svcb-https]).
+
+   port:  Used to indicate the target port number for the encrypted DNS
+      connection (Section 7.2 of [I-D.ietf-dnsop-svcb-https]).
+
+
 
 
 Boucadair, et al.       Expires 26 December 2022                [Page 5]
@@ -282,19 +282,13 @@ Boucadair, et al.       Expires 26 December 2022                [Page 5]
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
-   alpn:  Used to indicate the set of supported protocols (Section 7.1
-      of [I-D.ietf-dnsop-svcb-https]).
-
-   port:  Used to indicate the target port number for the encrypted DNS
-      connection (Section 7.2 of [I-D.ietf-dnsop-svcb-https]).
-
    ech:  Used to enable Encrypted ClientHello (ECH) (Section 7.3 of
       [I-D.ietf-dnsop-svcb-https]).
 
    dohpath:  Used to supply a relative DoH URI Template (Section 5.1 of
       [I-D.ietf-add-svcb-dns]).
 
-3.1.7.  Service Mode vs ADN Only Mode
+3.1.6.  Service Mode vs ADN Only Mode
 
    ServiceMode (Section 2.4.3 of [I-D.ietf-dnsop-svcb-https]) SHOULD be
    used because the Encrypted DNS options are self-contained and do not
@@ -308,6 +302,14 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    ADN will be processed by a host following the procedure in Section 5
    of [I-D.ietf-add-ddr].  Note that this mode may be subject to active
    attacks, which can be mitigated by DNSSEC.
+
+3.1.7.  Encrypted DNS Options Ordering
+
+   The DHCP options defined in Sections 4 and 5 follow the option
+   ordering guidelines in Section 17 of [RFC7227].
+
+   Likewise, the RA option (Section 6) adheres to the recommendations in
+   Section 9 of [RFC4861].
 
 3.1.8.  Recommended DNR Information
 
@@ -326,10 +328,8 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
    *  A set of service parameters.
 
-3.2.  Handling Configuration Data Conflicts
 
-   If the encrypted DNS is discovered by a host using both RA and DHCP,
-   the rules discussed in Section 5.3.1 of [RFC8106] MUST be followed.
+
 
 
 
@@ -337,6 +337,11 @@ Boucadair, et al.       Expires 26 December 2022                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+3.2.  Handling Configuration Data Conflicts
+
+   If the encrypted DNS is discovered by a host using both RA and DHCP,
+   the rules discussed in Section 5.3.1 of [RFC8106] MUST be followed.
 
    DHCP/RA options to discover encrypted DNS resolvers (including, DoH
    URI Templates) takes precedence over Discovery of Designated
@@ -372,11 +377,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 4.1.  Option Format
 
    The format of the DHCPv6 Encrypted DNS option is shown in Figure 1.
-
-
-
-
-
 
 
 
@@ -859,11 +859,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    networks because such a WLAN authentication lacks peer entity
    authentication.
 
-   Note that filtering communications between devices at the Access
-   Point (AP) may prevent some of the aforementioned attacks.  However,
-   such filtering might have negative implications on legitimate
-   communications between devices that are serviced by the same AP.
-
    This leads to the need for provisioning unique credentials for
    different clients.  Endpoints can be provisioned with unique
    credentials (username and password, typically) provided by the local
@@ -874,6 +869,11 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    local network.  To address this limitation, unique pre-shared keys
    can be created for each such devices and WPA-PSK is used (e.g.,
    [IPSK]).
+
+   Note that filtering communications between devices at the Access
+   Point (AP) may prevent some of the aforementioned attacks.  However,
+   such filtering might have negative implications on legitimate
+   communications between devices that are serviced by the same AP.
 
 8.  IANA Considerations
 
@@ -1097,10 +1097,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               <http://www.iana.org/assignments/icmpv6-parameters/
               icmpv6-parameters.xhtml#icmpv6-parameters-5>.
 
-   [RFC3258]  Hardie, T., "Distributing Authoritative Name Servers via
-              Shared Unicast Addresses", RFC 3258, DOI 10.17487/RFC3258,
-              April 2002, <https://www.rfc-editor.org/info/rfc3258>.
-
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
               Text on Security Considerations", BCP 72, RFC 3552,
               DOI 10.17487/RFC3552, July 2003,
@@ -1114,6 +1110,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    [RFC4786]  Abley, J. and K. Lindqvist, "Operation of Anycast
               Services", BCP 126, RFC 4786, DOI 10.17487/RFC4786,
               December 2006, <https://www.rfc-editor.org/info/rfc4786>.
+
+
+
+
 
 
 

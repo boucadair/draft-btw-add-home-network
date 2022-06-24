@@ -251,18 +251,20 @@
           protocol. No probing is required in such a design.</t>
         </section>
 
-        <section title="Multiple IP Addresses">
+        <section title="Single vs. Multiple IP Addresses">
           <t>A list of IP addresses to reach an encrypted DNS resolver may be
           returned in an Encrypted DNS option to accommodate current
           deployments relying upon primary and backup resolvers. Also, DNR can
-          be used in contexts where other DNS redundancy schemes are used such
-          as the use of anycast <xref target="RFC4786"></xref>. Whether one or
-          more IP addresses are returned in an Encrypted DNS option is
-          deployment specific. For example, a router embedding a recursive
-          server or a forwarder has to include one single IP address pointing
-          to one of its LAN-facing interfaces. Typically, this IP address can
-          be a private IPv4 address, a link-local address, a Unique Local IPv6
-          unicast Address (ULA), or a Global Unicast Address (GUA). </t>
+          be used in contexts where other DNS redundancy schemes (e.g.,
+          anycast as in BCP 126 <xref target="RFC4786"></xref>) are used. </t>
+
+          <t>Whether one or more IP addresses are returned in an Encrypted DNS
+          option is deployment specific. For example, a router embedding a
+          recursive server or a forwarder has to include one single IP address
+          pointing to one of its LAN-facing interfaces. Typically, this IP
+          address can be a private IPv4 address, a link-local address, a
+          Unique Local IPv6 unicast Address (ULA), or a Global Unicast Address
+          (GUA). </t>
 
           <t>If multiple IP addresses are to be returned in an Encrypted DNS
           option, these addresses are ordered in the preference for use by the
@@ -274,17 +276,6 @@
           because otherwise means to correlate an IP address conveyed in an
           option with an ADN conveyed in another option will be required if,
           for example, more than one ADN is supported by the network.</t>
-        </section>
-
-        <section title="Encrypted DNS Options Ordering">
-          <t>The DHCP options defined in Sections <xref format="counter"
-          target="DHCPv6"></xref> and <xref format="counter"
-          target="DHCP"></xref> follow the option ordering guidelines in
-          Section 17 of <xref target="RFC7227"></xref>.</t>
-
-          <t>Likewise, the RA option (<xref format="default"
-          target="RA"></xref>) adheres to the recommendations in Section 9 of
-          <xref target="RFC4861"></xref>.</t>
         </section>
 
         <section title="Service Parameters">
@@ -339,7 +330,18 @@
           DNSSEC.</t>
         </section>
 
-        <section title="Recommended DNR Information ">
+        <section title="Encrypted DNS Options Ordering">
+          <t>The DHCP options defined in Sections <xref format="counter"
+          target="DHCPv6"></xref> and <xref format="counter"
+          target="DHCP"></xref> follow the option ordering guidelines in
+          Section 17 of <xref target="RFC7227"></xref>.</t>
+
+          <t>Likewise, the RA option (<xref format="default"
+          target="RA"></xref>) adheres to the recommendations in Section 9 of
+          <xref target="RFC4861"></xref>.</t>
+        </section>
+
+        <section title="Recommended DNR Information">
           <t>Other mechanisms may be considered in other contexts (e.g.,
           secure discovery) for the provisioning of encrypted DNS resolvers.
           It is RECOMMENDED that at least the following DNR information is
@@ -820,11 +822,6 @@
         local networks because such a WLAN authentication lacks peer entity
         authentication.</t>
 
-        <t>Note that filtering communications between devices at the Access
-        Point (AP) may prevent some of the aforementioned attacks. However,
-        such filtering might have negative implications on legitimate
-        communications between devices that are serviced by the same AP.</t>
-
         <t>This leads to the need for provisioning unique credentials for
         different clients. Endpoints can be provisioned with unique
         credentials (username and password, typically) provided by the local
@@ -836,6 +833,11 @@
         address this limitation, unique pre-shared keys can be created for
         each such devices and WPA-PSK is used (e.g., <xref
         target="IPSK"></xref>).</t>
+
+        <t>Note that filtering communications between devices at the Access
+        Point (AP) may prevent some of the aforementioned attacks. However,
+        such filtering might have negative implications on legitimate
+        communications between devices that are serviced by the same AP.</t>
       </section>
     </section>
 
@@ -1006,8 +1008,6 @@
       <?rfc include='reference.RFC.7227'?>
 
       <?rfc include='reference.RFC.7969'?>
-
-      <?rfc include='reference.RFC.3258'?>
 
       <?rfc include='reference.RFC.4786'?>
 
