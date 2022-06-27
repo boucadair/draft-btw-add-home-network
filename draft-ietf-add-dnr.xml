@@ -316,14 +316,14 @@
             </list></t>
         </section>
 
-        <section title="Service Mode vs ADN Only Mode">
-          <t>ServiceMode (Section 2.4.3 of <xref
-          target="I-D.ietf-dnsop-svcb-https"></xref>) SHOULD be used because
-          the Encrypted DNS options are self-contained and do not require any
-          additional DNS queries. The reader may refer to <xref
-          target="RFC7969"></xref> for an overview of advanced capabilities
-          that are supported by DHCP servers to populate configuration data
-          (e.g., issue DNS queries).</t>
+        <section title="ADN Only Mode">
+          <t>The provisioning mode, in which an ADN, a list of IP addresses,
+          and a set of service parameters of the encrypted DNS resolver are
+          supplied to a host, SHOULD be used because the Encrypted DNS options
+          are self-contained and do not require any additional DNS queries.
+          The reader may refer to <xref target="RFC7969"></xref> for an
+          overview of advanced capabilities that are supported by DHCP servers
+          to populate configuration data (e.g., issue DNS queries).</t>
 
           <t>In contexts where putting additional complexity on requesting
           hosts is acceptable, returning an ADN only can be considered. The
@@ -383,7 +383,7 @@
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
         DNS session following the order of the discovered resolvers. The
-        client follows the mechanism discussed in Section 8 of <xref
+        client follows the mechanism discussed in Section 8.1 of <xref
         target="RFC8310"></xref> to authenticate the DNS resolver certificate
         using the authentication domain name conveyed in the Encrypted DNS
         options. ALPN-related considerations can be found in Section 6.1 of
@@ -460,7 +460,7 @@
               </figure></t>
 
             <t hangText="Addr Length:">Length of enclosed IPv6 addresses in
-            octets. It MUST be a multiple of 16 for ServiceMode.</t>
+            octets. When present, it MUST be a multiple of 16.</t>
 
             <t hangText="ipv6-address(es) (variable length):">Indicates one or
             more IPv6 addresses to reach the encrypted DNS resolver. An
@@ -589,8 +589,7 @@
             target="fqdn"></xref>.</t>
 
             <t hangText="Addr Length:">Indicates the length of included IPv4
-            addresses in octets. It MUST be a multiple of 4 for
-            ServiceMode.</t>
+            addresses in octets. When present, it MUST be a multiple of 4.</t>
 
             <t hangText="IPv4 Address(es) (variable length):">Indicates one or
             more IPv4 addresses to reach the encrypted DNS resolver. Both
@@ -712,8 +711,8 @@
             as specified in Section 10 of <xref target="RFC8415"></xref>.</t>
 
             <t hangText="Addr Length:">16-bit unsigned integer. This field
-            indicates the length of enclosed IPv6 addresses in octets. It MUST
-            be a multiple of 16 for ServiceMode.</t>
+            indicates the length of enclosed IPv6 addresses in octets. When
+            present, it MUST be a multiple of 16.</t>
 
             <t hangText="ipv6-address(es) (variable length):">One or more IPv6
             addresses of the encrypted DNS resolver. An address can be
@@ -871,29 +870,16 @@
         <t>IANA is requested to assign the following new DHCPv6 Option Code in
         the registry maintained in <xref target="DHCPV6"></xref>.</t>
 
-        <texttable>
-          <ttcol>Value</ttcol>
+        <t><figure>
+            <artwork align="center"><![CDATA[+=======+===============+============+===========+================+
+| Value | Description   | Client ORO | Singleton | Reference      |
+|       |               |            | Option    |                |
++=======+===============+============+===========+================+
+| TBA1  | OPTION_V6_DNR | Yes        | No        | [ThisDocument] |
++-------+---------------+------------+-----------+----------------+
 
-          <ttcol>Description</ttcol>
-
-          <ttcol>Client ORO</ttcol>
-
-          <ttcol>Singleton Option</ttcol>
-
-          <ttcol>Reference</ttcol>
-
-          <c>TBA1</c>
-
-          <c>OPTION_V6_DNR</c>
-
-          <c>Yes</c>
-
-          <c>No</c>
-
-          <c>[ThisDocument]</c>
-        </texttable>
-
-        <t></t>
+                   Table 1: DHCPv6 Encrypted DNS Option]]></artwork>
+          </figure></t>
       </section>
 
       <section anchor="iana4" title="DHCPv4 Option">
@@ -901,13 +887,15 @@
         the registry maintained in <xref target="BOOTP"></xref>.</t>
 
         <figure>
-          <artwork align="center"><![CDATA[+------+------------------+-------+----------------+----------------+
+          <artwork align="center"><![CDATA[+======+==================+=======+================+================+
 | Tag  | Name             | Data  | Meaning        | Reference      |
 |      |                  | Length|                |                |
-+------+------------------+-------+----------------+----------------+
++======+==================+=======+================+================+
 | TBA2 | OPTION_V4_DNR    | N     | Encrypted DNS  | [ThisDocument] |
 |      |                  |       | Server         |                |
-+------+------------------+-------+----------------+----------------+]]></artwork>
++------+------------------+-------+----------------+----------------+
+
+                  Table 2: DHCPv4 Encrypted DNS Option]]></artwork>
         </figure>
       </section>
 
@@ -918,19 +906,15 @@
         (ICMPv6) Parameters" registry maintained in <xref
         target="ND"></xref>.</t>
 
-        <texttable>
-          <ttcol>Type</ttcol>
+        <t><figure>
+            <artwork align="center"><![CDATA[+======+======================+================+
+| Type | Description          | Reference      |
++======+======================+================+
+| TBA3 | Encrypted DNS Option | [ThisDocument] |
++------+----------------------+----------------+
 
-          <ttcol>Description</ttcol>
-
-          <ttcol>Reference</ttcol>
-
-          <c>TBA3</c>
-
-          <c>Encrypted DNS Option</c>
-
-          <c>[ThisDocument]</c>
-        </texttable>
+         Table 3: Encrypted DNS ND Option]]></artwork>
+          </figure></t>
       </section>
     </section>
 
@@ -957,19 +941,19 @@
 
     <section title="Contributing Authors">
       <t><figure>
-          <artwork><![CDATA[   Nicolai Leymann
-   Deutsche Telekom
-   Germany
+          <artwork><![CDATA[Nicolai Leymann
+Deutsche Telekom
+Germany
 
-   Email: n.leymann@telekom.de
+Email: n.leymann@telekom.de
 
-   Zhiwei Yan
-   CNNIC
-   No.4 South 4th Street, Zhongguancun
-   Beijing  100190
-   China
+Zhiwei Yan
+CNNIC
+No.4 South 4th Street, Zhongguancun
+Beijing  100190
+China
 
-   EMail: yan@cnnic.cn]]></artwork>
+EMail: yan@cnnic.cn]]></artwork>
         </figure></t>
     </section>
   </middle>
