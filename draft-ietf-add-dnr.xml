@@ -31,7 +31,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-09" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-10" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -256,7 +256,7 @@
           returned in an Encrypted DNS option to accommodate current
           deployments relying upon primary and backup resolvers. Also, DNR can
           be used in contexts where other DNS redundancy schemes (e.g.,
-          anycast as in BCP 126 <xref target="RFC4786"></xref>) are used. </t>
+          anycast as in BCP 126 <xref target="RFC4786"></xref>) are used.</t>
 
           <t>Whether one or more IP addresses are returned in an Encrypted DNS
           option is deployment specific. For example, a router embedding a
@@ -264,7 +264,7 @@
           pointing to one of its LAN-facing interfaces. Typically, this IP
           address can be a private IPv4 address, a link-local address, a
           Unique Local IPv6 unicast Address (ULA), or a Global Unicast Address
-          (GUA). </t>
+          (GUA).</t>
 
           <t>If multiple IP addresses are to be returned in an Encrypted DNS
           option, these addresses are ordered in the preference for use by the
@@ -289,7 +289,7 @@
           may increase the size of the options but it has the merit relying
           upon an existing IANA registry and, thus, accommodating new
           encrypted DNS protocols and service parameters that may be defined
-          in the future. </t>
+          in the future.</t>
 
           <t>The following service parameters MUST be supported by a DNR
           implementation:</t>
@@ -523,6 +523,31 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |     TBA2      |     Length    |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+~      DNR Instance Data #1     ~
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
+.              ...              .    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ optional
+~      DNR Instance Data #n     ~    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
+]]></artwork>
+          </figure></t>
+
+        <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
+        are as follows:<list style="hanging">
+            <t hangText="Code:">OPTION_V4_DNR (TBA2, see <xref
+            target="iana4"></xref>).</t>
+
+            <t hangText="Length:">Indicates the length of the enclosed data in
+            octets.</t>
+
+            <t hangText="DNR Instance Data:">Includes the configuration data
+            of an encrypted DNS resolver. The format of this field is shown in
+            <xref target="dhcpri_dns2"></xref>. <figure anchor="dhcpri_dns2"
+                title="DNR Instance Data Format">
+                <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|    DNR Instance Data Length   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |       Service Priority        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |   ADN Length  |               |
@@ -539,20 +564,18 @@
 |                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
-          </figure></t>
+              </figure><vspace blankLines="1" />When several encrypted DNS
+            resolvers are to be included, the "DNR Instance Data" field is
+            repeated.</t>
+          </list>The fields shown in <xref target="dhcpri_dns2"></xref> are as
+        follows:<list style="hanging">
+            <t hangText="DNR Instance Data Length:">Length of all following
+            data in octets. This field is set to ('ADN Length' + 3) when only
+            an ADN is provided for a DNR instance.</t>
 
-        <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
-        are as follows:<list style="hanging">
-            <t hangText="Code:">OPTION_V4_DNR (TBA2, see <xref
-            target="iana4"></xref>).</t>
-
-            <t hangText="Length:">Indicates the length of the enclosed data in
-            octets. The option length is ('ADN Length' + 3) when only an ADN
-            is included in the option.</t>
-
-            <t hangText="Service Priority:">The priority of this OPTION_V4_DNR
-            instance compared to other instances. This field is encoded
-            following the rules specified in Section 2.4.1 of <xref
+            <t hangText="Service Priority:">The priority of this instance
+            compared to other DNR instances. This field is encoded following
+            the rules specified in Section 2.4.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Indicates the length of the
@@ -594,7 +617,8 @@
             included IP addresses.<vspace blankLines="1" />If no port service
             parameter is included, this indicates that default port numbers
             should be used. <vspace blankLines="1" />The length of this field
-            is ('Option-length' - 4 - 'ADN Length' - 'Addr Length').</t>
+            is ('DNR Instance Data Length' - 4 - 'ADN Length' - 'Addr
+            Length').</t>
           </list></t>
 
         <t>OPTION_V4_DNR is a concatenation-requiring option. As such, the
@@ -608,11 +632,11 @@
         the encrypted DNS resolver by including OPTION_V4_DNR in a Parameter
         Request List option <xref target="RFC2132"></xref>.</t>
 
-        <t>The DHCPv4 client MUST be prepared to receive multiple instances of
-        the OPTION_V4_DNR option; each option is to be treated as a separate
-        encrypted DNS resolver. These instances SHOULD be processed following
-        their service priority (i.e., smaller service priority indicates a
-        higher preference).</t>
+        <t>The DHCPv4 client MUST be prepared to receive multiple DNR instance
+        data in the OPTION_V4_DNR option; each instance is to be treated as a
+        separate encrypted DNS resolver. These instances SHOULD be processed
+        following their service priority (i.e., smaller service priority
+        indicates a higher preference).</t>
 
         <t>The DHCPv4 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V4_DNR.</t>
