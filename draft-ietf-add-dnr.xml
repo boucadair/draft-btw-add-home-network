@@ -119,7 +119,7 @@
       </address>
     </author>
 
-    <date day="" month="" year="" />
+    <date day="27" month="June" year="2022" />
 
     <workgroup>ADD</workgroup>
 
@@ -384,12 +384,17 @@
         <t>If the local DNS client supports one of the discovered Encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
-        DNS session following the order of the discovered resolvers. The
-        client follows the mechanism discussed in <xref section="8.1"
-        target="RFC8310"></xref> to authenticate the DNS resolver certificate
-        using the authentication domain name conveyed in the Encrypted DNS
-        options. ALPN-related considerations can be found in Section 6.1 of
-        <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+        DNS session following the order of the discovered resolvers. </t>
+
+        <t>The client verifies the connection based on PKIX validation <xref
+        target="RFC5280"></xref> of the DNS resolver certificate and uses the
+        validation techniques as described in <xref target="RFC6125"></xref>
+        to compare the authentication domain name conveyed in the Encrypted
+        DNS options to the certificate provided (see <xref section="8.1"
+        target="RFC8310"></xref> for more details). The client uses by default
+        PKIX validation unless configured otherwise. ALPN-related
+        considerations can be found in Section 6.1 of <xref
+        target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
       </section>
 
       <section title="Multihoming Considerations">
@@ -1050,6 +1055,8 @@
       <?rfc include='reference.RFC.6092'?>
 
       <?rfc include='reference.RFC.8310'?>
+
+      <?rfc include='reference.RFC.5280'?>
 
       <?rfc include='reference.RFC.8499'?>
 

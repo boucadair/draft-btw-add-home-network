@@ -357,10 +357,14 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    If the local DNS client supports one of the discovered Encrypted DNS
    protocols identified by Application Layer Protocol Negotiation (ALPN)
    protocol identifiers, the DNS client establishes an encrypted DNS
-   session following the order of the discovered resolvers.  The client
-   follows the mechanism discussed in Section 8.1 of [RFC8310] to
-   authenticate the DNS resolver certificate using the authentication
-   domain name conveyed in the Encrypted DNS options.  ALPN-related
+   session following the order of the discovered resolvers.
+
+   The client verifies the connection based on PKIX validation [RFC5280]
+   of the DNS resolver certificate and uses the validation techniques as
+   described in [RFC6125] to compare the authentication domain name
+   conveyed in the Encrypted DNS options to the certificate provided
+   (see Section 8.1 of [RFC8310] for more details).  The client uses by
+   default PKIX validation unless configured otherwise.  ALPN-related
    considerations can be found in Section 6.1 of
    [I-D.ietf-dnsop-svcb-https].
 
@@ -379,10 +383,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 4.1.  Option Format
 
    The format of the DHCPv6 Encrypted DNS option is shown in Figure 1.
-
-
-
-
 
 
 
@@ -476,10 +476,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  This field MUST include at least the
-      "alpn" SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The
-      service parameters MUST NOT include "ipv4hint" or "ipv6hint"
-      SvcParams as they are superseded by the included IP addresses.
+      alternate port numbers.  This field MUST include at least "alpn"
+      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The service
+      parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
+      they are superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
@@ -635,10 +635,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  This field MUST include at least the
-      "alpn" SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The
-      service parameters MUST NOT include "ipv4hint" or "ipv6hint"
-      SvcParams as they are superseded by the included IP addresses.
+      alternate port numbers.  This field MUST include at least "alpn"
+      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The service
+      parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
+      they are superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -770,10 +770,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  This field MUST include at least the
-      "alpn" SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The
-      service parameters MUST NOT include "ipv4hint" or "ipv6hint"
-      SvcParams as they are superseded by the included IP addresses.
+      alternate port numbers.  This field MUST include at least "alpn"
+      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The service
+      parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
+      they are superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -1162,11 +1162,11 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               Services", BCP 126, RFC 4786, DOI 10.17487/RFC4786,
               December 2006, <https://www.rfc-editor.org/info/rfc4786>.
 
-   [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
-              Capabilities in Customer Premises Equipment (CPE) for
-              Providing Residential IPv6 Internet Service", RFC 6092,
-              DOI 10.17487/RFC6092, January 2011,
-              <https://www.rfc-editor.org/info/rfc6092>.
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/info/rfc5280>.
 
 
 
@@ -1177,6 +1177,12 @@ Boucadair, et al.       Expires 29 December 2022               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
+              Capabilities in Customer Premises Equipment (CPE) for
+              Providing Residential IPv6 Internet Service", RFC 6092,
+              DOI 10.17487/RFC6092, January 2011,
+              <https://www.rfc-editor.org/info/rfc6092>.
 
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
@@ -1220,12 +1226,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               DOI 10.17487/RFC7969, October 2016,
               <https://www.rfc-editor.org/info/rfc7969>.
 
-   [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
-              to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
-              <https://www.rfc-editor.org/info/rfc8146>.
-
-
-
 
 
 
@@ -1233,6 +1233,10 @@ Boucadair, et al.       Expires 29 December 2022               [Page 22]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
+              to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
+              <https://www.rfc-editor.org/info/rfc8146>.
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -1276,10 +1280,6 @@ Authors' Addresses
    Email: dwing-ietf@fuggles.com
 
 
-   Neil Cook
-   Open-Xchange
-   United Kingdom
-   Email: neil.cook@noware.co.uk
 
 
 
@@ -1290,16 +1290,16 @@ Boucadair, et al.       Expires 29 December 2022               [Page 23]
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
+   Neil Cook
+   Open-Xchange
+   United Kingdom
+   Email: neil.cook@noware.co.uk
+
+
    Tommy Jensen
    Microsoft
    United States of America
    Email: tojens@microsoft.com
-
-
-
-
-
-
 
 
 
