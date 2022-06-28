@@ -319,7 +319,7 @@
         <section title="ADN Only Mode">
           <t>The provisioning mode in which an ADN, a list of IP addresses,
           and a set of service parameters of the encrypted DNS resolver are
-          supplied to a host, SHOULD be used because the Encrypted DNS options
+          supplied to a host SHOULD be used because the Encrypted DNS options
           are self-contained and do not require any additional DNS queries.
           The reader may refer to <xref target="RFC7969"></xref> for an
           overview of advanced capabilities that are supported by DHCP servers
