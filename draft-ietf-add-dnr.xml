@@ -317,7 +317,7 @@
         </section>
 
         <section title="ADN Only Mode">
-          <t>The provisioning mode, in which an ADN, a list of IP addresses,
+          <t>The provisioning mode in which an ADN, a list of IP addresses,
           and a set of service parameters of the encrypted DNS resolver are
           supplied to a host, SHOULD be used because the Encrypted DNS options
           are self-contained and do not require any additional DNS queries.
