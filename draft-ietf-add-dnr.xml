@@ -318,7 +318,7 @@
           <t></t>
         </section>
 
-        <section title="ADN Only Mode">
+        <section anchor="adn-only" title="ADN Only Mode">
           <t>The provisioning mode in which an ADN, a list of IP addresses,
           and a set of service parameters of the encrypted DNS resolver are
           supplied to a host SHOULD be used because the Encrypted DNS options
@@ -333,6 +333,29 @@
           Section 5 of <xref target="I-D.ietf-add-ddr"></xref>. Note that this
           mode may be subject to active attacks, which can be mitigated by
           DNSSEC.</t>
+        </section>
+
+        <section anchor="VC" title="DNR Validation Checks">
+          <t>On receipt of an Encrypted DNS option, the client makes the
+          following validation checks:<list style="symbols">
+              <t>The ADN is encoded as per <xref section="10"
+              target="RFC8415"></xref>.</t>
+
+              <t>If additional data is supplied: <list style="symbols">
+                  <t>the service parameters are encoded following the rules
+                  specified in <xref section=" 2.4.1"
+                  target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+
+                  <t>the option includes at least one valid IP address and the
+                  "alpn" service parameter.</t>
+
+                  <t>the service parameters do not include "ipv4hint" or
+                  "ipv6hint" service parameters.</t>
+                </list></t>
+            </list></t>
+
+          <t>If the checks fail, the receiver discards the received Encrypted
+          DNS option.</t>
         </section>
 
         <section title="Encrypted DNS Options Ordering">
@@ -517,6 +540,10 @@
         their service priority (i.e., smaller service priority indicates a
         higher preference).</t>
 
+        <t>The DHCPv6 client MUST silently discard any OPTION_V6_DNR that
+        fails to pass the validation steps defined in <xref
+        target="VC"></xref>.</t>
+
         <t>The DHCPv6 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V6_DNR.</t>
       </section>
@@ -648,6 +675,10 @@
         following their service priority (i.e., smaller service priority
         indicates a higher preference).</t>
 
+        <t>The DHCPv4 client MUST silently discard any OPTION_V4_DNR that
+        fails to pass the validation steps defined in <xref
+        target="VC"></xref>.</t>
+
         <t>The DHCPv4 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V4_DNR.</t>
       </section>
@@ -764,7 +795,8 @@
         addition, the host follows the same procedure as the one described in
         Section 5.3.1 of <xref target="RFC8106"></xref> for processing
         received Encrypted DNS options with the formatting requirements in
-        <xref target="RA-ADN"></xref> substituted for the length
+        <xref target="RA-ADN"></xref> and validation checks in <xref
+        target="VC"></xref> substituted for the length and fields
         validation.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
