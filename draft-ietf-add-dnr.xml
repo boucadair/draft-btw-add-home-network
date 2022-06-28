@@ -119,7 +119,7 @@
       </address>
     </author>
 
-    <date />
+    <date day="" month="" year="" />
 
     <workgroup>ADD</workgroup>
 
@@ -314,6 +314,8 @@
               Template (Section 5.1 of <xref
               target="I-D.ietf-add-svcb-dns"></xref>).</t>
             </list></t>
+
+          <t></t>
         </section>
 
         <section title="ADN Only Mode">
@@ -483,14 +485,16 @@
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
             include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers. The service parameters MUST NOT include
-            "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-            included IP addresses. <vspace blankLines="1" />If no port service
-            parameter is included, this indicates that default port numbers
-            should be used. As a reminder, the default port number is 853 for
-            DoT, 443 for DoH, and 853 for DoQ.<vspace blankLines="1" />The
-            length of this field is ('Option-length' - 6 - 'ADN Length' -
-            'Addr Length').</t>
+            alternate port numbers. This field MUST include at least "alpn"
+            SvcParam (Section 4.1 of <xref
+            target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
+            MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+            superseded by the included IP addresses. <vspace
+            blankLines="1" />If no port service parameter is included, this
+            indicates that default port numbers should be used. As a reminder,
+            the default port number is 853 for DoT, 443 for DoH, and 853 for
+            DoQ.<vspace blankLines="1" />The length of this field is
+            ('Option-length' - 6 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
         <t></t>
@@ -611,13 +615,15 @@
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
             include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers. The service parameters MUST NOT include
-            "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-            included IP addresses.<vspace blankLines="1" />If no port service
-            parameter is included, this indicates that default port numbers
-            should be used. <vspace blankLines="1" />The length of this field
-            is ('DNR Instance Data Length' - 4 - 'ADN Length' - 'Addr
-            Length').</t>
+            alternate port numbers. This field MUST include at least "alpn"
+            SvcParam (Section 4.1 of <xref
+            target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
+            MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+            superseded by the included IP addresses.<vspace
+            blankLines="1" />If no port service parameter is included, this
+            indicates that default port numbers should be used. <vspace
+            blankLines="1" />The length of this field is ('DNR Instance Data
+            Length' - 4 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
         <t>OPTION_V4_DNR is a concatenation-requiring option. As such, the
@@ -733,11 +739,13 @@
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
             include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers. The service parameters MUST NOT include
-            "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-            included IP addresses.<vspace blankLines="1" />If no port service
-            parameter is included, this indicates that default port numbers
-            should be used.</t>
+            alternate port numbers. This field MUST include at least "alpn"
+            SvcParam (Section 4.1 of <xref
+            target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
+            MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+            superseded by the included IP addresses.<vspace
+            blankLines="1" />If no port service parameter is included, this
+            indicates that default port numbers should be used.</t>
           </list></t>
 
         <t>The option MUST be padded with zeros so that the full enclosed data
@@ -870,33 +878,56 @@
         <t>IANA is requested to assign the following new DHCPv6 Option Code in
         the registry maintained in <xref target="DHCPV6"></xref>.</t>
 
-        <t><figure>
-            <artwork align="center"><![CDATA[+=======+===============+============+===========+================+
-| Value | Description   | Client ORO | Singleton | Reference      |
-|       |               |            | Option    |                |
-+=======+===============+============+===========+================+
-| TBA1  | OPTION_V6_DNR | Yes        | No        | [ThisDocument] |
-+-------+---------------+------------+-----------+----------------+
+        <texttable anchor="dhcpv6t" title="DHCPv6 Encrypted DNS Option">
+          <ttcol>Value</ttcol>
 
-                   Table 1: DHCPv6 Encrypted DNS Option]]></artwork>
-          </figure></t>
+          <ttcol>Description</ttcol>
+
+          <ttcol>Client ORO</ttcol>
+
+          <ttcol>Singleton Option</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA1</c>
+
+          <c>OPTION_V6_DNR</c>
+
+          <c>Yes</c>
+
+          <c>No</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+
+        <t></t>
       </section>
 
       <section anchor="iana4" title="DHCPv4 Option">
         <t>IANA is requested to assign the following new DHCP Option Code in
         the registry maintained in <xref target="BOOTP"></xref>.</t>
 
-        <figure>
-          <artwork align="center"><![CDATA[+======+==================+=======+================+================+
-| Tag  | Name             | Data  | Meaning        | Reference      |
-|      |                  | Length|                |                |
-+======+==================+=======+================+================+
-| TBA2 | OPTION_V4_DNR    | N     | Encrypted DNS  | [ThisDocument] |
-|      |                  |       | Server         |                |
-+------+------------------+-------+----------------+----------------+
+        <texttable anchor="dhcpv4t" title="DHCPv6 Encrypted DNS Option">
+          <ttcol>Tag</ttcol>
 
-                  Table 2: DHCPv4 Encrypted DNS Option]]></artwork>
-        </figure>
+          <ttcol>Name</ttcol>
+
+          <ttcol>Data Length</ttcol>
+
+          <ttcol>Meaning</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA2</c>
+
+          <c>OPTION_V4_DNR</c>
+
+          <c>N</c>
+
+          <c>Encrypted DNS Server</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
       </section>
 
       <section anchor="iana7" title="Neighbor Discovery Option">
@@ -906,15 +937,23 @@
         (ICMPv6) Parameters" registry maintained in <xref
         target="ND"></xref>.</t>
 
-        <t><figure>
-            <artwork align="center"><![CDATA[+======+======================+================+
-| Type | Description          | Reference      |
-+======+======================+================+
-| TBA3 | Encrypted DNS Option | [ThisDocument] |
-+------+----------------------+----------------+
+        <texttable anchor="ndt" title="Encrypted DNS ND Option">
+          <ttcol>Type</ttcol>
 
-         Table 3: Encrypted DNS ND Option]]></artwork>
-          </figure></t>
+          <ttcol>Description</ttcol>
+
+          <ttcol>Reference</ttcol>
+
+          <c>TBA3</c>
+
+          <c>Encrypted DNS Option</c>
+
+          <c>[ThisDocument]</c>
+        </texttable>
+
+        <t></t>
+
+        <t></t>
       </section>
     </section>
 
@@ -940,21 +979,47 @@
     </section>
 
     <section title="Contributing Authors">
-      <t><figure>
-          <artwork><![CDATA[Nicolai Leymann
-Deutsche Telekom
-Germany
+      <t />
 
-Email: n.leymann@telekom.de
+      <contact fullname="Nicolai Leymann">
+        <organization>Deutsche Telekom</organization>
 
-Zhiwei Yan
-CNNIC
-No.4 South 4th Street, Zhongguancun
-Beijing  100190
-China
+        <address>
+          <postal>
+            <street />
 
-EMail: yan@cnnic.cn]]></artwork>
-        </figure></t>
+            <city />
+
+            <region />
+
+            <code />
+
+            <country>Germany</country>
+          </postal>
+
+          <email>n.leymann@telekom.de</email>
+        </address>
+      </contact>
+
+      <contact fullname="Zhiwei Yan">
+        <organization>CNNIC</organization>
+
+        <address>
+          <postal>
+            <street>No.4 South 4th Street, Zhongguancun</street>
+
+            <city>Beijing</city>
+
+            <region />
+
+            <code>100190</code>
+
+            <country>China</country>
+          </postal>
+
+          <email>yan@cnnic.cn</email>
+        </address>
+      </contact>
     </section>
   </middle>
 

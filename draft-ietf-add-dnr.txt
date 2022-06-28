@@ -104,7 +104,7 @@ Table of Contents
      8.2.  DHCPv4 Option . . . . . . . . . . . . . . . . . . . . . .  17
      8.3.  Neighbor Discovery Option . . . . . . . . . . . . . . . .  18
    9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
-   10. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  18
+   10. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  19
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
 
 
@@ -291,11 +291,12 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    dohpath:  Used to supply a relative DoH URI Template (Section 5.1 of
       [I-D.ietf-add-svcb-dns]).
 
+
 3.1.6.  ADN Only Mode
 
-   The provisioning mode, in which an ADN, a list of IP addresses, and a
+   The provisioning mode in which an ADN, a list of IP addresses, and a
    set of service parameters of the encrypted DNS resolver are supplied
-   to a host, SHOULD be used because the Encrypted DNS options are self-
+   to a host SHOULD be used because the Encrypted DNS options are self-
    contained and do not require any additional DNS queries.  The reader
    may refer to [RFC7969] for an overview of advanced capabilities that
    are supported by DHCP servers to populate configuration data (e.g.,
@@ -329,7 +330,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    *  An authentication domain name.
 
    *  A list of IP addresses to locate the encrypted DNS resolver.
-
 
 
 
@@ -476,9 +476,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
+      alternate port numbers.  This field MUST include at least the
+      "alpn" SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The
+      service parameters MUST NOT include "ipv4hint" or "ipv6hint"
+      SvcParams as they are superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
@@ -493,7 +494,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    To discover an encrypted DNS resolver, the DHCPv6 client MUST include
    OPTION_V6_DNR in an Option Request Option (ORO), as in Sections
    18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of [RFC8415].
-
 
 
 
@@ -635,9 +635,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
+      alternate port numbers.  This field MUST include at least the
+      "alpn" SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The
+      service parameters MUST NOT include "ipv4hint" or "ipv6hint"
+      SvcParams as they are superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -663,7 +664,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
    The DHCPv4 client MUST silently discard multicast and host loopback
    addresses conveyed in OPTION_V4_DNR.
-
 
 
 
@@ -770,13 +770,13 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
+      alternate port numbers.  This field MUST include at least the
+      "alpn" SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The
+      service parameters MUST NOT include "ipv4hint" or "ipv6hint"
+      SvcParams as they are superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
-
 
 
 
@@ -931,7 +931,8 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
     | TBA1  | OPTION_V6_DNR | Yes        | No        | [ThisDocument] |
     +-------+---------------+------------+-----------+----------------+
 
-                       Table 1: DHCPv6 Encrypted DNS Option
+                    Table 1: DHCPv6 Encrypted DNS Option
+
 
 8.2.  DHCPv4 Option
 
@@ -948,21 +949,19 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-
 Boucadair, et al.       Expires 29 December 2022               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
-   +======+==================+=======+================+================+
-   | Tag  | Name             | Data  | Meaning        | Reference      |
-   |      |                  | Length|                |                |
-   +======+==================+=======+================+================+
-   | TBA2 | OPTION_V4_DNR    | N     | Encrypted DNS  | [ThisDocument] |
-   |      |                  |       | Server         |                |
-   +------+------------------+-------+----------------+----------------+
+   +======+===============+=============+============+================+
+   | Tag  | Name          | Data Length | Meaning    | Reference      |
+   +======+===============+=============+============+================+
+   | TBA2 | OPTION_V4_DNR | N           | Encrypted  | [ThisDocument] |
+   |      |               |             | DNS Server |                |
+   +------+---------------+-------------+------------+----------------+
 
-                     Table 2: DHCPv4 Encrypted DNS Option
+                   Table 2: DHCPv6 Encrypted DNS Option
 
 8.3.  Neighbor Discovery Option
 
@@ -977,7 +976,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
              | TBA3 | Encrypted DNS Option | [ThisDocument] |
              +------+----------------------+----------------+
 
-                      Table 3: Encrypted DNS ND Option
+                     Table 3: Encrypted DNS ND Option
+
+
 
 9.  Acknowledgements
 
@@ -999,7 +1000,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
    the AD review.
 
-10.  Contributing Authors
 
 
 
@@ -1010,19 +1010,23 @@ Boucadair, et al.       Expires 29 December 2022               [Page 18]
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
+10.  Contributing Authors
+
+
    Nicolai Leymann
    Deutsche Telekom
    Germany
-
    Email: n.leymann@telekom.de
+
 
    Zhiwei Yan
    CNNIC
    No.4 South 4th Street, Zhongguancun
-   Beijing  100190
+   Beijing
+   100190
    China
+   Email: yan@cnnic.cn
 
-   EMail: yan@cnnic.cn
 
 11.  References
 
@@ -1031,8 +1035,8 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    [I-D.ietf-add-svcb-dns]
               Schwartz, B., "Service Binding Mapping for DNS Servers",
               Work in Progress, Internet-Draft, draft-ietf-add-svcb-dns-
-              03, 22 April 2022, <https://www.ietf.org/archive/id/draft-
-              ietf-add-svcb-dns-03.txt>.
+              05, 24 June 2022, <https://www.ietf.org/archive/id/draft-
+              ietf-add-svcb-dns-05.txt>.
 
    [I-D.ietf-dnsop-svcb-https]
               Schwartz, B., Bishop, M., and E. Nygren, "Service binding
@@ -1051,10 +1055,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
               Extensions", RFC 2132, DOI 10.17487/RFC2132, March 1997,
               <https://www.rfc-editor.org/info/rfc2132>.
 
-   [RFC3396]  Lemon, T. and S. Cheshire, "Encoding Long Options in the
-              Dynamic Host Configuration Protocol (DHCPv4)", RFC 3396,
-              DOI 10.17487/RFC3396, November 2002,
-              <https://www.rfc-editor.org/info/rfc3396>.
 
 
 
@@ -1065,6 +1065,11 @@ Boucadair, et al.       Expires 29 December 2022               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
+
+   [RFC3396]  Lemon, T. and S. Cheshire, "Encoding Long Options in the
+              Dynamic Host Configuration Protocol (DHCPv4)", RFC 3396,
+              DOI 10.17487/RFC3396, November 2002,
+              <https://www.rfc-editor.org/info/rfc3396>.
 
    [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
               "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
@@ -1112,11 +1117,6 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-
-
-
-
-
 Boucadair, et al.       Expires 29 December 2022               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolver       June 2022
@@ -1125,9 +1125,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    [I-D.ietf-add-ddr]
               Pauly, T., Kinnear, E., Wood, C. A., McManus, P., and T.
               Jensen, "Discovery of Designated Resolvers", Work in
-              Progress, Internet-Draft, draft-ietf-add-ddr-06, 4 April
+              Progress, Internet-Draft, draft-ietf-add-ddr-07, 24 June
               2022, <https://www.ietf.org/archive/id/draft-ietf-add-ddr-
-              06.txt>.
+              07.txt>.
 
    [I-D.pusateri-dhc-dns-driu]
               Pusateri, T. and W. Toorop, "DHCPv6 Options for private
