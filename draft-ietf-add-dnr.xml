@@ -383,7 +383,7 @@
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
         DNS session following the order of the discovered resolvers. The
-        client follows the mechanism discussed in Section 8.1 of <xref
+        client follows the mechanism discussed in <xref section="8.1"
         target="RFC8310"></xref> to authenticate the DNS resolver certificate
         using the authentication domain name conveyed in the Encrypted DNS
         options. ALPN-related considerations can be found in Section 6.1 of
