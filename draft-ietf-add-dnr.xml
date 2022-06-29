@@ -335,6 +335,17 @@
           DNSSEC.</t>
         </section>
 
+        <section title="Encrypted DNS Options Ordering">
+          <t>The DHCP options defined in Sections <xref format="counter"
+          target="DHCPv6"></xref> and <xref format="counter"
+          target="DHCP"></xref> follow the option ordering guidelines in
+          Section 17 of <xref target="RFC7227"></xref>.</t>
+
+          <t>Likewise, the RA option (<xref format="default"
+          target="RA"></xref>) adheres to the recommendations in Section 9 of
+          <xref target="RFC4861"></xref>.</t>
+        </section>
+
         <section anchor="VC" title="DNR Validation Checks">
           <t>On receipt of an Encrypted DNS option, the client makes the
           following validation checks:<list style="symbols">
@@ -355,18 +366,7 @@
             </list></t>
 
           <t>If the checks fail, the receiver discards the received Encrypted
-          DNS option.</t>
-        </section>
-
-        <section title="Encrypted DNS Options Ordering">
-          <t>The DHCP options defined in Sections <xref format="counter"
-          target="DHCPv6"></xref> and <xref format="counter"
-          target="DHCP"></xref> follow the option ordering guidelines in
-          Section 17 of <xref target="RFC7227"></xref>.</t>
-
-          <t>Likewise, the RA option (<xref format="default"
-          target="RA"></xref>) adheres to the recommendations in Section 9 of
-          <xref target="RFC4861"></xref>.</t>
+          DNS option(s).</t>
         </section>
 
         <section title="Recommended DNR Information">
@@ -407,16 +407,17 @@
         <t>If the local DNS client supports one of the discovered Encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
-        DNS session following the order of the discovered resolvers. </t>
+        DNS session following the order of the discovered resolvers.</t>
 
-        <t>The client verifies the connection based on PKIX validation <xref
-        target="RFC5280"></xref> of the DNS resolver certificate and uses the
-        validation techniques as described in <xref target="RFC6125"></xref>
-        to compare the authentication domain name conveyed in the Encrypted
-        DNS options to the certificate provided (see <xref section="8.1"
-        target="RFC8310"></xref> for more details). The client uses by default
-        PKIX validation unless configured otherwise. ALPN-related
-        considerations can be found in Section 6.1 of <xref
+        <t>The DNS client verifies the connection based on PKIX validation
+        <xref target="RFC5280"></xref> of the DNS resolver certificate and
+        uses the validation techniques as described in <xref
+        target="RFC6125"></xref> to compare the authentication domain name
+        conveyed in the Encrypted DNS options to the certificate provided (see
+        <xref section="8.1" target="RFC8310"></xref> for more details). The
+        DNS client uses Web PKI trust anchors by default unless configured
+        otherwise to use explicit trust anchors. ALPN-related considerations
+        can be found in Section 6.1 of <xref
         target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
       </section>
 
@@ -1106,8 +1107,6 @@
 
       <?rfc include='reference.RFC.9250'?>
 
-      <?rfc include='reference.I-D.ietf-add-ddr'?>
-
       <?rfc include='reference.RFC.6731'?>
 
       <?rfc include='reference.RFC.3552'?>
@@ -1121,6 +1120,8 @@
       <?rfc include='reference.RFC.7969'?>
 
       <?rfc include='reference.RFC.4786'?>
+
+      <?rfc include='reference.I-D.ietf-add-ddr'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
 
