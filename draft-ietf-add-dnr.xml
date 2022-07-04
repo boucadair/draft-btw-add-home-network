@@ -165,8 +165,9 @@
       <t>The options defined in this document can be deployed in a variety of
       deployments (e.g., local networks with Customer Premises Equipment
       (CPEs) that may or may not be managed by an Internet Service Provider
-      (ISP), local networks with or without DNS forwarders). It is out of the
-      scope of this document to provide an inventory of such deployments.</t>
+      (ISP), or local networks with or without DNS forwarders). It is out of
+      the scope of this document to provide an inventory of such
+      deployments.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -188,6 +189,9 @@
           are transported over an encrypted channel. Examples of encrypted DNS
           are DoT, DoH, or DoQ.</t>
 
+          <t hangText="Encrypted DNS resolver:">refers to a DNS resolver that
+          supports any encrypted DNS scheme. </t>
+
           <t hangText="Encrypted DNS options:">refers to the options defined
           in Sections <xref format="counter" target="DHCPv6"></xref>, <xref
           format="counter" target="DHCP"></xref>, and <xref format="counter"
@@ -204,7 +208,7 @@
       target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
       target="RA"></xref>): Encrypted DNS options.</t>
 
-      <t>These options configure an authentication domain name, a list of IPv6
+      <t>These options configure an authentication domain name, a list of IP
       addresses, and a set of service parameters of the encrypted DNS
       resolver. More information about the design of these options is provided
       in the following subsections.</t>
@@ -247,8 +251,8 @@
           the options defined in Sections <xref format="counter"
           target="DHCPv6"></xref>, <xref format="counter"
           target="DHCP"></xref>, and <xref format="counter"
-          target="RA"></xref> associate an IP address with an encrypted DNS
-          protocol. No probing is required in such a design.</t>
+          target="RA"></xref> associate an encrypted DNS protocol with an IP
+          address. No probing is required in such a design.</t>
         </section>
 
         <section title="Single vs. Multiple IP Addresses">
@@ -279,12 +283,12 @@
         </section>
 
         <section title="Service Parameters">
-          <t>Because distinct encrypted DNS protocols may be provisioned by a
-          network (e.g., DoT, DoH, and DoQ) and that some of these protocols
-          may make use of customized port numbers instead of default ones, the
-          Encrypted DNS options are designed to return a set of service
-          parameters. These parameters are encoded following the same rules
-          for encoding SvcParams in Section 2.1 of <xref
+          <t>Because distinct encrypted DNS protocols (e.g., DoT, DoH, and
+          DoQ) may be provisioned by a network and that some of these
+          protocols may make use of customized port numbers instead of default
+          ones, the Encrypted DNS options are designed to return a set of
+          service parameters. These parameters are encoded following the same
+          rules for encoding SvcParams in Section 2.1 of <xref
           target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach
           may increase the size of the options but it has the merit relying
           upon an existing IANA registry and, thus, accommodating new
@@ -392,7 +396,7 @@
 
       <section title="Handling Configuration Data Conflicts">
         <t>If the encrypted DNS is discovered by a host using both RA and
-        DHCP, the rules discussed in Section 5.3.1 of <xref
+        DHCP, the rules discussed in <xref section=" 5.3.1"
         target="RFC8106"></xref> MUST be followed.</t>
 
         <t>DHCP/RA options to discover encrypted DNS resolvers (including, DoH
@@ -615,18 +619,17 @@
             the rules specified in Section 2.4.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
-            <t hangText="ADN Length:">Indicates the length of the
-            authentication-domain-name in octets.</t>
+            <t hangText="ADN Length:">Length of the authentication-domain-name
+            in octets.</t>
 
-            <t
-            hangText="authentication-domain-name (variable length):">Includes
-            the authentication domain name of the encrypted DNS resolver. This
+            <t hangText="authentication-domain-name (variable length):">The
+            authentication domain name of the encrypted DNS resolver. This
             field is formatted as specified in Section 10 of <xref
             target="RFC8415"></xref>. An example is provided in <xref
             target="fqdn"></xref>.</t>
 
-            <t hangText="Addr Length:">Indicates the length of included IPv4
-            addresses in octets. When present, it MUST be a multiple of 4.</t>
+            <t hangText="Addr Length:">Length of included IPv4 addresses in
+            octets. When present, it MUST be a multiple of 4.</t>
 
             <t hangText="IPv4 Address(es) (variable length):">Indicates one or
             more IPv4 addresses to reach the encrypted DNS resolver. Both
@@ -643,7 +646,7 @@
               </figure></t>
 
             <t
-            hangText="Service Paramters (SvcParams) (variable length):">Specifies
+            hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
@@ -750,8 +753,9 @@
             octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">The
-            domain name of the encrypted DNS resolver. This field is formatted
-            as specified in Section 10 of <xref target="RFC8415"></xref>.</t>
+            authentication domain name of the encrypted DNS resolver. This
+            field is formatted as specified in Section 10 of <xref
+            target="RFC8415"></xref>.</t>
 
             <t hangText="Addr Length:">16-bit unsigned integer. This field
             indicates the length of enclosed IPv6 addresses in octets. When
@@ -771,7 +775,7 @@
             octets.</t>
 
             <t
-            hangText="Service Paramters (SvcParams) (variable length):">Specifies
+            hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
             in Section 2.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
@@ -828,16 +832,16 @@
         the following mechanisms:</t>
 
         <t><list style="symbols">
-            <t>DHCPv6-Shield described in <xref target="RFC7610"></xref>, the
-            router (e.g., a border router, a CPE) discards DHCP response
-            messages received from any local endpoint.</t>
+            <t>DHCPv6-Shield <xref target="RFC7610"></xref>: the router (e.g.,
+            a border router, a CPE) discards DHCP response messages received
+            from any local endpoint.</t>
 
-            <t>RA-Guard described in <xref target="RFC7113"></xref>, the
-            router discards RAs messages received from any local endpoint.</t>
+            <t>RA-Guard <xref target="RFC7113"></xref>: the router discards
+            RAs messages received from any local endpoint.</t>
 
             <t>Source Address Validation Improvement (SAVI) solution for DHCP
-            described in <xref target="RFC7513"></xref>, the router filters
-            packets with forged source IP addresses.</t>
+            <xref target="RFC7513"></xref>: the router filters packets with
+            forged source IP addresses.</t>
           </list></t>
 
         <t>The above mechanisms would ensure that the endpoint receives the
@@ -855,10 +859,13 @@
         subject to attacks (e.g., redirect to malicious resolvers, intercept
         sensitive data).</t>
 
-        <t>Encrypted DNS connections received from outside the local network
-        MUST be discarded by the encrypted DNS forwarder in the CPE. This
-        behavior adheres to REQ#8 in <xref target="RFC6092"></xref>; it MUST
-        apply for both IPv4 and IPv6.</t>
+        <t>By default, Encrypted DNS connections received from outside the
+        local network MUST be discarded by the encrypted DNS forwarder in a
+        CPE. This behavior adheres to REQ#8 in <xref target="RFC6092"></xref>;
+        it MUST apply for both IPv4 and IPv6. This recommendation is meant to
+        isolate local network DNS resolver services from the public Internet
+        and prevent external attacks against the local Encrypted DNS
+        resolver.</t>
       </section>
 
       <section title="Deletion Attacks">
@@ -1014,6 +1021,8 @@
 
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
       the AD review.</t>
+
+      <t>Thanks to Rich Salz for the secdir review. </t>
     </section>
 
     <section title="Contributing Authors">
