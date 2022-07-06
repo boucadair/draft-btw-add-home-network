@@ -190,7 +190,7 @@
           are DoT, DoH, or DoQ.</t>
 
           <t hangText="Encrypted DNS resolver:">refers to a DNS resolver that
-          supports any encrypted DNS scheme. </t>
+          supports any encrypted DNS scheme.</t>
 
           <t hangText="Encrypted DNS options:">refers to the options defined
           in Sections <xref format="counter" target="DHCPv6"></xref>, <xref
@@ -222,15 +222,14 @@
           designed to include an authentication domain name. This ADN is
           presented as a reference identifier for DNS authentication purposes.
           This design accommodates the current best practices for issuing
-          certificates as per Section 1.7.2 of <xref
-          target="RFC6125"></xref>:</t>
+          certificates as per Section 1.7.2 of <xref target="RFC6125" />:</t>
 
-          <t><figure>
-              <artwork><![CDATA[   |  Some certification authorities issue server certificates based on
-   |  IP addresses, but preliminary evidence indicates that such
-   |  certificates are a very small percentage (less than 1%) of issued
-   |  certificates.]]></artwork>
-            </figure></t>
+          <aside pn="section-3-6">
+            <t indent="0" pn="section-3-1.1">Some certification authorities
+            issue server certificates based on IP addresses, but preliminary
+            evidence indicates that such certificates are a very small
+            percentage (less than 1%) of issued certificates.</t>
+          </aside>
         </section>
 
         <section title="Avoiding Dependency on External Resolvers">
@@ -1022,7 +1021,7 @@
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
       the AD review.</t>
 
-      <t>Thanks to Rich Salz for the secdir review. </t>
+      <t>Thanks to Rich Salz for the secdir review.</t>
     </section>
 
     <section title="Contributing Authors">

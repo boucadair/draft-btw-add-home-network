@@ -198,10 +198,10 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    accommodates the current best practices for issuing certificates as
    per Section 1.7.2 of [RFC6125]:
 
-    |  Some certification authorities issue server certificates based on
-    |  IP addresses, but preliminary evidence indicates that such
-    |  certificates are a very small percentage (less than 1%) of issued
-    |  certificates.
+      |  Some certification authorities issue server certificates based
+      |  on IP addresses, but preliminary evidence indicates that such
+      |  certificates are a very small percentage (less than 1%) of
+      |  issued certificates.
 
 3.1.2.  Avoiding Dependency on External Resolvers
 
