@@ -405,6 +405,13 @@
         target="spoof"></xref>.</t>
       </section>
 
+      <section title="Encrypted vs Unencrypted DNS">
+        <t>If a client learns both encrypted and unencrypted DNS resolvers
+        from the same network, and absent explicit configuration otherwise, it
+        is RECOMMENDED that the client uses the encrypted DNS resolvers for
+        that network.</t>
+      </section>
+
       <section title="Connection Establishment">
         <t>If the local DNS client supports one of the discovered Encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
@@ -1023,7 +1030,7 @@
       the AD review.</t>
 
       <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
-      review, and Robert Sparks via the artart review. </t>
+      review, and Robert Sparks for the artart review. </t>
     </section>
 
     <section title="Contributing Authors">
