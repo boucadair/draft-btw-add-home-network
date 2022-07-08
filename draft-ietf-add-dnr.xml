@@ -180,8 +180,6 @@
       <t>This document makes use of the terms defined in <xref
       target="RFC8499"></xref>. The following additional terms are used: <list
           style="hanging">
-          <t hangText="Do53:">refers to unencrypted DNS.</t>
-
           <t hangText="DNR:">refers to the Discovery of Network-designated
           Resolvers procedure.</t>
 
@@ -224,7 +222,7 @@
           This design accommodates the current best practices for issuing
           certificates as per Section 1.7.2 of <xref target="RFC6125" />:</t>
 
-          <aside pn="section-3-6">
+          <aside pn="section-3-1">
             <t indent="0" pn="section-3-1.1">Some certification authorities
             issue server certificates based on IP addresses, but preliminary
             evidence indicates that such certificates are a very small
@@ -357,7 +355,7 @@
 
               <t>If additional data is supplied: <list style="symbols">
                   <t>the service parameters are encoded following the rules
-                  specified in <xref section=" 2.4.1"
+                  specified in <xref section="2.1"
                   target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
                   <t>the option includes at least one valid IP address and the
@@ -368,8 +366,8 @@
                 </list></t>
             </list></t>
 
-          <t>If the checks fail, the receiver discards the received Encrypted
-          DNS option(s).</t>
+          <t>If any of the checks fail, the receiver discards the received
+          Encrypted DNS option(s).</t>
         </section>
 
         <section title="Recommended DNR Information">
@@ -400,10 +398,11 @@
 
         <t>DHCP/RA options to discover encrypted DNS resolvers (including, DoH
         URI Templates) takes precedence over Discovery of Designated Resolvers
-        (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to
-        an external DNS resolver, which is susceptible to both internal and
-        external attacks whereas DHCP/RA is typically protected using the
-        mechanisms discussed in <xref target="spoof"></xref>.</t>
+        (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses
+        unencrypted DNS (a.k.a., Do53) to an external DNS resolver, which is
+        susceptible to both internal and external attacks whereas DHCP/RA is
+        typically protected using the mechanisms discussed in <xref
+        target="spoof"></xref>.</t>
       </section>
 
       <section title="Connection Establishment">
@@ -424,7 +423,7 @@
         target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
       </section>
 
-      <section title="Multihoming Considerations">
+      <section title="Multihoming Is Out Of Scope">
         <t>Devices may be connected to multiple networks; each providing their
         own DNS configuration using the discovery mechanisms specified in this
         document. Nevertheless, it is out of the scope of this specification
@@ -469,9 +468,9 @@
             is included in the option.</t>
 
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
-            instance compared to other instances. This field is encoded
-            following the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            instance compared to other instances. This 16-bit unsigned integer
+            is interpreted following the rules specified in Section 2.4.1 of
+            <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             field in octets.</t>
@@ -561,7 +560,7 @@
         <t><figure anchor="dhcpri_dns" title="DHCPv4 Encrypted DNS Option">
             <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|     TBA2      |     Length    |
+| OPTION_V4_DNR |     Length    |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~      DNR Instance Data #1     ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
@@ -731,9 +730,10 @@
             option (including the Type and Length fields) is in units of 8
             octets.</t>
 
-            <t hangText="Service Priority:">The priority of this Encrypted DNS
-            option instance compared to other instances. This field is encoded
-            following the rules specified in Section 2.4.1 of <xref
+            <t hangText="Service Priority:">16-bit unsigned integer. The
+            priority of this Encrypted DNS option instance compared to other
+            instances. This field is interpreted following the rules specified
+            in Section 2.4.1 of <xref
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="Lifetime:">32-bit unsigned integer. The maximum time
@@ -951,7 +951,7 @@
         <t>IANA is requested to assign the following new DHCP Option Code in
         the registry maintained in <xref target="BOOTP"></xref>.</t>
 
-        <texttable anchor="dhcpv4t" title="DHCPv6 Encrypted DNS Option">
+        <texttable anchor="dhcpv4t" title="DHCPv4 Encrypted DNS Option">
           <ttcol>Tag</ttcol>
 
           <ttcol>Name</ttcol>
@@ -981,7 +981,8 @@
         (ICMPv6) Parameters" registry maintained in <xref
         target="ND"></xref>.</t>
 
-        <texttable anchor="ndt" title="Encrypted DNS ND Option">
+        <texttable anchor="ndt"
+                   title="Neighbor Discovery Encrypted DNS Option">
           <ttcol>Type</ttcol>
 
           <ttcol>Description</ttcol>
@@ -1021,7 +1022,8 @@
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
       the AD review.</t>
 
-      <t>Thanks to Rich Salz for the secdir review.</t>
+      <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
+      review, and Robert Sparks via the artart review. </t>
     </section>
 
     <section title="Contributing Authors">
