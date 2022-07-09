@@ -180,6 +180,8 @@
       <t>This document makes use of the terms defined in <xref
       target="RFC8499"></xref>. The following additional terms are used: <list
           style="hanging">
+          <t hangText="Do53:">refers to unencrypted DNS.</t>
+
           <t hangText="DNR:">refers to the Discovery of Network-designated
           Resolvers procedure.</t>
 
@@ -324,16 +326,23 @@
           and a set of service parameters of the encrypted DNS resolver are
           supplied to a host SHOULD be used because the Encrypted DNS options
           are self-contained and do not require any additional DNS queries.
-          The reader may refer to <xref target="RFC7969"></xref> for an
-          overview of advanced capabilities that are supported by DHCP servers
-          to populate configuration data (e.g., issue DNS queries).</t>
+          The reader may refer to <xref target="RFC7969" /> for an overview of
+          advanced capabilities that are supported by DHCP servers to populate
+          configuration data (e.g., issue DNS queries).</t>
 
           <t>In contexts where putting additional complexity on requesting
-          hosts is acceptable, returning an ADN only can be considered. The
-          supplied ADN will be processed by a host following the procedure in
-          Section 5 of <xref target="I-D.ietf-add-ddr"></xref>. Note that this
-          mode may be subject to active attacks, which can be mitigated by
-          DNSSEC.</t>
+          hosts is acceptable, returning ADNs only can be considered. The
+          supplied ADN will be passed to a local resolution library (a DNS
+          client, typically) which will then issues Service Binding (SVCB)
+          queries <xref target="I-D.ietf-add-svcb-dns" />. These SVCB queries
+          can be sent to the discovered encrypted DNS resolver itself or to
+          the network-designated Do53 resolver. Note that this mode may be
+          subject to active attacks, which can be mitigated by DNSSEC.</t>
+
+          <aside pn="section-3-6">
+            <t indent="0" pn="section-3-1.6">How an ADN is passed to a local
+            resolution library is implementation specific.</t>
+          </aside>
         </section>
 
         <section title="Encrypted DNS Options Ordering">
@@ -398,18 +407,15 @@
 
         <t>DHCP/RA options to discover encrypted DNS resolvers (including, DoH
         URI Templates) takes precedence over Discovery of Designated Resolvers
-        (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses
-        unencrypted DNS (a.k.a., Do53) to an external DNS resolver, which is
-        susceptible to both internal and external attacks whereas DHCP/RA is
-        typically protected using the mechanisms discussed in <xref
-        target="spoof"></xref>.</t>
-      </section>
+        (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to
+        an external DNS resolver, which is susceptible to both internal and
+        external attacks whereas DHCP/RA is typically protected using the
+        mechanisms discussed in <xref target="spoof"></xref>.</t>
 
-      <section title="Encrypted vs Unencrypted DNS">
-        <t>If a client learns both encrypted and unencrypted DNS resolvers
-        from the same network, and absent explicit configuration otherwise, it
-        is RECOMMENDED that the client uses the encrypted DNS resolvers for
-        that network.</t>
+        <t>If a client learns both encrypted and Do53 DNS resolvers from the
+        same network, and absent explicit configuration otherwise, it is
+        RECOMMENDED that the client uses the encrypted DNS resolvers for that
+        network.</t>
       </section>
 
       <section title="Connection Establishment">
@@ -1030,7 +1036,7 @@
       the AD review.</t>
 
       <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
-      review, and Robert Sparks for the artart review. </t>
+      review, and Robert Sparks for the artart review.</t>
     </section>
 
     <section title="Contributing Authors">
