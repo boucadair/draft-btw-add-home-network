@@ -5,19 +5,19 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 29 December 2022                                         Akamai
+Expires: 12 January 2023                                          Akamai
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                            27 June 2022
+                                                            11 July 2022
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
                        designated Resolvers (DNR)
-                         draft-ietf-add-dnr-10
+                         draft-ietf-add-dnr-11
 
 Abstract
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 December 2022.
+   This Internet-Draft will expire on 12 January 2023.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 1]
+Boucadair, et al.        Expires 12 January 2023                [Page 1]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 2]
+Boucadair, et al.        Expires 12 January 2023                [Page 2]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
@@ -165,9 +165,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 3]
+Boucadair, et al.        Expires 12 January 2023                [Page 3]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    Encrypted DNS options:  refers to the options defined in Sections 4,
@@ -221,9 +221,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 4]
+Boucadair, et al.        Expires 12 January 2023                [Page 4]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    probing, the options defined in Sections 4, 5, and 6 associate an
@@ -277,9 +277,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 5]
+Boucadair, et al.        Expires 12 January 2023                [Page 5]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    port:  Used to indicate the target port number for the encrypted DNS
@@ -306,7 +306,7 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
    issue DNS queries).
 
    In contexts where putting additional complexity on requesting hosts
-   is acceptable, returning ADNs only can be considered.  The supplied
+   is acceptable, returning an ADN only can be considered.  The supplied
    ADN will be passed to a local resolution library (a DNS client,
    typically) which will then issues Service Binding (SVCB) queries
    [I-D.ietf-add-svcb-dns].  These SVCB queries can be sent to the
@@ -333,9 +333,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 6]
+Boucadair, et al.        Expires 12 January 2023                [Page 6]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    *  The ADN is encoded as per Section 10 of [RFC8415].
@@ -389,12 +389,12 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 7]
+Boucadair, et al.        Expires 12 January 2023                [Page 7]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
-   If a client learns both encrypted and Do53 DNS resolvers from the
+   If a client learns both Do53 and encrypted DNS resolvers from the
    same network, and absent explicit configuration otherwise, it is
    RECOMMENDED that the client uses the encrypted DNS resolvers for that
    network.
@@ -445,9 +445,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 8]
+Boucadair, et al.        Expires 12 January 2023                [Page 8]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -501,9 +501,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022                [Page 9]
+Boucadair, et al.        Expires 12 January 2023                [Page 9]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
           Figure 2: An Example of the DNS authentication-domain-name
@@ -557,9 +557,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 10]
+Boucadair, et al.        Expires 12 January 2023               [Page 10]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    The DHCPv6 client MUST be prepared to receive multiple instances of
@@ -613,9 +613,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 11]
+Boucadair, et al.        Expires 12 January 2023               [Page 11]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
@@ -650,8 +650,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
       provided for a DNR instance.
 
    Service Priority:  The priority of this instance compared to other
-      DNR instances.  This field is encoded following the rules
-      specified in Section 2.4.1 of [I-D.ietf-dnsop-svcb-https].
+      DNR instances.  This 16-bit unsigned integer is interpreted
+      following the rules specified in Section 2.4.1 of
+      [I-D.ietf-dnsop-svcb-https].
 
    ADN Length:  Length of the authentication-domain-name in octets.
 
@@ -668,10 +669,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-
-Boucadair, et al.       Expires 29 December 2022               [Page 12]
+Boucadair, et al.        Expires 12 January 2023               [Page 12]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
       addresses to reach the encrypted DNS resolver.  Both private and
@@ -725,9 +725,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 13]
+Boucadair, et al.        Expires 12 January 2023               [Page 13]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    The DHCPv4 client MUST silently discard multicast and host loopback
@@ -781,9 +781,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 14]
+Boucadair, et al.        Expires 12 January 2023               [Page 14]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
       Encrypted DNS option instance compared to other instances.  This
@@ -837,9 +837,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 15]
+Boucadair, et al.        Expires 12 January 2023               [Page 15]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
       service parameters that are encoded following the rules in
@@ -893,9 +893,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 16]
+Boucadair, et al.        Expires 12 January 2023               [Page 16]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    Attacks of spoofed or modified DHCP responses and RA messages by
@@ -949,9 +949,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 17]
+Boucadair, et al.        Expires 12 January 2023               [Page 17]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 7.3.  Passive Attacks
@@ -1005,9 +1005,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 18]
+Boucadair, et al.        Expires 12 January 2023               [Page 18]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
     +=======+===============+============+===========+================+
@@ -1061,9 +1061,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 19]
+Boucadair, et al.        Expires 12 January 2023               [Page 19]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    Thanks to Mark Nottingham for the feedback on HTTP redirection that
@@ -1117,9 +1117,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 20]
+Boucadair, et al.        Expires 12 January 2023               [Page 20]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    [I-D.ietf-dnsop-svcb-https]
@@ -1173,9 +1173,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 21]
+Boucadair, et al.        Expires 12 January 2023               [Page 21]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    [DHCPV6]   "DHCPv6 Option Codes", <https://www.iana.org/assignments/
@@ -1229,9 +1229,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 22]
+Boucadair, et al.        Expires 12 January 2023               [Page 22]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
@@ -1285,9 +1285,9 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 23]
+Boucadair, et al.        Expires 12 January 2023               [Page 23]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
@@ -1341,9 +1341,9 @@ Authors' Addresses
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 24]
+Boucadair, et al.        Expires 12 January 2023               [Page 24]
 
-Internet-Draft  Discovery of Network-designated Resolver       June 2022
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    Tirumaleswar Reddy (editor)
@@ -1397,4 +1397,4 @@ Internet-Draft  Discovery of Network-designated Resolver       June 2022
 
 
 
-Boucadair, et al.       Expires 29 December 2022               [Page 25]
+Boucadair, et al.        Expires 12 January 2023               [Page 25]

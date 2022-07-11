@@ -31,7 +31,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-10" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-11" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -119,7 +119,7 @@
       </address>
     </author>
 
-    <date day="27" month="June" year="2022" />
+    <date day="" month="" year="" />
 
     <workgroup>ADD</workgroup>
 
@@ -331,7 +331,7 @@
           configuration data (e.g., issue DNS queries).</t>
 
           <t>In contexts where putting additional complexity on requesting
-          hosts is acceptable, returning ADNs only can be considered. The
+          hosts is acceptable, returning an ADN only can be considered. The
           supplied ADN will be passed to a local resolution library (a DNS
           client, typically) which will then issues Service Binding (SVCB)
           queries <xref target="I-D.ietf-add-svcb-dns" />. These SVCB queries
@@ -412,7 +412,7 @@
         external attacks whereas DHCP/RA is typically protected using the
         mechanisms discussed in <xref target="spoof"></xref>.</t>
 
-        <t>If a client learns both encrypted and Do53 DNS resolvers from the
+        <t>If a client learns both Do53 and encrypted DNS resolvers from the
         same network, and absent explicit configuration otherwise, it is
         RECOMMENDED that the client uses the encrypted DNS resolvers for that
         network.</t>
@@ -626,9 +626,9 @@
             an ADN is provided for a DNR instance.</t>
 
             <t hangText="Service Priority:">The priority of this instance
-            compared to other DNR instances. This field is encoded following
-            the rules specified in Section 2.4.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            compared to other DNR instances. This 16-bit unsigned integer is
+            interpreted following the rules specified in Section 2.4.1 of
+            <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             in octets.</t>
