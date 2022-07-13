@@ -443,7 +443,12 @@
         document. Nevertheless, it is out of the scope of this specification
         to discuss DNS selection of multi-interface devices. The reader may
         refer to <xref target="RFC6731"></xref> for a discussion of issues and
-        an example of DNS resolver selection for multi-interfaced devices.</t>
+        an example of DNS resolver selection for multi-interfaced devices.
+        Also, the reader may refer to <xref
+        target="I-D.ietf-add-split-horizon-authority"></xref> for a discussion
+        on how DNR and Provisioning Domains (PvDs) Key "dnsZones" <xref
+        section="4.3" target="RFC8801"></xref> can be used in Split DNS
+        environments (Section 6 of <xref target="RFC8499"></xref>). </t>
       </section>
     </section>
 
@@ -1147,6 +1152,10 @@
       <?rfc include='reference.I-D.ietf-add-ddr'?>
 
       <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
+
+      <?rfc include='reference.I-D.ietf-add-split-horizon-authority'?>
+
+      <?rfc include='reference.RFC.8801'?>
 
       <reference anchor="Evil-Twin"
                  target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">

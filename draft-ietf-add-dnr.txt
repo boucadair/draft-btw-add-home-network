@@ -117,7 +117,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
      11.1.  Normative References . . . . . . . . . . . . . . . . . .  20
      11.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
 
 1.  Introduction
 
@@ -424,6 +424,10 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    specification to discuss DNS selection of multi-interface devices.
    The reader may refer to [RFC6731] for a discussion of issues and an
    example of DNS resolver selection for multi-interfaced devices.
+   Also, the reader may refer to [I-D.ietf-add-split-horizon-authority]
+   for a discussion on how DNR and Provisioning Domains (PvDs) Key
+   "dnsZones" Section 4.3 of [RFC8801] can be used in Split DNS
+   environments (Section 6 of [RFC8499]).
 
 4.  DHCPv6 Encrypted DNS Option
 
@@ -431,10 +435,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 4.1.  Option Format
 
    The format of the DHCPv6 Encrypted DNS option is shown in Figure 1.
-
-
-
-
 
 
 
@@ -1203,6 +1203,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               2022, <https://www.ietf.org/archive/id/draft-ietf-add-ddr-
               08.txt>.
 
+   [I-D.ietf-add-split-horizon-authority]
+              Reddy, T., Wing, D., Smith, K., and B. Schwartz,
+              "Establishing Local DNS Authority in Split-Horizon
+              Environments", Work in Progress, Internet-Draft, draft-
+              ietf-add-split-horizon-authority-00, 25 June 2022,
+              <https://www.ietf.org/archive/id/draft-ietf-add-split-
+              horizon-authority-00.txt>.
+
    [I-D.pusateri-dhc-dns-driu]
               Pusateri, T. and W. Toorop, "DHCPv6 Options for private
               DNS Discovery", Work in Progress, Internet-Draft, draft-
@@ -1218,6 +1226,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
               2017, <https://www.krackattacks.com/>.
 
+
+
+
+Boucadair, et al.        Expires 14 January 2023               [Page 22]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
    [ND]       "IPv6 Neighbor Discovery Option Formats",
               <https://www.iana.org/assignments/icmpv6-parameters/
               icmpv6-parameters.xhtml#icmpv6-parameters-5>.
@@ -1226,13 +1242,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               Text on Security Considerations", BCP 72, RFC 3552,
               DOI 10.17487/RFC3552, July 2003,
               <https://www.rfc-editor.org/info/rfc3552>.
-
-
-
-Boucadair, et al.        Expires 14 January 2023               [Page 22]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
 
    [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
               Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
@@ -1272,6 +1281,15 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               DOI 10.17487/RFC7113, February 2014,
               <https://www.rfc-editor.org/info/rfc7113>.
 
+
+
+
+
+Boucadair, et al.        Expires 14 January 2023               [Page 23]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
    [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
               S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
               BCP 187, RFC 7227, DOI 10.17487/RFC7227, May 2014,
@@ -1281,14 +1299,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               Validation Improvement (SAVI) Solution for DHCP",
               RFC 7513, DOI 10.17487/RFC7513, May 2015,
               <https://www.rfc-editor.org/info/rfc7513>.
-
-
-
-
-Boucadair, et al.        Expires 14 January 2023               [Page 23]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
 
    [RFC7610]  Gont, F., Liu, W., and G. Van de Velde, "DHCPv6-Shield:
               Protecting against Rogue DHCPv6 Servers", BCP 199,
@@ -1322,6 +1332,20 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
               January 2019, <https://www.rfc-editor.org/info/rfc8499>.
 
+   [RFC8801]  Pfister, P., Vyncke, É., Pauly, T., Schinazi, D., and W.
+              Shao, "Discovering Provisioning Domain Names and Data",
+              RFC 8801, DOI 10.17487/RFC8801, July 2020,
+              <https://www.rfc-editor.org/info/rfc8801>.
+
+
+
+
+
+Boucadair, et al.        Expires 14 January 2023               [Page 24]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
    [RFC9250]  Huitema, C., Dickinson, S., and A. Mankin, "DNS over
               Dedicated QUIC Connections", RFC 9250,
               DOI 10.17487/RFC9250, May 2022,
@@ -1334,16 +1358,6 @@ Authors' Addresses
    35000 Rennes
    France
    Email: mohamed.boucadair@orange.com
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 14 January 2023               [Page 24]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    Tirumaleswar Reddy (editor)
@@ -1371,20 +1385,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Microsoft
    United States of America
    Email: tojens@microsoft.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
