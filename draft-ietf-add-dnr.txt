@@ -193,10 +193,10 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
    In order to allow for PKIX-based authentication between a DNS client
    and an encrypted DNS resolver, the Encrypted DNS options are designed
-   to include an authentication domain name.  This ADN is presented as a
-   reference identifier for DNS authentication purposes.  This design
-   accommodates the current best practices for issuing certificates as
-   per Section 1.7.2 of [RFC6125]:
+   to always include an authentication domain name.  This ADN is
+   presented as a reference identifier for DNS authentication purposes.
+   This design accommodates the current best practices for issuing
+   certificates as per Section 1.7.2 of [RFC6125]:
 
       |  Some certification authorities issue server certificates based
       |  on IP addresses, but preliminary evidence indicates that such
@@ -1081,8 +1081,8 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
    review, and Robert Sparks for the artart review.
 
-   Thanks for Lars Eggert, Roman Danyliw, and Erik Kline for the IESG
-   review.
+   Thanks for Lars Eggert, Roman Danyliw, Erik Kline, and Martin Duke
+   for the IESG review.
 
 10.  Contributing Authors
 

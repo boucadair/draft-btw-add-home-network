@@ -219,10 +219,11 @@
         <section title="ADN as the Reference Identifier for DNS Authentication">
           <t>In order to allow for PKIX-based authentication between a DNS
           client and an encrypted DNS resolver, the Encrypted DNS options are
-          designed to include an authentication domain name. This ADN is
-          presented as a reference identifier for DNS authentication purposes.
-          This design accommodates the current best practices for issuing
-          certificates as per <xref section="1.7.2" target="RFC6125" />:</t>
+          designed to always include an authentication domain name. This ADN
+          is presented as a reference identifier for DNS authentication
+          purposes. This design accommodates the current best practices for
+          issuing certificates as per <xref section="1.7.2"
+          target="RFC6125" />:</t>
 
           <aside pn="section-3-1">
             <t indent="0" pn="section-3-1.1">Some certification authorities
@@ -278,7 +279,7 @@
           <t>A single option is used to convey both the ADN and IP addresses.
           Otherwise a means to correlate an IP address conveyed in an option
           with an ADN conveyed in another option will be required if, for
-          example, more than one ADN is supported by the network. </t>
+          example, more than one ADN is supported by the network.</t>
         </section>
 
         <section title="Service Parameters">
@@ -448,7 +449,7 @@
         target="I-D.ietf-add-split-horizon-authority"></xref> for a discussion
         on how DNR and Provisioning Domains (PvDs) Key "dnsZones" (<xref
         section="4.3" target="RFC8801"></xref>) can be used in Split DNS
-        environments (<xref section="6" target="RFC8801"></xref>). </t>
+        environments (<xref section="6" target="RFC8801"></xref>).</t>
       </section>
     </section>
 
@@ -1040,8 +1041,8 @@
       <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
       review, and Robert Sparks for the artart review.</t>
 
-      <t>Thanks for Lars Eggert, Roman Danyliw, and Erik Kline for the IESG
-      review. </t>
+      <t>Thanks for Lars Eggert, Roman Danyliw, Erik Kline, and Martin Duke
+      for the IESG review.</t>
     </section>
 
     <section title="Contributing Authors">
