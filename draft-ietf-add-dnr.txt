@@ -1081,8 +1081,8 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
    review, and Robert Sparks for the artart review.
 
-   Thanks for Lars Eggert, Roman Danyliw, Erik Kline, and Martin Duke
-   for the IESG review.
+   Thanks to Lars Eggert, Roman Danyliw, Erik Kline, and Martin Duke for
+   the IESG review.
 
 10.  Contributing Authors
 
