@@ -31,7 +31,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-11" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-12" ipr="trust200902">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -222,7 +222,7 @@
           designed to include an authentication domain name. This ADN is
           presented as a reference identifier for DNS authentication purposes.
           This design accommodates the current best practices for issuing
-          certificates as per Section 1.7.2 of <xref target="RFC6125" />:</t>
+          certificates as per <xref section="1.7.2" target="RFC6125" />:</t>
 
           <aside pn="section-3-1">
             <t indent="0" pn="section-3-1.1">Some certification authorities
@@ -275,10 +275,10 @@
         </section>
 
         <section title="Why Not Separate Options for ADN and IP Addresses?">
-          <t>A single option is used to convey both the ADN and IP addresses
-          because otherwise means to correlate an IP address conveyed in an
-          option with an ADN conveyed in another option will be required if,
-          for example, more than one ADN is supported by the network.</t>
+          <t>A single option is used to convey both the ADN and IP addresses.
+          Otherwise a means to correlate an IP address conveyed in an option
+          with an ADN conveyed in another option will be required if, for
+          example, more than one ADN is supported by the network. </t>
         </section>
 
         <section title="Service Parameters">
@@ -287,9 +287,9 @@
           protocols may make use of customized port numbers instead of default
           ones, the Encrypted DNS options are designed to return a set of
           service parameters. These parameters are encoded following the same
-          rules for encoding SvcParams in Section 2.1 of <xref
+          rules for encoding SvcParams in <xref section="2.1"
           target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach
-          may increase the size of the options but it has the merit relying
+          may increase the size of the options but it has the merit of relying
           upon an existing IANA registry and, thus, accommodating new
           encrypted DNS protocols and service parameters that may be defined
           in the future.</t>
@@ -299,22 +299,22 @@
 
           <t><list style="hanging">
               <t hangText="alpn:">Used to indicate the set of supported
-              protocols (Section 7.1 of <xref
+              protocols (<xref section="7.1"
               target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
 
               <t hangText="port:">Used to indicate the target port number for
-              the encrypted DNS connection (Section 7.2 of <xref
+              the encrypted DNS connection (<xref section="7.2"
               target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
             </list></t>
 
           <t>In addition, the following service parameters are RECOMMENDED to
           be supported by a DNR implementation:<list style="hanging">
               <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
-              (Section 7.3 of <xref
+              (<xref section="7.3"
               target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
 
               <t hangText="dohpath:">Used to supply a relative DoH URI
-              Template (Section 5.1 of <xref
+              Template (<xref section="5.1"
               target="I-D.ietf-add-svcb-dns"></xref>).</t>
             </list></t>
 
@@ -333,7 +333,7 @@
           <t>In contexts where putting additional complexity on requesting
           hosts is acceptable, returning an ADN only can be considered. The
           supplied ADN will be passed to a local resolution library (a DNS
-          client, typically) which will then issues Service Binding (SVCB)
+          client, typically) which will then issue Service Binding (SVCB)
           queries <xref target="I-D.ietf-add-svcb-dns" />. These SVCB queries
           can be sent to the discovered encrypted DNS resolver itself or to
           the network-designated Do53 resolver. Note that this mode may be
@@ -348,18 +348,18 @@
         <section title="Encrypted DNS Options Ordering">
           <t>The DHCP options defined in Sections <xref format="counter"
           target="DHCPv6"></xref> and <xref format="counter"
-          target="DHCP"></xref> follow the option ordering guidelines in
-          Section 17 of <xref target="RFC7227"></xref>.</t>
+          target="DHCP"></xref> follow the option ordering guidelines in <xref
+          section="17" target="RFC7227"></xref>.</t>
 
           <t>Likewise, the RA option (<xref format="default"
-          target="RA"></xref>) adheres to the recommendations in Section 9 of
-          <xref target="RFC4861"></xref>.</t>
+          target="RA"></xref>) adheres to the recommendations in <xref
+          section="9" target="RFC4861"></xref>.</t>
         </section>
 
         <section anchor="VC" title="DNR Validation Checks">
-          <t>On receipt of an Encrypted DNS option, the client makes the
-          following validation checks:<list style="symbols">
-              <t>The ADN is encoded as per <xref section="10"
+          <t>On receipt of an Encrypted DNS option, the DHCP client (or IPv6
+          host) makes the following validation checks:<list style="symbols">
+              <t>The ADN is present and encoded as per <xref section="10"
               target="RFC8415"></xref>.</t>
 
               <t>If additional data is supplied: <list style="symbols">
@@ -376,7 +376,7 @@
             </list></t>
 
           <t>If any of the checks fail, the receiver discards the received
-          Encrypted DNS option(s).</t>
+          Encrypted DNS option.</t>
         </section>
 
         <section title="Recommended DNR Information">
@@ -390,7 +390,8 @@
               rely on implicit ordering if multiple instances of the encrypted
               DNS are used.</t>
 
-              <t>An authentication domain name.</t>
+              <t>An authentication domain name. This parameter is
+              mandatory.</t>
 
               <t>A list of IP addresses to locate the encrypted DNS
               resolver.</t>
@@ -430,9 +431,9 @@
         target="RFC6125"></xref> to compare the authentication domain name
         conveyed in the Encrypted DNS options to the certificate provided (see
         <xref section="8.1" target="RFC8310"></xref> for more details). The
-        DNS client uses Web PKI trust anchors by default unless configured
-        otherwise to use explicit trust anchors. ALPN-related considerations
-        can be found in Section 6.1 of <xref
+        DNS client uses the default system or application PKI trust anchors
+        unless configured otherwise to use explicit trust anchors.
+        ALPN-related considerations can be found in <xref section="6.1"
         target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
       </section>
 
@@ -482,15 +483,15 @@
 
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This 16-bit unsigned integer
-            is interpreted following the rules specified in Section 2.4.1 of
-            <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            is interpreted following the rules specified in <xref
+            section="2.4.1" target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             field in octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">A
             fully qualified domain name of the encrypted DNS resolver. This
-            field is formatted as specified in Section 10 of <xref
+            field is formatted as specified in <xref section="10"
             target="RFC8415"></xref>.<vspace blankLines="1" />An example of
             the authentication-domain-name encoding is shown in <xref
             target="fqdn"></xref>. This example conveys the FQDN
@@ -526,11 +527,10 @@
             <t
             hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
-            in Section 2.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
-            include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers. This field MUST include at least "alpn"
-            SvcParam (Section 4.1 of <xref
+            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https"></xref>.
+            Service parameters may include, for example, a list of ALPN
+            protocol identifiers or alternate port numbers. This field MUST
+            include at least "alpn" SvcParam (<xref section="4.1"
             target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
             MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
             superseded by the included IP addresses. <vspace
@@ -627,15 +627,15 @@
 
             <t hangText="Service Priority:">The priority of this instance
             compared to other DNR instances. This 16-bit unsigned integer is
-            interpreted following the rules specified in Section 2.4.1 of
-            <xref target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            interpreted following the rules specified in <xref section="2.4.1"
+            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             in octets.</t>
 
             <t hangText="authentication-domain-name (variable length):">The
             authentication domain name of the encrypted DNS resolver. This
-            field is formatted as specified in Section 10 of <xref
+            field is formatted as specified in <xref section="10"
             target="RFC8415"></xref>. An example is provided in <xref
             target="fqdn"></xref>.</t>
 
@@ -659,11 +659,10 @@
             <t
             hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
-            in Section 2.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
-            include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers. This field MUST include at least "alpn"
-            SvcParam (Section 4.1 of <xref
+            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https"></xref>.
+            Service parameters may include, for example, a list of ALPN
+            protocol identifiers or alternate port numbers. This field MUST
+            include at least "alpn" SvcParam (<xref section="4.1"
             target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
             MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
             superseded by the included IP addresses.<vspace
@@ -705,7 +704,7 @@
       <section anchor="RA-ADN" title="Option Format">
         <t>This section defines a new Neighbor Discovery option <xref
         target="RFC4861"></xref>: IPv6 RA Encrypted DNS option. This option is
-        useful in contexts similar to those discussed in Section 1.1 of <xref
+        useful in contexts similar to those discussed in <xref section="1.1"
         target="RFC8106"></xref>.</t>
 
         <t>The format of the IPv6 RA Encrypted DNS option is illustrated in
@@ -746,7 +745,7 @@
             <t hangText="Service Priority:">16-bit unsigned integer. The
             priority of this Encrypted DNS option instance compared to other
             instances. This field is interpreted following the rules specified
-            in Section 2.4.1 of <xref
+            in <xref section="2.4.1"
             target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
 
             <t hangText="Lifetime:">32-bit unsigned integer. The maximum time
@@ -766,7 +765,7 @@
 
             <t hangText="authentication-domain-name (variable length):">The
             authentication domain name of the encrypted DNS resolver. This
-            field is formatted as specified in Section 10 of <xref
+            field is formatted as specified in <xref section="10"
             target="RFC8415"></xref>.</t>
 
             <t hangText="Addr Length:">16-bit unsigned integer. This field
@@ -789,11 +788,10 @@
             <t
             hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
-            in Section 2.1 of <xref
-            target="I-D.ietf-dnsop-svcb-https"></xref>. Service parameters may
-            include, for example, a list of ALPN protocol identifiers or
-            alternate port numbers. This field MUST include at least "alpn"
-            SvcParam (Section 4.1 of <xref
+            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https"></xref>.
+            Service parameters may include, for example, a list of ALPN
+            protocol identifiers or alternate port numbers. This field MUST
+            include at least "alpn" SvcParam (<xref section="4.1"
             target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
             MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
             superseded by the included IP addresses.<vspace
@@ -802,7 +800,7 @@
           </list></t>
 
         <t>The option MUST be padded with zeros so that the full enclosed data
-        is a multiple of 8 octets (Section 4.6 of <xref
+        is a multiple of 8 octets (<xref section="4.6"
         target="RFC4861"></xref>).</t>
       </section>
 
@@ -810,9 +808,9 @@
         <t>The procedure for DNS configuration is the same as it is with any
         other Neighbor Discovery option <xref target="RFC4861"></xref>. In
         addition, the host follows the same procedure as the one described in
-        Section 5.3.1 of <xref target="RFC8106"></xref> for processing
-        received Encrypted DNS options with the formatting requirements in
-        <xref target="RA-ADN"></xref> and validation checks in <xref
+        <xref section="5.3.1" target="RFC8106"></xref> for processing received
+        Encrypted DNS options with the formatting requirements in <xref
+        target="RA-ADN"></xref> and validation checks in <xref
         target="VC"></xref> substituted for the length and fields
         validation.</t>
 
@@ -832,28 +830,29 @@
         modification within the LAN. Unless mitigated (described below), the
         content of DHCP and RA messages can be spoofed or modified by active
         attackers, such as compromised devices within the local network. An
-        active attacker (Section 3.3 of <xref target="RFC3552"></xref>) can
+        active attacker (<xref section="3.3" target="RFC3552"></xref>) can
         spoof the DHCP/RA response to provide the attacker's encrypted DNS
         resolver. Note that such an attacker can launch other attacks as
-        discussed in Section 22 of <xref target="RFC8415"></xref>. The
-        attacker can get a domain name with a domain-validated public
-        certificate from a CA and host an encrypted DNS resolver.</t>
+        discussed in <xref section="22" target="RFC8415"></xref>. The attacker
+        can get a domain name with a domain-validated public certificate from
+        a CA and host an encrypted DNS resolver.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
         the following mechanisms:</t>
 
         <t><list style="symbols">
-            <t>DHCPv6-Shield <xref target="RFC7610"></xref>: the router (e.g.,
-            a border router, a CPE) discards DHCP response messages received
-            from any local endpoint.</t>
+            <t>DHCPv6-Shield <xref target="RFC7610"></xref>: the network
+            access node (e.g., a border router, a CPE, an Access Point (AP))
+            discards DHCP response messages received from any local
+            endpoint.</t>
 
-            <t>RA-Guard <xref target="RFC7113"></xref>: the router discards
-            RAs messages received from any local endpoint.</t>
+            <t>RA-Guard <xref target="RFC7113"></xref>: the network access
+            node discards RAs messages received from any local endpoint.</t>
 
             <t>Source Address Validation Improvement (SAVI) solution for DHCP
-            <xref target="RFC7513"></xref>: the router filters packets with
-            forged source IP addresses.</t>
+            <xref target="RFC7513"></xref>: the network access node filters
+            packets with forged source IP addresses.</t>
           </list></t>
 
         <t>The above mechanisms would ensure that the endpoint receives the
@@ -876,13 +875,13 @@
         CPE. This behavior adheres to REQ#8 in <xref target="RFC6092"></xref>;
         it MUST apply for both IPv4 and IPv6. This recommendation is meant to
         isolate local network DNS resolver services from the public Internet
-        and prevent external attacks against the local Encrypted DNS
+        and prevent external attacks against the local encrypted DNS
         resolver.</t>
       </section>
 
       <section title="Deletion Attacks">
         <t>If the DHCP responses or RAs are dropped by the attacker, the
-        client can fallback to use a preconfigured encrypted DNS resolver.
+        client can fall back to use a preconfigured encrypted DNS resolver.
         However, the use of policies to select resolvers is out of the scope
         of this document.</t>
 
@@ -890,7 +889,7 @@
       </section>
 
       <section title="Passive Attacks">
-        <t>A passive attacker (Section 3.2 of <xref target="RFC3552"></xref>)
+        <t>A passive attacker (<xref section="3.2" target="RFC3552"></xref>)
         can identify a host is using DHCP/RA to discover an encrypted DNS
         resolver and can infer that host is capable of using DoH/DoT/DoQ to
         encrypt DNS messages. However, a passive attacker cannot spoof or
@@ -903,9 +902,9 @@
         target="Evil-Twin"></xref>, <xref target="Krack"></xref>, <xref
         target="Dragonblood"></xref>). Because of these attacks, only
         cryptographically authenticated communications are trusted on WLANs.
-        This means that an information (e.g., NTP server, DNS resolver, domain
-        search list) provided by such networks via DHCP, DHCPv6, or RA are
-        untrusted because DHCP and RA messages are not authenticated.</t>
+        This means that any information (e.g., NTP server, DNS resolver,
+        domain search list) provided by such networks via DHCP, DHCPv6, or RA
+        is untrusted because DHCP and RA messages are not authenticated.</t>
 
         <t>If the pre-shared key (PSK) is the same for all clients that
         connect to the same WLAN (e.g., WPA-PSK), the shared key will be
@@ -917,11 +916,11 @@
         <t>This leads to the need for provisioning unique credentials for
         different clients. Endpoints can be provisioned with unique
         credentials (username and password, typically) provided by the local
-        network administrator to mutually authenticate to the local WLAN
-        Access Point (e.g., 802.1x Wireless User Authentication on OpenWRT
-        <xref target="dot1x"></xref>, EAP-pwd <xref target="RFC8146"></xref>).
-        Not all endpoint devices (e.g., IoT devices) support 802.1x supplicant
-        and need an alternate mechanism to connect to the local network. To
+        network administrator to mutually authenticate to the local WLAN AP
+        (e.g., 802.1x Wireless User Authentication on OpenWRT <xref
+        target="dot1x"></xref>, EAP-pwd <xref target="RFC8146"></xref>). Not
+        all endpoint devices (e.g., IoT devices) support 802.1x supplicant and
+        need an alternate mechanism to connect to the local network. To
         address this limitation, unique pre-shared keys can be created for
         each such devices and WPA-PSK is used (e.g., <xref
         target="IPSK"></xref>).</t>
@@ -1010,8 +1009,6 @@
         </texttable>
 
         <t></t>
-
-        <t></t>
       </section>
     </section>
 
@@ -1027,7 +1024,7 @@
       was discussed in previous versions of this specification.</t>
 
       <t>The use of DHCP to retrieve an authentication domain name was
-      discussed in Section 7.3.1 of <xref target="RFC8310"></xref> and <xref
+      discussed in <xref section="7.3.1" target="RFC8310"></xref> and <xref
       target="I-D.pusateri-dhc-dns-driu"></xref>.</t>
 
       <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
@@ -1037,6 +1034,9 @@
 
       <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
       review, and Robert Sparks for the artart review.</t>
+
+      <t>Thanks for Lars Eggert, Roman Danyliw, and Erik Kline for the IESG
+      review. </t>
     </section>
 
     <section title="Contributing Authors">
@@ -1227,7 +1227,7 @@
       </reference>
 
       <reference anchor="ND"
-                 target="http://www.iana.org/assignments/icmpv6-parameters/    icmpv6-parameters.xhtml#icmpv6-parameters-5">
+                 target="https://www.iana.org/assignments/icmpv6-parameters/    icmpv6-parameters.xhtml#icmpv6-parameters-5">
         <front>
           <title>IPv6 Neighbor Discovery Option Formats</title>
 

@@ -5,19 +5,19 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 12 January 2023                                          Akamai
+Expires: 14 January 2023                                          Akamai
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                            11 July 2022
+                                                            13 July 2022
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
                        designated Resolvers (DNR)
-                         draft-ietf-add-dnr-11
+                         draft-ietf-add-dnr-12
 
 Abstract
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 January 2023.
+   This Internet-Draft will expire on 14 January 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 1]
+Boucadair, et al.        Expires 14 January 2023                [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 2]
+Boucadair, et al.        Expires 14 January 2023                [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -165,7 +165,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 3]
+Boucadair, et al.        Expires 14 January 2023                [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -221,7 +221,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 4]
+Boucadair, et al.        Expires 14 January 2023                [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -251,10 +251,10 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 3.1.4.  Why Not Separate Options for ADN and IP Addresses?
 
-   A single option is used to convey both the ADN and IP addresses
-   because otherwise means to correlate an IP address conveyed in an
-   option with an ADN conveyed in another option will be required if,
-   for example, more than one ADN is supported by the network.
+   A single option is used to convey both the ADN and IP addresses.
+   Otherwise a means to correlate an IP address conveyed in an option
+   with an ADN conveyed in another option will be required if, for
+   example, more than one ADN is supported by the network.
 
 3.1.5.  Service Parameters
 
@@ -265,7 +265,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    parameters.  These parameters are encoded following the same rules
    for encoding SvcParams in Section 2.1 of [I-D.ietf-dnsop-svcb-https].
    This encoding approach may increase the size of the options but it
-   has the merit relying upon an existing IANA registry and, thus,
+   has the merit of relying upon an existing IANA registry and, thus,
    accommodating new encrypted DNS protocols and service parameters that
    may be defined in the future.
 
@@ -277,7 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 5]
+Boucadair, et al.        Expires 14 January 2023                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -308,7 +308,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    In contexts where putting additional complexity on requesting hosts
    is acceptable, returning an ADN only can be considered.  The supplied
    ADN will be passed to a local resolution library (a DNS client,
-   typically) which will then issues Service Binding (SVCB) queries
+   typically) which will then issue Service Binding (SVCB) queries
    [I-D.ietf-add-svcb-dns].  These SVCB queries can be sent to the
    discovered encrypted DNS resolver itself or to the network-designated
    Do53 resolver.  Note that this mode may be subject to active attacks,
@@ -327,18 +327,18 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 3.1.8.  DNR Validation Checks
 
-   On receipt of an Encrypted DNS option, the client makes the following
-   validation checks:
+   On receipt of an Encrypted DNS option, the DHCP client (or IPv6 host)
+   makes the following validation checks:
 
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 6]
+Boucadair, et al.        Expires 14 January 2023                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
-   *  The ADN is encoded as per Section 10 of [RFC8415].
+   *  The ADN is present and encoded as per Section 10 of [RFC8415].
 
    *  If additional data is supplied:
 
@@ -352,7 +352,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
          service parameters.
 
    If any of the checks fail, the receiver discards the received
-   Encrypted DNS option(s).
+   Encrypted DNS option.
 
 3.1.9.  Recommended DNR Information
 
@@ -365,7 +365,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       on implicit ordering if multiple instances of the encrypted DNS
       are used.
 
-   *  An authentication domain name.
+   *  An authentication domain name.  This parameter is mandatory.
 
    *  A list of IP addresses to locate the encrypted DNS resolver.
 
@@ -389,7 +389,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 7]
+Boucadair, et al.        Expires 14 January 2023                [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -411,9 +411,10 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    techniques as described in [RFC6125] to compare the authentication
    domain name conveyed in the Encrypted DNS options to the certificate
    provided (see Section 8.1 of [RFC8310] for more details).  The DNS
-   client uses Web PKI trust anchors by default unless configured
-   otherwise to use explicit trust anchors.  ALPN-related considerations
-   can be found in Section 6.1 of [I-D.ietf-dnsop-svcb-https].
+   client uses the default system or application PKI trust anchors
+   unless configured otherwise to use explicit trust anchors.  ALPN-
+   related considerations can be found in Section 6.1 of
+   [I-D.ietf-dnsop-svcb-https].
 
 3.4.  Multihoming Is Out Of Scope
 
@@ -444,8 +445,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-
-Boucadair, et al.        Expires 12 January 2023                [Page 8]
+Boucadair, et al.        Expires 14 January 2023                [Page 8]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -501,7 +501,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023                [Page 9]
+Boucadair, et al.        Expires 14 January 2023                [Page 9]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -557,7 +557,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 10]
+Boucadair, et al.        Expires 14 January 2023               [Page 10]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -613,7 +613,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 11]
+Boucadair, et al.        Expires 14 January 2023               [Page 11]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -669,7 +669,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 12]
+Boucadair, et al.        Expires 14 January 2023               [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -725,7 +725,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 13]
+Boucadair, et al.        Expires 14 January 2023               [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -781,7 +781,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 14]
+Boucadair, et al.        Expires 14 January 2023               [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -837,7 +837,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 15]
+Boucadair, et al.        Expires 14 January 2023               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -893,7 +893,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 16]
+Boucadair, et al.        Expires 14 January 2023               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -902,15 +902,16 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    attackers within the local network may be mitigated by making use of
    the following mechanisms:
 
-   *  DHCPv6-Shield [RFC7610]: the router (e.g., a border router, a CPE)
-      discards DHCP response messages received from any local endpoint.
+   *  DHCPv6-Shield [RFC7610]: the network access node (e.g., a border
+      router, a CPE, an Access Point (AP)) discards DHCP response
+      messages received from any local endpoint.
 
-   *  RA-Guard [RFC7113]: the router discards RAs messages received from
-      any local endpoint.
+   *  RA-Guard [RFC7113]: the network access node discards RAs messages
+      received from any local endpoint.
 
    *  Source Address Validation Improvement (SAVI) solution for DHCP
-      [RFC7513]: the router filters packets with forged source IP
-      addresses.
+      [RFC7513]: the network access node filters packets with forged
+      source IP addresses.
 
    The above mechanisms would ensure that the endpoint receives the
    correct configuration information of the encrypted DNS resolvers
@@ -931,14 +932,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    This behavior adheres to REQ#8 in [RFC6092]; it MUST apply for both
    IPv4 and IPv6.  This recommendation is meant to isolate local network
    DNS resolver services from the public Internet and prevent external
-   attacks against the local Encrypted DNS resolver.
+   attacks against the local encrypted DNS resolver.
 
 7.2.  Deletion Attacks
 
    If the DHCP responses or RAs are dropped by the attacker, the client
-   can fallback to use a preconfigured encrypted DNS resolver.  However,
-   the use of policies to select resolvers is out of the scope of this
-   document.
+   can fall back to use a preconfigured encrypted DNS resolver.
+   However, the use of policies to select resolvers is out of the scope
+   of this document.
 
    Note that deletion attack is not specific to DHCP/RA.
 
@@ -948,8 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-
-Boucadair, et al.        Expires 12 January 2023               [Page 17]
+Boucadair, et al.        Expires 14 January 2023               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -967,9 +967,9 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    home networks) is vulnerable to various attacks (e.g., [Evil-Twin],
    [Krack], [Dragonblood]).  Because of these attacks, only
    cryptographically authenticated communications are trusted on WLANs.
-   This means that an information (e.g., NTP server, DNS resolver,
+   This means that any information (e.g., NTP server, DNS resolver,
    domain search list) provided by such networks via DHCP, DHCPv6, or RA
-   are untrusted because DHCP and RA messages are not authenticated.
+   is untrusted because DHCP and RA messages are not authenticated.
 
    If the pre-shared key (PSK) is the same for all clients that connect
    to the same WLAN (e.g., WPA-PSK), the shared key will be available to
@@ -981,13 +981,13 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    This leads to the need for provisioning unique credentials for
    different clients.  Endpoints can be provisioned with unique
    credentials (username and password, typically) provided by the local
-   network administrator to mutually authenticate to the local WLAN
-   Access Point (e.g., 802.1x Wireless User Authentication on OpenWRT
-   [dot1x], EAP-pwd [RFC8146]).  Not all endpoint devices (e.g., IoT
-   devices) support 802.1x supplicant and need an alternate mechanism to
-   connect to the local network.  To address this limitation, unique
-   pre-shared keys can be created for each such devices and WPA-PSK is
-   used (e.g., [IPSK]).
+   network administrator to mutually authenticate to the local WLAN AP
+   (e.g., 802.1x Wireless User Authentication on OpenWRT [dot1x], EAP-
+   pwd [RFC8146]).  Not all endpoint devices (e.g., IoT devices) support
+   802.1x supplicant and need an alternate mechanism to connect to the
+   local network.  To address this limitation, unique pre-shared keys
+   can be created for each such devices and WPA-PSK is used (e.g.,
+   [IPSK]).
 
 8.  IANA Considerations
 
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 18]
+Boucadair, et al.        Expires 14 January 2023               [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1050,7 +1050,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
              Table 3: Neighbor Discovery Encrypted DNS Option
 
 
-
 9.  Acknowledgements
 
    Many thanks to Christian Jacquenet and Michael Richardson for the
@@ -1061,7 +1060,8 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 19]
+
+Boucadair, et al.        Expires 14 January 2023               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1080,6 +1080,9 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
    Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
    review, and Robert Sparks for the artart review.
+
+   Thanks for Lars Eggert, Roman Danyliw, and Erik Kline for the IESG
+   review.
 
 10.  Contributing Authors
 
@@ -1114,10 +1117,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-
-
-
-Boucadair, et al.        Expires 12 January 2023               [Page 20]
+Boucadair, et al.        Expires 14 January 2023               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 21]
+Boucadair, et al.        Expires 14 January 2023               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1219,7 +1219,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               2017, <https://www.krackattacks.com/>.
 
    [ND]       "IPv6 Neighbor Discovery Option Formats",
-              <http://www.iana.org/assignments/icmpv6-parameters/
+              <https://www.iana.org/assignments/icmpv6-parameters/
               icmpv6-parameters.xhtml#icmpv6-parameters-5>.
 
    [RFC3552]  Rescorla, E. and B. Korver, "Guidelines for Writing RFC
@@ -1229,7 +1229,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 22]
+Boucadair, et al.        Expires 14 January 2023               [Page 22]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1285,7 +1285,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 23]
+Boucadair, et al.        Expires 14 January 2023               [Page 23]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1341,7 +1341,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 24]
+Boucadair, et al.        Expires 14 January 2023               [Page 24]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1397,4 +1397,4 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 12 January 2023               [Page 25]
+Boucadair, et al.        Expires 14 January 2023               [Page 25]
