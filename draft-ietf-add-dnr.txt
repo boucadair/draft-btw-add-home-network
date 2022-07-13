@@ -426,8 +426,8 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    example of DNS resolver selection for multi-interfaced devices.
    Also, the reader may refer to [I-D.ietf-add-split-horizon-authority]
    for a discussion on how DNR and Provisioning Domains (PvDs) Key
-   "dnsZones" Section 4.3 of [RFC8801] can be used in Split DNS
-   environments (Section 6 of [RFC8499]).
+   "dnsZones" (Section 4.3 of [RFC8801]) can be used in Split DNS
+   environments (Section 6 of [RFC8801]).
 
 4.  DHCPv6 Encrypted DNS Option
 

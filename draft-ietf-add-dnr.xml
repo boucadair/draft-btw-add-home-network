@@ -446,9 +446,9 @@
         an example of DNS resolver selection for multi-interfaced devices.
         Also, the reader may refer to <xref
         target="I-D.ietf-add-split-horizon-authority"></xref> for a discussion
-        on how DNR and Provisioning Domains (PvDs) Key "dnsZones" <xref
-        section="4.3" target="RFC8801"></xref> can be used in Split DNS
-        environments (Section 6 of <xref target="RFC8499"></xref>). </t>
+        on how DNR and Provisioning Domains (PvDs) Key "dnsZones" (<xref
+        section="4.3" target="RFC8801"></xref>) can be used in Split DNS
+        environments (<xref section="6" target="RFC8801"></xref>). </t>
       </section>
     </section>
 
