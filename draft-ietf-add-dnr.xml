@@ -421,10 +421,11 @@
       </section>
 
       <section title="Connection Establishment">
-        <t>If the local DNS client supports one of the discovered Encrypted
+        <t>If the local DNS client supports one of the discovered encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
-        DNS session following the order of the discovered resolvers.</t>
+        DNS session following the service priority of the discovered encrypted
+        resolvers.</t>
 
         <t>The DNS client verifies the connection based on PKIX validation
         <xref target="RFC5280"></xref> of the DNS resolver certificate and
@@ -438,7 +439,7 @@
         target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
       </section>
 
-      <section title="Multihoming Is Out Of Scope">
+      <section title="Multihoming Considerations">
         <t>Devices may be connected to multiple networks; each providing their
         own DNS configuration using the discovery mechanisms specified in this
         document. Nevertheless, it is out of the scope of this specification
@@ -458,7 +459,7 @@
 
       <section anchor="DHCPv6-ADN" title="Option Format">
         <t>The format of the DHCPv6 Encrypted DNS option is shown in <xref
-        target="dhcpv6-format"></xref>.</t>
+        target="dhcpv6-format"></xref>. </t>
 
         <t><figure align="center" anchor="dhcpv6-format"
             title="DHCPv6 Encrypted DNS Option">
@@ -467,17 +468,17 @@
 |       OPTION_V6_DNR           |         Option-length         |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
 |       Service Priority        |         ADN Length            |  
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-~                   authentication-domain-name                  ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|         Addr Length           |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               | 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
+~                   authentication-domain-name                  ~   
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   
+|         Addr Length           |                               | 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |  
 ~                        ipv6-address(es)                       ~ 
-|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
-|                               |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
-~                 Service Parameters (SvcParams)                ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+]]></artwork>
+|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
+|                               |                               | 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               | 
+~                 Service Parameters (SvcParams)                ~ 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ]]></artwork>
           </figure>The fields of the option shown in <xref
         target="dhcpv6-format"></xref> are as follows:<list style="hanging">
             <t hangText="Option-code:">OPTION_V6_DNR (TBA1, see <xref
@@ -547,7 +548,9 @@
             ('Option-length' - 6 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
-        <t></t>
+        <t>Note that "Addr Length", "ipv6-address(es)", and "Service
+        Parameters (SvcParams)" fields are not present if the ADN-only mode is
+        used (<xref target="adn-only"></xref>).</t>
       </section>
 
       <section title="DHCPv6 Client Behavior">
@@ -611,16 +614,16 @@
 |   ADN Length  |               |
 +-+-+-+-+-+-+-+-+               |
 ~  authentication-domain-name   ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  Addr Length  |               |
-+-+-+-+-+-+-+-+-+               |
-~        IPv4 Address(es)       ~
-|               +-+-+-+-+-+-+-+-+
-|               |               |
-+-+-+-+-+-+-+-+-+               |
-~Service Parameters (SvcParams) ~
-|                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
+|  Addr Length  |               | 
++-+-+-+-+-+-+-+-+               | 
+~        IPv4 Address(es)       ~ 
+|               +-+-+-+-+-+-+-+-+ 
+|               |               | 
++-+-+-+-+-+-+-+-+               | 
+~Service Parameters (SvcParams) ~ 
+|                               | 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   
 ]]></artwork>
               </figure><vspace blankLines="1" />When several encrypted DNS
             resolvers are to be included, the "DNR Instance Data" field is
@@ -678,6 +681,10 @@
             Length' - 4 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
+        <t>Note that "Addr Length", "IPv4 Address(es)", and "Service
+        Parameters (SvcParams)" fields are not present if the ADN-only mode is
+        used (<xref target="adn-only"></xref>).</t>
+
         <t>OPTION_V4_DNR is a concatenation-requiring option. As such, the
         mechanism specified in <xref target="RFC3396"></xref> MUST be used if
         OPTION_V4_DNR exceeds the maximum DHCPv4 option size of 255
@@ -727,11 +734,11 @@
 |          ADN Length           |                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
 ~                   authentication-domain-name                  ~
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+  
 |         Addr Length           |                               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               | 
 ~                        ipv6-address(es)                       ~
-|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                               +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
 |                               |     SvcParams Length          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~                 Service Parameters (SvcParams)                ~
@@ -804,6 +811,10 @@
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used.</t>
           </list></t>
+
+        <t>Note that "Addr Length", "ipv6-address(es)", and "Service
+        Parameters (SvcParams)" fields are not present if the ADN-only mode is
+        used (<xref target="adn-only"></xref>).</t>
 
         <t>The option MUST be padded with zeros so that the full enclosed data
         is a multiple of 8 octets (<xref section="4.6"
@@ -1041,8 +1052,8 @@
       <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
       review, and Robert Sparks for the artart review.</t>
 
-      <t>Thanks to Lars Eggert, Roman Danyliw, Erik Kline, and Martin Duke for
-      the IESG review.</t>
+      <t>Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, and
+      Robert Wilton for the IESG review.</t>
     </section>
 
     <section title="Contributing Authors">
