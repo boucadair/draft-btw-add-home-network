@@ -401,6 +401,9 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 3.3.  Connection Establishment
 
+   This section provides a non-normative description of how a DNS client
+   may use of the discovered DNR information.
+
    If the local DNS client supports one of the discovered encrypted DNS
    protocols identified by Application Layer Protocol Negotiation (ALPN)
    protocol identifiers, the DNS client establishes an encrypted DNS
@@ -415,7 +418,9 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    client uses the default system or application PKI trust anchors
    unless configured otherwise to use explicit trust anchors.  ALPN-
    related considerations can be found in Section 6.1 of
-   [I-D.ietf-dnsop-svcb-https].
+   [I-D.ietf-dnsop-svcb-https].  Operation considerations to check the
+   revocation status of the certificate of an encrypted DNS resolver are
+   discussed in Section 10 of [RFC8484].
 
 3.4.  Multihoming Considerations
 
@@ -436,11 +441,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 4.1.  Option Format
 
    The format of the DHCPv6 Encrypted DNS option is shown in Figure 1.
-
-
-
-
-
 
 
 

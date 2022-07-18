@@ -421,6 +421,9 @@
       </section>
 
       <section title="Connection Establishment">
+        <t>This section provides a non-normative description of how a DNS
+        client may use of the discovered DNR information. </t>
+
         <t>If the local DNS client supports one of the discovered encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
         (ALPN) protocol identifiers, the DNS client establishes an encrypted
@@ -436,7 +439,10 @@
         DNS client uses the default system or application PKI trust anchors
         unless configured otherwise to use explicit trust anchors.
         ALPN-related considerations can be found in <xref section="6.1"
-        target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+        target="I-D.ietf-dnsop-svcb-https"></xref>. Operation considerations
+        to check the revocation status of the certificate of an encrypted DNS
+        resolver are discussed in Section 10 of <xref
+        target="RFC8484"></xref>. </t>
       </section>
 
       <section title="Multihoming Considerations">
