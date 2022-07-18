@@ -521,7 +521,8 @@
             address can be link-local, ULA, or GUA. The format of this field
             is shown in <xref target="v6add"></xref>.<figure align="center"
                 anchor="v6add" title="Format of the IPv6 Addresses Field">
-                <artwork><![CDATA[+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                <artwork><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                                                               |
 |                         ipv6-address                          |
 |                                                               |
@@ -1052,8 +1053,8 @@
       <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
       review, and Robert Sparks for the artart review.</t>
 
-      <t>Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, and
-      Robert Wilton for the IESG review.</t>
+      <t>Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, Robert
+      Wilton, and Paul Wouters for the IESG review.</t>
     </section>
 
     <section title="Contributing Authors">

@@ -517,6 +517,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       link-local, ULA, or GUA.  The format of this field is shown in
       Figure 3.
 
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       |                                                               |
       |                         ipv6-address                          |
@@ -553,7 +554,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    To discover an encrypted DNS resolver, the DHCPv6 client MUST include
    OPTION_V6_DNR in an Option Request Option (ORO), as in Sections
    18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of [RFC8415].
-
 
 
 
@@ -1081,8 +1081,8 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
    review, and Robert Sparks for the artart review.
 
-   Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, and
-   Robert Wilton for the IESG review.
+   Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, Robert
+   Wilton, and Paul Wouters for the IESG review.
 
 10.  Contributing Authors
 
