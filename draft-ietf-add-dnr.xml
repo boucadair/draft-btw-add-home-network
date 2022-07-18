@@ -422,7 +422,7 @@
 
       <section title="Connection Establishment">
         <t>This section provides a non-normative description of how a DNS
-        client may use of the discovered DNR information. </t>
+        client may use the discovered DNR information. </t>
 
         <t>If the local DNS client supports one of the discovered encrypted
         DNS protocols identified by Application Layer Protocol Negotiation

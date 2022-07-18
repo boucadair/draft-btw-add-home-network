@@ -402,7 +402,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 3.3.  Connection Establishment
 
    This section provides a non-normative description of how a DNS client
-   may use of the discovered DNR information.
+   may use the discovered DNR information.
 
    If the local DNS client supports one of the discovered encrypted DNS
    protocols identified by Application Layer Protocol Negotiation (ALPN)
