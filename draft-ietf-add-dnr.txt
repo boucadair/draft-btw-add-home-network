@@ -141,6 +141,10 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    of the scope of this document to provide an inventory of such
    deployments.
 
+   This document focuses on the encrypted DNS discovery.  Resolver
+   selection considerations are out of scope.  Likewise, policies
+   (including interaction with users) are out of scope.
+
 2.  Terminology
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -158,10 +162,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       procedure.
 
    Encrypted DNS:  refers to a scheme where DNS exchanges are
-      transported over an encrypted channel.  Examples of encrypted DNS
-      are DoT, DoH, or DoQ.
-
-   Encrypted DNS resolver:  refers to a DNS resolver that supports any
 
 
 
@@ -170,6 +170,10 @@ Boucadair, et al.        Expires 20 January 2023                [Page 3]
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
+      transported over an encrypted channel.  Examples of encrypted DNS
+      are DoT, DoH, or DoQ.
+
+   Encrypted DNS resolver:  refers to a DNS resolver that supports any
       encrypted DNS scheme.
 
    Encrypted DNS options:  refers to the options defined in Sections 4,
@@ -213,11 +217,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    on the same or distinct IP addresses.  Such a decision is deployment
    specific.
 
-   In order to optimize the size of discovery messages when all DNS
-   resolvers terminate on the same IP address, early versions of this
-   document considered relying upon the discovery mechanisms specified
-   in [RFC2132][RFC3646][RFC8106] to retrieve a list of IP addresses to
-   reach their DNS resolvers.  Nevertheless, this approach requires a
+
 
 
 
@@ -226,6 +226,11 @@ Boucadair, et al.        Expires 20 January 2023                [Page 4]
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
+   In order to optimize the size of discovery messages when all DNS
+   resolvers terminate on the same IP address, early versions of this
+   document considered relying upon the discovery mechanisms specified
+   in [RFC2132][RFC3646][RFC8106] to retrieve a list of IP addresses to
+   reach their DNS resolvers.  Nevertheless, this approach requires a
    client that supports more than one encrypted DNS protocol (e.g., DoH
    and DoT) to probe that list of IP addresses.  To avoid such a
    probing, the options defined in Sections 4, 5, and 6 associate an
@@ -269,11 +274,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    This encoding approach may increase the size of the options but it
    has the merit of relying upon an existing IANA registry and, thus,
    accommodating new encrypted DNS protocols and service parameters that
-   may be defined in the future.
-
-   The following service parameters MUST be supported by a DNR
-   implementation:
-
 
 
 
@@ -281,6 +281,11 @@ Boucadair, et al.        Expires 20 January 2023                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
+
+   may be defined in the future.
+
+   The following service parameters MUST be supported by a DNR
+   implementation:
 
    alpn:  Used to indicate the set of supported protocols (Section 7.1
       of [I-D.ietf-dnsop-svcb-https]).
@@ -325,11 +330,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    The DHCP options defined in Sections 4 and 5 follow the option
    ordering guidelines in Section 17 of [RFC7227].
 
-   Likewise, the RA option (Section 6) adheres to the recommendations in
-   Section 9 of [RFC4861].
-
-
-
 
 
 
@@ -337,6 +337,9 @@ Boucadair, et al.        Expires 20 January 2023                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
+
+   Likewise, the RA option (Section 6) adheres to the recommendations in
+   Section 9 of [RFC4861].
 
 3.1.8.  DNR Validation Checks
 
@@ -380,9 +383,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
    If the encrypted DNS is discovered by a host using both RA and DHCP,
    the rules discussed in Section 5.3.1 of [RFC8106] MUST be followed.
-
-
-
 
 
 
@@ -920,7 +920,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    AP) may prevent some spoofing attacks.  However, such a filtering
    might have negative implications on legitimate communications between
    devices that are serviced by the same AP.  Special care should be
-   considered when configuring such filtering rules.
+   considered when configuring such a filtering rules.
 
    The above mechanisms would ensure that the endpoint receives the
    correct configuration information of the encrypted DNS resolvers
