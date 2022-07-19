@@ -5,14 +5,14 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 19 January 2023                                          Akamai
+Expires: 20 January 2023                                          Akamai
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                            18 July 2022
+                                                            19 July 2022
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 January 2023.
+   This Internet-Draft will expire on 20 January 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 1]
+Boucadair, et al.        Expires 20 January 2023                [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -84,11 +84,11 @@ Table of Contents
        3.1.8.  DNR Validation Checks . . . . . . . . . . . . . . . .   6
        3.1.9.  Recommended DNR Information . . . . . . . . . . . . .   7
      3.2.  Handling Configuration Data Conflicts . . . . . . . . . .   7
-     3.3.  Connection Establishment  . . . . . . . . . . . . . . . .   8
+     3.3.  Validating Discovered Resolvers . . . . . . . . . . . . .   8
      3.4.  Multihoming Considerations  . . . . . . . . . . . . . . .   8
-   4.  DHCPv6 Encrypted DNS Option . . . . . . . . . . . . . . . . .   8
-     4.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .   8
-     4.2.  DHCPv6 Client Behavior  . . . . . . . . . . . . . . . . .  10
+   4.  DHCPv6 Encrypted DNS Option . . . . . . . . . . . . . . . . .   9
+     4.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .   9
+     4.2.  DHCPv6 Client Behavior  . . . . . . . . . . . . . . . . .  11
    5.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . . . .  11
      5.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .  11
      5.2.  DHCPv4 Client Behavior  . . . . . . . . . . . . . . . . .  13
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 2]
+Boucadair, et al.        Expires 20 January 2023                [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -165,7 +165,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 3]
+Boucadair, et al.        Expires 20 January 2023                [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -221,7 +221,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 4]
+Boucadair, et al.        Expires 20 January 2023                [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -277,7 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 5]
+Boucadair, et al.        Expires 20 January 2023                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -333,7 +333,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 6]
+Boucadair, et al.        Expires 20 January 2023                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -389,7 +389,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023                [Page 7]
+Boucadair, et al.        Expires 20 January 2023                [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -399,10 +399,13 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    RECOMMENDED that the client uses the encrypted DNS resolvers for that
    network.
 
-3.3.  Connection Establishment
+3.3.  Validating Discovered Resolvers
 
-   This section provides a non-normative description of how a DNS client
-   may use the discovered DNR information.
+   This section describes a set of validation checks to confirm that an
+   encrypted DNS resolver matches what is provided using DNR (e.g., DHCP
+   or RA).  Such validation checks do not intend to validate the
+   security of the DNR provisioning mechanisms or the user's trust
+   relationship to the network.
 
    If the local DNS client supports one of the discovered encrypted DNS
    protocols identified by Application Layer Protocol Negotiation (ALPN)
@@ -435,20 +438,24 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    "dnsZones" (Section 4.3 of [RFC8801]) can be used in Split DNS
    environments (Section 6 of [RFC8499]).
 
+
+
+
+
+
+
+
+Boucadair, et al.        Expires 20 January 2023                [Page 8]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
 4.  DHCPv6 Encrypted DNS Option
 
 
 4.1.  Option Format
 
    The format of the DHCPv6 Encrypted DNS option is shown in Figure 1.
-
-
-
-
-Boucadair, et al.        Expires 19 January 2023                [Page 8]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
 
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -489,6 +496,16 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       domain name of the encrypted DNS resolver.  This field is
       formatted as specified in Section 10 of [RFC8415].
 
+
+
+
+
+
+Boucadair, et al.        Expires 20 January 2023                [Page 9]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
       An example of the authentication-domain-name encoding is shown in
       Figure 2.  This example conveys the FQDN "doh1.example.com.", and
       the resulting Option-length field is 18.
@@ -498,13 +515,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
        +------+------+------+------+------+------+------+------+------+
        |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
        +------+------+------+------+------+------+------+------+------+
-
-
-
-Boucadair, et al.        Expires 19 January 2023                [Page 9]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
 
           Figure 2: An Example of the DNS authentication-domain-name
                                    Encoding
@@ -545,6 +555,13 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       The length of this field is ('Option-length' - 6 - 'ADN Length' -
       'Addr Length').
 
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 10]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
    Note that "Addr Length", "ipv6-address(es)", and "Service Parameters
    (SvcParams)" fields are not present if the ADN-only mode is used
    (Section 3.1.6).
@@ -554,13 +571,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    To discover an encrypted DNS resolver, the DHCPv6 client MUST include
    OPTION_V6_DNR in an Option Request Option (ORO), as in Sections
    18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of [RFC8415].
-
-
-
-Boucadair, et al.        Expires 19 January 2023               [Page 10]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
 
    The DHCPv6 client MUST be prepared to receive multiple instances of
    the OPTION_V6_DNR option; each option is to be treated as a separate
@@ -600,23 +610,16 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
    Length:  Indicates the length of the enclosed data in octets.
 
-   DNR Instance Data:  Includes the configuration data of an encrypted
-      DNS resolver.  The format of this field is shown in Figure 5.
 
 
 
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 19 January 2023               [Page 11]
+Boucadair, et al.        Expires 20 January 2023               [Page 11]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
+
+   DNR Instance Data:  Includes the configuration data of an encrypted
+      DNS resolver.  The format of this field is shown in Figure 5.
 
                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -664,16 +667,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Addr Length:  Length of included IPv4 addresses in octets.  When
       present, it MUST be a multiple of 4.
 
-   IPv4 Address(es) (variable length):  Indicates one or more IPv4
 
 
-
-
-Boucadair, et al.        Expires 19 January 2023               [Page 12]
+Boucadair, et al.        Expires 20 January 2023               [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
+   IPv4 Address(es) (variable length):  Indicates one or more IPv4
       addresses to reach the encrypted DNS resolver.  Both private and
       public IPv4 addresses can be included in this field.  The format
       of this field is shown in Figure 6.  This format assumes that an
@@ -724,8 +725,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-
-Boucadair, et al.        Expires 19 January 2023               [Page 13]
+Boucadair, et al.        Expires 20 January 2023               [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -781,7 +781,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 14]
+Boucadair, et al.        Expires 20 January 2023               [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -837,7 +837,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 15]
+Boucadair, et al.        Expires 20 January 2023               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -893,7 +893,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 16]
+Boucadair, et al.        Expires 20 January 2023               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -949,7 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 17]
+Boucadair, et al.        Expires 20 January 2023               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 18]
+Boucadair, et al.        Expires 20 January 2023               [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1061,7 +1061,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 19]
+Boucadair, et al.        Expires 20 January 2023               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1117,7 +1117,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 20]
+Boucadair, et al.        Expires 20 January 2023               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 21]
+Boucadair, et al.        Expires 20 January 2023               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 22]
+Boucadair, et al.        Expires 20 January 2023               [Page 22]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1285,7 +1285,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 23]
+Boucadair, et al.        Expires 20 January 2023               [Page 23]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1341,7 +1341,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 24]
+Boucadair, et al.        Expires 20 January 2023               [Page 24]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
@@ -1397,4 +1397,4 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires 19 January 2023               [Page 25]
+Boucadair, et al.        Expires 20 January 2023               [Page 25]
