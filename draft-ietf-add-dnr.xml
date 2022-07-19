@@ -148,7 +148,7 @@
 
   <middle>
     <section anchor="intro" title="Introduction">
-      <t>This document focuses on the support of encrypted DNS such as
+      <t>This document focuses on the discovery of encrypted DNS such as
       DNS-over-HTTPS (DoH) <xref target="RFC8484"></xref>, DNS-over-TLS (DoT)
       <xref target="RFC7858"></xref>, or DNS-over-QUIC (DoQ) <xref
       target="RFC9250"></xref> in local networks.</t>
@@ -169,9 +169,8 @@
       the scope of this document to provide an inventory of such
       deployments.</t>
 
-      <t>This document focuses on the encrypted DNS discovery. Resolver
-      selection considerations are out of scope. Likewise, policies (including
-      interaction with users) are out of scope. </t>
+      <t>Resolver selection considerations are out of scope. Likewise,
+      policies (including any interactions with users) are out of scope. </t>
     </section>
 
     <section anchor="notation" title="Terminology">
