@@ -444,6 +444,13 @@
         to check the revocation status of the certificate of an encrypted DNS
         resolver are discussed in Section 10 of <xref
         target="RFC8484"></xref>.</t>
+
+	<aside><t>PKIX validation often requires downloading data from
+	external servers (e.g., certificate revocation lists, certificate
+	transparency) which requires using DNS.  Applications SHOULD NOT
+	be allowed to use an encrypted DNS server until those PKIX
+	validations have completed for that encrypted DNS server.</t></aside>
+
       </section>
 
       <section title="Multihoming Considerations">
