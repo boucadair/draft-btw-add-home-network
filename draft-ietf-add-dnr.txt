@@ -916,11 +916,17 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       [RFC7513]: the network access node filters packets with forged
       source IP addresses.
 
+   More generally, filtering communications between devices (e.g., at an
+   AP) may prevent some spoofing attacks.  However, such a filtering
+   might have negative implications on legitimate communications between
+   devices that are serviced by the same AP.  Special care should be
+   considered when configuring such filtering rules.
+
    The above mechanisms would ensure that the endpoint receives the
    correct configuration information of the encrypted DNS resolvers
    selected by the DHCP server (or RA sender), but cannot provide any
    information about the DHCP server or the entity hosting the DHCP
-   server (or RA sender) .
+   server (or RA sender).
 
    Encrypted DNS sessions with rogue resolvers that spoof the IP address
    of a DNS resolver will fail because the DNS client will fail to
@@ -930,13 +936,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    failures and accept spoofed certificates will be subject to attacks
    (e.g., redirect to malicious resolvers, intercept sensitive data).
 
-   By default, Encrypted DNS connections received from outside the local
-   network MUST be discarded by the encrypted DNS forwarder in a CPE.
-   This behavior adheres to REQ#8 in [RFC6092]; it MUST apply for both
-   IPv4 and IPv6.  This recommendation is meant to isolate local network
-   DNS resolver services from the public Internet and prevent external
-   attacks against the local encrypted DNS resolver.
-
 7.2.  Deletion Attacks
 
    If the DHCP responses or RAs are dropped by the attacker, the client
@@ -945,6 +944,7 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    of this document.
 
    Note that deletion attack is not specific to DHCP/RA.
+
 
 
 
@@ -1290,12 +1290,6 @@ Boucadair, et al.        Expires 20 January 2023               [Page 23]
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
-   [RFC6092]  Woodyatt, J., Ed., "Recommended Simple Security
-              Capabilities in Customer Premises Equipment (CPE) for
-              Providing Residential IPv6 Internet Service", RFC 6092,
-              DOI 10.17487/RFC6092, January 2011,
-              <https://www.rfc-editor.org/info/rfc6092>.
-
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
               within Internet Public Key Infrastructure Using X.509
@@ -1338,6 +1332,12 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               DOI 10.17487/RFC7844, May 2016,
               <https://www.rfc-editor.org/info/rfc7844>.
 
+   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
+              and P. Hoffman, "Specification for DNS over Transport
+              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
+              2016, <https://www.rfc-editor.org/info/rfc7858>.
+
+
 
 
 
@@ -1345,11 +1345,6 @@ Boucadair, et al.        Expires 20 January 2023               [Page 24]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
-
-   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
-              and P. Hoffman, "Specification for DNS over Transport
-              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
-              2016, <https://www.rfc-editor.org/info/rfc7858>.
 
    [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
               Configuration on the Basis of Network Topology", RFC 7969,
@@ -1396,15 +1391,17 @@ Authors' Addresses
    Email: mohamed.boucadair@orange.com
 
 
+   Tirumaleswar Reddy (editor)
+   Akamai
+   Embassy Golf Link Business Park
+
+
 
 Boucadair, et al.        Expires 20 January 2023               [Page 25]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
-   Tirumaleswar Reddy (editor)
-   Akamai
-   Embassy Golf Link Business Park
    Bangalore 560071
    Karnataka
    India
@@ -1427,6 +1424,9 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Microsoft
    United States of America
    Email: tojens@microsoft.com
+
+
+
 
 
 

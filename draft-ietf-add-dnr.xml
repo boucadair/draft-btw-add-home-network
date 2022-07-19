@@ -884,11 +884,17 @@
             packets with forged source IP addresses.</t>
           </list></t>
 
+        <t>More generally, filtering communications between devices (e.g., at
+        an AP) may prevent some spoofing attacks. However, such a filtering
+        might have negative implications on legitimate communications between
+        devices that are serviced by the same AP. Special care should be
+        considered when configuring such filtering rules. </t>
+
         <t>The above mechanisms would ensure that the endpoint receives the
         correct configuration information of the encrypted DNS resolvers
         selected by the DHCP server (or RA sender), but cannot provide any
         information about the DHCP server or the entity hosting the DHCP
-        server (or RA sender) .</t>
+        server (or RA sender).</t>
 
         <t>Encrypted DNS sessions with rogue resolvers that spoof the IP
         address of a DNS resolver will fail because the DNS client will fail
@@ -898,14 +904,6 @@
         authentication failures and accept spoofed certificates will be
         subject to attacks (e.g., redirect to malicious resolvers, intercept
         sensitive data).</t>
-
-        <t>By default, Encrypted DNS connections received from outside the
-        local network MUST be discarded by the encrypted DNS forwarder in a
-        CPE. This behavior adheres to REQ#8 in <xref target="RFC6092"></xref>;
-        it MUST apply for both IPv4 and IPv6. This recommendation is meant to
-        isolate local network DNS resolver services from the public Internet
-        and prevent external attacks against the local encrypted DNS
-        resolver.</t>
       </section>
 
       <section title="Deletion Attacks">
@@ -1155,8 +1153,6 @@
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.RFC.6092'?>
-
       <?rfc include='reference.RFC.8310'?>
 
       <?rfc include='reference.RFC.5280'?>
