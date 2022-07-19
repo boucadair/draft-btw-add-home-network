@@ -887,12 +887,6 @@
             packets with forged source IP addresses.</t>
           </list></t>
 
-        <t>More generally, filtering communications between devices (e.g., at
-        an AP) may prevent some spoofing attacks. However, such a filtering
-        might have negative implications on legitimate communications between
-        devices that are serviced by the same AP. Special care should be
-        considered when configuring such a filtering rules. </t>
-
         <t>The above mechanisms would ensure that the endpoint receives the
         correct configuration information of the encrypted DNS resolvers
         selected by the DHCP server (or RA sender), but cannot provide any

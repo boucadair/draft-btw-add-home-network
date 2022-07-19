@@ -98,10 +98,10 @@ Table of Contents
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
      7.1.  Spoofing Attacks  . . . . . . . . . . . . . . . . . . . .  16
      7.2.  Deletion Attacks  . . . . . . . . . . . . . . . . . . . .  17
-     7.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  18
+     7.3.  Passive Attacks . . . . . . . . . . . . . . . . . . . . .  17
      7.4.  Wireless Security - Authentication Attacks  . . . . . . .  18
    8.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  18
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
      9.1.  DHCPv6 Option . . . . . . . . . . . . . . . . . . . . . .  19
      9.2.  DHCPv4 Option . . . . . . . . . . . . . . . . . . . . . .  19
      9.3.  Neighbor Discovery Option . . . . . . . . . . . . . . . .  19
@@ -115,8 +115,8 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
 
    11. Contributing Authors  . . . . . . . . . . . . . . . . . . . .  20
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  21
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  20
      12.2.  Informative References . . . . . . . . . . . . . . . . .  22
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  25
 
@@ -916,12 +916,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
       [RFC7513]: the network access node filters packets with forged
       source IP addresses.
 
-   More generally, filtering communications between devices (e.g., at an
-   AP) may prevent some spoofing attacks.  However, such a filtering
-   might have negative implications on legitimate communications between
-   devices that are serviced by the same AP.  Special care should be
-   considered when configuring such a filtering rules.
-
    The above mechanisms would ensure that the endpoint receives the
    correct configuration information of the encrypted DNS resolvers
    selected by the DHCP server (or RA sender), but cannot provide any
@@ -945,6 +939,12 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
    Note that deletion attack is not specific to DHCP/RA.
 
+7.3.  Passive Attacks
+
+   A passive attacker (Section 3.2 of [RFC3552]) can identify a host is
+   using DHCP/RA to discover an encrypted DNS resolver and can infer
+   that host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
+   However, a passive attacker cannot spoof or modify DHCP/RA messages.
 
 
 
@@ -953,13 +953,6 @@ Boucadair, et al.        Expires 20 January 2023               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
 
-
-7.3.  Passive Attacks
-
-   A passive attacker (Section 3.2 of [RFC3552]) can identify a host is
-   using DHCP/RA to discover an encrypted DNS resolver and can infer
-   that host is capable of using DoH/DoT/DoQ to encrypt DNS messages.
-   However, a passive attacker cannot spoof or modify DHCP/RA messages.
 
 7.4.  Wireless Security - Authentication Attacks
 
@@ -1001,6 +994,13 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    this document does not expose more privacy information compared to
    Do53 discovery options.
 
+   As discussed in [RFC9076], the use of encrypted DNS does not reduce
+   the data available in the DNS resolver.  For example, the reader may
+   refer to Section 8 of [RFC8484] or Section 7 of [RFC9250] for a
+   discussion on specific privacy considerations to encrypted DNS.
+
+9.  IANA Considerations
+
 
 
 
@@ -1008,14 +1008,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 Boucadair, et al.        Expires 20 January 2023               [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
-   As discussed in [RFC9076], the use of encrypted DNS does not reduce
-   the data available in the DNS resolver.  For example, the reader may
-   refer to Section 8 of [RFC8484] or Section 7 of [RFC9250] for a
-   discussion on specific privacy considerations to encrypted DNS.
-
-9.  IANA Considerations
 
 
 9.1.  DHCPv6 Option
@@ -1054,6 +1046,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    registry under the "Internet Control Message Protocol version 6
    (ICMPv6) Parameters" registry maintained in [ND].
 
+             +======+======================+================+
+             | Type | Description          | Reference      |
+             +======+======================+================+
+             | TBA3 | Encrypted DNS Option | [ThisDocument] |
+             +------+----------------------+----------------+
+
+             Table 3: Neighbor Discovery Encrypted DNS Option
+
 
 
 
@@ -1064,15 +1064,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 Boucadair, et al.        Expires 20 January 2023               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
-             +======+======================+================+
-             | Type | Description          | Reference      |
-             +======+======================+================+
-             | TBA3 | Encrypted DNS Option | [ThisDocument] |
-             +------+----------------------+----------------+
-
-             Table 3: Neighbor Discovery Encrypted DNS Option
 
 
 10.  Acknowledgements
@@ -1110,18 +1101,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Email: n.leymann@telekom.de
 
 
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 20 January 2023               [Page 20]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
    Zhiwei Yan
    CNNIC
    No.4 South 4th Street, Zhongguancun
@@ -1134,6 +1113,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
 12.  References
 
 12.1.  Normative References
+
+
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 20]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
 
    [I-D.ietf-add-svcb-dns]
               Schwartz, B., "Service Binding Mapping for DNS Servers",
@@ -1168,16 +1155,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               DOI 10.17487/RFC4861, September 2007,
               <https://www.rfc-editor.org/info/rfc4861>.
 
-
-
-
-
-
-Boucadair, et al.        Expires 20 January 2023               [Page 21]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
    [RFC8106]  Jeong, J., Park, S., Beloeil, L., and S. Madanapalli,
               "IPv6 Router Advertisement Options for DNS Configuration",
               RFC 8106, DOI 10.17487/RFC8106, March 2017,
@@ -1192,6 +1169,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               "Dynamic Host Configuration Protocol for IPv6 (DHCPv6)",
               RFC 8415, DOI 10.17487/RFC8415, November 2018,
               <https://www.rfc-editor.org/info/rfc8415>.
+
+
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 21]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
 
 12.2.  Informative References
 
@@ -1224,16 +1209,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               2022, <https://www.ietf.org/archive/id/draft-ietf-add-ddr-
               08.txt>.
 
-
-
-
-
-
-Boucadair, et al.        Expires 20 January 2023               [Page 22]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
    [I-D.ietf-add-split-horizon-authority]
               Reddy, T., Wing, D., Smith, K., and B. Schwartz,
               "Establishing Local DNS Authority in Split-Horizon
@@ -1248,6 +1223,16 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               pusateri-dhc-dns-driu-00, 2 July 2018,
               <https://www.ietf.org/archive/id/draft-pusateri-dhc-dns-
               driu-00.txt>.
+
+
+
+
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 22]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
 
    [IPSK]     Cisco, "Identity PSK Feature Deployment Guide",
               <https://www.cisco.com/c/en/us/td/docs/wireless/
@@ -1281,15 +1266,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
 
-
-
-
-
-Boucadair, et al.        Expires 20 January 2023               [Page 23]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
               within Internet Public Key Infrastructure Using X.509
@@ -1306,6 +1282,13 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               Advertisement Guard (RA-Guard)", RFC 7113,
               DOI 10.17487/RFC7113, February 2014,
               <https://www.rfc-editor.org/info/rfc7113>.
+
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 23]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
 
    [RFC7227]  Hankins, D., Mrugalski, T., Siodelski, M., Jiang, S., and
               S. Krishnan, "Guidelines for Creating New DHCPv6 Options",
@@ -1337,15 +1320,6 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
-
-
-
-
-Boucadair, et al.        Expires 20 January 2023               [Page 24]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
    [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
               Configuration on the Basis of Network Topology", RFC 7969,
               DOI 10.17487/RFC7969, October 2016,
@@ -1363,6 +1337,14 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/info/rfc8484>.
+
+
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 24]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
 
    [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
@@ -1394,14 +1376,6 @@ Authors' Addresses
    Tirumaleswar Reddy (editor)
    Akamai
    Embassy Golf Link Business Park
-
-
-
-Boucadair, et al.        Expires 20 January 2023               [Page 25]
-
-Internet-Draft  Discovery of Network-designated Resolver       July 2022
-
-
    Bangalore 560071
    Karnataka
    India
@@ -1420,10 +1394,36 @@ Internet-Draft  Discovery of Network-designated Resolver       July 2022
    Email: neil.cook@noware.co.uk
 
 
+
+
+
+Boucadair, et al.        Expires 20 January 2023               [Page 25]
+
+Internet-Draft  Discovery of Network-designated Resolver       July 2022
+
+
    Tommy Jensen
    Microsoft
    United States of America
    Email: tojens@microsoft.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
