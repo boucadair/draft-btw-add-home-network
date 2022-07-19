@@ -852,6 +852,8 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
+      <t></t>
+
       <section anchor="spoof" title="Spoofing Attacks">
         <t>DHCP/RA messages are not encrypted or protected against
         modification within the LAN. Unless mitigated (described below), the
@@ -952,6 +954,24 @@
         each such devices and WPA-PSK is used (e.g., <xref
         target="IPSK"></xref>).</t>
       </section>
+    </section>
+
+    <section title="Privacy Considerations">
+      <t>Privacy considerations that are specific to DNR provisioning
+      mechanisms are discussed in <xref section="23" target="RFC8415"></xref>
+      or <xref target="RFC7824"></xref>. Anonymity profiles for DHCP clients
+      are discussed in <xref target="RFC7844"></xref>. The mechanism defined
+      in this document can be used to infer that a DHCP client or IPv6 host
+      support encrypted DNS options, but does not explicitly reveal whether
+      local DNS clients are able to consume these options or infer their
+      encryption capabilities. Other than that, this document does not expose
+      more privacy information compared to Do53 discovery options. </t>
+
+      <t>As discussed in <xref target="RFC9076"></xref>, the use of encrypted
+      DNS does not reduce the data available in the DNS resolver. For example,
+      the reader may refer to <xref section="8" target="RFC8484"></xref> or
+      <xref section="7" target="RFC9250"></xref> for a discussion on specific
+      privacy considerations to encrypted DNS.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -1178,6 +1198,12 @@
       <?rfc include='reference.I-D.ietf-add-split-horizon-authority'?>
 
       <?rfc include='reference.RFC.8801'?>
+
+      <?rfc include='reference.RFC.9076'?>
+
+      <?rfc include='reference.RFC.7824'?>
+
+      <?rfc include='reference.RFC.7844'?>
 
       <reference anchor="Evil-Twin"
                  target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">
