@@ -382,12 +382,13 @@
 
         <section title="DNR Information Using Other Provisioning Mechanisms">
           <t>The provisioning mechanisms specified in this document may not be
-          available in specific networks (e.g., some cellular networks) or may
-          not be suitable in some contexts (e.g., need for a secure
-          discovery). Other mechanisms may be considered in these contexts for
-          the provisioning of encrypted DNS resolvers. It is RECOMMENDED that
-          at least the following DNR information is made available to a
-          requesting host:</t>
+          available in specific networks (e.g., some cellular networks
+          exclusively use Protocol Configuration Options (PCOs) <xref
+          target="TS.24008" />) or may not be suitable in some contexts (e.g.,
+          need for a secure discovery). Other mechanisms may be considered in
+          these contexts for the provisioning of encrypted DNS resolvers. It
+          is RECOMMENDED that at least the following DNR information is made
+          available to a requesting host:</t>
 
           <t>
             <list style="symbols">
@@ -1302,6 +1303,20 @@
           </author>
 
           <date />
+        </front>
+      </reference>
+
+      <reference anchor="TS.24008"
+                 target="http://www.3gpp.org/DynaReport/24008.htm">
+        <front>
+          <title>Mobile radio interface Layer 3 specification; Core network
+          protocols; Stage 3 (Release 16)</title>
+
+          <author fullname="" surname="">
+            <organization>3GPP</organization>
+          </author>
+
+          <date day="0" month="December" year="2019" />
         </front>
       </reference>
     </references>
