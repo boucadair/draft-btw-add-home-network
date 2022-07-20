@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!-- This template is for creating an Internet Draft using xml2rfc,
      which is available here: http://xml.resource.org. -->
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!-- One method to get references from the online citation libraries.
-     There has to be one entity for each item to be referenced. 
-     An alternate method (rfc include) is described in the references. -->
-]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <!-- used by XSLT processors -->
 <!-- For a complete list and description of processing instructions (PIs), 
@@ -31,7 +26,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-12" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-add-dnr-12" ipr="trust200902" submissionType="IETF" consensus="true">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -228,8 +223,8 @@
           issuing certificates as per <xref section="1.7.2"
           target="RFC6125" />:</t>
 
-          <aside pn="section-3-1">
-            <t indent="0" pn="section-3-1.1">Some certification authorities
+          <aside pn="aside-cert-authorities">
+            <t indent="0">Some certification authorities
             issue server certificates based on IP addresses, but preliminary
             evidence indicates that such certificates are a very small
             percentage (less than 1%) of issued certificates.</t>
@@ -343,8 +338,8 @@
           the network-designated Do53 resolver. Note that this mode may be
           subject to active attacks, which can be mitigated by DNSSEC.</t>
 
-          <aside pn="section-3-6">
-            <t indent="0" pn="section-3-1.6">How an ADN is passed to a local
+          <aside pn="aside-adn-passed">
+            <t indent="0">How an ADN is passed to a local
             resolution library is implementation specific.</t>
           </aside>
         </section>
@@ -1130,73 +1125,73 @@
 
   <back>
     <references title="Normative References">
-      <?rfc include='reference.RFC.2119'?>
+      <?rfc include='reference.RFC.2119.xml'?>
 
-      <?rfc include='reference.RFC.8174'?>
+      <?rfc include='reference.RFC.8174.xml'?>
 
-      <?rfc include='reference.RFC.4861'?>
+      <?rfc include='reference.RFC.4861.xml'?>
 
-      <?rfc include='reference.RFC.8415'?>
+      <?rfc include='reference.RFC.8415.xml'?>
 
-      <?rfc include='reference.RFC.2132'?>
+      <?rfc include='reference.RFC.2132.xml'?>
 
-      <?rfc include='reference.RFC.8106'?>
+      <?rfc include='reference.RFC.8106.xml'?>
 
-      <?rfc include='reference.RFC.3396'?>
+      <?rfc include='reference.RFC.3396.xml'?>
 
-      <?rfc include='reference.I-D.ietf-dnsop-svcb-https'?>
+      <?rfc include='reference.I-D.ietf-dnsop-svcb-https.xml'?>
 
-      <?rfc include='reference.I-D.ietf-add-svcb-dns'?>
+      <?rfc include='reference.I-D.ietf-add-svcb-dns.xml'?>
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.RFC.8310'?>
+      <?rfc include='reference.RFC.8310.xml'?>
 
-      <?rfc include='reference.RFC.5280'?>
+      <?rfc include='reference.RFC.5280.xml'?>
 
-      <?rfc include='reference.RFC.8499'?>
+      <?rfc include='reference.RFC.8499.xml'?>
 
-      <?rfc include='reference.RFC.6125'?>
+      <?rfc include='reference.RFC.6125.xml'?>
 
-      <?rfc include='reference.RFC.3646'?>
+      <?rfc include='reference.RFC.3646.xml'?>
 
-      <?rfc include='reference.RFC.7610'?>
+      <?rfc include='reference.RFC.7610.xml'?>
 
-      <?rfc include='reference.RFC.7113'?>
+      <?rfc include='reference.RFC.7113.xml'?>
 
-      <?rfc include='reference.RFC.7858'?>
+      <?rfc include='reference.RFC.7858.xml'?>
 
-      <?rfc include='reference.RFC.8484'?>
+      <?rfc include='reference.RFC.8484.xml'?>
 
-      <?rfc include='reference.RFC.9250'?>
+      <?rfc include='reference.RFC.9250.xml'?>
 
-      <?rfc include='reference.RFC.6731'?>
+      <?rfc include='reference.RFC.6731.xml'?>
 
-      <?rfc include='reference.RFC.3552'?>
+      <?rfc include='reference.RFC.3552.xml'?>
 
-      <?rfc include='reference.RFC.7513'?>
+      <?rfc include='reference.RFC.7513.xml'?>
 
-      <?rfc include='reference.RFC.8146'?>
+      <?rfc include='reference.RFC.8146.xml'?>
 
-      <?rfc include='reference.RFC.7227'?>
+      <?rfc include='reference.RFC.7227.xml'?>
 
-      <?rfc include='reference.RFC.7969'?>
+      <?rfc include='reference.RFC.7969.xml'?>
 
-      <?rfc include='reference.RFC.4786'?>
+      <?rfc include='reference.RFC.4786.xml'?>
 
-      <?rfc include='reference.I-D.ietf-add-ddr'?>
+      <?rfc include='reference.I-D.ietf-add-ddr.xml'?>
 
-      <?rfc include='reference.I-D.pusateri-dhc-dns-driu'?>
+      <?rfc include='reference.I-D.pusateri-dhc-dns-driu.xml'?>
 
-      <?rfc include='reference.I-D.ietf-add-split-horizon-authority'?>
+      <?rfc include='reference.I-D.ietf-add-split-horizon-authority.xml'?>
 
-      <?rfc include='reference.RFC.8801'?>
+      <?rfc include='reference.RFC.8801.xml'?>
 
-      <?rfc include='reference.RFC.9076'?>
+      <?rfc include='reference.RFC.9076.xml'?>
 
-      <?rfc include='reference.RFC.7824'?>
+      <?rfc include='reference.RFC.7824.xml'?>
 
-      <?rfc include='reference.RFC.7844'?>
+      <?rfc include='reference.RFC.7844.xml'?>
 
       <reference anchor="Evil-Twin"
                  target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">
