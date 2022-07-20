@@ -26,7 +26,8 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" docName="draft-ietf-add-dnr-12" ipr="trust200902" submissionType="IETF" consensus="true">
+<rfc category="std" consensus="true" docName="draft-ietf-add-dnr-12"
+     ipr="trust200902" submissionType="IETF">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
     Advertisement Options for the Discovery of Network-designated Resolvers
@@ -38,7 +39,7 @@
 
       <address>
         <postal>
-          <street></street>
+          <street />
 
           <city>Rennes</city>
 
@@ -77,7 +78,7 @@
 
       <address>
         <postal>
-          <street></street>
+          <street />
 
           <country>USA</country>
         </postal>
@@ -91,7 +92,7 @@
 
       <address>
         <postal>
-          <street></street>
+          <street />
 
           <country>UK</country>
         </postal>
@@ -105,7 +106,7 @@
 
       <address>
         <postal>
-          <street></street>
+          <street />
 
           <country>USA</country>
         </postal>
@@ -144,18 +145,18 @@
   <middle>
     <section anchor="intro" title="Introduction">
       <t>This document focuses on the discovery of encrypted DNS such as
-      DNS-over-HTTPS (DoH) <xref target="RFC8484"></xref>, DNS-over-TLS (DoT)
-      <xref target="RFC7858"></xref>, or DNS-over-QUIC (DoQ) <xref
-      target="RFC9250"></xref> in local networks.</t>
+      DNS-over-HTTPS (DoH) <xref target="RFC8484" />, DNS-over-TLS (DoT) <xref
+      target="RFC7858" />, or DNS-over-QUIC (DoQ) <xref target="RFC9250" /> in
+      local networks.</t>
 
       <t>In particular, the document specifies how a local encrypted DNS
       resolver can be discovered by connected hosts by means of DHCPv4 <xref
-      target="RFC2132"></xref>, DHCPv6 <xref target="RFC8415"></xref>, and
-      IPv6 Router Advertisement (RA) <xref target="RFC4861"></xref> options.
-      These options are designed to convey the following information: the DNS
-      Authentication Domain Name (ADN), a list of IP addresses, and a set of
-      service parameters. This procedure is called Discovery of
-      Network-designated Resolvers (DNR).</t>
+      target="RFC2132" />, DHCPv6 <xref target="RFC8415" />, and IPv6 Router
+      Advertisement (RA) <xref target="RFC4861" /> options. These options are
+      designed to convey the following information: the DNS Authentication
+      Domain Name (ADN), a list of IP addresses, and a set of service
+      parameters. This procedure is called Discovery of Network-designated
+      Resolvers (DNR).</t>
 
       <t>The options defined in this document can be deployed in a variety of
       deployments (e.g., local networks with Customer Premises Equipment
@@ -165,18 +166,18 @@
       deployments.</t>
 
       <t>Resolver selection considerations are out of scope. Likewise,
-      policies (including any interactions with users) are out of scope. </t>
+      policies (including any interactions with users) are out of scope.</t>
     </section>
 
     <section anchor="notation" title="Terminology">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
       "OPTIONAL" in this document are to be interpreted as described in BCP 14
-      <xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and
-      only when, they appear in all capitals, as shown here.</t>
+      <xref target="RFC2119" /> <xref target="RFC8174" /> when, and only when,
+      they appear in all capitals, as shown here.</t>
 
       <t>This document makes use of the terms defined in <xref
-      target="RFC8499"></xref>. The following additional terms are used: <list
+      target="RFC8499" />. The following additional terms are used: <list
           style="hanging">
           <t hangText="Do53:">refers to unencrypted DNS.</t>
 
@@ -191,9 +192,9 @@
           supports any encrypted DNS scheme.</t>
 
           <t hangText="Encrypted DNS options:">refers to the options defined
-          in Sections <xref format="counter" target="DHCPv6"></xref>, <xref
-          format="counter" target="DHCP"></xref>, and <xref format="counter"
-          target="RA"></xref>.</t>
+          in Sections <xref format="counter" target="DHCPv6" />, <xref
+          format="counter" target="DHCP" />, and <xref format="counter"
+          target="RA" />.</t>
 
           <t hangText="DHCP:">refers to both DHCPv4 and DHCPv6.</t>
         </list></t>
@@ -202,9 +203,9 @@
     <section anchor="RI" title="Overview">
       <t>This document describes how a DNS client can discover local encrypted
       DNS resolvers using DHCP (Sections <xref format="counter"
-      target="DHCPv6"></xref> and <xref format="counter"
-      target="DHCP"></xref>) and Neighbor Discovery protocol (<xref
-      target="RA"></xref>): Encrypted DNS options.</t>
+      target="DHCPv6" /> and <xref format="counter" target="DHCP" />) and
+      Neighbor Discovery protocol (<xref target="RA" />): Encrypted DNS
+      options.</t>
 
       <t>These options configure an authentication domain name, a list of IP
       addresses, and a set of service parameters of the encrypted DNS
@@ -212,7 +213,7 @@
       in the following subsections.</t>
 
       <section anchor="rationale" title="Configuration Data for Encrypted DNS">
-        <t></t>
+        <t />
 
         <section title="ADN as the Reference Identifier for DNS Authentication">
           <t>In order to allow for PKIX-based authentication between a DNS
@@ -224,10 +225,10 @@
           target="RFC6125" />:</t>
 
           <aside pn="aside-cert-authorities">
-            <t indent="0">Some certification authorities
-            issue server certificates based on IP addresses, but preliminary
-            evidence indicates that such certificates are a very small
-            percentage (less than 1%) of issued certificates.</t>
+            <t indent="0">Some certification authorities issue server
+            certificates based on IP addresses, but preliminary evidence
+            indicates that such certificates are a very small percentage (less
+            than 1%) of issued certificates.</t>
           </aside>
         </section>
 
@@ -241,16 +242,16 @@
           <t>In order to optimize the size of discovery messages when all DNS
           resolvers terminate on the same IP address, early versions of this
           document considered relying upon the discovery mechanisms specified
-          in <xref target="RFC2132"></xref><xref target="RFC3646"></xref><xref
-          target="RFC8106"></xref> to retrieve a list of IP addresses to reach
+          in <xref target="RFC2132" /><xref target="RFC3646" /><xref
+          target="RFC8106" /> to retrieve a list of IP addresses to reach
           their DNS resolvers. Nevertheless, this approach requires a client
           that supports more than one encrypted DNS protocol (e.g., DoH and
           DoT) to probe that list of IP addresses. To avoid such a probing,
           the options defined in Sections <xref format="counter"
-          target="DHCPv6"></xref>, <xref format="counter"
-          target="DHCP"></xref>, and <xref format="counter"
-          target="RA"></xref> associate an encrypted DNS protocol with an IP
-          address. No probing is required in such a design.</t>
+          target="DHCPv6" />, <xref format="counter" target="DHCP" />, and
+          <xref format="counter" target="RA" /> associate an encrypted DNS
+          protocol with an IP address. No probing is required in such a
+          design.</t>
         </section>
 
         <section title="Single vs. Multiple IP Addresses">
@@ -258,7 +259,7 @@
           returned in an Encrypted DNS option to accommodate current
           deployments relying upon primary and backup resolvers. Also, DNR can
           be used in contexts where other DNS redundancy schemes (e.g.,
-          anycast as in BCP 126 <xref target="RFC4786"></xref>) are used.</t>
+          anycast as in BCP 126 <xref target="RFC4786" />) are used.</t>
 
           <t>Whether one or more IP addresses are returned in an Encrypted DNS
           option is deployment specific. For example, a router embedding a
@@ -287,8 +288,8 @@
           ones, the Encrypted DNS options are designed to return a set of
           service parameters. These parameters are encoded following the same
           rules for encoding SvcParams in <xref section="2.1"
-          target="I-D.ietf-dnsop-svcb-https"></xref>. This encoding approach
-          may increase the size of the options but it has the merit of relying
+          target="I-D.ietf-dnsop-svcb-https" />. This encoding approach may
+          increase the size of the options but it has the merit of relying
           upon an existing IANA registry and, thus, accommodating new
           encrypted DNS protocols and service parameters that may be defined
           in the future.</t>
@@ -296,28 +297,29 @@
           <t>The following service parameters MUST be supported by a DNR
           implementation:</t>
 
-          <t><list style="hanging">
+          <t>
+            <list style="hanging">
               <t hangText="alpn:">Used to indicate the set of supported
               protocols (<xref section="7.1"
-              target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+              target="I-D.ietf-dnsop-svcb-https" />).</t>
 
               <t hangText="port:">Used to indicate the target port number for
               the encrypted DNS connection (<xref section="7.2"
-              target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
-            </list></t>
+              target="I-D.ietf-dnsop-svcb-https" />).</t>
+            </list>
+          </t>
 
           <t>In addition, the following service parameters are RECOMMENDED to
           be supported by a DNR implementation:<list style="hanging">
               <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
-              (<xref section="7.3"
-              target="I-D.ietf-dnsop-svcb-https"></xref>).</t>
+              (<xref section="7.3" target="I-D.ietf-dnsop-svcb-https" />).</t>
 
               <t hangText="dohpath:">Used to supply a relative DoH URI
               Template (<xref section="5.1"
-              target="I-D.ietf-add-svcb-dns"></xref>).</t>
+              target="I-D.ietf-add-svcb-dns" />).</t>
             </list></t>
 
-          <t></t>
+          <t />
         </section>
 
         <section anchor="adn-only" title="ADN Only Mode">
@@ -339,32 +341,32 @@
           subject to active attacks, which can be mitigated by DNSSEC.</t>
 
           <aside pn="aside-adn-passed">
-            <t indent="0">How an ADN is passed to a local
-            resolution library is implementation specific.</t>
+            <t indent="0">How an ADN is passed to a local resolution library
+            is implementation specific.</t>
           </aside>
         </section>
 
         <section title="Encrypted DNS Options Ordering">
           <t>The DHCP options defined in Sections <xref format="counter"
-          target="DHCPv6"></xref> and <xref format="counter"
-          target="DHCP"></xref> follow the option ordering guidelines in <xref
-          section="17" target="RFC7227"></xref>.</t>
+          target="DHCPv6" /> and <xref format="counter" target="DHCP" />
+          follow the option ordering guidelines in <xref section="17"
+          target="RFC7227" />.</t>
 
-          <t>Likewise, the RA option (<xref format="default"
-          target="RA"></xref>) adheres to the recommendations in <xref
-          section="9" target="RFC4861"></xref>.</t>
+          <t>Likewise, the RA option (<xref format="default" target="RA" />)
+          adheres to the recommendations in <xref section="9"
+          target="RFC4861" />.</t>
         </section>
 
         <section anchor="VC" title="DNR Validation Checks">
           <t>On receipt of an Encrypted DNS option, the DHCP client (or IPv6
           host) makes the following validation checks:<list style="symbols">
               <t>The ADN is present and encoded as per <xref section="10"
-              target="RFC8415"></xref>.</t>
+              target="RFC8415" />.</t>
 
               <t>If additional data is supplied: <list style="symbols">
                   <t>the service parameters are encoded following the rules
                   specified in <xref section="2.1"
-                  target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+                  target="I-D.ietf-dnsop-svcb-https" />.</t>
 
                   <t>the option includes at least one valid IP address and the
                   "alpn" service parameter.</t>
@@ -378,13 +380,17 @@
           Encrypted DNS option.</t>
         </section>
 
-        <section title="Recommended DNR Information">
-          <t>Other mechanisms may be considered in other contexts (e.g.,
-          secure discovery) for the provisioning of encrypted DNS resolvers.
-          It is RECOMMENDED that at least the following DNR information is
-          made available to a requesting host:</t>
+        <section title="DNR Information Using Other Provisioning Mechanisms">
+          <t>The provisioning mechanisms specified in this document may not be
+          available in specific networks (e.g., some cellular networks) or may
+          not be suitable in some contexts (e.g., need for a secure
+          discovery). Other mechanisms may be considered in these contexts for
+          the provisioning of encrypted DNS resolvers. It is RECOMMENDED that
+          at least the following DNR information is made available to a
+          requesting host:</t>
 
-          <t><list style="symbols">
+          <t>
+            <list style="symbols">
               <t>A service priority whenever the discovery mechanism does not
               rely on implicit ordering if multiple instances of the encrypted
               DNS are used.</t>
@@ -396,21 +402,22 @@
               resolver.</t>
 
               <t>A set of service parameters.</t>
-            </list></t>
+            </list>
+          </t>
         </section>
       </section>
 
       <section title="Handling Configuration Data Conflicts">
         <t>If the encrypted DNS is discovered by a host using both RA and
         DHCP, the rules discussed in <xref section=" 5.3.1"
-        target="RFC8106"></xref> MUST be followed.</t>
+        target="RFC8106" /> MUST be followed.</t>
 
         <t>DHCP/RA options to discover encrypted DNS resolvers (including, DoH
         URI Templates) takes precedence over Discovery of Designated Resolvers
-        (DDR) <xref target="I-D.ietf-add-ddr"></xref> since DDR uses Do53 to
-        an external DNS resolver, which is susceptible to both internal and
+        (DDR) <xref target="I-D.ietf-add-ddr" /> since DDR uses Do53 to an
+        external DNS resolver, which is susceptible to both internal and
         external attacks whereas DHCP/RA is typically protected using the
-        mechanisms discussed in <xref target="spoof"></xref>.</t>
+        mechanisms discussed in <xref target="spoof" />.</t>
 
         <t>If a client learns both Do53 and encrypted DNS resolvers from the
         same network, and absent explicit configuration otherwise, it is
@@ -423,7 +430,7 @@
         an encrypted DNS resolver matches what is provided using DNR (e.g.,
         DHCP or RA). Such validation checks do not intend to validate the
         security of the DNR provisioning mechanisms or the user's trust
-        relationship to the network. </t>
+        relationship to the network.</t>
 
         <t>If the local DNS client supports one of the discovered encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
@@ -432,18 +439,17 @@
         resolvers.</t>
 
         <t>The DNS client verifies the connection based on PKIX validation
-        <xref target="RFC5280"></xref> of the DNS resolver certificate and
-        uses the validation techniques as described in <xref
-        target="RFC6125"></xref> to compare the authentication domain name
-        conveyed in the Encrypted DNS options to the certificate provided (see
-        <xref section="8.1" target="RFC8310"></xref> for more details). The
-        DNS client uses the default system or application PKI trust anchors
-        unless configured otherwise to use explicit trust anchors.
-        ALPN-related considerations can be found in <xref section="6.1"
-        target="I-D.ietf-dnsop-svcb-https"></xref>. Operation considerations
-        to check the revocation status of the certificate of an encrypted DNS
-        resolver are discussed in Section 10 of <xref
-        target="RFC8484"></xref>.</t>
+        <xref target="RFC5280" /> of the DNS resolver certificate and uses the
+        validation techniques as described in <xref target="RFC6125" /> to
+        compare the authentication domain name conveyed in the Encrypted DNS
+        options to the certificate provided (see <xref section="8.1"
+        target="RFC8310" /> for more details). The DNS client uses the default
+        system or application PKI trust anchors unless configured otherwise to
+        use explicit trust anchors. ALPN-related considerations can be found
+        in <xref section="6.1" target="I-D.ietf-dnsop-svcb-https" />.
+        Operation considerations to check the revocation status of the
+        certificate of an encrypted DNS resolver are discussed in Section 10
+        of <xref target="RFC8484" />.</t>
       </section>
 
       <section title="Multihoming Considerations">
@@ -451,22 +457,22 @@
         own DNS configuration using the discovery mechanisms specified in this
         document. Nevertheless, it is out of the scope of this specification
         to discuss DNS selection of multi-interface devices. The reader may
-        refer to <xref target="RFC6731"></xref> for a discussion of issues and
-        an example of DNS resolver selection for multi-interfaced devices.
-        Also, the reader may refer to <xref
-        target="I-D.ietf-add-split-horizon-authority"></xref> for a discussion
-        on how DNR and Provisioning Domains (PvDs) Key "dnsZones" (<xref
-        section="4.3" target="RFC8801"></xref>) can be used in Split DNS
-        environments (<xref section="6" target="RFC8499"></xref>).</t>
+        refer to <xref target="RFC6731" /> for a discussion of issues and an
+        example of DNS resolver selection for multi-interfaced devices. Also,
+        the reader may refer to <xref
+        target="I-D.ietf-add-split-horizon-authority" /> for a discussion on
+        how DNR and Provisioning Domains (PvDs) Key "dnsZones" (<xref
+        section="4.3" target="RFC8801" />) can be used in Split DNS
+        environments (<xref section="6" target="RFC8499" />).</t>
       </section>
     </section>
 
     <section anchor="DHCPv6" title="DHCPv6 Encrypted DNS Option">
-      <t></t>
+      <t />
 
       <section anchor="DHCPv6-ADN" title="Option Format">
         <t>The format of the DHCPv6 Encrypted DNS option is shown in <xref
-        target="dhcpv6-format"></xref>.</t>
+        target="dhcpv6-format" />.</t>
 
         <t><figure align="center" anchor="dhcpv6-format"
             title="DHCPv6 Encrypted DNS Option">
@@ -487,9 +493,9 @@
 ~                 Service Parameters (SvcParams)                ~ 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ]]></artwork>
           </figure>The fields of the option shown in <xref
-        target="dhcpv6-format"></xref> are as follows:<list style="hanging">
+        target="dhcpv6-format" /> are as follows:<list style="hanging">
             <t hangText="Option-code:">OPTION_V6_DNR (TBA1, see <xref
-            target="iana6"></xref>)</t>
+            target="iana6" />)</t>
 
             <t hangText="Option-length:">Length of the enclosed data in
             octets. The option length is ('ADN Length' + 4) when only an ADN
@@ -498,7 +504,7 @@
             <t hangText="Service Priority:">The priority of this OPTION_V6_DNR
             instance compared to other instances. This 16-bit unsigned integer
             is interpreted following the rules specified in <xref
-            section="2.4.1" target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            section="2.4.1" target="I-D.ietf-dnsop-svcb-https" />.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             field in octets.</t>
@@ -506,9 +512,9 @@
             <t hangText="authentication-domain-name (variable length):">A
             fully qualified domain name of the encrypted DNS resolver. This
             field is formatted as specified in <xref section="10"
-            target="RFC8415"></xref>.<vspace blankLines="1" />An example of
-            the authentication-domain-name encoding is shown in <xref
-            target="fqdn"></xref>. This example conveys the FQDN
+            target="RFC8415" />.<vspace blankLines="1" />An example of the
+            authentication-domain-name encoding is shown in <xref
+            target="fqdn" />. This example conveys the FQDN
             "doh1.example.com.", and the resulting Option-length field is
             18.<figure anchor="fqdn"
                 title="An Example of the DNS authentication-domain-name Encoding">
@@ -526,7 +532,7 @@
             <t hangText="ipv6-address(es) (variable length):">Indicates one or
             more IPv6 addresses to reach the encrypted DNS resolver. An
             address can be link-local, ULA, or GUA. The format of this field
-            is shown in <xref target="v6add"></xref>.<figure align="center"
+            is shown in <xref target="v6add" />.<figure align="center"
                 anchor="v6add" title="Format of the IPv6 Addresses Field">
                 <artwork><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -542,12 +548,12 @@
             <t
             hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
-            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https"></xref>.
+            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
             protocol identifiers or alternate port numbers. This field MUST
             include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
-            MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+            target="I-D.ietf-add-svcb-dns" />). The service parameters MUST
+            NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
             superseded by the included IP addresses. <vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used. As a reminder,
@@ -558,14 +564,14 @@
 
         <t>Note that "Addr Length", "ipv6-address(es)", and "Service
         Parameters (SvcParams)" fields are not present if the ADN-only mode is
-        used (<xref target="adn-only"></xref>).</t>
+        used (<xref target="adn-only" />).</t>
       </section>
 
       <section title="DHCPv6 Client Behavior">
         <t>To discover an encrypted DNS resolver, the DHCPv6 client MUST
         include OPTION_V6_DNR in an Option Request Option (ORO), as in
         Sections 18.2.1, 18.2.2, 18.2.4, 18.2.5, 18.2.6, and 21.7 of <xref
-        target="RFC8415"></xref>.</t>
+        target="RFC8415" />.</t>
 
         <t>The DHCPv6 client MUST be prepared to receive multiple instances of
         the OPTION_V6_DNR option; each option is to be treated as a separate
@@ -575,7 +581,7 @@
 
         <t>The DHCPv6 client MUST silently discard any OPTION_V6_DNR that
         fails to pass the validation steps defined in <xref
-        target="VC"></xref>.</t>
+        target="VC" />.</t>
 
         <t>The DHCPv6 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V6_DNR.</t>
@@ -585,9 +591,10 @@
     <section anchor="DHCP" title="DHCPv4 Encrypted DNS Option">
       <section title="Option Format">
         <t>The format of the DHCPv4 Encrypted DNS option is illustrated in
-        <xref target="dhcpri_dns"></xref>.</t>
+        <xref target="dhcpri_dns" />.</t>
 
-        <t><figure anchor="dhcpri_dns" title="DHCPv4 Encrypted DNS Option">
+        <t>
+          <figure anchor="dhcpri_dns" title="DHCPv4 Encrypted DNS Option">
             <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 | OPTION_V4_DNR |     Length    |
@@ -599,19 +606,20 @@
 ~      DNR Instance Data #n     ~    |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+   ---
 ]]></artwork>
-          </figure></t>
+          </figure>
+        </t>
 
-        <t>The fields of the option shown in <xref target="dhcpri_dns"></xref>
-        are as follows:<list style="hanging">
+        <t>The fields of the option shown in <xref target="dhcpri_dns" /> are
+        as follows:<list style="hanging">
             <t hangText="Code:">OPTION_V4_DNR (TBA2, see <xref
-            target="iana4"></xref>).</t>
+            target="iana4" />).</t>
 
             <t hangText="Length:">Indicates the length of the enclosed data in
             octets.</t>
 
             <t hangText="DNR Instance Data:">Includes the configuration data
             of an encrypted DNS resolver. The format of this field is shown in
-            <xref target="dhcpri_dns2"></xref>. <figure anchor="dhcpri_dns2"
+            <xref target="dhcpri_dns2" />. <figure anchor="dhcpri_dns2"
                 title="DNR Instance Data Format">
                 <artwork align="center"><![CDATA[ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -636,7 +644,7 @@
               </figure><vspace blankLines="1" />When several encrypted DNS
             resolvers are to be included, the "DNR Instance Data" field is
             repeated.</t>
-          </list>The fields shown in <xref target="dhcpri_dns2"></xref> are as
+          </list>The fields shown in <xref target="dhcpri_dns2" /> are as
         follows:<list style="hanging">
             <t hangText="DNR Instance Data Length:">Length of all following
             data in octets. This field is set to ('ADN Length' + 3) when only
@@ -645,7 +653,7 @@
             <t hangText="Service Priority:">The priority of this instance
             compared to other DNR instances. This 16-bit unsigned integer is
             interpreted following the rules specified in <xref section="2.4.1"
-            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            target="I-D.ietf-dnsop-svcb-https" />.</t>
 
             <t hangText="ADN Length:">Length of the authentication-domain-name
             in octets.</t>
@@ -653,8 +661,8 @@
             <t hangText="authentication-domain-name (variable length):">The
             authentication domain name of the encrypted DNS resolver. This
             field is formatted as specified in <xref section="10"
-            target="RFC8415"></xref>. An example is provided in <xref
-            target="fqdn"></xref>.</t>
+            target="RFC8415" />. An example is provided in <xref
+            target="fqdn" />.</t>
 
             <t hangText="Addr Length:">Length of included IPv4 addresses in
             octets. When present, it MUST be a multiple of 4.</t>
@@ -662,8 +670,8 @@
             <t hangText="IPv4 Address(es) (variable length):">Indicates one or
             more IPv4 addresses to reach the encrypted DNS resolver. Both
             private and public IPv4 addresses can be included in this field.
-            The format of this field is shown in <xref target="v4"></xref>.
-            This format assumes that an IPv4 address is encoded as
+            The format of this field is shown in <xref target="v4" />. This
+            format assumes that an IPv4 address is encoded as
             a1.a2.a3.a4.<figure align="center" anchor="v4"
                 title="Format of the IPv4 Addresses Field">
                 <artwork align="center"><![CDATA[0     8     16    24    32    40    48
@@ -676,12 +684,12 @@
             <t
             hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
-            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https"></xref>.
+            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
             protocol identifiers or alternate port numbers. This field MUST
             include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
-            MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+            target="I-D.ietf-add-svcb-dns" />). The service parameters MUST
+            NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
             superseded by the included IP addresses.<vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used. <vspace
@@ -691,10 +699,10 @@
 
         <t>Note that "Addr Length", "IPv4 Address(es)", and "Service
         Parameters (SvcParams)" fields are not present if the ADN-only mode is
-        used (<xref target="adn-only"></xref>).</t>
+        used (<xref target="adn-only" />).</t>
 
         <t>OPTION_V4_DNR is a concatenation-requiring option. As such, the
-        mechanism specified in <xref target="RFC3396"></xref> MUST be used if
+        mechanism specified in <xref target="RFC3396" /> MUST be used if
         OPTION_V4_DNR exceeds the maximum DHCPv4 option size of 255
         octets.</t>
       </section>
@@ -702,7 +710,7 @@
       <section title="DHCPv4 Client Behavior">
         <t>To discover an encrypted DNS resolver, the DHCPv4 client requests
         the encrypted DNS resolver by including OPTION_V4_DNR in a Parameter
-        Request List option <xref target="RFC2132"></xref>.</t>
+        Request List option <xref target="RFC2132" />.</t>
 
         <t>The DHCPv4 client MUST be prepared to receive multiple DNR instance
         data in the OPTION_V4_DNR option; each instance is to be treated as a
@@ -712,7 +720,7 @@
 
         <t>The DHCPv4 client MUST silently discard any OPTION_V4_DNR that
         fails to pass the validation steps defined in <xref
-        target="VC"></xref>.</t>
+        target="VC" />.</t>
 
         <t>The DHCPv4 client MUST silently discard multicast and host loopback
         addresses conveyed in OPTION_V4_DNR.</t>
@@ -720,18 +728,19 @@
     </section>
 
     <section anchor="RA" title="IPv6 RA Encrypted DNS Option">
-      <t></t>
+      <t />
 
       <section anchor="RA-ADN" title="Option Format">
         <t>This section defines a new Neighbor Discovery option <xref
-        target="RFC4861"></xref>: IPv6 RA Encrypted DNS option. This option is
+        target="RFC4861" />: IPv6 RA Encrypted DNS option. This option is
         useful in contexts similar to those discussed in <xref section="1.1"
-        target="RFC8106"></xref>.</t>
+        target="RFC8106" />.</t>
 
         <t>The format of the IPv6 RA Encrypted DNS option is illustrated in
-        <xref target="ra_dns"></xref>.</t>
+        <xref target="ra_dns" />.</t>
 
-        <t><figure anchor="ra_dns" title="RA Encrypted DNS Option">
+        <t>
+          <figure anchor="ra_dns" title="RA Encrypted DNS Option">
             <artwork align="center"><![CDATA[ 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -752,12 +761,13 @@
 ~                 Service Parameters (SvcParams)                ~
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork>
-          </figure></t>
+          </figure>
+        </t>
 
-        <t>The fields of the option shown in <xref target="ra_dns"></xref> are
-        as follows:<list style="hanging">
+        <t>The fields of the option shown in <xref target="ra_dns" /> are as
+        follows:<list style="hanging">
             <t hangText="Type:">8-bit identifier of the Encrypted DNS option
-            as assigned by IANA (TBA3, see <xref target="iana7"></xref>).</t>
+            as assigned by IANA (TBA3, see <xref target="iana7" />).</t>
 
             <t hangText="Length:">8-bit unsigned integer. The length of the
             option (including the Type and Length fields) is in units of 8
@@ -767,14 +777,14 @@
             priority of this Encrypted DNS option instance compared to other
             instances. This field is interpreted following the rules specified
             in <xref section="2.4.1"
-            target="I-D.ietf-dnsop-svcb-https"></xref>.</t>
+            target="I-D.ietf-dnsop-svcb-https" />.</t>
 
             <t hangText="Lifetime:">32-bit unsigned integer. The maximum time
             in seconds (relative to the time the packet is received) over
             which the discovered Authentication Domain Name is valid. <vspace
             blankLines="1" />The value of Lifetime SHOULD by default be at
             least 3 * MaxRtrAdvInterval, where MaxRtrAdvInterval is the
-            maximum RA interval as defined in <xref target="RFC4861"></xref>.
+            maximum RA interval as defined in <xref target="RFC4861" />.
             <vspace blankLines="1" />A value of all one bits (0xffffffff)
             represents infinity. <vspace blankLines="1" />A value of zero
             means that this Authentication Domain Name MUST no longer be
@@ -787,7 +797,7 @@
             <t hangText="authentication-domain-name (variable length):">The
             authentication domain name of the encrypted DNS resolver. This
             field is formatted as specified in <xref section="10"
-            target="RFC8415"></xref>.</t>
+            target="RFC8415" />.</t>
 
             <t hangText="Addr Length:">16-bit unsigned integer. This field
             indicates the length of enclosed IPv6 addresses in octets. When
@@ -797,10 +807,10 @@
             addresses of the encrypted DNS resolver. An address can be
             link-local, ULA, or GUA. <vspace blankLines="1" />All of the
             addresses share the same Lifetime value. Similar to <xref
-            target="RFC8106"></xref>, if it is desirable to have different
-            Lifetime values per IP address, multiple Encrypted DNS options may
-            be used.<vspace blankLines="1" />The format of this field is shown
-            in <xref target="v6add"></xref>.</t>
+            target="RFC8106" />, if it is desirable to have different Lifetime
+            values per IP address, multiple Encrypted DNS options may be
+            used.<vspace blankLines="1" />The format of this field is shown in
+            <xref target="v6add" />.</t>
 
             <t hangText="SvcParams Length:">16-bit unsigned integer. This
             field indicates the length of the Service Parameters field in
@@ -809,12 +819,12 @@
             <t
             hangText="Service Parameters (SvcParams) (variable length):">Specifies
             a set of service parameters that are encoded following the rules
-            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https"></xref>.
+            in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
             protocol identifiers or alternate port numbers. This field MUST
             include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns"></xref>). The service parameters
-            MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+            target="I-D.ietf-add-svcb-dns" />). The service parameters MUST
+            NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
             superseded by the included IP addresses.<vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used.</t>
@@ -822,22 +832,21 @@
 
         <t>Note that "Addr Length", "ipv6-address(es)", and "Service
         Parameters (SvcParams)" fields are not present if the ADN-only mode is
-        used (<xref target="adn-only"></xref>).</t>
+        used (<xref target="adn-only" />).</t>
 
         <t>The option MUST be padded with zeros so that the full enclosed data
         is a multiple of 8 octets (<xref section="4.6"
-        target="RFC4861"></xref>).</t>
+        target="RFC4861" />).</t>
       </section>
 
       <section title="IPv6 Host Behavior">
         <t>The procedure for DNS configuration is the same as it is with any
-        other Neighbor Discovery option <xref target="RFC4861"></xref>. In
+        other Neighbor Discovery option <xref target="RFC4861" />. In
         addition, the host follows the same procedure as the one described in
-        <xref section="5.3.1" target="RFC8106"></xref> for processing received
+        <xref section="5.3.1" target="RFC8106" /> for processing received
         Encrypted DNS options with the formatting requirements in <xref
-        target="RA-ADN"></xref> and validation checks in <xref
-        target="VC"></xref> substituted for the length and fields
-        validation.</t>
+        target="RA-ADN" /> and validation checks in <xref target="VC" />
+        substituted for the length and fields validation.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
         in RAs. These instances SHOULD be processed following their service
@@ -850,37 +859,38 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t></t>
+      <t />
 
       <section anchor="spoof" title="Spoofing Attacks">
         <t>DHCP/RA messages are not encrypted or protected against
         modification within the LAN. Unless mitigated (described below), the
         content of DHCP and RA messages can be spoofed or modified by active
         attackers, such as compromised devices within the local network. An
-        active attacker (<xref section="3.3" target="RFC3552"></xref>) can
-        spoof the DHCP/RA response to provide the attacker's encrypted DNS
-        resolver. Note that such an attacker can launch other attacks as
-        discussed in <xref section="22" target="RFC8415"></xref>. The attacker
-        can get a domain name with a domain-validated public certificate from
-        a CA and host an encrypted DNS resolver.</t>
+        active attacker (<xref section="3.3" target="RFC3552" />) can spoof
+        the DHCP/RA response to provide the attacker's encrypted DNS resolver.
+        Note that such an attacker can launch other attacks as discussed in
+        <xref section="22" target="RFC8415" />. The attacker can get a domain
+        name with a domain-validated public certificate from a CA and host an
+        encrypted DNS resolver.</t>
 
         <t>Attacks of spoofed or modified DHCP responses and RA messages by
         attackers within the local network may be mitigated by making use of
         the following mechanisms:</t>
 
-        <t><list style="symbols">
-            <t>DHCPv6-Shield <xref target="RFC7610"></xref>: the network
-            access node (e.g., a border router, a CPE, an Access Point (AP))
-            discards DHCP response messages received from any local
-            endpoint.</t>
+        <t>
+          <list style="symbols">
+            <t>DHCPv6-Shield <xref target="RFC7610" />: the network access
+            node (e.g., a border router, a CPE, an Access Point (AP)) discards
+            DHCP response messages received from any local endpoint.</t>
 
-            <t>RA-Guard <xref target="RFC7113"></xref>: the network access
-            node discards RAs messages received from any local endpoint.</t>
+            <t>RA-Guard <xref target="RFC7113" />: the network access node
+            discards RAs messages received from any local endpoint.</t>
 
             <t>Source Address Validation Improvement (SAVI) solution for DHCP
-            <xref target="RFC7513"></xref>: the network access node filters
-            packets with forged source IP addresses.</t>
-          </list></t>
+            <xref target="RFC7513" />: the network access node filters packets
+            with forged source IP addresses.</t>
+          </list>
+        </t>
 
         <t>The above mechanisms would ensure that the endpoint receives the
         correct configuration information of the encrypted DNS resolvers
@@ -891,11 +901,10 @@
         <t>Encrypted DNS sessions with rogue resolvers that spoof the IP
         address of a DNS resolver will fail because the DNS client will fail
         to authenticate that rogue resolver based upon PKIX authentication
-        <xref target="RFC6125"></xref>, particularly the authentication domain
-        name in the Encrypted DNS Option. DNS clients that ignore
-        authentication failures and accept spoofed certificates will be
-        subject to attacks (e.g., redirect to malicious resolvers, intercept
-        sensitive data).</t>
+        <xref target="RFC6125" />, particularly the authentication domain name
+        in the Encrypted DNS Option. DNS clients that ignore authentication
+        failures and accept spoofed certificates will be subject to attacks
+        (e.g., redirect to malicious resolvers, intercept sensitive data).</t>
       </section>
 
       <section title="Deletion Attacks">
@@ -908,18 +917,18 @@
       </section>
 
       <section title="Passive Attacks">
-        <t>A passive attacker (<xref section="3.2" target="RFC3552"></xref>)
-        can identify a host is using DHCP/RA to discover an encrypted DNS
-        resolver and can infer that host is capable of using DoH/DoT/DoQ to
-        encrypt DNS messages. However, a passive attacker cannot spoof or
-        modify DHCP/RA messages.</t>
+        <t>A passive attacker (<xref section="3.2" target="RFC3552" />) can
+        identify a host is using DHCP/RA to discover an encrypted DNS resolver
+        and can infer that host is capable of using DoH/DoT/DoQ to encrypt DNS
+        messages. However, a passive attacker cannot spoof or modify DHCP/RA
+        messages.</t>
       </section>
 
       <section title="Wireless Security - Authentication Attacks">
         <t>Wireless LAN (WLAN) as frequently deployed in local networks (e.g.,
         home networks) is vulnerable to various attacks (e.g., <xref
-        target="Evil-Twin"></xref>, <xref target="Krack"></xref>, <xref
-        target="Dragonblood"></xref>). Because of these attacks, only
+        target="Evil-Twin" />, <xref target="Krack" />, <xref
+        target="Dragonblood" />). Because of these attacks, only
         cryptographically authenticated communications are trusted on WLANs.
         This means that any information (e.g., NTP server, DNS resolver,
         domain search list) provided by such networks via DHCP, DHCPv6, or RA
@@ -937,39 +946,39 @@
         credentials (username and password, typically) provided by the local
         network administrator to mutually authenticate to the local WLAN AP
         (e.g., 802.1x Wireless User Authentication on OpenWRT <xref
-        target="dot1x"></xref>, EAP-pwd <xref target="RFC8146"></xref>). Not
-        all endpoint devices (e.g., IoT devices) support 802.1x supplicant and
+        target="dot1x" />, EAP-pwd <xref target="RFC8146" />). Not all
+        endpoint devices (e.g., IoT devices) support 802.1x supplicant and
         need an alternate mechanism to connect to the local network. To
         address this limitation, unique pre-shared keys can be created for
         each such devices and WPA-PSK is used (e.g., <xref
-        target="IPSK"></xref>).</t>
+        target="IPSK" />).</t>
       </section>
     </section>
 
     <section title="Privacy Considerations">
       <t>Privacy considerations that are specific to DNR provisioning
-      mechanisms are discussed in <xref section="23" target="RFC8415"></xref>
-      or <xref target="RFC7824"></xref>. Anonymity profiles for DHCP clients
-      are discussed in <xref target="RFC7844"></xref>. The mechanism defined
-      in this document can be used to infer that a DHCP client or IPv6 host
-      support encrypted DNS options, but does not explicitly reveal whether
-      local DNS clients are able to consume these options or infer their
-      encryption capabilities. Other than that, this document does not expose
-      more privacy information compared to Do53 discovery options. </t>
+      mechanisms are discussed in <xref section="23" target="RFC8415" /> or
+      <xref target="RFC7824" />. Anonymity profiles for DHCP clients are
+      discussed in <xref target="RFC7844" />. The mechanism defined in this
+      document can be used to infer that a DHCP client or IPv6 host support
+      encrypted DNS options, but does not explicitly reveal whether local DNS
+      clients are able to consume these options or infer their encryption
+      capabilities. Other than that, this document does not expose more
+      privacy information compared to Do53 discovery options.</t>
 
-      <t>As discussed in <xref target="RFC9076"></xref>, the use of encrypted
-      DNS does not reduce the data available in the DNS resolver. For example,
-      the reader may refer to <xref section="8" target="RFC8484"></xref> or
-      <xref section="7" target="RFC9250"></xref> for a discussion on specific
-      privacy considerations to encrypted DNS.</t>
+      <t>As discussed in <xref target="RFC9076" />, the use of encrypted DNS
+      does not reduce the data available in the DNS resolver. For example, the
+      reader may refer to <xref section="8" target="RFC8484" /> or <xref
+      section="7" target="RFC9250" /> for a discussion on specific privacy
+      considerations to encrypted DNS.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t></t>
+      <t />
 
       <section anchor="iana6" title="DHCPv6 Option">
         <t>IANA is requested to assign the following new DHCPv6 Option Code in
-        the registry maintained in <xref target="DHCPV6"></xref>.</t>
+        the registry maintained in <xref target="DHCPV6" />.</t>
 
         <texttable anchor="dhcpv6t" title="DHCPv6 Encrypted DNS Option">
           <ttcol>Value</ttcol>
@@ -993,12 +1002,12 @@
           <c>[ThisDocument]</c>
         </texttable>
 
-        <t></t>
+        <t />
       </section>
 
       <section anchor="iana4" title="DHCPv4 Option">
         <t>IANA is requested to assign the following new DHCP Option Code in
-        the registry maintained in <xref target="BOOTP"></xref>.</t>
+        the registry maintained in <xref target="BOOTP" />.</t>
 
         <texttable anchor="dhcpv4t" title="DHCPv4 Encrypted DNS Option">
           <ttcol>Tag</ttcol>
@@ -1027,8 +1036,7 @@
         <t>IANA is requested to assign the following new IPv6 Neighbor
         Discovery Option type in the "IPv6 Neighbor Discovery Option Formats"
         sub-registry under the "Internet Control Message Protocol version 6
-        (ICMPv6) Parameters" registry maintained in <xref
-        target="ND"></xref>.</t>
+        (ICMPv6) Parameters" registry maintained in <xref target="ND" />.</t>
 
         <texttable anchor="ndt"
                    title="Neighbor Discovery Encrypted DNS Option">
@@ -1045,7 +1053,7 @@
           <c>[ThisDocument]</c>
         </texttable>
 
-        <t></t>
+        <t />
       </section>
     </section>
 
@@ -1061,8 +1069,8 @@
       was discussed in previous versions of this specification.</t>
 
       <t>The use of DHCP to retrieve an authentication domain name was
-      discussed in <xref section="7.3.1" target="RFC8310"></xref> and <xref
-      target="I-D.pusateri-dhc-dns-driu"></xref>.</t>
+      discussed in <xref section="7.3.1" target="RFC8310" /> and <xref
+      target="I-D.pusateri-dhc-dns-driu" />.</t>
 
       <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
 
@@ -1264,7 +1272,7 @@
           <title>DHCPv6 Option Codes</title>
 
           <author>
-            <organization></organization>
+            <organization />
           </author>
 
           <date />
@@ -1277,7 +1285,7 @@
           <title>IPv6 Neighbor Discovery Option Formats</title>
 
           <author>
-            <organization></organization>
+            <organization />
           </author>
 
           <date />
@@ -1290,7 +1298,7 @@
           <title>BOOTP Vendor Extensions and DHCP Options</title>
 
           <author>
-            <organization></organization>
+            <organization />
           </author>
 
           <date />
