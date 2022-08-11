@@ -54,17 +54,11 @@
 
     <author fullname="Tirumaleswar Reddy" initials="T." role="editor"
             surname="Reddy">
-      <organization>Akamai</organization>
+      <organization>Nokia</organization>
 
       <address>
         <postal>
-          <street>Embassy Golf Link Business Park</street>
-
-          <city>Bangalore</city>
-
-          <region>Karnataka</region>
-
-          <code>560071</code>
+          <street />
 
           <country>India</country>
         </postal>

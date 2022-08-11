@@ -5,7 +5,7 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 12 February 2023                                         Akamai
+Expires: 12 February 2023                                          Nokia
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
@@ -1421,10 +1421,7 @@ Authors' Addresses
 
 
    Tirumaleswar Reddy (editor)
-   Akamai
-   Embassy Golf Link Business Park
-   Bangalore 560071
-   Karnataka
+   Nokia
    India
    Email: kondtir@gmail.com
 
@@ -1445,6 +1442,9 @@ Authors' Addresses
    Microsoft
    United States of America
    Email: tojens@microsoft.com
+
+
+
 
 
 
