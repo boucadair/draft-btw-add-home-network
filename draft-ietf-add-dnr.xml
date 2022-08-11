@@ -423,7 +423,9 @@
         <t>If a client learns both Do53 and encrypted DNS resolvers from the
         same network, and absent explicit configuration otherwise, it is
         RECOMMENDED that the client uses the encrypted DNS resolvers for that
-        network.</t>
+        network. If the client cannot establish an authenticated and encrypted
+        connection with the encrypted DNS resolver, it may fallback to using
+        the Do53 resolver.</t>
       </section>
 
       <section title="Validating Discovered Resolvers">
@@ -576,7 +578,7 @@
 
         <t>The DHCPv6 client MUST be prepared to receive multiple instances of
         the OPTION_V6_DNR option; each option is to be treated as a separate
-        encrypted DNS resolver. These instances SHOULD be processed following
+        encrypted DNS resolver. These instances MUST be processed following
         their service priority (i.e., smaller service priority indicates a
         higher preference).</t>
 
@@ -715,7 +717,7 @@
 
         <t>The DHCPv4 client MUST be prepared to receive multiple DNR instance
         data in the OPTION_V4_DNR option; each instance is to be treated as a
-        separate encrypted DNS resolver. These instances SHOULD be processed
+        separate encrypted DNS resolver. These instances MUST be processed
         following their service priority (i.e., smaller service priority
         indicates a higher preference).</t>
 
@@ -850,7 +852,7 @@
         substituted for the length and fields validation.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
-        in RAs. These instances SHOULD be processed following their service
+        in RAs. These instances MUST be processed following their service
         priority (i.e., smaller service priority indicates a higher
         preference).</t>
 
