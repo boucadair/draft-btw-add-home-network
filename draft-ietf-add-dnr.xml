@@ -26,7 +26,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" consensus="true" docName="draft-ietf-add-dnr-12"
+<rfc category="std" consensus="true" docName="draft-ietf-add-dnr-14"
      ipr="trust200902" submissionType="IETF">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
@@ -54,17 +54,11 @@
 
     <author fullname="Tirumaleswar Reddy" initials="T." role="editor"
             surname="Reddy">
-      <organization>Akamai</organization>
+      <organization>Nokia</organization>
 
       <address>
         <postal>
-          <street>Embassy Golf Link Business Park</street>
-
-          <city>Bangalore</city>
-
-          <region>Karnataka</region>
-
-          <code>560071</code>
+          <street />
 
           <country>India</country>
         </postal>
@@ -309,11 +303,8 @@
             </list>
           </t>
 
-          <t>In addition, the following service parameters are RECOMMENDED to
-          be supported by a DNR implementation:<list style="hanging">
-              <t hangText="ech:">Used to enable Encrypted ClientHello (ECH)
-              (<xref section="7.3" target="I-D.ietf-dnsop-svcb-https" />).</t>
-
+          <t>In addition, the following service parameter is RECOMMENDED to be
+          supported by a DNR implementation:<list style="hanging">
               <t hangText="dohpath:">Used to supply a relative DoH URI
               Template (<xref section="5.1"
               target="I-D.ietf-add-svcb-dns" />).</t>
@@ -423,7 +414,9 @@
         <t>If a client learns both Do53 and encrypted DNS resolvers from the
         same network, and absent explicit configuration otherwise, it is
         RECOMMENDED that the client uses the encrypted DNS resolvers for that
-        network.</t>
+        network. If the client cannot establish an authenticated and encrypted
+        connection with the encrypted DNS resolver, it may fallback to using
+        the Do53 resolver.</t>
       </section>
 
       <section title="Validating Discovered Resolvers">
@@ -576,7 +569,7 @@
 
         <t>The DHCPv6 client MUST be prepared to receive multiple instances of
         the OPTION_V6_DNR option; each option is to be treated as a separate
-        encrypted DNS resolver. These instances SHOULD be processed following
+        encrypted DNS resolver. These instances MUST be processed following
         their service priority (i.e., smaller service priority indicates a
         higher preference).</t>
 
@@ -715,7 +708,7 @@
 
         <t>The DHCPv4 client MUST be prepared to receive multiple DNR instance
         data in the OPTION_V4_DNR option; each instance is to be treated as a
-        separate encrypted DNS resolver. These instances SHOULD be processed
+        separate encrypted DNS resolver. These instances MUST be processed
         following their service priority (i.e., smaller service priority
         indicates a higher preference).</t>
 
@@ -850,7 +843,7 @@
         substituted for the length and fields validation.</t>
 
         <t>The host MUST be prepared to receive multiple Encrypted DNS options
-        in RAs. These instances SHOULD be processed following their service
+        in RAs. These instances MUST be processed following their service
         priority (i.e., smaller service priority indicates a higher
         preference).</t>
 
