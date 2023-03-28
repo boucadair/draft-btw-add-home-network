@@ -26,7 +26,7 @@
 <?rfc subcompact="no" ?>
 <!-- keep one blank line between list items -->
 <!-- end of list of popular I-D processing instructions -->
-<rfc category="std" consensus="true" docName="draft-ietf-add-dnr-14"
+<rfc category="std" consensus="true" docName="draft-ietf-add-dnr-15"
      ipr="trust200902" submissionType="IETF">
   <front>
     <title abbrev="Discovery of Network-designated Resolvers">DHCP and Router
@@ -359,8 +359,7 @@
                   specified in <xref section="2.1"
                   target="I-D.ietf-dnsop-svcb-https" />.</t>
 
-                  <t>the option includes at least one valid IP address and the
-                  "alpn" service parameter.</t>
+                  <t>the option includes at least one valid IP address.</t>
 
                   <t>the service parameters do not include "ipv4hint" or
                   "ipv6hint" service parameters.</t>
@@ -428,9 +427,10 @@
 
         <t>If the local DNS client supports one of the discovered encrypted
         DNS protocols identified by Application Layer Protocol Negotiation
-        (ALPN) protocol identifiers, the DNS client establishes an encrypted
-        DNS session following the service priority of the discovered encrypted
-        resolvers.</t>
+        (ALPN) protocol identifiers (or other service parameter that indicates
+        some other protocol disambiguation mechanism), the DNS client
+        establishes an encrypted DNS session following the service priority of
+        the discovered encrypted resolvers.</t>
 
         <t>The DNS client verifies the connection based on PKIX validation
         <xref target="RFC5280" /> of the DNS resolver certificate and uses the
@@ -544,11 +544,9 @@
             a set of service parameters that are encoded following the rules
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
-            protocol identifiers or alternate port numbers. This field MUST
-            include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns" />). The service parameters MUST
-            NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
-            superseded by the included IP addresses. <vspace
+            protocol identifiers or alternate port numbers. The service
+            parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
+            they are superseded by the included IP addresses. <vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used. As a reminder,
             the default port number is 853 for DoT, 443 for DoH, and 853 for
@@ -680,11 +678,9 @@
             a set of service parameters that are encoded following the rules
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
-            protocol identifiers or alternate port numbers. This field MUST
-            include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns" />). The service parameters MUST
-            NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
-            superseded by the included IP addresses.<vspace
+            protocol identifiers or alternate port numbers. The service
+            parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
+            they are superseded by the included IP addresses.<vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used. <vspace
             blankLines="1" />The length of this field is ('DNR Instance Data
@@ -815,11 +811,9 @@
             a set of service parameters that are encoded following the rules
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
-            protocol identifiers or alternate port numbers. This field MUST
-            include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns" />). The service parameters MUST
-            NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
-            superseded by the included IP addresses.<vspace
+            protocol identifiers or alternate port numbers. The service
+            parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
+            they are superseded by the included IP addresses.<vspace
             blankLines="1" />If no port service parameter is included, this
             indicates that default port numbers should be used.</t>
           </list></t>
@@ -1066,7 +1060,11 @@
       discussed in <xref section="7.3.1" target="RFC8310" /> and <xref
       target="I-D.pusateri-dhc-dns-driu" />.</t>
 
-      <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
+      <t>Thanks to Bernie Volz for the review of the DHCP part. </t>
+
+      <t>Christian Amsuss reported a case where ALPN cannot be used (e.g., DNS
+      over CoAP messages that are encrypted using Object Security for
+      Constrained RESTful Environments (OSCORE)).</t>
 
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
       the AD review.</t>
