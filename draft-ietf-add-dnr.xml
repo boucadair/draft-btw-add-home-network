@@ -544,14 +544,19 @@
             a set of service parameters that are encoded following the rules
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
-            protocol identifiers or alternate port numbers. The service
-            parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
-            they are superseded by the included IP addresses. <vspace
-            blankLines="1" />If no port service parameter is included, this
-            indicates that default port numbers should be used. As a reminder,
-            the default port number is 853 for DoT, 443 for DoH, and 853 for
-            DoQ.<vspace blankLines="1" />The length of this field is
-            ('Option-length' - 6 - 'ADN Length' - 'Addr Length').</t>
+            protocol identifiers or alternate port numbers. This field SHOULD
+            include at least "alpn" SvcParam (<xref section="4.1"
+            target="I-D.ietf-add-svcb-dns" />). The "alpn" SvcParam may not be
+            required in contexts such as DNS over CoAP messages are encrypted
+            using Object Security for Constrained RESTful Environments
+            (OSCORE). The service parameters MUST NOT include "ipv4hint" or
+            "ipv6hint" SvcParams as they are superseded by the included IP
+            addresses. <vspace blankLines="1" />If no port service parameter
+            is included, this indicates that default port numbers should be
+            used. As a reminder, the default port number is 853 for DoT, 443
+            for DoH, and 853 for DoQ.<vspace blankLines="1" />The length of
+            this field is ('Option-length' - 6 - 'ADN Length' - 'Addr
+            Length').</t>
           </list></t>
 
         <t>Note that "Addr Length", "ipv6-address(es)", and "Service
@@ -678,13 +683,16 @@
             a set of service parameters that are encoded following the rules
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
-            protocol identifiers or alternate port numbers. The service
-            parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
-            they are superseded by the included IP addresses.<vspace
-            blankLines="1" />If no port service parameter is included, this
-            indicates that default port numbers should be used. <vspace
-            blankLines="1" />The length of this field is ('DNR Instance Data
-            Length' - 4 - 'ADN Length' - 'Addr Length').</t>
+            protocol identifiers or alternate port numbers. This field SHOULD
+            include at least "alpn" SvcParam (<xref section="4.1"
+            target="I-D.ietf-add-svcb-dns" />). The "alpn" SvcParam may not be
+            required in contexts such as DNS over CoAP messages are encrypted
+            using OSCORE. The service parameters MUST NOT include "ipv4hint"
+            or "ipv6hint" SvcParams as they are superseded by the included IP
+            addresses.<vspace blankLines="1" />If no port service parameter is
+            included, this indicates that default port numbers should be used.
+            <vspace blankLines="1" />The length of this field is ('DNR
+            Instance Data Length' - 4 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
         <t>Note that "Addr Length", "IPv4 Address(es)", and "Service
@@ -811,11 +819,15 @@
             a set of service parameters that are encoded following the rules
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
-            protocol identifiers or alternate port numbers. The service
-            parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
-            they are superseded by the included IP addresses.<vspace
-            blankLines="1" />If no port service parameter is included, this
-            indicates that default port numbers should be used.</t>
+            protocol identifiers or alternate port numbers. This field SHOULD
+            include at least "alpn" SvcParam (<xref section="4.1"
+            target="I-D.ietf-add-svcb-dns" />). The "alpn" SvcParam may not be
+            required in contexts such as DNS over CoAP messages are encrypted
+            using OSCORE. The service parameters MUST NOT include "ipv4hint"
+            or "ipv6hint" SvcParams as they are superseded by the included IP
+            addresses.<vspace blankLines="1" />If no port service parameter is
+            included, this indicates that default port numbers should be
+            used.</t>
           </list></t>
 
         <t>Note that "Addr Length", "ipv6-address(es)", and "Service
@@ -1062,9 +1074,8 @@
 
       <t>Thanks to Bernie Volz for the review of the DHCP part. </t>
 
-      <t>Christian Amsuss reported a case where ALPN cannot be used (e.g., DNS
-      over CoAP messages that are encrypted using Object Security for
-      Constrained RESTful Environments (OSCORE)).</t>
+      <t>Christian Amsuss reported a case where ALPN service parameter cannot
+      be used.</t>
 
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
       the AD review.</t>

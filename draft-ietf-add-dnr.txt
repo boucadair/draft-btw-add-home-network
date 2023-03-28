@@ -562,9 +562,13 @@ Boucadair, et al.       Expires 29 September 2023              [Page 10]
 Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
 
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
+      alternate port numbers.  This field SHOULD include at least "alpn"
+      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The "alpn"
+      SvcParam may not be required in contexts such as DNS over CoAP
+      messages are encrypted using Object Security for Constrained
+      RESTful Environments (OSCORE).  The service parameters MUST NOT
+      include "ipv4hint" or "ipv6hint" SvcParams as they are superseded
+      by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
@@ -601,10 +605,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
    The format of the DHCPv4 Encrypted DNS option is illustrated in
    Figure 4.
-
-
-
-
 
 
 
@@ -711,15 +711,15 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
+      alternate port numbers.  This field SHOULD include at least "alpn"
+      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The "alpn"
+      SvcParam may not be required in contexts such as DNS over CoAP
+      messages are encrypted using OSCORE.  The service parameters MUST
+      NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+      superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
-
-      The length of this field is ('DNR Instance Data Length' - 4 - 'ADN
-      Length' - 'Addr Length').
 
 
 
@@ -729,6 +729,9 @@ Boucadair, et al.       Expires 29 September 2023              [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
+
+      The length of this field is ('DNR Instance Data Length' - 4 - 'ADN
+      Length' - 'Addr Length').
 
    Note that "Addr Length", "IPv4 Address(es)", and "Service Parameters
    (SvcParams)" fields are not present if the ADN-only mode is used
@@ -767,9 +770,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
    The format of the IPv6 RA Encrypted DNS option is illustrated in
    Figure 7.
-
-
-
 
 
 
@@ -870,9 +870,12 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
       service parameters that are encoded following the rules in
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
-      alternate port numbers.  The service parameters MUST NOT include
-      "ipv4hint" or "ipv6hint" SvcParams as they are superseded by the
-      included IP addresses.
+      alternate port numbers.  This field SHOULD include at least "alpn"
+      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The "alpn"
+      SvcParam may not be required in contexts such as DNS over CoAP
+      messages are encrypted using OSCORE.  The service parameters MUST
+      NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
+      superseded by the included IP addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -883,9 +886,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
    The option MUST be padded with zeros so that the full enclosed data
    is a multiple of 8 octets (Section 4.6 of [RFC4861]).
-
-
-
 
 
 
@@ -1122,9 +1122,8 @@ Boucadair, et al.       Expires 29 September 2023              [Page 20]
 Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
 
-   Christian Amsuss reported a case where ALPN cannot be used (e.g., DNS
-   over CoAP messages that are encrypted using Object Security for
-   Constrained RESTful Environments (OSCORE)).
+   Christian Amsuss reported a case where ALPN service parameter cannot
+   be used.
 
    Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
    the AD review.
@@ -1164,20 +1163,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               <https://datatracker.ietf.org/doc/html/draft-ietf-add-
               svcb-dns-08>.
 
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 21]
-
-Internet-Draft  Discovery of Network-designated Resolver      March 2023
-
-
    [I-D.ietf-dnsop-svcb-https]
               Schwartz, B. M., Bishop, M., and E. Nygren, "Service
               binding and parameter specification via the DNS (DNS SVCB
@@ -1185,6 +1170,13 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               ietf-dnsop-svcb-https-12, 11 March 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-
               svcb-https-12>.
+
+
+
+Boucadair, et al.       Expires 29 September 2023              [Page 21]
+
+Internet-Draft  Discovery of Network-designated Resolver      March 2023
+
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1226,14 +1218,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               <https://www.iana.org/assignments/bootp-dhcp-parameters/
               bootp-dhcp-parameters.xhtml#options>.
 
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 22]
-
-Internet-Draft  Discovery of Network-designated Resolver      March 2023
-
-
    [DHCPV6]   "DHCPv6 Option Codes", <https://www.iana.org/assignments/
               dhcpv6-parameters/dhcpv6-parameters.xhtml#dhcpv6-
               parameters-2>.
@@ -1241,6 +1225,14 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
    [dot1x]    Cisco, "Basic 802.1x Wireless User Authentication",
               <https://openwrt.org/docs/guide-user/network/wifi/
               wireless.security.8021x>.
+
+
+
+
+Boucadair, et al.       Expires 29 September 2023              [Page 22]
+
+Internet-Draft  Discovery of Network-designated Resolver      March 2023
+
 
    [Dragonblood]
               The Unicode Consortium, "Dragonblood: Analyzing the
@@ -1282,14 +1274,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
    [Krack]    The Unicode Consortium, "Key Reinstallation Attacks",
               2017, <https://www.krackattacks.com/>.
 
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 23]
-
-Internet-Draft  Discovery of Network-designated Resolver      March 2023
-
-
    [ND]       "IPv6 Neighbor Discovery Option Formats",
               <https://www.iana.org/assignments/icmpv6-parameters/
               icmpv6-parameters.xhtml#icmpv6-parameters-5>.
@@ -1298,6 +1282,13 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               Text on Security Considerations", BCP 72, RFC 3552,
               DOI 10.17487/RFC3552, July 2003,
               <https://www.rfc-editor.org/info/rfc3552>.
+
+
+
+Boucadair, et al.       Expires 29 September 2023              [Page 23]
+
+Internet-Draft  Discovery of Network-designated Resolver      March 2023
+
 
    [RFC3646]  Droms, R., Ed., "DNS Configuration options for Dynamic
               Host Configuration Protocol for IPv6 (DHCPv6)", RFC 3646,
@@ -1336,16 +1327,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               BCP 187, RFC 7227, DOI 10.17487/RFC7227, May 2014,
               <https://www.rfc-editor.org/info/rfc7227>.
 
-
-
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 24]
-
-Internet-Draft  Discovery of Network-designated Resolver      March 2023
-
-
    [RFC7513]  Bi, J., Wu, J., Yao, G., and F. Baker, "Source Address
               Validation Improvement (SAVI) Solution for DHCP",
               RFC 7513, DOI 10.17487/RFC7513, May 2015,
@@ -1355,6 +1336,15 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               Protecting against Rogue DHCPv6 Servers", BCP 199,
               RFC 7610, DOI 10.17487/RFC7610, August 2015,
               <https://www.rfc-editor.org/info/rfc7610>.
+
+
+
+
+
+Boucadair, et al.       Expires 29 September 2023              [Page 24]
+
+Internet-Draft  Discovery of Network-designated Resolver      March 2023
+
 
    [RFC7824]  Krishnan, S., Mrugalski, T., and S. Jiang, "Privacy
               Considerations for DHCPv6", RFC 7824,
@@ -1393,15 +1383,6 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
               Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
               January 2019, <https://www.rfc-editor.org/info/rfc8499>.
 
-
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 25]
-
-Internet-Draft  Discovery of Network-designated Resolver      March 2023
-
-
    [RFC8801]  Pfister, P., Vyncke, É., Pauly, T., Schinazi, D., and W.
               Shao, "Discovering Provisioning Domain Names and Data",
               RFC 8801, DOI 10.17487/RFC8801, July 2020,
@@ -1410,6 +1391,16 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
    [RFC9076]  Wicinski, T., Ed., "DNS Privacy Considerations", RFC 9076,
               DOI 10.17487/RFC9076, July 2021,
               <https://www.rfc-editor.org/info/rfc9076>.
+
+
+
+
+
+
+Boucadair, et al.       Expires 29 September 2023              [Page 25]
+
+Internet-Draft  Discovery of Network-designated Resolver      March 2023
+
 
    [RFC9250]  Huitema, C., Dickinson, S., and A. Mankin, "DNS over
               Dedicated QUIC Connections", RFC 9250,
@@ -1450,14 +1441,6 @@ Authors' Addresses
    Tommy Jensen
    Microsoft
    United States of America
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 26]
-
-Internet-Draft  Discovery of Network-designated Resolver      March 2023
-
-
    Email: tojens@microsoft.com
 
 
@@ -1470,43 +1453,4 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires 29 September 2023              [Page 27]
+Boucadair, et al.       Expires 29 September 2023              [Page 26]
