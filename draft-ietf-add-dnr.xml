@@ -545,8 +545,7 @@
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
             protocol identifiers or alternate port numbers. This field SHOULD
-            include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns" />). The "alpn" SvcParam may not be
+            include at least "alpn" SvcParam. The "alpn" SvcParam may not be
             required in contexts such as a variant of DNS over CoAP where
             messages are encrypted using Object Security for Constrained
             RESTful Environments (OSCORE). The service parameters MUST NOT
@@ -684,8 +683,7 @@
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
             protocol identifiers or alternate port numbers. This field SHOULD
-            include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns" />). The "alpn" SvcParam may not be
+            include at least "alpn" SvcParam. The "alpn" SvcParam may not be
             required in contexts such as a variant of DNS over CoAP where
             messages are encrypted using OSCORE. The service parameters MUST
             NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
@@ -821,8 +819,7 @@
             in <xref section="2.1" target="I-D.ietf-dnsop-svcb-https" />.
             Service parameters may include, for example, a list of ALPN
             protocol identifiers or alternate port numbers. This field SHOULD
-            include at least "alpn" SvcParam (<xref section="4.1"
-            target="I-D.ietf-add-svcb-dns" />). The "alpn" SvcParam may not be
+            include at least "alpn" SvcParam. The "alpn" SvcParam may not be
             required in contexts such as a variant of DNS over CoAP where
             messages are encrypted using OSCORE. The service parameters MUST
             NOT include "ipv4hint" or "ipv6hint" SvcParams as they are

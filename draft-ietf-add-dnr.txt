@@ -563,12 +563,12 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
 
 
       alternate port numbers.  This field SHOULD include at least "alpn"
-      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The "alpn"
-      SvcParam may not be required in contexts such as a variant of DNS
-      over CoAP where messages are encrypted using Object Security for
-      Constrained RESTful Environments (OSCORE).  The service parameters
-      MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as they are
-      superseded by the included IP addresses.
+      SvcParam.  The "alpn" SvcParam may not be required in contexts
+      such as a variant of DNS over CoAP where messages are encrypted
+      using Object Security for Constrained RESTful Environments
+      (OSCORE).  The service parameters MUST NOT include "ipv4hint" or
+      "ipv6hint" SvcParams as they are superseded by the included IP
+      addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.  As a reminder, the default
@@ -712,11 +712,11 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
       alternate port numbers.  This field SHOULD include at least "alpn"
-      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The "alpn"
-      SvcParam may not be required in contexts such as a variant of DNS
-      over CoAP where messages are encrypted using OSCORE.  The service
-      parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
-      they are superseded by the included IP addresses.
+      SvcParam.  The "alpn" SvcParam may not be required in contexts
+      such as a variant of DNS over CoAP where messages are encrypted
+      using OSCORE.  The service parameters MUST NOT include "ipv4hint"
+      or "ipv6hint" SvcParams as they are superseded by the included IP
+      addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
@@ -871,11 +871,11 @@ Internet-Draft  Discovery of Network-designated Resolver      March 2023
       Section 2.1 of [I-D.ietf-dnsop-svcb-https].  Service parameters
       may include, for example, a list of ALPN protocol identifiers or
       alternate port numbers.  This field SHOULD include at least "alpn"
-      SvcParam (Section 4.1 of [I-D.ietf-add-svcb-dns]).  The "alpn"
-      SvcParam may not be required in contexts such as a variant of DNS
-      over CoAP where messages are encrypted using OSCORE.  The service
-      parameters MUST NOT include "ipv4hint" or "ipv6hint" SvcParams as
-      they are superseded by the included IP addresses.
+      SvcParam.  The "alpn" SvcParam may not be required in contexts
+      such as a variant of DNS over CoAP where messages are encrypted
+      using OSCORE.  The service parameters MUST NOT include "ipv4hint"
+      or "ipv6hint" SvcParams as they are superseded by the included IP
+      addresses.
 
       If no port service parameter is included, this indicates that
       default port numbers should be used.
