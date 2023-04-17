@@ -229,7 +229,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 3.1.2.  Avoiding Dependency on External Resolvers
 
    To avoid adding a dependency on another server to resolve the ADN,
-   the Encrypted DNS options return the IP address(es) to locate the
+   the Encrypted DNS options return the IP address(es) to locate an
    encrypted DNS resolver.  These encrypted DNS resolvers may be hosted
    on the same or distinct IP addresses.  Such a decision is deployment
    specific.

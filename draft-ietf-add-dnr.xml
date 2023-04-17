@@ -237,7 +237,7 @@
         <section title="Avoiding Dependency on External Resolvers">
           <t>To avoid adding a dependency on another server to resolve the
           ADN, the Encrypted DNS options return the IP address(es) to locate
-          the encrypted DNS resolver. These encrypted DNS resolvers may be
+          an encrypted DNS resolver. These encrypted DNS resolvers may be
           hosted on the same or distinct IP addresses. Such a decision is
           deployment specific.</t>
 
