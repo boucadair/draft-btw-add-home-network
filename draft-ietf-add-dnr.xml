@@ -173,6 +173,14 @@
       <t>This document makes use of the terms defined in <xref
       target="RFC8499" />. The following additional terms are used: <list
           style="hanging">
+          <t hangText="Authentication Domain Name (ADN):">refers to a domain
+          name that is used by a DNS client to authenticate a DNS
+          resolver.</t>
+
+          <t hangText="ADN-only mode:">refers to a DNS discovery mode where
+          only the ADN of the DNS resolver is retrieved. See <xref
+          target="adn-only" />.</t>
+
           <t hangText="Do53:">refers to unencrypted DNS.</t>
 
           <t hangText="DNR:">refers to the Discovery of Network-designated
@@ -548,14 +556,14 @@
             include at least "alpn" SvcParam. The "alpn" SvcParam may not be
             required in contexts such as a variant of DNS over CoAP where
             messages are encrypted using Object Security for Constrained
-            RESTful Environments (OSCORE). The service parameters MUST NOT
-            include "ipv4hint" or "ipv6hint" SvcParams as they are superseded
-            by the included IP addresses. <vspace blankLines="1" />If no port
-            service parameter is included, this indicates that default port
-            numbers should be used. As a reminder, the default port number is
-            853 for DoT, 443 for DoH, and 853 for DoQ.<vspace
-            blankLines="1" />The length of this field is ('Option-length' - 6
-            - 'ADN Length' - 'Addr Length').</t>
+            RESTful Environments (OSCORE) <xref target="RFC8613" />. The
+            service parameters MUST NOT include "ipv4hint" or "ipv6hint"
+            SvcParams as they are superseded by the included IP addresses.
+            <vspace blankLines="1" />If no port service parameter is included,
+            this indicates that default port numbers should be used. As a
+            reminder, the default port number is 853 for DoT, 443 for DoH, and
+            853 for DoQ.<vspace blankLines="1" />The length of this field is
+            ('Option-length' - 6 - 'ADN Length' - 'Addr Length').</t>
           </list></t>
 
         <t>Note that "Addr Length", "ipv6-address(es)", and "Service
@@ -1070,16 +1078,17 @@
       discussed in <xref section="7.3.1" target="RFC8310" /> and <xref
       target="I-D.pusateri-dhc-dns-driu" />.</t>
 
-      <t>Thanks to Bernie Volz for the review of the DHCP part. </t>
+      <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
 
-      <t>Christian Amsuss reported a case where ALPN service parameter cannot
+      <t>Christian Amsuess reported a case where ALPN service parameter cannot
       be used.</t>
 
       <t>Thanks to Andrew Campling for the Shepherd review and Eric Vyncke for
       the AD review.</t>
 
-      <t>Thanks to Rich Salz for the secdir review, Joe Clarke for the ops-dir
-      review, and Robert Sparks for the artart review.</t>
+      <t>Thanks to Rich Salz for the secdir reviews, Joe Clarke for the
+      ops-dir review, Robert Sparks for the artart review, and David Blacka
+      for the dnsdir review.</t>
 
       <t>Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, Robert
       Wilton, and Paul Wouters for the IESG review.</t>
@@ -1201,6 +1210,8 @@
       <?rfc include='reference.RFC.7824.xml'?>
 
       <?rfc include='reference.RFC.7844.xml'?>
+
+      <?rfc include='reference.RFC.8613'?>
 
       <reference anchor="Evil-Twin"
                  target="https://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">
