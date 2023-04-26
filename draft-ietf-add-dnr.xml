@@ -218,10 +218,10 @@
         <t />
 
         <section title="ADN as the Reference Identifier for DNS Authentication">
-          <t>In order to allow for PKIX-based authentication between a DNS
-          client and an encrypted DNS resolver, the Encrypted DNS options are
-          designed to always include an authentication domain name. This ADN
-          is presented as a reference identifier for DNS authentication
+          <t>In order to allow for a PKIX-based authentication of the
+          encrypted DNS resolver to the DNS client, the Encrypted DNS options
+          are designed to always include an authentication domain name. This
+          ADN is presented as a reference identifier for DNS authentication
           purposes. This design accommodates the current best practices for
           issuing certificates as per <xref section="1.7.2"
           target="RFC6125" />:</t>
@@ -278,7 +278,7 @@
 
         <section title="Why Not Separate Options for ADN and IP Addresses?">
           <t>A single option is used to convey both the ADN and IP addresses.
-          Otherwise a means to correlate an IP address conveyed in an option
+          Otherwise, a means to correlate an IP address conveyed in an option
           with an ADN conveyed in another option will be required if, for
           example, more than one ADN is supported by the network.</t>
         </section>
@@ -422,7 +422,7 @@
         same network, and absent explicit configuration otherwise, it is
         RECOMMENDED that the client uses the encrypted DNS resolvers for that
         network. If the client cannot establish an authenticated and encrypted
-        connection with the encrypted DNS resolver, it may fallback to using
+        connection with the encrypted DNS resolver, it may fall back to using
         the Do53 resolver.</t>
       </section>
 
@@ -1075,8 +1075,9 @@
       was discussed in previous versions of this specification.</t>
 
       <t>The use of DHCP to retrieve an authentication domain name was
-      discussed in <xref section="7.3.1" target="RFC8310" /> and <xref
-      target="I-D.pusateri-dhc-dns-driu" />.</t>
+      discussed in <xref section="7.3.1" target="RFC8310" /> and in an
+      Internet-Draft authored by Tom Pusateri and Willem Toorop
+      (draft-pusateri-dhc-dns-driu).</t>
 
       <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
 
@@ -1199,8 +1200,6 @@
 
       <?rfc include='reference.I-D.ietf-add-ddr.xml'?>
 
-      <?rfc include='reference.I-D.pusateri-dhc-dns-driu.xml'?>
-
       <?rfc include='reference.I-D.ietf-add-split-horizon-authority.xml'?>
 
       <?rfc include='reference.RFC.8801.xml'?>
@@ -1318,7 +1317,7 @@
       </reference>
 
       <reference anchor="TS.24008"
-                 target="http://www.3gpp.org/DynaReport/24008.htm">
+                 target="https://www.3gpp.org/DynaReport/24008.htm">
         <front>
           <title>Mobile radio interface Layer 3 specification; Core network
           protocols; Stage 3 (Release 16)</title>
