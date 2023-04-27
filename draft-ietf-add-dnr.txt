@@ -5,14 +5,14 @@
 ADD                                                    M. Boucadair, Ed.
 Internet-Draft                                                    Orange
 Intended status: Standards Track                           T. Reddy, Ed.
-Expires: 28 October 2023                                           Nokia
+Expires: 29 October 2023                                           Nokia
                                                                  D. Wing
                                                                   Citrix
                                                                  N. Cook
                                                             Open-Xchange
                                                                T. Jensen
                                                                Microsoft
-                                                           26 April 2023
+                                                           27 April 2023
 
 
   DHCP and Router Advertisement Options for the Discovery of Network-
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 October 2023.
+   This Internet-Draft will expire on 29 October 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 1]
+Boucadair, et al.        Expires 29 October 2023                [Page 1]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -89,7 +89,7 @@ Table of Contents
      3.4.  Multihoming Considerations  . . . . . . . . . . . . . . .   9
    4.  DHCPv6 Encrypted DNS Option . . . . . . . . . . . . . . . . .   9
      4.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .   9
-     4.2.  DHCPv6 Client Behavior  . . . . . . . . . . . . . . . . .  11
+     4.2.  DHCPv6 Client Behavior  . . . . . . . . . . . . . . . . .  12
    5.  DHCPv4 Encrypted DNS Option . . . . . . . . . . . . . . . . .  12
      5.1.  Option Format . . . . . . . . . . . . . . . . . . . . . .  12
      5.2.  DHCPv4 Client Behavior  . . . . . . . . . . . . . . . . .  14
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 2]
+Boucadair, et al.        Expires 29 October 2023                [Page 2]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -165,7 +165,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 3]
+Boucadair, et al.        Expires 29 October 2023                [Page 3]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -221,7 +221,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 4]
+Boucadair, et al.        Expires 29 October 2023                [Page 4]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -277,7 +277,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 5]
+Boucadair, et al.        Expires 29 October 2023                [Page 5]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -333,7 +333,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 6]
+Boucadair, et al.        Expires 29 October 2023                [Page 6]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -389,7 +389,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 7]
+Boucadair, et al.        Expires 29 October 2023                [Page 7]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -445,7 +445,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023                [Page 8]
+Boucadair, et al.        Expires 29 October 2023                [Page 8]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -468,12 +468,17 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
    own DNS configuration using the discovery mechanisms specified in
    this document.  Nevertheless, it is out of the scope of this
    specification to discuss DNS selection of multi-interface devices.
-   The reader may refer to [RFC6731] for a discussion of issues and an
-   example of DNS resolver selection for multi-interfaced devices.
-   Also, the reader may refer to [I-D.ietf-add-split-horizon-authority]
-   for a discussion on how DNR and Provisioning Domains (PvDs) Key
-   "dnsZones" (Section 4.3 of [RFC8801]) can be used in Split DNS
-   environments (Section 6 of [RFC8499]).
+   Such considerations fall under the generic issue of handling multiple
+   provisioning sources and which should not be dealt within each option
+   separately as per the recommendation in Section 12 of [RFC7227].
+
+   The reader may refer to [RFC6731] for a discussion of DNS selection
+   issues and an example of DNS resolver selection for multi-interfaced
+   devices.  Also, the reader may refer to
+   [I-D.ietf-add-split-horizon-authority] for a discussion on how DNR
+   and Provisioning Domains (PvDs) Key "dnsZones" (Section 4.3 of
+   [RFC8801]) can be used in Split DNS environments (Section 6 of
+   [RFC8499]).
 
 4.  DHCPv6 Encrypted DNS Option
 
@@ -481,6 +486,25 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 4.1.  Option Format
 
    The format of the DHCPv6 Encrypted DNS option is shown in Figure 1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires 29 October 2023                [Page 9]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2023
+
 
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -498,13 +522,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               |
      ~                 Service Parameters (SvcParams)                ~
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-
-Boucadair, et al.        Expires 28 October 2023                [Page 9]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2023
-
 
                    Figure 1: DHCPv6 Encrypted DNS Option
 
@@ -538,6 +555,13 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
        |   m  |   p  |   l  |   e  | 0x03 |   c  |   o  |   m  | 0x00 |
        +------+------+------+------+------+------+------+------+------+
 
+
+
+Boucadair, et al.        Expires 29 October 2023               [Page 10]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2023
+
+
           Figure 2: An Example of the DNS authentication-domain-name
                                    Encoding
 
@@ -548,19 +572,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
       addresses to reach the encrypted DNS resolver.  An address can be
       link-local, ULA, or GUA.  The format of this field is shown in
       Figure 3.
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 10]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2023
-
 
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -597,6 +608,16 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
    (SvcParams)" fields are not present if the ADN-only mode is used
    (Section 3.1.6).
 
+
+
+
+
+
+Boucadair, et al.        Expires 29 October 2023               [Page 11]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2023
+
+
 4.2.  DHCPv6 Client Behavior
 
    To discover an encrypted DNS resolver, the DHCPv6 client MUST include
@@ -608,15 +629,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
    encrypted DNS resolver.  These instances MUST be processed following
    their service priority (i.e., smaller service priority indicates a
    higher preference).
-
-
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 11]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2023
-
 
    The DHCPv6 client MUST silently discard any OPTION_V6_DNR that fails
    to pass the validation steps defined in Section 3.1.8.
@@ -657,19 +669,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 12]
+Boucadair, et al.        Expires 29 October 2023               [Page 12]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -725,7 +725,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 13]
+Boucadair, et al.        Expires 29 October 2023               [Page 13]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -781,7 +781,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 14]
+Boucadair, et al.        Expires 29 October 2023               [Page 14]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -837,7 +837,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 15]
+Boucadair, et al.        Expires 29 October 2023               [Page 15]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -893,7 +893,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 16]
+Boucadair, et al.        Expires 29 October 2023               [Page 16]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -949,7 +949,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 17]
+Boucadair, et al.        Expires 29 October 2023               [Page 17]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 18]
+Boucadair, et al.        Expires 29 October 2023               [Page 18]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 19]
+Boucadair, et al.        Expires 29 October 2023               [Page 19]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 20]
+Boucadair, et al.        Expires 29 October 2023               [Page 20]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1144,8 +1144,8 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
    The use of DHCP to retrieve an authentication domain name was
    discussed in Section 7.3.1 of [RFC8310] and in an Internet-Draft
-   authored by Tom Pusateri and Willem Toorop (draft-pusateri-dhc-dns-
-   driu).
+   authored by Tom Pusateri and Willem Toorop
+   [I-D.pusateri-dhc-dns-driu].
 
    Thanks to Bernie Volz for the review of the DHCP part.
 
@@ -1160,7 +1160,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
    the dnsdir review.
 
    Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, Robert
-   Wilton, and Paul Wouters for the IESG review.
+   Wilton, Paul Wouters, and Zaheduzzaman Sarker for the IESG review.
 
 11.  Contributing Authors
 
@@ -1173,7 +1173,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 21]
+Boucadair, et al.        Expires 29 October 2023               [Page 21]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1229,7 +1229,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 22]
+Boucadair, et al.        Expires 29 October 2023               [Page 22]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1285,7 +1285,7 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-Boucadair, et al.        Expires 28 October 2023               [Page 23]
+Boucadair, et al.        Expires 29 October 2023               [Page 23]
 
 Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
@@ -1297,6 +1297,13 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
               draft-ietf-add-split-horizon-authority-04, 8 March 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-add-
               split-horizon-authority-04>.
+
+   [I-D.pusateri-dhc-dns-driu]
+              Pusateri, T. and W. Toorop, "DHCPv6 Options for private
+              DNS Discovery", Work in Progress, Internet-Draft, draft-
+              pusateri-dhc-dns-driu-00, 2 July 2018,
+              <https://datatracker.ietf.org/doc/html/draft-pusateri-dhc-
+              dns-driu-00>.
 
    [IPSK]     Cisco, "Identity PSK Feature Deployment Guide",
               <https://www.cisco.com/c/en/us/td/docs/wireless/
@@ -1330,21 +1337,21 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
 
+
+
+
+
+Boucadair, et al.        Expires 29 October 2023               [Page 24]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2023
+
+
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
               within Internet Public Key Infrastructure Using X.509
               (PKIX) Certificates in the Context of Transport Layer
               Security (TLS)", RFC 6125, DOI 10.17487/RFC6125, March
               2011, <https://www.rfc-editor.org/info/rfc6125>.
-
-
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 24]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2023
-
 
    [RFC6731]  Savolainen, T., Kato, J., and T. Lemon, "Improved
               Recursive DNS Server Selection for Multi-Interfaced
@@ -1386,6 +1393,15 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
               Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
               2016, <https://www.rfc-editor.org/info/rfc7858>.
 
+
+
+
+
+Boucadair, et al.        Expires 29 October 2023               [Page 25]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2023
+
+
    [RFC7969]  Lemon, T. and T. Mrugalski, "Customizing DHCP
               Configuration on the Basis of Network Topology", RFC 7969,
               DOI 10.17487/RFC7969, October 2016,
@@ -1394,13 +1410,6 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
    [RFC8146]  Harkins, D., "Adding Support for Salted Password Databases
               to EAP-pwd", RFC 8146, DOI 10.17487/RFC8146, April 2017,
               <https://www.rfc-editor.org/info/rfc8146>.
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 25]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2023
-
 
    [RFC8310]  Dickinson, S., Gillmor, D., and T. Reddy, "Usage Profiles
               for DNS over TLS and DNS over DTLS", RFC 8310,
@@ -1440,6 +1449,15 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 Authors' Addresses
 
+
+
+
+
+Boucadair, et al.        Expires 29 October 2023               [Page 26]
+
+Internet-Draft  Discovery of Network-designated Resolver      April 2023
+
+
    Mohamed Boucadair (editor)
    Orange
    35000 Rennes
@@ -1450,14 +1468,6 @@ Authors' Addresses
    Tirumaleswar Reddy (editor)
    Nokia
    India
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 26]
-
-Internet-Draft  Discovery of Network-designated Resolver      April 2023
-
-
    Email: kondtir@gmail.com
 
 
@@ -1499,14 +1509,4 @@ Internet-Draft  Discovery of Network-designated Resolver      April 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.        Expires 28 October 2023               [Page 27]
+Boucadair, et al.        Expires 29 October 2023               [Page 27]

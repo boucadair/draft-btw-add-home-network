@@ -458,10 +458,15 @@
         <t>Devices may be connected to multiple networks; each providing their
         own DNS configuration using the discovery mechanisms specified in this
         document. Nevertheless, it is out of the scope of this specification
-        to discuss DNS selection of multi-interface devices. The reader may
-        refer to <xref target="RFC6731" /> for a discussion of issues and an
-        example of DNS resolver selection for multi-interfaced devices. Also,
-        the reader may refer to <xref
+        to discuss DNS selection of multi-interface devices. Such
+        considerations fall under the generic issue of handling multiple
+        provisioning sources and which should not be dealt within each option
+        separately as per the recommendation in <xref section="12"
+        target="RFC7227" />.</t>
+
+        <t>The reader may refer to <xref target="RFC6731" /> for a discussion
+        of DNS selection issues and an example of DNS resolver selection for
+        multi-interfaced devices. Also, the reader may refer to <xref
         target="I-D.ietf-add-split-horizon-authority" /> for a discussion on
         how DNR and Provisioning Domains (PvDs) Key "dnsZones" (<xref
         section="4.3" target="RFC8801" />) can be used in Split DNS
@@ -1076,8 +1081,8 @@
 
       <t>The use of DHCP to retrieve an authentication domain name was
       discussed in <xref section="7.3.1" target="RFC8310" /> and in an
-      Internet-Draft authored by Tom Pusateri and Willem Toorop
-      (draft-pusateri-dhc-dns-driu).</t>
+      Internet-Draft authored by Tom Pusateri and Willem Toorop <xref
+      target="I-D.pusateri-dhc-dns-driu" />.</t>
 
       <t>Thanks to Bernie Volz for the review of the DHCP part.</t>
 
@@ -1092,7 +1097,7 @@
       for the dnsdir review.</t>
 
       <t>Thanks to Lars Eggert, Roman Danyliw, Erik Kline, Martin Duke, Robert
-      Wilton, and Paul Wouters for the IESG review.</t>
+      Wilton, Paul Wouters, and Zaheduzzaman Sarker for the IESG review.</t>
     </section>
 
     <section title="Contributing Authors">
@@ -1199,6 +1204,8 @@
       <?rfc include='reference.RFC.4786.xml'?>
 
       <?rfc include='reference.I-D.ietf-add-ddr.xml'?>
+
+      <?rfc include='reference.I-D.pusateri-dhc-dns-driu.xml'?>
 
       <?rfc include='reference.I-D.ietf-add-split-horizon-authority.xml'?>
 
