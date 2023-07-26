@@ -17,4 +17,4 @@ The public version is available at: https://tools.ietf.org/html/draft-ietf-add-d
 
 [Kea 2.4.0 with DNR support](https://www.isc.org/blogs/kea-2-4-0/)
 
-[more details](https://reports.kea.isc.org/dev_guide/d7/dee/classisc_1_1dhcp_1_1DnrInstance.html)
+More details [here](https://reports.kea.isc.org/dev_guide/d7/dee/classisc_1_1dhcp_1_1DnrInstance.html)
